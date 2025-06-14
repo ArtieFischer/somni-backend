@@ -1,0 +1,283 @@
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { config } from '../config';
+import { logger } from '../utils/logger';
+import type { DreamRecord } from '../types';
+
+class SupabaseService {
+  private client: SupabaseClient;
+
+  constructor() {
+    this.client = createClient(
+      config.supabase.url,
+      config.supabase.serviceRoleKey,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false,
+        },
+      }
+    );
+  }
+
+  /**
+   * Verify JWT token and get user information
+   */
+  async verifyUserToken(token: string) {
+    try {
+      const { data: { user }, error } = await this.client.auth.getUser(token);
+      
+      if (error) {
+        logger.warn('Token verification failed', { error: error.message });
+        return null;
+      }
+      
+      if (!user) {
+        logger.warn('No user found for token');
+        return null;
+      }
+      
+      logger.debug('Token verified successfully', { userId: user.id });
+      return user;
+    } catch (error) {
+      logger.error('Token verification error', { error });
+      return null;
+    }
+  }
+
+  /**
+   * Get dream record by ID and verify ownership
+   */
+  async getDream(dreamId: string, userId: string): Promise<DreamRecord | null> {
+    try {
+      const { data: dream, error } = await this.client
+        .from('dreams')
+        .select('*')
+        .eq('id', dreamId)
+        .eq('user_id', userId)
+        .single();
+
+      if (error) {
+        logger.warn('Dream not found or unauthorized', { 
+          dreamId, 
+          userId, 
+          error: error.message 
+        });
+        return null;
+      }
+
+      return dream as DreamRecord;
+    } catch (error) {
+      logger.error('Error fetching dream', { dreamId, userId, error });
+      return null;
+    }
+  }
+
+  /**
+   * Update dream transcription status
+   */
+  async updateDreamStatus(
+    dreamId: string, 
+    status: 'processing' | 'completed' | 'failed',
+    userId?: string
+  ): Promise<boolean> {
+    try {
+      const updateData: Partial<DreamRecord> = {
+        transcription_status: status,
+        updated_at: new Date().toISOString(),
+      };
+
+      const query = this.client
+        .from('dreams')
+        .update(updateData)
+        .eq('id', dreamId);
+
+      // Add user filter if provided for extra security
+      if (userId) {
+        query.eq('user_id', userId);
+      }
+
+      const { error } = await query;
+
+      if (error) {
+        logger.error('Failed to update dream status', { 
+          dreamId, 
+          status, 
+          userId,
+          error: error.message 
+        });
+        return false;
+      }
+
+      logger.info('Dream status updated', { dreamId, status, userId });
+      return true;
+    } catch (error) {
+      logger.error('Error updating dream status', { dreamId, status, userId, error });
+      return false;
+    }
+  }
+
+  /**
+   * Update dream with transcription results
+   */
+  async updateDreamTranscription(
+    dreamId: string,
+    transcription: {
+      text: string;
+      languageCode?: string;
+      languageProbability?: number;
+      metadata?: Record<string, any>;
+    },
+    userId?: string
+  ): Promise<boolean> {
+    try {
+      const updateData: Partial<DreamRecord> = {
+        raw_transcript: transcription.text,
+        transcription_status: 'completed',
+        transcription_metadata: {
+          language_code: transcription.languageCode,
+          language_probability: transcription.languageProbability,
+          processed_at: new Date().toISOString(),
+          model_id: 'scribe_v1',
+          character_count: transcription.text.length,
+          word_count: transcription.text.split(' ').length,
+          ...transcription.metadata,
+        },
+        updated_at: new Date().toISOString(),
+      };
+
+      const query = this.client
+        .from('dreams')
+        .update(updateData)
+        .eq('id', dreamId);
+
+      // Add user filter if provided for extra security
+      if (userId) {
+        query.eq('user_id', userId);
+      }
+
+      const { error } = await query;
+
+      if (error) {
+        logger.error('Failed to update dream transcription', { 
+          dreamId, 
+          userId,
+          error: error.message 
+        });
+        return false;
+      }
+
+      logger.info('Dream transcription updated', { 
+        dreamId, 
+        userId, 
+        textLength: transcription.text.length,
+        languageCode: transcription.languageCode 
+      });
+      
+      return true;
+    } catch (error) {
+      logger.error('Error updating dream transcription', { dreamId, userId, error });
+      return false;
+    }
+  }
+
+  /**
+   * Update dream with error information
+   */
+  async updateDreamError(
+    dreamId: string,
+    errorMessage: string,
+    errorDetails?: Record<string, any>,
+    userId?: string
+  ): Promise<boolean> {
+    try {
+      const updateData: Partial<DreamRecord> = {
+        transcription_status: 'failed',
+        transcription_metadata: {
+          error: errorMessage,
+          error_details: errorDetails,
+          failed_at: new Date().toISOString(),
+        },
+        updated_at: new Date().toISOString(),
+      };
+
+      const query = this.client
+        .from('dreams')
+        .update(updateData)
+        .eq('id', dreamId);
+
+      // Add user filter if provided for extra security  
+      if (userId) {
+        query.eq('user_id', userId);
+      }
+
+      const { error } = await query;
+
+      if (error) {
+        logger.error('Failed to update dream error', { 
+          dreamId, 
+          userId,
+          error: error.message 
+        });
+        return false;
+      }
+
+      logger.info('Dream error updated', { dreamId, userId, errorMessage });
+      return true;
+    } catch (error) {
+      logger.error('Error updating dream error', { dreamId, userId, error });
+      return false;
+    }
+  }
+
+  /**
+   * Record transcription usage for tracking/billing
+   */
+  async recordTranscriptionUsage(
+    userId: string,
+    dreamId: string,
+    characterCount: number,
+    duration: number,
+    languageCode?: string
+  ): Promise<boolean> {
+    try {
+      const { error } = await this.client
+        .from('transcription_usage')
+        .insert({
+          user_id: userId,
+          dream_id: dreamId,
+          character_count: characterCount,
+          duration_seconds: duration,
+          language_code: languageCode,
+          model_id: 'scribe_v1',
+          created_at: new Date().toISOString(),
+        });
+
+      if (error) {
+        logger.warn('Failed to record transcription usage', { 
+          userId, 
+          dreamId, 
+          error: error.message 
+        });
+        return false;
+      }
+
+      logger.debug('Transcription usage recorded', { 
+        userId, 
+        dreamId, 
+        characterCount, 
+        duration 
+      });
+      
+      return true;
+    } catch (error) {
+      logger.error('Error recording transcription usage', { 
+        userId, 
+        dreamId, 
+        error 
+      });
+      return false;
+    }
+  }
+}
+
+export const supabaseService = new SupabaseService(); 
