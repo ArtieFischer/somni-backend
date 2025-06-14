@@ -45,7 +45,7 @@ export const logger = winston.createLogger({
   format: config.isProduction ? productionFormat : developmentFormat,
   defaultMeta: {
     service: 'somni-backend',
-    version: process.env.npm_package_version || '1.0.0',
+    version: process.env['npm_package_version'] || '1.0.0',
   },
   transports: [
     // Console transport

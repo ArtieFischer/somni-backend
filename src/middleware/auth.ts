@@ -11,7 +11,7 @@ export const verifyApiSecret = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const apiSecret = req.headers['x-api-secret'] as string;
   
   if (!apiSecret) {
@@ -20,9 +20,10 @@ export const verifyApiSecret = (
       userAgent: req.get('User-Agent'),
       ip: req.ip 
     });
-    return res.status(401).json({ 
+    res.status(401).json({ 
       error: 'Unauthorized - API secret required' 
     });
+    return;
   }
   
   if (apiSecret !== config.security.apiSecretKey) {
@@ -31,9 +32,10 @@ export const verifyApiSecret = (
       userAgent: req.get('User-Agent'),
       ip: req.ip 
     });
-    return res.status(401).json({ 
+    res.status(401).json({ 
       error: 'Unauthorized - Invalid API secret' 
     });
+    return;
   }
   
   logger.debug('API secret verified successfully');
@@ -48,7 +50,7 @@ export const verifySupabaseToken = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
     const token = req.headers['x-supabase-token'] as string;
     
@@ -57,9 +59,10 @@ export const verifySupabaseToken = async (
         url: req.url,
         ip: req.ip 
       });
-      return res.status(401).json({ 
+      res.status(401).json({ 
         error: 'Unauthorized - User token required' 
       });
+      return;
     }
 
     // Verify token and get user
@@ -70,9 +73,10 @@ export const verifySupabaseToken = async (
         url: req.url,
         ip: req.ip 
       });
-      return res.status(401).json({ 
+      res.status(401).json({ 
         error: 'Unauthorized - Invalid or expired token' 
       });
+      return;
     }
     
     // Attach user to request for downstream middleware/routes
@@ -91,9 +95,10 @@ export const verifySupabaseToken = async (
       ip: req.ip 
     });
     
-    return res.status(500).json({ 
+    res.status(500).json({ 
       error: 'Internal server error during authentication' 
     });
+    return;
   }
 };
 
@@ -112,7 +117,7 @@ export const authenticateRequest = [
  */
 export const attachUserContext = (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
   // Add user ID to rate limiting key if user is authenticated

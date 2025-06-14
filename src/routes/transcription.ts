@@ -113,8 +113,8 @@ router.post(
         dreamId,
         {
           text: transcription.text,
-          languageCode: transcription.languageCode,
-          languageProbability: transcription.languageProbability,
+          languageCode: transcription.languageCode || undefined,
+          languageProbability: transcription.languageProbability || undefined,
           metadata: {
             words: transcription.words,
             buffer_size: audioBuffer.length,
@@ -217,7 +217,7 @@ router.post(
  * 
  * Health check endpoint specifically for transcription service
  */
-router.get('/status', async (req: Request, res: Response) => {
+router.get('/status', async (_req: Request, res: Response) => {
   try {
     const elevenLabsHealth = await elevenLabsService.checkHealth();
     

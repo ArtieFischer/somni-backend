@@ -1,6 +1,6 @@
 import { ElevenLabsClient } from 'elevenlabs';
 import { config } from '../config';
-import { logger, logTranscription } from '../utils/logger';
+import { logger } from '../utils/logger';
 import type { ElevenLabsTranscriptionResult } from '../types';
 
 class ElevenLabsService {
@@ -180,7 +180,7 @@ class ElevenLabsService {
   /**
    * Start a conversational AI session (placeholder for future implementation)
    */
-  async startConversation(agentId: string): Promise<void> {
+  async startConversation(_agentId: string): Promise<void> {
     // Placeholder for future conversational AI implementation
     throw new Error('Conversational AI not yet implemented');
   }

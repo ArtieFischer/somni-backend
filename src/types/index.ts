@@ -26,8 +26,8 @@ export interface TranscribeResponse {
   dreamId: string;
   transcription?: {
     text: string;
-    languageCode?: string;
-    languageProbability?: number;
+    languageCode?: string | undefined;
+    languageProbability?: number | undefined;
     wordCount: number;
     characterCount: number;
   };

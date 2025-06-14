@@ -6,7 +6,7 @@ import { logger } from '../utils/logger';
  * Generic request validation middleware factory
  */
 export const validateRequest = <T extends ZodSchema>(schema: T) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     try {
       const validationResult = schema.safeParse(req.body);
       
@@ -24,10 +24,11 @@ export const validateRequest = <T extends ZodSchema>(schema: T) => {
           errors: errorDetails,
         });
         
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Validation failed',
           details: errorDetails,
         });
+        return;
       }
       
       // Replace request body with validated data
@@ -40,9 +41,10 @@ export const validateRequest = <T extends ZodSchema>(schema: T) => {
         method: req.method,
       });
       
-      return res.status(500).json({
+      res.status(500).json({
         error: 'Internal validation error',
       });
+      return;
     }
   };
 };
@@ -80,24 +82,27 @@ export const validateHealthCheckQuery = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   try {
     const validationResult = healthCheckQuerySchema.safeParse(req.query);
     
     if (!validationResult.success) {
-      return res.status(400).json({
+      res.status(400).json({
         error: 'Invalid query parameters',
         details: validationResult.error.issues,
       });
+      return;
     }
     
-    req.query = validationResult.data || {};
+    // Cast to any to avoid TypeScript strict query type issues
+    (req as any).query = validationResult.data || {};
     next();
   } catch (error) {
     logger.error('Query validation error', { error, url: req.url });
-    return res.status(500).json({
+    res.status(500).json({
       error: 'Internal validation error',
     });
+    return;
   }
 };
 
@@ -105,21 +110,23 @@ export const validateHealthCheckQuery = (
  * Validate UUID parameters
  */
 export const validateUuidParam = (paramName: string) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const paramValue = req.params[paramName];
     
     if (!paramValue) {
-      return res.status(400).json({
+      res.status(400).json({
         error: `Missing parameter: ${paramName}`,
       });
+      return;
     }
     
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     
     if (!uuidRegex.test(paramValue)) {
-      return res.status(400).json({
+      res.status(400).json({
         error: `Invalid ${paramName} format. Must be a valid UUID.`,
       });
+      return;
     }
     
     next();
@@ -130,7 +137,7 @@ export const validateUuidParam = (paramName: string) => {
  * Content-Type validation middleware
  */
 export const validateContentType = (expectedType: string = 'application/json') => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const contentType = req.get('Content-Type');
     
     if (!contentType || !contentType.includes(expectedType)) {
@@ -140,9 +147,10 @@ export const validateContentType = (expectedType: string = 'application/json') =
         url: req.url,
       });
       
-      return res.status(415).json({
+      res.status(415).json({
         error: `Content-Type must be ${expectedType}`,
       });
+      return;
     }
     
     next();
@@ -153,7 +161,7 @@ export const validateContentType = (expectedType: string = 'application/json') =
  * Request size validation middleware
  */
 export const validateRequestSize = (maxSizeBytes: number = 50 * 1024 * 1024) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const contentLength = req.get('Content-Length');
     
     if (contentLength) {
@@ -166,9 +174,10 @@ export const validateRequestSize = (maxSizeBytes: number = 50 * 1024 * 1024) => 
           url: req.url,
         });
         
-        return res.status(413).json({
+        res.status(413).json({
           error: `Request too large. Maximum size is ${Math.floor(maxSizeBytes / 1024 / 1024)}MB`,
         });
+        return;
       }
     }
     

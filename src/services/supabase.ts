@@ -123,8 +123,8 @@ class SupabaseService {
     dreamId: string,
     transcription: {
       text: string;
-      languageCode?: string;
-      languageProbability?: number;
+      languageCode?: string | undefined;
+      languageProbability?: number | undefined;
       metadata?: Record<string, any>;
     },
     userId?: string

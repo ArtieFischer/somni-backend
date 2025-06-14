@@ -45,7 +45,7 @@ app.use('/health', healthRouter);
 app.use('/api/v1/transcription', transcriptionRouter);
 
 // Root endpoint
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({
     service: 'somni-backend',
     status: 'operational',
@@ -62,13 +62,13 @@ app.use('*', (req, res) => {
 });
 
 // Error handler
-app.use((error: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((error: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   logger.error('Unhandled error', { error: error.message });
   res.status(500).json({ error: 'Internal server error' });
 });
 
 // Start server
-const server = app.listen(config.port, () => {
+app.listen(config.port, () => {
   logger.info(`Somni Backend Service started on port ${config.port}`);
 });
 

@@ -23,7 +23,7 @@ router.get(
         status: 'operational',
         service: 'somni-backend',
         timestamp: new Date().toISOString(),
-        version: process.env.npm_package_version || '1.0.0',
+        version: process.env['npm_package_version'] || '1.0.0',
         uptime: process.uptime(),
       };
 
@@ -87,7 +87,7 @@ router.get(
 );
 
 // Readiness probe endpoint (for Kubernetes/Railway)
-router.get('/ready', async (req: Request, res: Response) => {
+router.get('/ready', async (_req: Request, res: Response) => {
   try {
     // Quick checks for essential services
     const checks = await Promise.allSettled([
@@ -118,7 +118,7 @@ router.get('/ready', async (req: Request, res: Response) => {
 });
 
 // Liveness probe endpoint (for Kubernetes/Railway)
-router.get('/live', (req: Request, res: Response) => {
+router.get('/live', (_req: Request, res: Response) => {
   // Simple liveness check - if the server can respond, it's alive
   res.status(200).json({
     status: 'alive',
