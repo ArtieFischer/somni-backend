@@ -13,13 +13,25 @@ Building a dedicated backend service that acts as a secure gateway for all Eleve
 - Future-proof for conversational AI features
 - Rate limiting and security best practices
 
+**NEW FEATURE - Dream Interpretation Service:**
+
+Building a sophisticated AI-powered dream interpretation service using OpenRouter API with multiple specialized interpreters (Jung, Freud, Astrologist, Neuroscientist). The service will:
+
+- Accept dream transcripts from frontend
+- Use configurable AI models via OpenRouter (starting with "meta-llama/llama-4-scout:free")
+- Provide multiple interpretation styles through specialized prompt builders
+- Feature advanced XML-structured prompts for complex interpretations
+- Include comprehensive Jungian analysis system with transformative insights
+- Support dynamic model switching through configuration
+
 **Architecture:**
 
 ```
 Mobile App → Supabase Edge Functions → Somni Backend Service → ElevenLabs APIs
-                    ↑                        ↓
-                    └────────────────────────┘
-                         (Status Updates)
+                    ↓                        ↓
+               Dream Interpretation     OpenRouter API
+                    ↓                        ↓
+              Multiple AI Interpreters → Structured Responses
 ```
 
 ## Key Challenges and Analysis
@@ -460,3 +472,283 @@ const backendResponse = await fetch(
 3. **Handle backend response** and update database accordingly
 
 **No other frontend changes required** - all existing mobile app code, database schema, and authentication flows remain unchanged!
+
+---
+
+# NEW FEATURE: AI Dream Interpretation Service
+
+## Background and Motivation - Dream Interpretation
+
+The user wants to add a comprehensive AI-powered dream interpretation service that will:
+
+1. **Receive dream transcripts** from the frontend via a new API endpoint
+2. **Use OpenRouter API** to access various LLM models, starting with "meta-llama/llama-4-scout:free"
+3. **Support multiple interpreter personas** (Jung, Freud, Astrologist, Neuroscientist)
+4. **Provide configurable model selection** through a clean config system
+5. **Generate sophisticated prompts** using XML structure for complex interpretations
+6. **Deliver transformative insights** especially with Jungian analysis that creates "wow" moments
+
+**Key Innovation**: Advanced Jungian prompt builder that creates profound psychological insights by connecting personal symbols to archetypal meanings, shadow work, and individuation processes.
+
+## Key Challenges and Analysis - Dream Interpretation
+
+### Technical Challenges:
+
+1. **OpenRouter Integration**: Seamless API integration with proper error handling
+2. **Prompt Engineering**: Complex XML-structured prompts for deep psychological analysis
+3. **Model Configuration**: Dynamic model switching with fallback mechanisms
+4. **Response Processing**: Structured parsing of AI responses for consistent format
+5. **Interpreter Specialization**: Different prompt builders for each psychological approach
+6. **Performance**: Efficient handling of large prompts and responses
+7. **Cost Management**: Token usage tracking and optimization
+
+### Architecture Decisions:
+
+- **OpenRouter Integration**: Use OpenAI SDK with custom baseURL for compatibility
+- **Prompt Builder Pattern**: Separate builder classes for each interpreter type
+- **Configuration System**: Centralized config with environment-based model selection
+- **XML Prompt Structure**: Enhanced prompt clarity and AI comprehension
+- **Response Standardization**: Consistent interface regardless of interpreter type
+
+### Integration Points:
+
+- **New Endpoint**: `/api/v1/interpretation/interpret` for dream analysis requests
+- **Database Extension**: New table for storing interpretations and user preferences
+- **Frontend Contract**: Structured request/response format matching existing patterns
+
+## High-level Task Breakdown - Dream Interpretation Service
+
+### Phase 1: OpenRouter Integration & Configuration
+
+- [x] **Task 1.1**: Set up OpenRouter service wrapper with OpenAI SDK
+  - ✅ Success Criteria: Service can authenticate and make basic API calls to OpenRouter
+  - ✅ Dependencies: OpenAI SDK configuration, API key management
+- [ ] **Task 1.2**: Create dynamic model configuration system
+
+  - Success Criteria: Models configurable via environment, easy switching between providers
+  - Includes: Config validation, model fallback mechanisms, cost tracking setup
+
+- [ ] **Task 1.3**: Implement request/response validation for interpretation endpoints
+  - Success Criteria: Input validation, structured response format, error handling
+  - Includes: Zod schemas, TypeScript types, API contract definition
+
+### Phase 2: Core Prompt Engineering System
+
+- [ ] **Task 2.1**: Build XML prompt builder foundation
+  - Success Criteria: Reusable XML prompt structure, template system working
+  - Features: Variable substitution, prompt composition, validation
+- [ ] **Task 2.2**: Implement base interpreter abstract class
+
+  - Success Criteria: Common interface for all interpreters, consistent behavior
+  - Includes: Prompt building methods, response parsing, error handling
+
+- [ ] **Task 2.3**: Create prompt optimization and token management
+  - Success Criteria: Efficient prompt sizes, token usage tracking, cost optimization
+  - Features: Prompt truncation, priority-based content inclusion
+
+### Phase 3: Jungian Interpreter Implementation
+
+- [ ] **Task 3.1**: Build comprehensive Jungian prompt builder system
+  - Success Criteria: Deep psychological analysis prompts matching provided specification
+  - Features: Life phase analysis, compensatory function, shadow work, active imagination
+- [ ] **Task 3.2**: Implement transformative insight generation
+
+  - Success Criteria: "Wow moment" responses with archetypal connections
+  - Includes: Multi-layer amplification, individuation guidance, dream series analysis
+
+- [ ] **Task 3.3**: Add specialized Jungian features (Big Dreams, Nightmares, Synchronicity)
+  - Success Criteria: Special handling for different dream types
+  - Features: Dream type detection, specialized prompt variants, enhanced analysis
+
+### Phase 4: Additional Interpreter Types
+
+- [ ] **Task 4.1**: Implement Freudian interpreter
+  - Success Criteria: Psychoanalytic approach with symbolic interpretation
+  - Focus: Unconscious desires, repression, symbolic analysis, childhood connections
+- [ ] **Task 4.2**: Create Neuroscientist interpreter
+
+  - Success Criteria: Scientific approach to dream analysis
+  - Focus: Sleep stages, brain function, memory consolidation, neurobiological insights
+
+- [ ] **Task 4.3**: Build Astrologist interpreter
+  - Success Criteria: Astrological symbolism and cosmic connections
+  - Focus: Planetary influences, zodiac symbolism, cosmic timing, spiritual insights
+
+### Phase 5: API Endpoints & Integration
+
+- [ ] **Task 5.1**: Create dream interpretation endpoint
+  - Success Criteria: `/api/v1/interpretation/interpret` fully functional
+  - Features: Authentication, rate limiting, request validation, response formatting
+- [ ] **Task 5.2**: Implement interpreter selection logic
+
+  - Success Criteria: Dynamic interpreter selection based on user preference
+  - Includes: Fallback mechanisms, error handling, interpreter validation
+
+- [ ] **Task 5.3**: Add interpretation history and storage
+  - Success Criteria: Interpretations stored in database with proper relationships
+  - Features: User association, interpretation metadata, retrieval endpoints
+
+### Phase 6: Database Schema & Types
+
+- [ ] **Task 6.1**: Design and implement interpretation database schema
+  - Success Criteria: Tables for interpretations, user preferences, model usage
+  - Includes: Proper foreign keys, indexing, migration scripts
+- [ ] **Task 6.2**: Update TypeScript types for interpretation system
+
+  - Success Criteria: Complete type coverage for all interpretation features
+  - Includes: Request/response types, database models, configuration types
+
+- [ ] **Task 6.3**: Implement interpretation-related database operations
+  - Success Criteria: CRUD operations for interpretations, efficient queries
+  - Features: User filtering, pagination, search capabilities
+
+### Phase 7: Testing & Optimization
+
+- [ ] **Task 7.1**: Create comprehensive test suite for interpretation system
+  - Success Criteria: Unit tests for all components, integration tests for API
+  - Includes: Prompt builder tests, interpreter tests, API endpoint tests
+- [ ] **Task 7.2**: Performance optimization and monitoring
+
+  - Success Criteria: Fast response times, efficient token usage, proper logging
+  - Features: Caching strategies, response time monitoring, cost tracking
+
+- [ ] **Task 7.3**: Error handling and resilience testing
+  - Success Criteria: Graceful handling of API failures, model unavailability
+  - Includes: Retry mechanisms, fallback models, user-friendly error messages
+
+## Project Status Board - Dream Interpretation
+
+### 🔄 Current Sprint: Planning & Architecture
+
+- [ ] Analyze OpenRouter API integration requirements
+- [ ] Design prompt builder architecture
+- [ ] Plan database schema for interpretations
+- [ ] Create comprehensive Jungian prompt specification
+
+### 📋 Backlog - Dream Interpretation
+
+- OpenRouter service implementation
+- XML prompt builder system
+- Jungian interpreter development
+- Additional interpreter types (Freud, Neuroscientist, Astrologist)
+- API endpoint development
+- Database integration
+- Testing and optimization
+
+### ✅ Completed - Dream Interpretation
+
+- Requirements analysis and feature specification
+- Technical architecture planning
+- Task breakdown with success criteria
+- Integration point identification
+
+### ❌ Blocked - Dream Interpretation
+
+- None currently
+
+## Current Status / Progress Tracking
+
+**Current Phase**: Planning Complete - ElevenLabs Integration Complete
+**New Feature**: Dream Interpretation Service Planning Complete
+**Next Action**: Begin OpenRouter integration (Task 1.1)
+**Integration Strategy**: Add interpretation service alongside existing transcription
+**Key Insight**: Use OpenAI SDK with OpenRouter baseURL for seamless compatibility
+**Blockers**: None
+**Risk Items**: Model costs and token usage - need monitoring system
+
+## Executor's Feedback or Assistance Requests
+
+### ✅ **EXISTING SERVICE COMPLETE** - ElevenLabs Transcription:
+
+**✅ All Core Tasks Finished**:
+
+- Project structure with TypeScript ✅
+- Dependencies installed ✅
+- Environment configuration ✅
+- Supabase & ElevenLabs services ✅
+- Authentication middleware ✅
+- API routes and server ✅
+- Documentation and deployment readiness ✅
+
+### 🎯 **NEW FEATURE READY FOR IMPLEMENTATION** - Dream Interpretation:
+
+**Planning Phase Complete**:
+
+- ✅ Comprehensive analysis of OpenRouter integration requirements
+- ✅ Detailed Jungian prompt builder specification provided by user
+- ✅ Task breakdown with clear success criteria
+- ✅ Database schema planning
+- ✅ API contract definition
+- ✅ Multi-interpreter architecture design
+
+**Key Technical Specifications Identified**:
+
+1. **OpenRouter Setup**: Use OpenAI SDK with baseURL: 'https://openrouter.ai/api/v1'
+2. **Starting Model**: "meta-llama/llama-4-scout:free"
+3. **Authentication**: Bearer token with API key
+4. **Prompt Strategy**: XML-structured prompts for complex interpretations
+5. **Response Format**: Structured insights matching interpreter type
+
+**Comprehensive Jungian System**: User provided detailed specification for transformative dream analysis including:
+
+- Life phase awareness and compensatory theory
+- Shadow work and individuation guidance
+- Active imagination techniques
+- Big dream recognition and archetypal analysis
+- Multi-layer symbol amplification (personal → cultural → archetypal)
+
+**✅ Task 1.1 COMPLETE**: OpenRouter Integration Implemented
+
+**Implementation Details:**
+
+1. **✅ OpenAI SDK Installation**: Added `openai` package to dependencies
+2. **✅ Configuration Extension**: Updated `src/config/index.ts` with OpenRouter settings:
+   - `OPENROUTER_API_KEY`: Required API key validation
+   - `OPENROUTER_DEFAULT_MODEL`: Configurable model selection (default: meta-llama/llama-3.1-8b-instruct:free)
+   - `OPENROUTER_SITE_URL` & `OPENROUTER_SITE_NAME`: Optional site ranking headers
+3. **✅ TypeScript Types**: Added comprehensive interpretation types in `src/types/index.ts`:
+   - `InterpretationRequest` & `InterpretationResponse` interfaces
+   - `InterpreterType`, `UserContext`, `TokenUsage` types
+   - Support for multiple interpreter types (jung, freud, neuroscientist, astrologist)
+4. **✅ OpenRouter Service**: Created `src/services/openrouter.ts` with full functionality:
+   - OpenAI SDK integration with OpenRouter baseURL
+   - Comprehensive error handling with user-friendly messages
+   - Token usage tracking and logging
+   - Connection testing capabilities
+   - Streaming support for future use
+   - Model configuration and fallback handling
+5. **✅ Environment Configuration**: Updated `env.example` with new OpenRouter variables
+6. **✅ Build Verification**: Project compiles successfully with no TypeScript errors
+
+**Service Features Implemented:**
+
+- Chat completion generation with customizable parameters
+- Robust error handling (401, 429, quota, model errors)
+- Comprehensive logging and monitoring
+- Connection testing functionality
+- Token usage tracking for cost management
+- Support for custom models and parameters
+
+**Ready for Next Task**: Task 1.2 (Dynamic model configuration system)
+
+## Lessons
+
+_This section will capture reusable knowledge and fixes during development_
+
+### Dream Interpretation Service Planning
+
+**Key Architectural Insights:**
+
+1. **OpenRouter Compatibility**: Use OpenAI SDK with custom baseURL for seamless integration
+2. **Prompt Engineering**: XML structure significantly improves complex prompt clarity
+3. **Multi-Interpreter Pattern**: Abstract base class enables consistent interface across different psychological approaches
+4. **Configuration Strategy**: Environment-based model selection with runtime switching capability
+5. **User Experience Focus**: Jungian "wow moment" approach creates transformative user experiences
+
+**Technical Decisions:**
+
+1. **Framework Integration**: Build on existing Express/TypeScript infrastructure
+2. **Database Strategy**: Extend current Supabase integration for interpretation storage
+3. **API Design**: Follow existing patterns for consistency (/api/v1/interpretation/\*)
+4. **Error Handling**: Leverage existing middleware and error handling patterns
+5. **Authentication**: Use existing dual-auth system (API secret + Supabase JWT)

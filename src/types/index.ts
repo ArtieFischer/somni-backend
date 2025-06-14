@@ -81,6 +81,86 @@ export interface HealthResponse {
   uptime?: number;
 }
 
+// Dream Interpretation types
+export interface InterpretationRequest {
+  dreamId: string;
+  transcript: string;
+  interpreterType: InterpreterType;
+  userContext?: UserContext;
+  options?: InterpretationOptions;
+}
+
+export interface InterpretationResponse {
+  success: boolean;
+  dreamId: string;
+  interpretation?: {
+    coreMessage: string;
+    insights: string[];
+    symbols?: SymbolAnalysis[];
+    guidance: string;
+    reflectiveQuestions: string[];
+  };
+  metadata?: {
+    interpreterType: InterpreterType;
+    modelId: string;
+    processedAt: string;
+    tokenUsage?: TokenUsage;
+  };
+  error?: string;
+}
+
+export type InterpreterType = 'jung' | 'freud' | 'neuroscientist' | 'astrologist';
+
+export interface UserContext {
+  age?: number;
+  gender?: string;
+  currentLifeSituation?: string;
+  emotionalState?: string;
+  recurringSymbols?: string[];
+  recentMajorEvents?: string[];
+}
+
+export interface InterpretationOptions {
+  depth?: 'initial' | 'deep' | 'transformative';
+  includeActiveImagination?: boolean;
+  includeShadowWork?: boolean;
+}
+
+export interface SymbolAnalysis {
+  symbol: string;
+  personalMeaning?: string;
+  culturalMeaning?: string;
+  archetypalMeaning?: string;
+}
+
+export interface TokenUsage {
+  promptTokens: number;
+  completionTokens: number;
+  totalTokens: number;
+  cost?: number;
+}
+
+// OpenRouter API types
+export interface OpenRouterCompletion {
+  id: string;
+  object: string;
+  created: number;
+  model: string;
+  choices: Array<{
+    index: number;
+    message: {
+      role: string;
+      content: string;
+    };
+    finish_reason: string;
+  }>;
+  usage?: {
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
+  };
+}
+
 // Rate limiting types
 export interface RateLimitInfo {
   limit: number;

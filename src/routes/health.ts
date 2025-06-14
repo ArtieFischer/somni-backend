@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { elevenLabsService } from '../services/elevenlabs';
 import { supabaseService } from '../services/supabase';
+import { openRouterService } from '../services/openrouter';
 import { config } from '../config';
 import { logger } from '../utils/logger';
 import { healthCheckRateLimit } from '../middleware/rateLimit';
@@ -36,10 +37,12 @@ router.get(
       const serviceChecks = await Promise.allSettled([
         elevenLabsService.checkHealth(),
         checkSupabaseHealth(),
+        checkOpenRouterHealth(),
       ]);
 
       const elevenLabsHealth = serviceChecks[0];
       const supabaseHealth = serviceChecks[1];
+      const openRouterHealth = serviceChecks[2];
 
       const serviceStatus = {
         elevenlabs: elevenLabsHealth.status === 'fulfilled' 
@@ -47,6 +50,9 @@ router.get(
           : { status: 'unhealthy', details: 'Service check failed' },
         supabase: supabaseHealth.status === 'fulfilled' 
           ? supabaseHealth.value 
+          : { status: 'unhealthy', details: 'Service check failed' },
+        openrouter: openRouterHealth.status === 'fulfilled' 
+          ? openRouterHealth.value 
           : { status: 'unhealthy', details: 'Service check failed' },
       };
 
@@ -147,6 +153,30 @@ async function checkSupabaseHealth(): Promise<{ status: 'healthy' | 'unhealthy';
 }
 
 /**
+ * Check OpenRouter connectivity
+ */
+async function checkOpenRouterHealth(): Promise<{ status: 'healthy' | 'unhealthy'; details?: string }> {
+  try {
+    const isConnected = await openRouterService.testConnection();
+    
+    if (isConnected) {
+      return { status: 'healthy' };
+    } else {
+      return { 
+        status: 'unhealthy', 
+        details: 'OpenRouter API test failed' 
+      };
+    }
+  } catch (error: any) {
+    logger.warn('OpenRouter health check failed', { error: error.message });
+    return { 
+      status: 'unhealthy', 
+      details: error.message || 'OpenRouter API connection failed' 
+    };
+  }
+}
+
+/**
  * Check essential services for readiness
  */
 async function checkEssentialServices(): Promise<boolean> {
@@ -159,6 +189,11 @@ async function checkEssentialServices(): Promise<boolean> {
     // Check if Supabase is configured
     if (!config.supabase.url || !config.supabase.serviceRoleKey) {
       throw new Error('Supabase not properly configured');
+    }
+
+    // Check if OpenRouter is configured
+    if (!config.openRouter.apiKey) {
+      throw new Error('OpenRouter API key not configured');
     }
 
     return true;

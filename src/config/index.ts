@@ -11,6 +11,12 @@ const envSchema = z.object({
   // ElevenLabs Configuration
   ELEVENLABS_API_KEY: z.string().min(1, 'ElevenLabs API key is required'),
   
+  // OpenRouter Configuration
+  OPENROUTER_API_KEY: z.string().min(1, 'OpenRouter API key is required'),
+  OPENROUTER_DEFAULT_MODEL: z.string().default('meta-llama/llama-3.1-8b-instruct:free'),
+  OPENROUTER_SITE_URL: z.string().url().optional(),
+  OPENROUTER_SITE_NAME: z.string().optional(),
+  
   // Supabase Configuration
   SUPABASE_URL: z.string().url('Invalid Supabase URL'),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1, 'Supabase service role key is required'),
@@ -51,6 +57,14 @@ export const config = {
     apiKey: parseResult.data.ELEVENLABS_API_KEY,
   },
   
+  // OpenRouter
+  openRouter: {
+    apiKey: parseResult.data.OPENROUTER_API_KEY,
+    defaultModel: parseResult.data.OPENROUTER_DEFAULT_MODEL,
+    siteUrl: parseResult.data.OPENROUTER_SITE_URL,
+    siteName: parseResult.data.OPENROUTER_SITE_NAME,
+  },
+  
   // Supabase
   supabase: {
     url: parseResult.data.SUPABASE_URL,
@@ -86,6 +100,7 @@ export const {
   isDevelopment,
   isProduction,
   elevenLabs,
+  openRouter,
   supabase,
   security,
   rateLimit,
