@@ -1,4 +1,4 @@
-import { ElevenLabsClient } from 'elevenlabs';
+import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 import { config } from '../config';
 import { logger } from '../utils/logger';
 import type { ElevenLabsTranscriptionResult } from '../types';
@@ -34,22 +34,22 @@ class ElevenLabsService {
 
       const result = await this.client.speechToText.convert({
         file: audioBlob,
-        model_id: 'scribe_v1',
-        ...(options.languageCode && { language_code: options.languageCode }),
-        tag_audio_events: options.tagAudioEvents ?? true,
+        modelId: 'scribe_v1',
+        ...(options.languageCode && { languageCode: options.languageCode }),
+        tagAudioEvents: options.tagAudioEvents ?? true,
         diarize: options.diarize ?? false,
       });
 
       logger.info('Transcription completed', {
-        languageCode: result.language_code,
+        languageCode: result.languageCode,
         textLength: result.text.length,
-        languageProbability: result.language_probability,
+        languageProbability: result.languageProbability,
       });
 
       return {
         text: result.text,
-        languageCode: result.language_code,
-        languageProbability: result.language_probability,
+        languageCode: result.languageCode,
+        languageProbability: result.languageProbability,
         words: result.words?.map(word => ({
           text: word.text,
           start_time: (word as any).start_time,

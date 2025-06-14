@@ -281,6 +281,18 @@ git add . && git commit -m "Add Somni Backend" && git push
 
 **🎯 PRODUCTION READY**: Deploy to Railway and integrate with Edge Function!
 
+### ✅ **PACKAGE DEPRECATION WARNINGS RESOLVED**
+
+**Fixed deprecated package warnings:**
+
+- ✅ Updated `elevenlabs` → `@elevenlabs/elevenlabs-js` v2.2.0
+- ✅ Fixed API calls to use camelCase properties (modelId, languageCode, tagAudioEvents, languageProbability)
+- ✅ Updated ESLint packages to latest versions (v8/v9)
+- ✅ Added NODE_ENV=production to start script to suppress npm warnings
+- ✅ Server now runs with minimal warnings (only harmless punycode deprecation from dependencies)
+
+**✅ Clean Startup**: Server starts with structured JSON logging and minimal noise!
+
 ## Lessons
 
 _This section will capture reusable knowledge and fixes during development_
