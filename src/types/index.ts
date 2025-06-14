@@ -81,49 +81,140 @@ export interface HealthResponse {
   uptime?: number;
 }
 
-// Dream Interpretation types
+// Dream Interpretation types - Enhanced for comprehensive Jungian system
 export interface InterpretationRequest {
   dreamId: string;
-  transcript: string;
+  dreamTranscription: string;
   interpreterType: InterpreterType;
   userContext?: UserContext;
-  options?: InterpretationOptions;
+  previousDreams?: DreamHistory[];
+  analysisDepth?: 'initial' | 'deep' | 'transformative';
+  specialPrompts?: {
+    synchronicity?: string;
+    isNightmare?: boolean;
+    customContext?: string;
+  };
 }
 
 export interface InterpretationResponse {
   success: boolean;
   dreamId: string;
-  interpretation?: {
-    coreMessage: string;
-    insights: string[];
-    symbols?: SymbolAnalysis[];
-    guidance: string;
-    reflectiveQuestions: string[];
-  };
+  interpretation?: JungianInsights | FreudianInsights | NeuroscientistInsights | AstrologistInsights;
+  aiResponse?: string; // Raw AI response for debugging
   metadata?: {
     interpreterType: InterpreterType;
-    modelId: string;
+    modelUsed: string;
     processedAt: string;
     tokenUsage?: TokenUsage;
+    costSummary?: CostSummary;
+    analysisDepth: 'initial' | 'deep' | 'transformative';
+    duration: number;
   };
   error?: string;
 }
 
 export type InterpreterType = 'jung' | 'freud' | 'neuroscientist' | 'astrologist';
 
+// Enhanced UserContext matching the Jungian specification
 export interface UserContext {
-  age?: number;
+  age: number;
   gender?: string;
-  currentLifeSituation?: string;
+  currentLifeSituation?: string; // What's happening in their life RIGHT NOW
   emotionalState?: string;
   recurringSymbols?: string[];
   recentMajorEvents?: string[];
+  lifePhase?: string; // Automatically determined from age
+}
+
+export interface DreamHistory {
+  dreamId: string;
+  transcript: string;
+  interpretationDate: string;
+  keySymbols?: string[];
+  themes?: string[];
+}
+
+// Jungian-specific insight structure
+export interface JungianInsights {
+  type: 'jungian';
+  coreMessage: string;
+  phenomenologicalOpening: string; // The initial wonder observation
+  symbols: Array<{
+    symbol: string;
+    personalMeaning: string;
+    culturalMeaning: string;
+    archetypalMeaning: string;
+  }>;
+  shadowAspects?: string[];
+  compensatoryFunction: string;
+  individuationGuidance: string;
+  activeImaginationExercise?: string;
+  reflectiveQuestions: string[];
+  isBigDream: boolean;
+  lifePhaseGuidance?: string;
+  animaAnimusContent?: string;
+  synchronicityConnection?: string;
+}
+
+// Other interpreter insight structures
+export interface FreudianInsights {
+  type: 'freudian';
+  coreMessage: string;
+  unconsciousDesires: string[];
+  symbolicAnalysis: Array<{
+    symbol: string;
+    symbolicMeaning: string;
+    psychoanalyticInterpretation: string;
+  }>;
+  childhoodConnections?: string[];
+  repressionIndicators?: string[];
+  reflectiveQuestions: string[];
+}
+
+export interface NeuroscientistInsights {
+  type: 'neuroscientist';
+  coreMessage: string;
+  sleepStageAnalysis: string;
+  memoryConsolidation: string[];
+  neurobiologicalProcesses: string[];
+  brainRegionsInvolved: string[];
+  cognitiveFunction: string;
+  reflectiveQuestions: string[];
+}
+
+export interface AstrologistInsights {
+  type: 'astrologist';
+  coreMessage: string;
+  planetaryInfluences: Array<{
+    planet: string;
+    influence: string;
+    symbolism: string;
+  }>;
+  zodiacConnections?: string[];
+  cosmicTiming?: string;
+  spiritualInsights: string[];
+  reflectiveQuestions: string[];
+}
+
+// Cost tracking and model management
+export interface CostSummary {
+  totalCost: number;
+  totalRequests: number;
+  recentEntries: Array<{
+    timestamp: string;
+    model: string;
+    cost: number;
+    tokens: number;
+  }>;
 }
 
 export interface InterpretationOptions {
   depth?: 'initial' | 'deep' | 'transformative';
   includeActiveImagination?: boolean;
   includeShadowWork?: boolean;
+  maxTokens?: number;
+  temperature?: number;
+  customModelOverride?: string;
 }
 
 export interface SymbolAnalysis {

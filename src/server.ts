@@ -8,6 +8,8 @@ import { attachUserContext } from './middleware/auth';
 import { generalRateLimit } from './middleware/rateLimit';
 import { healthRouter } from './routes/health';
 import { transcriptionRouter } from './routes/transcription';
+import { testModelsRouter } from './routes/test-models';
+import interpretationRouter from './routes/interpretation';
 
 const app = express();
 
@@ -43,6 +45,8 @@ app.use(generalRateLimit);
 // Routes
 app.use('/health', healthRouter);
 app.use('/api/v1/transcription', transcriptionRouter);
+app.use('/api/v1/interpretation', interpretationRouter);
+app.use('/api/v1/test', testModelsRouter);
 
 // Root endpoint
 app.get('/', (_req, res) => {

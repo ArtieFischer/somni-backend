@@ -1,7 +1,9 @@
 import OpenAI from 'openai';
-import { openRouter } from '../config';
+import { openRouter, models } from '../config';
 import { logger } from '../utils/logger';
-import type { TokenUsage } from '../types';
+import { modelConfigService } from './modelConfig';
+import type { TokenUsage, InterpreterType } from '../types';
+import type { CostEntry } from './modelConfig';
 
 export class OpenRouterService {
   private client: OpenAI;
@@ -29,7 +31,7 @@ export class OpenRouterService {
   }
 
   /**
-   * Generate a chat completion using OpenRouter
+   * Generate a chat completion using OpenRouter with fallback support
    */
   async generateCompletion(
     messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>,
@@ -38,6 +40,8 @@ export class OpenRouterService {
       temperature?: number;
       maxTokens?: number;
       stream?: boolean;
+      interpreterType?: InterpreterType;
+      dreamId?: string;
     } = {}
   ): Promise<{
     content: string;
@@ -45,8 +49,76 @@ export class OpenRouterService {
     model: string;
   }> {
     const startTime = Date.now();
-    const model = options.model || this.defaultModel;
+    
+    // Get model chain with fallbacks
+    const modelChain = modelConfigService.getModelChain(options.model);
+    
+    for (let i = 0; i < modelChain.length; i++) {
+      const currentModel = modelChain[i];
+      
+      if (!currentModel) {
+        logger.error('Invalid model in chain', { index: i, modelChain });
+        continue;
+      }
+      
+      try {
+        const result = await this.attemptCompletion(
+          messages,
+          currentModel,
+          options,
+          startTime
+        );
+        
+        // Track cost if enabled and both parameters are provided
+        if (options.interpreterType && options.dreamId) {
+          modelConfigService.trackCost(
+            currentModel,
+            result.usage,
+            options.interpreterType,
+            options.dreamId
+          );
+        }
+        
+        return result;
+      } catch (error) {
+        logger.warn(`Model ${currentModel} failed, trying next in chain`, {
+          model: currentModel,
+          attempt: i + 1,
+          totalModels: modelChain.length,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        });
+        
+        // If this is the last model in the chain, throw the error
+        if (i === modelChain.length - 1) {
+          throw error;
+        }
+        
+        // Wait before retrying with next model
+        await this.delay(models.retryDelayMs);
+      }
+    }
+    
+    throw new Error('All models in fallback chain failed');
+  }
 
+  /**
+   * Attempt completion with a specific model
+   */
+  private async attemptCompletion(
+    messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>,
+    model: string,
+    options: {
+      temperature?: number;
+      maxTokens?: number;
+      interpreterType?: InterpreterType;
+      dreamId?: string;
+    },
+    startTime: number
+  ): Promise<{
+    content: string;
+    usage: TokenUsage;
+    model: string;
+  }> {
     try {
       logger.info('Generating OpenRouter completion', {
         model,
@@ -55,11 +127,17 @@ export class OpenRouterService {
         maxTokens: options.maxTokens,
       });
 
+      // Get model parameters from configuration
+      const modelParams = modelConfigService.getModelParameters(model, {
+        ...(options.maxTokens !== undefined && { maxTokens: options.maxTokens }),
+        ...(options.temperature !== undefined && { temperature: options.temperature }),
+      });
+
       const completion = await this.client.chat.completions.create({
-        model,
+        model: modelParams.model,
         messages,
-        temperature: options.temperature ?? 0.7,
-        max_tokens: options.maxTokens ?? 4000,
+        temperature: modelParams.temperature,
+        max_tokens: modelParams.maxTokens,
         stream: false,
       });
 
@@ -186,16 +264,35 @@ export class OpenRouterService {
    * Get available models (for future implementation)
    */
   async getAvailableModels(): Promise<string[]> {
-    // This would require calling OpenRouter's models endpoint
-    // For now, return a list of common models
-    return [
-      'meta-llama/llama-3.1-8b-instruct:free',
-      'meta-llama/llama-3.1-70b-instruct:free',
-      'microsoft/wizardlm-2-8x22b',
-      'anthropic/claude-3-haiku',
-      'openai/gpt-4o-mini',
-      'google/gemma-2-9b-it:free',
-    ];
+    return modelConfigService.getAvailableModels().map(model => model.id);
+  }
+
+  /**
+   * Get model recommendations for interpreter type
+   */
+  getBestModelForInterpreter(interpreterType: InterpreterType): string {
+    return modelConfigService.getBestModelForInterpreter(interpreterType);
+  }
+
+  /**
+   * Get cost summary
+   */
+  getCostSummary(): {
+    totalCost: number;
+    totalRequests: number;
+    totalTokens: number;
+    costByModel: Record<string, number>;
+    costByInterpreter: Record<InterpreterType, number>;
+    recentEntries: CostEntry[];
+  } {
+    return modelConfigService.getCostSummary();
+  }
+
+  /**
+   * Delay utility for retries
+   */
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /**
