@@ -26,16 +26,7 @@
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "moduleResolution": "node",
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"],
-      "@/config/*": ["config/*"],
-      "@/middleware/*": ["middleware/*"],
-      "@/services/*": ["services/*"],
-      "@/routes/*": ["routes/*"],
-      "@/types/*": ["types/*"],
-      "@/utils/*": ["utils/*"]
-    }
+    "baseUrl": "./src"
   },
   "include": [
     "src/**/*"
