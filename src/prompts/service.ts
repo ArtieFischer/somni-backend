@@ -111,39 +111,46 @@ export class DreamInterpretationService {
    */
   private async generateInterpretation(
     request: InterpretationRequest, 
-    promptTemplate: { systemPrompt: string; variables: any }
+    promptTemplate: { systemPrompt: string; analysisStructure: string; outputFormat: string; variables: any }
   ) {
     try {
-      // Get best model for this interpreter type
-      const recommendedModel = modelConfigService.getBestModelForInterpreter(request.interpreterType);
-      const modelParams = modelConfigService.getModelParameters(recommendedModel);
+      // Force Llama 4 for Jung interpreter
+      const modelToUse = request.interpreterType === 'jung' 
+        ? 'meta-llama/llama-4-scout:free'
+        : modelConfigService.getBestModelForInterpreter(request.interpreterType);
       
-      // Prepare conversation
+      // Build the complete prompt
+      const fullSystemPrompt = `${promptTemplate.systemPrompt}
+
+${promptTemplate.outputFormat}`;
+
       const messages = [
         {
           role: 'system' as const,
-          content: promptTemplate.systemPrompt
+          content: fullSystemPrompt
         },
         {
           role: 'user' as const,
-          content: `Please analyze this dream using your specialized approach:\n\n"${request.dreamTranscription}"`
+          content: `Please interpret this dream:
+
+"${request.dreamTranscription}"
+
+Remember: Respond with ONLY the JSON object as specified.`
         }
       ];
 
       logger.info('🤖 Generating AI interpretation', {
-        model: recommendedModel,
+        model: modelToUse,
         interpreterType: request.interpreterType,
-        systemPromptLength: promptTemplate.systemPrompt.length,
-        dreamLength: request.dreamTranscription.length,
-        maxTokens: modelParams.maxTokens,
-        temperature: modelParams.temperature
+        systemPromptLength: fullSystemPrompt.length,
+        dreamLength: request.dreamTranscription.length
       });
 
-      // Generate with OpenRouter
+      // Generate with specific model
       const result = await openRouterService.generateCompletion(messages, {
-        model: recommendedModel,
-        temperature: modelParams.temperature,
-        maxTokens: modelParams.maxTokens,
+        model: modelToUse,
+        temperature: 0.7,
+        maxTokens: 1500, // Reduced for more concise responses
         interpreterType: request.interpreterType,
         dreamId: request.dreamId
       });

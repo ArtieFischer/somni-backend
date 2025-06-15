@@ -30,16 +30,15 @@ export class ModelConfigService {
   private totalCost = 0;
   
   // Single source of truth for model configuration
-  private readonly defaultModel = 'meta-llama/llama-4-maverick:free';
+  private readonly defaultModel = 'meta-llama/llama-4-scout:free';
   private readonly fallbackChain = [
-    'meta-llama/llama-4-scout:free',
-    'meta-llama/llama-3.1-8b-instruct:free', 
-    'meta-llama/llama-3.1-70b-instruct:free',
-    'google/gemma-2-9b-it:free'
+    'meta-llama/llama-4-scout:free',     // Primary model - free Llama 4
+    'meta-llama/llama-3.1-8b-instruct:free',  // Second fallback
+    'google/gemma-2-9b-it:free'          // Last resort
   ];
 
   constructor() {
-    // Initialize available models with their configurations
+    // Initialize with Llama 4 models first
     this.availableModels = [
       {
         id: 'meta-llama/llama-4-scout:free',
@@ -47,7 +46,7 @@ export class ModelConfigService {
         provider: 'openrouter',
         maxTokens: 8000,
         temperature: 0.7,
-        costPerKToken: 0, // Free model
+        costPerKToken: 0,
         recommended: true,
         interpreterTypes: ['jung', 'freud', 'neuroscientist', 'astrologist'],
       },
@@ -57,17 +56,7 @@ export class ModelConfigService {
         provider: 'openrouter',
         maxTokens: 8000,
         temperature: 0.7,
-        costPerKToken: 0, // Free model
-        recommended: true,
-        interpreterTypes: ['jung', 'freud', 'neuroscientist', 'astrologist'],
-      },
-      {
-        id: 'meta-llama/llama-3.1-70b-instruct:free',
-        name: 'Llama 3.1 70B (Free)',
-        provider: 'openrouter',
-        maxTokens: 8000,
-        temperature: 0.7,
-        costPerKToken: 0, // Free model
+        costPerKToken: 0,
         recommended: true,
         interpreterTypes: ['jung', 'freud', 'neuroscientist', 'astrologist'],
       },
@@ -77,17 +66,18 @@ export class ModelConfigService {
         provider: 'openrouter',
         maxTokens: 8000,
         temperature: 0.7,
-        costPerKToken: 0, // Free model
+        costPerKToken: 0,
         recommended: false,
         interpreterTypes: ['neuroscientist', 'astrologist'],
       },
+      // Paid models as additional options
       {
         id: 'anthropic/claude-3-haiku',
         name: 'Claude 3 Haiku',
         provider: 'openrouter',
         maxTokens: 200000,
         temperature: 0.7,
-        costPerKToken: 0.25, // Estimated cost
+        costPerKToken: 0.25,
         recommended: true,
         interpreterTypes: ['jung', 'freud'],
       },
@@ -97,53 +87,46 @@ export class ModelConfigService {
         provider: 'openrouter',
         maxTokens: 128000,
         temperature: 0.7,
-        costPerKToken: 0.15, // Estimated cost
+        costPerKToken: 0.15,
         recommended: true,
         interpreterTypes: ['jung', 'freud', 'neuroscientist'],
       },
     ];
 
-    logger.info('Model configuration service initialized', {
-      availableModels: this.availableModels.length,
+    logger.info('Model configuration initialized with Llama 4 as default', {
       defaultModel: this.defaultModel,
-      fallbackChain: this.fallbackChain,
-      costTrackingEnabled: costTracking.enabled,
+      primaryModel: this.availableModels[0]?.name || 'No models available'
     });
   }
 
   /**
-   * Get the best model for a specific interpreter type
+   * Get the best model for Jung interpreter - prioritize Llama 4
    */
   getBestModelForInterpreter(interpreterType: InterpreterType): string {
-    // Find models that support this interpreter type
+    if (interpreterType === 'jung') {
+      // Always prefer Llama 4 for Jung
+      return this.defaultModel;
+    }
+    
+    // Original logic for other interpreters
     const compatibleModels = this.availableModels.filter(model =>
       model.interpreterTypes.includes(interpreterType)
     );
 
-    if (compatibleModels.length === 0) {
-      logger.warn('No compatible models found for interpreter', { interpreterType });
-      return this.defaultModel;
+    return compatibleModels[0]?.id || this.defaultModel;
+  }
+
+  /**
+   * Get model chain ensuring Llama 4 is first
+   */
+  getModelChain(preferredModel?: string): string[] {
+    // If specifically requesting Llama 4, ensure it's first
+    if (preferredModel?.includes('llama-4')) {
+      return [preferredModel, ...this.fallbackChain.filter(m => m !== preferredModel)];
     }
-
-    // Prioritize free models, then recommended models
-    const bestModel = compatibleModels.find(model => 
-      model.costPerKToken === 0 && model.recommended
-    ) || compatibleModels.find(model => 
-      model.recommended
-    ) || compatibleModels[0];
-
-    if (!bestModel) {
-      logger.warn('No best model found, using default', { interpreterType });
-      return this.defaultModel;
-    }
-
-    logger.debug('Selected model for interpreter', {
-      interpreterType,
-      selectedModel: bestModel.id,
-      modelName: bestModel.name,
-    });
-
-    return bestModel.id;
+    
+    // Otherwise use our SSOT chain
+    return [...this.fallbackChain];
   }
 
   /**
@@ -151,39 +134,6 @@ export class ModelConfigService {
    */
   getDefaultModel(): string {
     return this.defaultModel;
-  }
-
-  /**
-   * Get model configuration with fallback chain - SSOT
-   */
-  getModelChain(preferredModel?: string): string[] {
-    const chain: string[] = [];
-
-    // 1. Use preferred model if specified and available
-    if (preferredModel && this.isModelAvailable(preferredModel)) {
-      chain.push(preferredModel);
-    }
-
-    // 2. Add models from our fallback chain (SSOT)
-    this.fallbackChain.forEach(model => {
-      if (!chain.includes(model) && this.isModelAvailable(model)) {
-        chain.push(model);
-      }
-    });
-
-    // 3. Ensure we have at least one available model
-    if (chain.length === 0) {
-      const anyAvailableModel = this.availableModels[0];
-      if (anyAvailableModel) {
-        chain.push(anyAvailableModel.id);
-        logger.warn('No models in chain available, using first available model', {
-          fallbackModel: anyAvailableModel.id
-        });
-      }
-    }
-
-    logger.debug('Generated model chain from SSOT', { preferredModel, chain });
-    return chain;
   }
 
   /**

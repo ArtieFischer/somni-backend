@@ -139,12 +139,7 @@ export interface JungianInsights {
   type: 'jungian';
   coreMessage: string;
   phenomenologicalOpening: string; // The initial wonder observation
-  symbols: Array<{
-    symbol: string;
-    personalMeaning: string;
-    culturalMeaning: string;
-    archetypalMeaning: string;
-  }>;
+  symbols: string[]; // Simple array of symbol strings
   shadowAspects?: string[];
   compensatoryFunction: string;
   individuationGuidance: string;
