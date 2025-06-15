@@ -137,6 +137,7 @@ export interface DreamHistory {
 // Jungian-specific insight structure
 export interface JungianInsights {
   type: 'jungian';
+  interpretation: string; // Full AI interpretation response
   coreMessage: string;
   phenomenologicalOpening: string; // The initial wonder observation
   symbols: string[]; // Simple array of symbol strings

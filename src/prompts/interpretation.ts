@@ -26,27 +26,54 @@ export class InterpretationParser {
    */
   private static parseJungianResponse(aiResponse: string): JungianInsights {
     try {
-      // Clean the response - remove any non-JSON content
-      const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+      // First try to find JSON in the response
+      let jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
         throw new Error('No JSON found in response');
       }
 
-      // Parse the JSON
-      const parsed = JSON.parse(jsonMatch[0]);
+      let jsonString = jsonMatch[0];
+      
+      // Clean up common JSON issues
+      jsonString = jsonString
+        .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
+        .replace(/,\s*}/g, '}') // Remove trailing commas before closing braces
+        .replace(/,\s*]/g, ']'); // Remove trailing commas before closing brackets
+
+      // Try to parse the cleaned JSON
+      let parsed;
+      try {
+        parsed = JSON.parse(jsonString);
+      } catch (parseError) {
+        // If parsing fails, try to fix common escape issues
+        jsonString = jsonString
+          .replace(/\\n/g, ' ') // Replace literal \n with spaces
+          .replace(/\\r/g, ' ') // Replace literal \r with spaces
+          .replace(/\\t/g, ' ') // Replace literal \t with spaces
+          .replace(/\s+/g, ' '); // Replace multiple spaces with single space
+        
+        parsed = JSON.parse(jsonString);
+      }
       
       // Validate required fields
       if (!parsed.interpretation || !Array.isArray(parsed.symbols)) {
-        throw new Error('Missing required fields in JSON response');
+        throw new Error(`Missing required fields. Found: interpretation=${!!parsed.interpretation}, symbols=${Array.isArray(parsed.symbols)}`);
       }
+
+      logger.info('Successfully parsed Jungian response', {
+        symbolsCount: parsed.symbols.length,
+        hasCompensatoryFunction: !!parsed.compensatoryFunction,
+        hasShadowAspect: !!parsed.shadowAspect
+      });
 
       return {
         type: 'jungian',
+        interpretation: parsed.interpretation,
         coreMessage: parsed.coreInsight || 'Your dream reveals profound inner wisdom.',
         phenomenologicalOpening: parsed.interpretation.split('.')[0] + '.',
         symbols: parsed.symbols,
         shadowAspects: parsed.shadowAspect ? [parsed.shadowAspect] : [],
-        compensatoryFunction: 'This dream brings balance to your conscious perspective.',
+        compensatoryFunction: parsed.compensatoryFunction || 'This dream brings balance to your conscious perspective.',
         individuationGuidance: parsed.guidanceForDreamer || 'Work with this dream through reflection.',
         reflectiveQuestions: parsed.reflectiveQuestion ? [parsed.reflectiveQuestion] : [],
         isBigDream: parsed.interpretation.toLowerCase().includes('profound') || 
@@ -56,12 +83,14 @@ export class InterpretationParser {
     } catch (error) {
       logger.error('Failed to parse Jungian response', { 
         error: error instanceof Error ? error.message : 'Unknown error',
-        responsePreview: aiResponse.substring(0, 200)
+        responsePreview: aiResponse.substring(0, 300),
+        responseLength: aiResponse.length
       });
 
       // Fallback response
       return {
         type: 'jungian',
+        interpretation: 'I sense this dream carries significant meaning for you. While I cannot fully parse the symbolic content at this moment, your unconscious is clearly communicating something important about your current life situation.',
         coreMessage: 'Your dream speaks to deep psychological processes.',
         phenomenologicalOpening: 'This dream presents rich symbolic material.',
         symbols: [],

@@ -57,6 +57,7 @@ Your response must be EXACTLY this JSON structure:
   "symbols": ["symbol1", "symbol2", "symbol3", "symbol4", "symbol5"],
   "coreInsight": "One sentence that captures the dream's deepest message - what the psyche is really saying",
   "shadowAspect": "If shadow material appears, what is it? If none, set to null",
+  "compensatoryFunction": "How this dream balances or compensates the dreamer's conscious attitude - be specific to their situation",
   "guidanceForDreamer": "2-3 sentences of practical wisdom for working with this dream",
   "reflectiveQuestion": "One profound question that opens new understanding"
 }
