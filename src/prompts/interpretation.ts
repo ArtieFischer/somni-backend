@@ -45,48 +45,89 @@ export class InterpretationParser {
   }
 
   /**
-   * Parse Jungian interpretation response
+   * Parse Jungian interpretation response with enhanced JSON and text handling
    */
   private static parseJungianResponse(aiResponse: string): JungianInsights {
     try {
-      // First try to parse as JSON
+      // First try to parse as clean JSON
+      let parsed: any;
+      
+      // Try to extract JSON from the response
       const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[0]);
-        if (parsed.interpretation && parsed.symbols && parsed.coreInsight) {
-                     return {
-             type: 'jungian',
-             coreMessage: parsed.coreInsight,
-             phenomenologicalOpening: this.extractOpeningParagraph(parsed.interpretation),
-             symbols: this.convertSymbolsToOldFormat(parsed.symbols),
-             shadowAspects: parsed.shadowAspect ? [parsed.shadowAspect] : [],
-             compensatoryFunction: this.extractCompensatoryInsight(parsed.interpretation),
-             individuationGuidance: parsed.guidanceForDreamer || 'Continue reflecting on this dream',
-             reflectiveQuestions: [parsed.reflectiveQuestion || 'What does this dream want you to understand?'],
-             isBigDream: false // Would need more sophisticated analysis
-           };
+        try {
+          parsed = JSON.parse(jsonMatch[0]);
+        } catch (e) {
+          // If JSON parsing fails, clean it up and try again
+          const cleanedJson = jsonMatch[0]
+            .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
+            .replace(/,\s*}/, '}') // Remove trailing commas
+            .replace(/,\s*]/, ']'); // Remove trailing commas in arrays
+          
+          parsed = JSON.parse(cleanedJson);
         }
       }
-
-             // Fallback to text extraction
-       return {
-         type: 'jungian',
-         coreMessage: this.extractFirstProfoundStatement(aiResponse),
-         phenomenologicalOpening: this.extractOpeningParagraph(aiResponse),
-         symbols: this.convertSymbolsToOldFormat(this.extractSimpleSymbols(aiResponse)),
-         shadowAspects: [this.extractSection(aiResponse, 'shadow', 'No shadow work identified')],
-         compensatoryFunction: this.extractCompensatoryInsight(aiResponse),
-         individuationGuidance: this.extractSection(aiResponse, 'guidance', 'Continue your inner work'),
-         reflectiveQuestions: this.extractQuestions(aiResponse),
-         isBigDream: false
-       };
+      
+      // If we have valid parsed JSON with the expected structure
+      if (parsed && parsed.interpretation && Array.isArray(parsed.symbols)) {
+        return {
+          type: 'jungian',
+          // Use the coreInsight as the main message
+          coreMessage: parsed.coreInsight || this.extractFirstProfoundStatement(parsed.interpretation),
+          phenomenologicalOpening: this.extractOpeningParagraph(parsed.interpretation),
+          // Convert simple symbol array to old format for compatibility
+          symbols: parsed.symbols.slice(0, 8).map((symbol: string) => ({
+            symbol: symbol,
+            personalMeaning: `Your personal connection to ${symbol}`,
+            culturalMeaning: `Collective meaning of ${symbol}`,
+            archetypalMeaning: `Archetypal significance of ${symbol}`
+          })),
+          shadowAspects: parsed.shadowAspect ? [parsed.shadowAspect] : [],
+          compensatoryFunction: this.extractCompensatoryInsight(parsed.interpretation),
+          individuationGuidance: parsed.guidanceForDreamer || 'Continue reflecting on this dream',
+          reflectiveQuestions: parsed.reflectiveQuestion ? [parsed.reflectiveQuestion] : [],
+          isBigDream: parsed.interpretation.toLowerCase().includes('remarkable') || 
+                     parsed.interpretation.toLowerCase().includes('threshold') ||
+                     parsed.interpretation.toLowerCase().includes('profound')
+        };
+      }
+      
+      // Fallback: treat as plain text
+      logger.warn('Failed to parse JSON response, using text extraction', {
+        responsePreview: aiResponse.substring(0, 200)
+      });
+      
+      return this.extractFromPlainText(aiResponse);
+      
     } catch (error) {
       logger.error('Failed to parse Jungian response', {
         error: error instanceof Error ? error.message : 'Unknown error',
-        responseLength: aiResponse.length
+        responseLength: aiResponse.length,
+        responsePreview: aiResponse.substring(0, 200)
       });
-      throw error;
+      
+      // Last resort fallback
+      return this.extractFromPlainText(aiResponse);
     }
+  }
+
+  private static extractFromPlainText(text: string): JungianInsights {
+    return {
+      type: 'jungian',
+      coreMessage: this.extractFirstProfoundStatement(text),
+      phenomenologicalOpening: this.extractOpeningParagraph(text),
+      symbols: this.extractSimpleSymbols(text).map(symbol => ({
+        symbol,
+        personalMeaning: `Personal significance of ${symbol}`,
+        culturalMeaning: `Cultural meaning of ${symbol}`,
+        archetypalMeaning: `Archetypal dimension of ${symbol}`
+      })),
+      shadowAspects: [],
+      compensatoryFunction: this.extractCompensatoryInsight(text),
+      individuationGuidance: 'Reflect deeply on what this dream is showing you',
+      reflectiveQuestions: this.extractQuestions(text).slice(0, 3),
+      isBigDream: false
+    };
   }
 
   /**
@@ -271,19 +312,7 @@ export class InterpretationParser {
     return 'The dream provides compensatory balance to your conscious attitude.';
   }
 
-  private static convertSymbolsToOldFormat(symbols: string[]): Array<{
-    symbol: string;
-    personalMeaning: string;
-    culturalMeaning: string;
-    archetypalMeaning: string;
-  }> {
-    return symbols.map(symbol => ({
-      symbol,
-      personalMeaning: `Personal meaning of ${symbol}`,
-      culturalMeaning: `Cultural significance of ${symbol}`,
-      archetypalMeaning: `Archetypal meaning of ${symbol}`
-    }));
-  }
+
 
   /**
    * Transform cost summary from OpenRouter format to our format

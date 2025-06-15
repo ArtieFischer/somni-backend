@@ -7,10 +7,8 @@ import type { CostEntry } from './modelConfig';
 
 export class OpenRouterService {
   private client: OpenAI;
-  private defaultModel: string;
 
   constructor() {
-    this.defaultModel = openRouter.defaultModel;
     
     // Initialize OpenAI client with OpenRouter configuration
     this.client = new OpenAI({
@@ -24,7 +22,7 @@ export class OpenRouterService {
 
     logger.info('OpenRouter service initialized', {
       baseURL: 'https://openrouter.ai/api/v1',
-      defaultModel: this.defaultModel,
+      defaultModel: modelConfigService.getDefaultModel(),
       hasSiteUrl: !!openRouter.siteUrl,
       hasSiteName: !!openRouter.siteName,
     });
@@ -190,7 +188,7 @@ export class OpenRouterService {
       maxTokens?: number;
     } = {}
   ): Promise<AsyncIterable<string>> {
-    const model = options.model || this.defaultModel;
+    const model = options.model || modelConfigService.getDefaultModel();
 
     try {
       logger.info('Generating OpenRouter streaming completion', {

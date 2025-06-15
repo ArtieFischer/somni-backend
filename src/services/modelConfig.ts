@@ -1,4 +1,4 @@
-import { openRouter, models, costTracking } from '../config';
+import { models, costTracking } from '../config';
 import { logger } from '../utils/logger';
 import type { InterpreterType, TokenUsage } from '../types';
 
@@ -28,10 +28,29 @@ export class ModelConfigService {
   private readonly availableModels: ModelConfig[];
   private costLog: CostEntry[] = [];
   private totalCost = 0;
+  
+  // Single source of truth for model configuration
+  private readonly defaultModel = 'meta-llama/llama-4-maverick:free';
+  private readonly fallbackChain = [
+    'meta-llama/llama-4-scout:free',
+    'meta-llama/llama-3.1-8b-instruct:free', 
+    'meta-llama/llama-3.1-70b-instruct:free',
+    'google/gemma-2-9b-it:free'
+  ];
 
   constructor() {
     // Initialize available models with their configurations
     this.availableModels = [
+      {
+        id: 'meta-llama/llama-4-scout:free',
+        name: 'Llama 4 Scout (Free)',
+        provider: 'openrouter',
+        maxTokens: 8000,
+        temperature: 0.7,
+        costPerKToken: 0, // Free model
+        recommended: true,
+        interpreterTypes: ['jung', 'freud', 'neuroscientist', 'astrologist'],
+      },
       {
         id: 'meta-llama/llama-3.1-8b-instruct:free',
         name: 'Llama 3.1 8B (Free)',
@@ -86,8 +105,8 @@ export class ModelConfigService {
 
     logger.info('Model configuration service initialized', {
       availableModels: this.availableModels.length,
-      defaultModel: openRouter.defaultModel,
-      fallbackModels: openRouter.fallbackModels,
+      defaultModel: this.defaultModel,
+      fallbackChain: this.fallbackChain,
       costTrackingEnabled: costTracking.enabled,
     });
   }
@@ -103,7 +122,7 @@ export class ModelConfigService {
 
     if (compatibleModels.length === 0) {
       logger.warn('No compatible models found for interpreter', { interpreterType });
-      return openRouter.defaultModel;
+      return this.defaultModel;
     }
 
     // Prioritize free models, then recommended models
@@ -115,7 +134,7 @@ export class ModelConfigService {
 
     if (!bestModel) {
       logger.warn('No best model found, using default', { interpreterType });
-      return openRouter.defaultModel;
+      return this.defaultModel;
     }
 
     logger.debug('Selected model for interpreter', {
@@ -128,7 +147,14 @@ export class ModelConfigService {
   }
 
   /**
-   * Get model configuration with fallback chain
+   * Get default model - SSOT
+   */
+  getDefaultModel(): string {
+    return this.defaultModel;
+  }
+
+  /**
+   * Get model configuration with fallback chain - SSOT
    */
   getModelChain(preferredModel?: string): string[] {
     const chain: string[] = [];
@@ -138,25 +164,25 @@ export class ModelConfigService {
       chain.push(preferredModel);
     }
 
-    // 2. Use default model if not already in chain
-    if (!chain.includes(openRouter.defaultModel)) {
-      chain.push(openRouter.defaultModel);
-    }
-
-    // 3. Add fallback models
-    openRouter.fallbackModels.forEach(model => {
+    // 2. Add models from our fallback chain (SSOT)
+    this.fallbackChain.forEach(model => {
       if (!chain.includes(model) && this.isModelAvailable(model)) {
         chain.push(model);
       }
     });
 
-    // 4. Ensure we have at least one free model as final fallback
-    const freeModel = this.availableModels.find(m => m.costPerKToken === 0);
-    if (freeModel && !chain.includes(freeModel.id)) {
-      chain.push(freeModel.id);
+    // 3. Ensure we have at least one available model
+    if (chain.length === 0) {
+      const anyAvailableModel = this.availableModels[0];
+      if (anyAvailableModel) {
+        chain.push(anyAvailableModel.id);
+        logger.warn('No models in chain available, using first available model', {
+          fallbackModel: anyAvailableModel.id
+        });
+      }
     }
 
-    logger.debug('Generated model chain', { preferredModel, chain });
+    logger.debug('Generated model chain from SSOT', { preferredModel, chain });
     return chain;
   }
 

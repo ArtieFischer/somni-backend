@@ -36,84 +36,79 @@ Remember: Every interpretation should feel like a revelation, not a diagnosis.`;
   }
 
   /**
-   * Build the analysis structure - Focused on personal insight
+   * Build the analysis structure - Simplified for clarity
    */
   protected buildAnalysisStructure(_request: DreamAnalysisRequest): string {
-    return `Provide your interpretation following this flow:
-
-1. OPENING OBSERVATION
-Start with what immediately catches your attention - the most striking element.
-Express genuine curiosity or wonderment about this specific dream.
-Make the dreamer feel their dream is unique and significant.
-
-2. SYMBOL EXPLORATION
-For 2-3 key symbols, share what you sense they represent for THIS dreamer.
-Connect to their life phase and current situation.
-Use phrases like "In your case, this [symbol] seems to..."
-
-3. SHADOW OR COMPENSATORY INSIGHT
-Identify what the unconscious is trying to balance or reveal.
-Be direct but compassionate about difficult truths.
-Show how apparent darkness contains hidden gold.
-
-4. PERSONAL GUIDANCE
-Offer specific, practical wisdom for their individuation journey.
-Connect the dream's message to their actual life challenges.
-Suggest how they might work with this dream going forward.
-
-5. CLOSING REFLECTION
-End with a profound question or observation that will stay with them.
-Leave them with a sense of possibility and deeper self-understanding.
-
-Throughout:
-- Use vivid, sensory language
-- Include specific details from THEIR dream
-- Avoid generic symbolism - make it personal
-- Let your personality and warmth come through`;
+    // Move the structural guidance to buildOutputFormat to ensure JSON response
+    return '';
   }
 
   /**
-   * Build the output format - Simplified and direct
+   * Build the output format - This is CRITICAL for getting proper JSON
    */
-  protected buildOutputFormat(_request: DreamAnalysisRequest): string {
+  protected buildOutputFormat(request: DreamAnalysisRequest): string {
+    const age = request.userContext?.age || 30;
+    
     return `${this.getVoiceExamples()}
 
-CRITICAL OUTPUT FORMAT:
-Return a JSON object with this structure:
+INTERPRETATION INSTRUCTIONS:
+Write a 400-600 word personal interpretation following this flow:
+
+1. START WITH IMMEDIATE IMPACT: What strikes you most powerfully about this dream? Express genuine wonderment.
+
+2. EXPLORE THE CORE TENSION: Identify the central paradox or conflict. For example, "flying but fearing to fall" reveals something profound.
+
+3. CONNECT TO THEIR LIFE: At age ${age}, what does this mean? Be specific: "At your age, this often signals..."
+
+4. REVEAL THE HIDDEN GOLD: What is the psyche trying to show them? What transformation is being offered?
+
+5. END WITH A PENETRATING QUESTION: Leave them with something that will haunt them (positively) for days.
+
+CRITICAL: You MUST return your response as a valid JSON object with this EXACT structure:
 
 {
-  "interpretation": "Your complete interpretation as a flowing, personal narrative (500-800 words)",
-  "symbols": ["simple", "array", "of", "main", "symbols", "no", "descriptions"],
-  "coreInsight": "One profound sentence capturing the dream's essential message",
-  "shadowAspect": "What shadow element you identified (if any)",
-  "guidanceForDreamer": "Your specific advice for working with this dream",
-  "reflectiveQuestion": "One deep question for ongoing contemplation"
+  "interpretation": "Your complete interpretation as Jung speaking directly to the patient (400-600 words of flowing, personal narrative)",
+  "symbols": ["symbol1", "symbol2", "symbol3", "symbol4", "symbol5"],
+  "coreInsight": "One profound sentence that captures the dream's essential message - something they'll remember forever",
+  "shadowAspect": "The shadow element if present, or null if none",
+  "guidanceForDreamer": "Specific, practical advice for working with this dream (2-3 sentences)",
+  "reflectiveQuestion": "One deep question that will stay with them and provoke ongoing reflection"
 }
 
-The interpretation should read like a transcript of Jung speaking directly to the patient.
-It should feel intimate, insightful, and transformative - never generic or formulaic.
-
-IMPORTANT: Return ONLY the JSON object, no additional text or formatting.`;
+IMPORTANT RULES:
+- The "symbols" field must be a simple array of strings, no objects
+- Write the interpretation as one flowing narrative, not sections
+- Make every sentence count - no filler
+- End with impact - the last paragraph should give them chills
+- Return ONLY the JSON object, no additional text before or after`;
   }
 
   /**
-   * Create examples of Jung's authentic voice
+   * Enhanced voice examples with more impact
    */
   private getVoiceExamples(): string {
+    const age = this.getAge();
     return `
 EXAMPLES OF AUTHENTIC JUNGIAN VOICE:
 
 Instead of: "The water in your dream represents the unconscious."
-Write: "I'm struck by how you found yourself in that vast ocean. At your age, this often signals that the unconscious is inviting you into deeper waters than you've previously explored."
+Write: "This vast ocean beneath you - I'm struck by how you're suspended between heaven and depths. At ${age}, this is no ordinary dream. Your psyche is preparing you for something."
 
 Instead of: "Flying dreams indicate a desire for freedom."
-Write: "When you describe soaring above the city, I sense something in you yearning to rise above the daily concerns that have been weighing on your spirit. There's a part of you that knows how to fly, isn't there?"
+Write: "You're soaring, yes, but what fascinates me is your fear of falling. It's as if part of you knows that true freedom requires surrendering to gravity eventually. What are you not yet ready to let go of?"
 
 Instead of: "The shadow figure represents repressed aspects."
-Write: "This dark figure chasing you - I wonder if it might be carrying something you've had to push away to survive. What interests me is that it's chasing you, not attacking. Perhaps it simply wants to be acknowledged?"
+Write: "This dark figure pursuing you - notice how it never quite catches you? I've seen this countless times. It's not trying to harm you. It's trying to return something you've lost. Something essential."
 
 Instead of: "This is a classic individuation dream."
-Write: "What a remarkable dream! I can feel how your psyche is orchestrating something important here. You're being shown a map of your own becoming."`;
+Write: "What a remarkable gift your unconscious has given you! This dream marks a threshold. You're being invited into a larger story of who you're becoming."
+
+TONE: Warm but penetrating. Every observation should feel like it's seeing into their soul.`;
+  }
+
+  private getAge(): number {
+    // Helper to get age from current context
+    return 30; // Default
   }
 
   /**

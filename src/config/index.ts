@@ -13,8 +13,6 @@ const envSchema = z.object({
   
   // OpenRouter Configuration
   OPENROUTER_API_KEY: z.string().min(1, 'OpenRouter API key is required'),
-  OPENROUTER_DEFAULT_MODEL: z.string().default('meta-llama/llama-3.1-8b-instruct:free'),
-  OPENROUTER_FALLBACK_MODELS: z.string().default('meta-llama/llama-3.1-70b-instruct:free,google/gemma-2-9b-it:free'),
   OPENROUTER_SITE_URL: z.string().url().optional(),
   OPENROUTER_SITE_NAME: z.string().optional(),
   
@@ -71,8 +69,6 @@ export const config = {
   // OpenRouter
   openRouter: {
     apiKey: parseResult.data.OPENROUTER_API_KEY,
-    defaultModel: parseResult.data.OPENROUTER_DEFAULT_MODEL,
-    fallbackModels: parseResult.data.OPENROUTER_FALLBACK_MODELS.split(',').map(model => model.trim()),
     siteUrl: parseResult.data.OPENROUTER_SITE_URL,
     siteName: parseResult.data.OPENROUTER_SITE_NAME,
   },
