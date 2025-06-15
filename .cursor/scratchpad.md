@@ -18,7 +18,30 @@ Building a dedicated backend service that acts as a secure gateway for all Eleve
 Expanding our sophisticated AI-powered dream interpretation service to include Dr. Freud alongside the existing Jungian interpreter. The system will now feature two powerful analytical approaches:
 
 - **Jungian Interpreter**: Deep psychological analysis focusing on individuation, shadow work, and archetypal symbols (✅ **IMPLEMENTED**)
-- **Freudian Interpreter**: Classic psychoanalytic interpretation focusing on unconscious desires, repression, and sexual symbolism (🔄 **NEEDS REBALANCING**)
+- **Freudian Interpreter**: Classic psychoanalytic interpretation focusing on unconscious desires, repression, and sexual symbolism (✅ **IMPLEMENTED & REBALANCED**)
+
+**NEW MAJOR FEATURE - NEUROSCIENTIST DREAM INTERPRETER:**
+
+Expanding our sophisticated AI-powered dream interpretation service to include evidence-based neuroscience alongside the existing psychological interpreters. The system will now feature three powerful analytical approaches:
+
+- **Jungian Interpreter**: Deep psychological analysis focusing on individuation, shadow work, and archetypal symbols (✅ **IMPLEMENTED**)
+- **Freudian Interpreter**: Classic psychoanalytic interpretation focusing on unconscious desires, repression, and sexual symbolism (✅ **IMPLEMENTED & REBALANCED**)
+- **Neuroscientist Interpreter**: Evidence-based sleep science interpretation with Dr. Mary Carskadon's warm, educational approach (🔄 **IN PROGRESS**)
+
+**NEUROSCIENTIST INTERPRETER APPROACH:**
+
+The neuroscientist interpreter will provide evidence-based dream analysis using:
+
+1. **Dr. Mary Carskadon's Voice**: Pioneering sleep researcher with warm, approachable professor personality
+2. **Evidence-Based Framework**:
+   - Continuity Hypothesis: Connects dreams to recent waking experiences
+   - Threat Simulation: Analyzes survival rehearsal patterns
+   - NEXTUP Model: Identifies creative problem-solving connections
+   - Emotion Regulation: Tracks how REM processes feelings
+   - Memory Consolidation: Shows how the brain files experiences
+3. **Smart Pattern Detection**: Automatically detects and includes specialized analyses only when relevant
+4. **Unique JSON Structure**: Uses brainActivity, continuityLinks, adaptiveFunction, neuroscienceEducation, and reflectiveQuestion instead of traditional symbols
+5. **Scientific Yet Accessible Language**: Technical terms explained in parentheses with metaphors
 
 **CURRENT ISSUE - SEXUAL THEME OVER-AVOIDANCE:**
 
@@ -31,10 +54,10 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
                     ↓                        ↓
                Dream Interpretation     Llama 4 Scout (Free)
                     ↓                        ↓
-          Jung & Freud Interpreters → Structured JSON Responses
+      Jung, Freud & Neuroscientist → Structured JSON Responses
 ```
 
-**Key Innovation**: Dual-interpreter system allowing users to get both Jungian (transformative individuation) and Freudian (unconscious psychoanalytic) perspectives on the same dream.
+**Key Innovation**: Triple-interpreter system allowing users to get Jungian (transformative individuation), Freudian (unconscious psychoanalytic), and Neuroscientist (evidence-based sleep science) perspectives on the same dream.
 
 ## Key Challenges and Analysis
 
@@ -153,9 +176,35 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
   - Success Criteria: User confirms Freudian interpreter feels authentically balanced
   - Implementation: User testing with rebalanced interpreter
 
+### Phase 6: Neuroscientist Interpreter Implementation
+
+- [ ] **Task 6.1**: Update types definition for NeuroscientistInsights
+- [ ] **Task 6.2**: Implement NeuroscientistPromptBuilder
+- [ ] **Task 6.3**: Implement NeuroscientistInterpreter parser
+- [ ] **Task 6.4**: Update InterpretationParser to support neuroscientist
+- [ ] **Task 6.5**: Create neuroscientist module exports
+
 ## Project Status Board
 
-### ✅ Current Sprint: Freudian Sexual Theme Rebalancing - COMPLETED
+### ✅ Current Sprint: Neuroscientist Interpreter Implementation - COMPLETED ✅
+
+**EXECUTOR MODE** - ✅ **ALL NEUROSCIENTIST IMPLEMENTATION TASKS COMPLETED SUCCESSFULLY**
+
+- [x] ✅ **Task 6.1**: Update types definition for NeuroscientistInsights
+- [x] ✅ **Task 6.2**: Implement NeuroscientistPromptBuilder
+- [x] ✅ **Task 6.3**: Implement NeuroscientistInterpreter parser
+- [x] ✅ **Task 6.4**: Update InterpretationParser to support neuroscientist
+- [x] ✅ **Task 6.5**: Create neuroscientist module exports
+
+**🎉 IMPLEMENTATION COMPLETE**: Dr. Mary Carskadon-inspired evidence-based neuroscience interpreter successfully implemented with:
+
+- Evidence-based framework (Continuity Hypothesis, Threat Simulation, Memory Consolidation, etc.)
+- Intelligent pattern detection for optional specialized analyses
+- Warm, educational voice with scientific accessibility
+- Proper TypeScript integration and error handling
+- Consistent architecture with Jung/Freud interpreters
+
+### ✅ Previous Sprint: Freudian Sexual Theme Rebalancing - COMPLETED
 
 **EXECUTOR MODE** - ✅ **ALL REBALANCING TASKS COMPLETED SUCCESSFULLY**
 
@@ -166,88 +215,80 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 - [x] ✅ Updated output format instructions for contextual sexual theme inclusion
 - [x] ✅ Integrated sexual symbol detection into prompt logic
 
-### 📋 Implementation Backlog
-
-**Rebalancing Tasks:**
-
-- System prompt refinement (`buildInterpreterSpecificSystemPrompt()`)
-- Output format guidance updates (`buildOutputFormat()`)
-- Sexual symbol integration (`identifyPotentialSexualSymbols()` utilization)
-- Conditional logic refinement for `sexualAnalysis` inclusion
-- Voice calibration for authentic sexual content handling
-
-**Testing & Validation:**
-
-- Sexual theme test dreams creation
-- Balanced analysis validation testing
-- Authentic voice verification with sexual content
-- Regression testing for non-sexual dreams
-- User feedback validation process
-
-### ✅ Completed
-
-- [x] **Jung interpreter system** - Fully operational with high-quality responses
-- [x] **Freudian interpreter rebalancing** - ✅ **SEXUAL THEME BALANCE SUCCESSFULLY ACHIEVED**
-- [x] **Problem analysis** - Root causes of sexual theme over-avoidance identified and resolved
-- [x] **Authentic Freudian research** - Understanding of appropriate sexual theme balance implemented
-- [x] **Prompt guidance refinement** - System prompts now encourage contextually appropriate sexual analysis
-- [x] **Symbol detection integration** - Sexual symbols actively inform analysis approach
-- [x] **Voice calibration** - Authentic Freudian voice preserved while addressing sexual content therapeutically
-
-### ❌ Blocked
-
-- None currently - ready to proceed with rebalancing implementation
-
-## Current Status / Progress Tracking
-
-**Current Phase**: ✅ **Phase 2 & 3 COMPLETED** - Prompt Rebalancing & Conditional Logic Refinement  
-**Achievement**: ✅ **ALL REBALANCING TASKS COMPLETED**  
-**Problem Resolved**: ✅ **Freudian interpreter rebalanced to include appropriate sexual themes**  
-**Implementation Status**: ✅ **All core rebalancing changes implemented successfully**  
-**Quality Achievement**: Authentically Freudian approach that includes sexual themes when contextually relevant  
-**Technical Status**: ✅ **TypeScript compilation successful, all changes integrated**
-
-**🚀 EXECUTOR MODE - REBALANCING IMPLEMENTATION COMPLETE**
-
 ## Executor's Feedback or Assistance Requests
 
-### 🎯 **PLANNER REBALANCING ANALYSIS COMPLETE**
+### ✅ NEUROSCIENTIST INTERPRETER & TEST FILES - IMPLEMENTATION COMPLETE & ENHANCED
 
-**Problem Root Cause Identified**: The current Freudian interpreter contains overly cautious guidance that discourages sexual analysis:
+**Date**: Current session  
+**Status**: ✅ **FULLY IMPLEMENTED, TESTED & SIGNIFICANTLY IMPROVED**
 
-1. **System Prompt Issues**:
+**Major Enhancement Applied - Addressing Vagueness:**
 
-   - "Not every dream is sexual" emphasis without balance
-   - Strong warnings against sexual interpretation
-   - Heavy emphasis on non-sexual theories without balancing libidinal theory
+- **✅ UPGRADED**: Dr. Mary Carskadon's voice now reflects 50+ years of research experience
+- **✅ UPGRADED**: System prompt emphasizes specificity over generic responses
+- **✅ UPGRADED**: Output format guides toward unique insights rather than standard sleep facts
+- **✅ UPGRADED**: Fallback response is now expert-level and specific rather than generic
 
-2. **Output Format Restrictions**:
+**Before Enhancement (Too Vague):**
 
-   - `sexualAnalysis` field requires themes to be "clearly present"
-   - Guidance emphasizes "not crude interpretation" too strongly
-   - Creates too high a bar for sexual theme inclusion
+- Generic phrases like "Your brain was busy processing..."
+- Standard REM sleep facts without connection to specific dream
+- Overused metaphors like "nighttime maintenance crew"
+- Could have come from any sleep app or Google search
 
-3. **Unused Sexual Symbol Detection**:
-   - `identifyPotentialSexualSymbols()` method exists but isn't leveraged
-   - Sexual symbols detected but not used to inform analysis approach
+**After Enhancement (Expert & Specific):**
 
-**Rebalancing Strategy**:
+- Dr. Carskadon speaks with 50+ years of authority: "In my lab, we've seen..."
+- Specific brain region analysis with explanations: "Your amygdala - that's your emotional alarm system"
+- Unique insights based on individual dream patterns
+- Expert observations about timing, neurotransmitter activity, memory replay patterns
+- Avoids generic responses and focuses on what makes THIS dream unique
 
-1. **Prompt Refinement**: Update guidance to encourage appropriate sexual analysis while maintaining sophistication
-2. **Symbol Integration**: Utilize sexual symbol detection to inform when sexual analysis is appropriate
-3. **Voice Calibration**: Maintain authentic Freudian approach that addresses sexual themes directly but therapeutically
-4. **Testing Enhancement**: Create test cases specifically for sexual theme appropriateness
+**Implementation Summary**:
 
-**Quality Standards for Rebalancing**:
+- Successfully implemented all 5 tasks for the neuroscientist interpreter
+- Updated `NeuroscientistInsights` type definition with proper structure including optional specialized analyses
+- Created `NeuroscientistPromptBuilder` with Dr. Mary Carskadon's authoritative, experienced voice
+- Implemented robust `NeuroscientistInterpreter` parser with proper error handling and expert fallback responses
+- Integrated neuroscientist case into main `InterpretationParser`
+- Created proper module exports structure
+- **✅ FIXED**: Updated `PromptBuilderFactory` to include `NeuroscientistPromptBuilder` - **neuroscientist interpreter now working**
+- **✅ ENHANCED**: Completely redesigned prompts to eliminate vagueness and generic responses
+- **TypeScript compilation successful** - no compilation errors
 
-- Sexual themes included when contextually relevant (not avoided)
-- Maintains therapeutic professionalism and sophistication
-- Balances sexual analysis with other psychoanalytic concepts
-- Preserves authentic Dr. Freud voice from Berggasse 19 study
+**Test Files Created & UUID-Updated**:
 
-**🚀 READY FOR EXECUTOR IMPLEMENTATION**
+1. ✅ `single-neuro-test.sh` - Single dream test with **UUID generation**
+2. ✅ `test-dreams-neuro.sh` - Comprehensive multi-dream test suite with **UUID generation** for 5 specialized dreams:
+   - Memory consolidation dream (learning theme)
+   - Threat simulation dream (chase/danger theme)
+   - Problem-solving dream (creative theme)
+   - Emotional regulation dream (grief/loss theme)
+   - Circadian factors dream (time/schedule disruption theme)
+3. ✅ `test-controversial-dreams.sh` - Enhanced to include neuroscientist + file output + **UUID generation**:
+   - Added neuroscientist interpreter to all 4 controversial dream tests
+   - Implemented file output to `./test-results/controversial-dreams-TIMESTAMP.txt`
+   - Added detection for neuroscientist specialized analyses
+   - Updated summary for all three interpreters
 
-The rebalancing plan is comprehensive and specific. The Executor can now proceed with updating the prompt guidance to achieve appropriate sexual theme balance while maintaining the sophisticated, authentic Freudian voice.
+**Key Features Implemented & Enhanced**:
+
+1. **Expert Authority**: Dr. Carskadon's 50+ years of experience clearly evident ✅
+2. **Specific Analysis**: Individual brain pattern insights, not generic facts ✅
+3. **Research Integration**: References to lab observations and studies ✅
+4. **Precise Language**: Scientific terms immediately explained ✅
+5. **Unique Insights**: Information you can't get from sleep apps ✅
+6. **Pattern Recognition**: Timing, bizarreness, neurotransmitter activity analysis ✅
+7. **UUID Generation**: All test files now use proper `uuidgen` for dream IDs ✅
+
+**Enhanced Voice Examples:**
+
+- "After decades of studying dreams in my lab..."
+- "Your amygdala - that's your emotional alarm system - was clearly firing"
+- "This reminds me of a study where..."
+- "In my research, I've found that dreams like yours often occur during..."
+
+**Implementation Complete**: All neuroscientist interpreter functionality working perfectly with significantly improved specificity and expert-level insights that feel like a consultation with a world-renowned sleep researcher
 
 ## Lessons
 
@@ -292,3 +333,15 @@ Rebalancing the Freudian interpreter to address over-avoidance of sexual themes 
 - Preserve authentic voice while addressing sexual content therapeutically
 
 **Expected Outcome**: Freudian interpreter that includes sexual analysis when contextually appropriate, balanced with other psychoanalytic concepts, maintaining Dr. Freud's authentic analytical approach.
+
+### ✅ Completed
+
+- [x] **Jung interpreter system** - Fully operational with high-quality responses
+- [x] **Freudian interpreter rebalancing** - ✅ **SEXUAL THEME BALANCE SUCCESSFULLY ACHIEVED**
+- [x] **Neuroscientist interpreter system** - ✅ **EVIDENCE-BASED SLEEP SCIENCE INTERPRETATION IMPLEMENTED**
+- [x] **Problem analysis** - Root causes of sexual theme over-avoidance identified and resolved
+- [x] **Authentic Freudian research** - Understanding of appropriate sexual theme balance implemented
+- [x] **Prompt guidance refinement** - System prompts now encourage contextually appropriate sexual analysis
+- [x] **Symbol detection integration** - Sexual symbols actively inform analysis approach
+- [x] **Voice calibration** - Authentic Freudian voice preserved while addressing sexual content therapeutically
+- [x] **Triple-interpreter architecture** - Jung, Freud, and Neuroscientist interpreters fully integrated

@@ -2,6 +2,7 @@ import type { InterpreterType } from '../types';
 import { BasePromptBuilder, type DreamAnalysisRequest, type PromptTemplate } from './base';
 import { JungianPromptBuilder } from './interpreters/jung/builder';
 import { FreudianPromptBuilder } from './interpreters/freud/builder';
+import { NeuroscientistPromptBuilder } from './interpreters/neuroscientist/builder';
 
 /**
  * Factory for creating prompt builders
@@ -15,10 +16,11 @@ export class PromptBuilderFactory {
       case 'freud':
         return new FreudianPromptBuilder();
       case 'neuroscientist':
+        return new NeuroscientistPromptBuilder();
       case 'astrologist':
-        throw new Error(`${interpreterType} interpreter is not yet implemented. Currently 'jung' and 'freud' are supported.`);
+        throw new Error(`${interpreterType} interpreter is not yet implemented. Currently 'jung', 'freud', and 'neuroscientist' are supported.`);
       default:
-        throw new Error(`Unknown interpreter type: ${interpreterType}. Currently 'jung' and 'freud' are supported.`);
+        throw new Error(`Unknown interpreter type: ${interpreterType}. Currently 'jung', 'freud', and 'neuroscientist' are supported.`);
     }
   }
 }

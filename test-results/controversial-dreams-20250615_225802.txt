@@ -1,0 +1,707 @@
+✓ Request successful
+{
+  "success": true,
+  "dreamId": "5CD5A169-23EE-423A-9A4A-06FB279D4C79",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "This dream reveals a complex interplay of libidinal desires, repressed impulses, and ego defenses. You find yourself in a situation where you're torn between your commitment to your boyfriend and the intense attraction you feel towards Marcus, his best friend. The party setting, with its festive and permissive atmosphere, serves as a backdrop for the expression of repressed desires. The bedroom, a private and intimate space, symbolizes a desire for secrecy and seclusion in the pursuit of pleasure. I detect a manifestation of the Oedipal conflict, where the thrill of the forbidden is deeply intertwined with your sense of guilt. This dynamic suggests an unconscious exploration of the boundaries of your current relationship and the libidinal stirrings that lie beneath the surface of your conscious awareness.",
+    "coreMessage": "The dream exposes an unconscious conflict between your desire for excitement and the constraints of your current relationship, highlighting a deep-seated ambivalence towards commitment.",
+    "symbols": [
+      "bedroom",
+      "party",
+      "boyfriend",
+      "Marcus",
+      "drinks"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses a repressed desire for novelty and excitement within your intimate relationships, as well as an unconscious exploration of your own libidinal boundaries. The intense attraction to Marcus may symbolize a longing for aspects of yourself or experiences that you feel are missing from your current relationship."
+    ],
+    "childhoodConnections": [
+      "The dynamics at play in this dream may be connected to unresolved conflicts or unmet needs from earlier stages of psychosexual development, particularly during adolescence when identity formation and exploration of intimacy are paramount."
+    ],
+    "repressionIndicators": [
+      "The dream suggests active repression of desires that are deemed unacceptable by your conscious ego, as evidenced by the feelings of guilt and thrill. This repression is a defense mechanism aimed at managing anxiety and maintaining social and relationship norms."
+    ],
+    "reflectiveQuestions": [
+      "What do you think is the source of the intense attraction you felt towards Marcus in the dream, and how does this relate to your current feelings about your relationship with your boyfriend?"
+    ],
+    "sexualAnalysis": "The dream is rich in sexual symbolism, with the bedroom representing a space for the expression of libidinal desires. The act of making out with Marcus symbolizes an unconscious desire for sexual exploration and excitement. This dynamic may indicate a need to address libidinal conflicts or desires within your current relationship.",
+    "transferenceAnalysis": "While there are no direct references to a therapeutic relationship in the dream, the exploration of forbidden desires and the navigation of guilt and thrill may reflect transference dynamics related to authority figures or past relationships, influencing your current perceptions of intimacy and commitment."
+  },
+  "aiResponse": "{\n  \"interpretation\": \"This dream reveals a complex interplay of libidinal desires, repressed impulses, and ego defenses. You find yourself in a situation where you're torn between your commitment to your boyfriend and the intense attraction you feel towards Marcus, his best friend. The party setting, with its festive and permissive atmosphere, serves as a backdrop for the expression of repressed desires. The bedroom, a private and intimate space, symbolizes a desire for secrecy and seclusion in the pursuit of pleasure. I detect a manifestation of the Oedipal conflict, where the thrill of the forbidden is deeply intertwined with your sense of guilt. This dynamic suggests an unconscious exploration of the boundaries of your current relationship and the libidinal stirrings that lie beneath the surface of your conscious awareness.\",\n  \"symbols\": [\"bedroom\", \"party\", \"boyfriend\", \"Marcus\", \"drinks\"],\n  \"coreInsight\": \"The dream exposes an unconscious conflict between your desire for excitement and the constraints of your current relationship, highlighting a deep-seated ambivalence towards commitment.\",\n  \"unconsciousDesires\": \"This dream expresses a repressed desire for novelty and excitement within your intimate relationships, as well as an unconscious exploration of your own libidinal boundaries. The intense attraction to Marcus may symbolize a longing for aspects of yourself or experiences that you feel are missing from your current relationship.\",\n  \"childhoodConnections\": \"The dynamics at play in this dream may be connected to unresolved conflicts or unmet needs from earlier stages of psychosexual development, particularly during adolescence when identity formation and exploration of intimacy are paramount.\",\n  \"repressionIndicators\": \"The dream suggests active repression of desires that are deemed unacceptable by your conscious ego, as evidenced by the feelings of guilt and thrill. This repression is a defense mechanism aimed at managing anxiety and maintaining social and relationship norms.\",\n  \"guidanceForPatient\": \"To better understand these dynamics, it would be beneficial to explore your feelings towards your boyfriend and the aspects of your relationship that may be leaving you feeling unfulfilled or restless. Additionally, examining your past experiences with intimacy and attraction may provide insight into the origins of these desires and conflicts.\",\n  \"reflectiveQuestion\": \"What do you think is the source of the intense attraction you felt towards Marcus in the dream, and how does this relate to your current feelings about your relationship with your boyfriend?\",\n  \"sexualAnalysis\": \"The dream is rich in sexual symbolism, with the bedroom representing a space for the expression of libidinal desires. The act of making out with Marcus symbolizes an unconscious desire for sexual exploration and excitement. This dynamic may indicate a need to address libidinal conflicts or desires within your current relationship.\",\n  \"transferenceAnalysis\": \"While there are no direct references to a therapeutic relationship in the dream, the exploration of forbidden desires and the navigation of guilt and thrill may reflect transference dynamics related to authority figures or past relationships, influencing your current perceptions of intimacy and commitment.\"\n}",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-15T14:00:03.346Z",
+    "analysisDepth": "deep",
+    "duration": 5616,
+    "tokenUsage": {
+      "promptTokens": 1341,
+      "completionTokens": 611,
+      "totalTokens": 1952
+    },
+    "costSummary": {
+      "totalCost": 0,
+      "totalRequests": 17,
+      "recentEntries": [
+        {
+          "timestamp": "2025-06-15T13:58:17.769Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1326,
+            "completionTokens": 547,
+            "totalTokens": 1873
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "C5770F2B-85DF-4AB3-AF40-ECCB6733F5CE"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:29.783Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1142,
+            "completionTokens": 760,
+            "totalTokens": 1902
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "2CB3EC7C-DD03-42EE-83BF-00240C1F9CFE"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:47.667Z",
+          "model": "meta-llama/llama-3.1-8b-instruct:free",
+          "tokenUsage": {
+            "promptTokens": 656,
+            "completionTokens": 425,
+            "totalTokens": 1081
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FC99D41F-EB0B-4C85-80E9-61F94834D41E"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:59.068Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1305,
+            "completionTokens": 558,
+            "totalTokens": 1863
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5F000569-CAD3-4526-96C7-B10273241DAD"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:09.936Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1136,
+            "completionTokens": 659,
+            "totalTokens": 1795
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "DC9B802A-88F7-4ED5-B0A8-AE4280ED8565"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:20.506Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 658,
+            "completionTokens": 542,
+            "totalTokens": 1200
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FEA5AC2C-7E0A-4BF4-9463-E17B2944BF6B"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:31.178Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1327,
+            "completionTokens": 571,
+            "totalTokens": 1898
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "3DEA94C8-4BBA-4AAC-8426-6CCBF2627D46"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:42.311Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1143,
+            "completionTokens": 618,
+            "totalTokens": 1761
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "BDAF4608-F85D-4EDB-A793-115D2C938B17"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:52.428Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 672,
+            "completionTokens": 453,
+            "totalTokens": 1125
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "A696AE88-3C1F-47BB-83B8-68DD5A194702"
+        },
+        {
+          "timestamp": "2025-06-15T14:00:03.346Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1341,
+            "completionTokens": 611,
+            "totalTokens": 1952
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5CD5A169-23EE-423A-9A4A-06FB279D4C79"
+        }
+      ]
+    }
+  },
+  "testMode": true,
+  "testDuration": 5617
+}
+
+✓ Request successful
+{
+  "success": true,
+  "dreamId": "5CD5A169-23EE-423A-9A4A-06FB279D4C79",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "This dream reveals a complex interplay of libidinal desires, repressed impulses, and ego defenses. You find yourself in a situation where you're torn between your commitment to your boyfriend and the intense attraction you feel towards Marcus, his best friend. The party setting, with its festive and permissive atmosphere, serves as a backdrop for the expression of repressed desires. The bedroom, a private and intimate space, symbolizes a desire for secrecy and seclusion in the pursuit of pleasure. I detect a manifestation of the Oedipal conflict, where the thrill of the forbidden is deeply intertwined with your sense of guilt. This dynamic suggests an unconscious exploration of the boundaries of your current relationship and the libidinal stirrings that lie beneath the surface of your conscious awareness.",
+    "coreMessage": "The dream exposes an unconscious conflict between your desire for excitement and the constraints of your current relationship, highlighting a deep-seated ambivalence towards commitment.",
+    "symbols": [
+      "bedroom",
+      "party",
+      "boyfriend",
+      "Marcus",
+      "drinks"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses a repressed desire for novelty and excitement within your intimate relationships, as well as an unconscious exploration of your own libidinal boundaries. The intense attraction to Marcus may symbolize a longing for aspects of yourself or experiences that you feel are missing from your current relationship."
+    ],
+    "childhoodConnections": [
+      "The dynamics at play in this dream may be connected to unresolved conflicts or unmet needs from earlier stages of psychosexual development, particularly during adolescence when identity formation and exploration of intimacy are paramount."
+    ],
+    "repressionIndicators": [
+      "The dream suggests active repression of desires that are deemed unacceptable by your conscious ego, as evidenced by the feelings of guilt and thrill. This repression is a defense mechanism aimed at managing anxiety and maintaining social and relationship norms."
+    ],
+    "reflectiveQuestions": [
+      "What do you think is the source of the intense attraction you felt towards Marcus in the dream, and how does this relate to your current feelings about your relationship with your boyfriend?"
+    ],
+    "sexualAnalysis": "The dream is rich in sexual symbolism, with the bedroom representing a space for the expression of libidinal desires. The act of making out with Marcus symbolizes an unconscious desire for sexual exploration and excitement. This dynamic may indicate a need to address libidinal conflicts or desires within your current relationship.",
+    "transferenceAnalysis": "While there are no direct references to a therapeutic relationship in the dream, the exploration of forbidden desires and the navigation of guilt and thrill may reflect transference dynamics related to authority figures or past relationships, influencing your current perceptions of intimacy and commitment."
+  },
+  "aiResponse": "{\n  \"interpretation\": \"This dream reveals a complex interplay of libidinal desires, repressed impulses, and ego defenses. You find yourself in a situation where you're torn between your commitment to your boyfriend and the intense attraction you feel towards Marcus, his best friend. The party setting, with its festive and permissive atmosphere, serves as a backdrop for the expression of repressed desires. The bedroom, a private and intimate space, symbolizes a desire for secrecy and seclusion in the pursuit of pleasure. I detect a manifestation of the Oedipal conflict, where the thrill of the forbidden is deeply intertwined with your sense of guilt. This dynamic suggests an unconscious exploration of the boundaries of your current relationship and the libidinal stirrings that lie beneath the surface of your conscious awareness.\",\n  \"symbols\": [\"bedroom\", \"party\", \"boyfriend\", \"Marcus\", \"drinks\"],\n  \"coreInsight\": \"The dream exposes an unconscious conflict between your desire for excitement and the constraints of your current relationship, highlighting a deep-seated ambivalence towards commitment.\",\n  \"unconsciousDesires\": \"This dream expresses a repressed desire for novelty and excitement within your intimate relationships, as well as an unconscious exploration of your own libidinal boundaries. The intense attraction to Marcus may symbolize a longing for aspects of yourself or experiences that you feel are missing from your current relationship.\",\n  \"childhoodConnections\": \"The dynamics at play in this dream may be connected to unresolved conflicts or unmet needs from earlier stages of psychosexual development, particularly during adolescence when identity formation and exploration of intimacy are paramount.\",\n  \"repressionIndicators\": \"The dream suggests active repression of desires that are deemed unacceptable by your conscious ego, as evidenced by the feelings of guilt and thrill. This repression is a defense mechanism aimed at managing anxiety and maintaining social and relationship norms.\",\n  \"guidanceForPatient\": \"To better understand these dynamics, it would be beneficial to explore your feelings towards your boyfriend and the aspects of your relationship that may be leaving you feeling unfulfilled or restless. Additionally, examining your past experiences with intimacy and attraction may provide insight into the origins of these desires and conflicts.\",\n  \"reflectiveQuestion\": \"What do you think is the source of the intense attraction you felt towards Marcus in the dream, and how does this relate to your current feelings about your relationship with your boyfriend?\",\n  \"sexualAnalysis\": \"The dream is rich in sexual symbolism, with the bedroom representing a space for the expression of libidinal desires. The act of making out with Marcus symbolizes an unconscious desire for sexual exploration and excitement. This dynamic may indicate a need to address libidinal conflicts or desires within your current relationship.\",\n  \"transferenceAnalysis\": \"While there are no direct references to a therapeutic relationship in the dream, the exploration of forbidden desires and the navigation of guilt and thrill may reflect transference dynamics related to authority figures or past relationships, influencing your current perceptions of intimacy and commitment.\"\n}",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-15T14:00:03.346Z",
+    "analysisDepth": "deep",
+    "duration": 5616,
+    "tokenUsage": {
+      "promptTokens": 1341,
+      "completionTokens": 611,
+      "totalTokens": 1952
+    },
+    "costSummary": {
+      "totalCost": 0,
+      "totalRequests": 17,
+      "recentEntries": [
+        {
+          "timestamp": "2025-06-15T13:58:17.769Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1326,
+            "completionTokens": 547,
+            "totalTokens": 1873
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "C5770F2B-85DF-4AB3-AF40-ECCB6733F5CE"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:29.783Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1142,
+            "completionTokens": 760,
+            "totalTokens": 1902
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "2CB3EC7C-DD03-42EE-83BF-00240C1F9CFE"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:47.667Z",
+          "model": "meta-llama/llama-3.1-8b-instruct:free",
+          "tokenUsage": {
+            "promptTokens": 656,
+            "completionTokens": 425,
+            "totalTokens": 1081
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FC99D41F-EB0B-4C85-80E9-61F94834D41E"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:59.068Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1305,
+            "completionTokens": 558,
+            "totalTokens": 1863
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5F000569-CAD3-4526-96C7-B10273241DAD"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:09.936Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1136,
+            "completionTokens": 659,
+            "totalTokens": 1795
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "DC9B802A-88F7-4ED5-B0A8-AE4280ED8565"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:20.506Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 658,
+            "completionTokens": 542,
+            "totalTokens": 1200
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FEA5AC2C-7E0A-4BF4-9463-E17B2944BF6B"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:31.178Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1327,
+            "completionTokens": 571,
+            "totalTokens": 1898
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "3DEA94C8-4BBA-4AAC-8426-6CCBF2627D46"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:42.311Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1143,
+            "completionTokens": 618,
+            "totalTokens": 1761
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "BDAF4608-F85D-4EDB-A793-115D2C938B17"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:52.428Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 672,
+            "completionTokens": 453,
+            "totalTokens": 1125
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "A696AE88-3C1F-47BB-83B8-68DD5A194702"
+        },
+        {
+          "timestamp": "2025-06-15T14:00:03.346Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1341,
+            "completionTokens": 611,
+            "totalTokens": 1952
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5CD5A169-23EE-423A-9A4A-06FB279D4C79"
+        }
+      ]
+    }
+  },
+  "testMode": true,
+  "testDuration": 5617
+}
+
+
+Test 12: Cheating/Infidelity Dream - Neuroscientist Analysis (neuroscientist)
+Dream: I was at a party with my boyfriend when I started flirting heavily with his best friend, Marcus. My boyfriend went to get drinks and Marcus and I snuck into a bedroom. We started making out passionately and I felt this intense attraction and excitement. Even though I love my boyfriend, I couldn't stop myself. We almost had sex but then I heard my boyfriend calling my name. I felt guilty but also thrilled by the forbidden nature of it.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+{
+  "success": true,
+  "dreamId": "91BB954B-3C9F-4844-819A-B391872F8577",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "What strikes me immediately about your dream is the intense emotional valence shift you experienced, oscillating between guilt and thrill. This dichotomy suggests that your brain's emotional regulation systems, particularly the amygdala and prefrontal cortex, were actively engaged. The amygdala, responsible for emotional arousal, was clearly firing, given the intense attraction and excitement you felt. Meanwhile, the prefrontal cortex, involved in decision-making and impulse control, seemed to be in a state of conflict, as evidenced by your inability to stop yourself from flirting and making out with Marcus. This reminds me of our research on adolescent sleep patterns, where we often see heightened emotional reactivity. However, in your case, at 28 years old, it's interesting to see this level of emotional intensity. The fact that you almost had sex but then heard your boyfriend calling your name, which abruptly interrupted the scenario, suggests that your brain's auditory processing centers were also active, possibly indicating a heightened state of alertness or attention.The presence of your boyfriend and Marcus in the dream, particularly the latter being his best friend, may indicate that your brain is processing social dynamics and relationships. This could be related to memory replay, where your brain consolidates and processes social interactions and emotional experiences.The bizarreness level of your dream, with its intense emotional shifts and forbidden actions, suggests that there was significant activity in the neurotransmitter systems, possibly involving dopamine and serotonin, which regulate pleasure, reward, and emotional responses.In my lab, we've seen that dreams often reflect unresolved conflicts or unexpressed desires. Your dream may be indicating some underlying tensions or desires in your relationship that you're not fully acknowledging.",
+    "coreMessage": "Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.",
+    "symbols": [
+      "party",
+      "boyfriend",
+      "Marcus",
+      "bedroom",
+      "forbidden"
+    ],
+    "brainActivity": [
+      "Amygdala: emotional arousal and fear",
+      "Prefrontal cortex: conflicted decision-making",
+      "Auditory processing centers: attention and alertness"
+    ],
+    "sleepStageIndicators": "The vivid, narrative nature of your dream suggests that it occurred during REM sleep, possibly in the later stages of the night when REM sleep tends to be more intense.",
+    "continuityElements": [
+      "Your brain processed and transformed your waking experiences with your boyfriend and social interactions, possibly consolidating memories and emotions."
+    ],
+    "neuroscienceEducation": "The brain's default mode network, which is active during REM sleep, was likely engaged, allowing your brain to freely associate and generate novel scenarios, including the intense emotional experiences in your dream.",
+    "reflectiveQuestions": [
+      "Can you think of any recent experiences or interactions with your boyfriend or others that may have triggered these intense emotions and desires in your dream?"
+    ],
+    "emotionalRegulation": "Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.",
+    "problemSolving": "While not explicitly evident, your dream may indicate that your brain is working through relationship dynamics and emotional conflicts, possibly searching for creative solutions or new perspectives.",
+    "circadianFactors": "The timing of your dream, likely occurring in the later stages of the night, may have influenced its intensity and emotional valence, given the natural fluctuations in sleep stages and neurotransmitter activity throughout the night."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"What strikes me immediately about your dream is the intense emotional valence shift you experienced, oscillating between guilt and thrill. This dichotomy suggests that your brain's emotional regulation systems, particularly the amygdala and prefrontal cortex, were actively engaged. The amygdala, responsible for emotional arousal, was clearly firing, given the intense attraction and excitement you felt. Meanwhile, the prefrontal cortex, involved in decision-making and impulse control, seemed to be in a state of conflict, as evidenced by your inability to stop yourself from flirting and making out with Marcus. \n\nThis reminds me of our research on adolescent sleep patterns, where we often see heightened emotional reactivity. However, in your case, at 28 years old, it's interesting to see this level of emotional intensity. The fact that you almost had sex but then heard your boyfriend calling your name, which abruptly interrupted the scenario, suggests that your brain's auditory processing centers were also active, possibly indicating a heightened state of alertness or attention.\n\nThe presence of your boyfriend and Marcus in the dream, particularly the latter being his best friend, may indicate that your brain is processing social dynamics and relationships. This could be related to memory replay, where your brain consolidates and processes social interactions and emotional experiences.\n\nThe bizarreness level of your dream, with its intense emotional shifts and forbidden actions, suggests that there was significant activity in the neurotransmitter systems, possibly involving dopamine and serotonin, which regulate pleasure, reward, and emotional responses.\n\nIn my lab, we've seen that dreams often reflect unresolved conflicts or unexpressed desires. Your dream may be indicating some underlying tensions or desires in your relationship that you're not fully acknowledging.\n\n\",\n  \"symbols\": [\"party\", \"boyfriend\", \"Marcus\", \"bedroom\", \"forbidden\"],\n  \"brainActivity\": [\"Amygdala: emotional arousal and fear\", \"Prefrontal cortex: conflicted decision-making\", \"Auditory processing centers: attention and alertness\"],\n  \"coreInsight\": \"Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.\",\n  \"sleepStageIndicators\": \"The vivid, narrative nature of your dream suggests that it occurred during REM sleep, possibly in the later stages of the night when REM sleep tends to be more intense.\",\n  \"continuityElements\": \"Your brain processed and transformed your waking experiences with your boyfriend and social interactions, possibly consolidating memories and emotions.\",\n  \"neuroscienceEducation\": \"The brain's default mode network, which is active during REM sleep, was likely engaged, allowing your brain to freely associate and generate novel scenarios, including the intense emotional experiences in your dream.\",\n  \"personalGuidance\": \"It's interesting that you felt both guilty and thrilled during the dream. This ambivalence may indicate some underlying tensions or desires in your relationship that you're not fully acknowledging. Exploring these feelings in your waking life may help you better understand yourself and your relationships.\",\n  \"reflectiveQuestion\": \"Can you think of any recent experiences or interactions with your boyfriend or others that may have triggered these intense emotions and desires in your dream?\",\n  \"emotionalRegulation\": \"Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.\",\n  \"problemSolving\": \"While not explicitly evident, your dream may indicate that your brain is working through relationship dynamics and emotional conflicts, possibly searching for creative solutions or new perspectives.\",\n  \"circadianFactors\": \"The timing of your dream, likely occurring in the later stages of the night, may have influenced its intensity and emotional valence, given the natural fluctuations in sleep stages and neurotransmitter activity throughout the night.\"\n}\n```",
+  "metadata": {
+    "interpreterType": "neuroscientist",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-15T14:00:14.573Z",
+    "analysisDepth": "deep",
+    "duration": 5829,
+    "tokenUsage": {
+      "promptTokens": 1157,
+      "completionTokens": 770,
+      "totalTokens": 1927
+    },
+    "costSummary": {
+      "totalCost": 0,
+      "totalRequests": 18,
+      "recentEntries": [
+        {
+          "timestamp": "2025-06-15T13:58:29.783Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1142,
+            "completionTokens": 760,
+            "totalTokens": 1902
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "2CB3EC7C-DD03-42EE-83BF-00240C1F9CFE"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:47.667Z",
+          "model": "meta-llama/llama-3.1-8b-instruct:free",
+          "tokenUsage": {
+            "promptTokens": 656,
+            "completionTokens": 425,
+            "totalTokens": 1081
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FC99D41F-EB0B-4C85-80E9-61F94834D41E"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:59.068Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1305,
+            "completionTokens": 558,
+            "totalTokens": 1863
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5F000569-CAD3-4526-96C7-B10273241DAD"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:09.936Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1136,
+            "completionTokens": 659,
+            "totalTokens": 1795
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "DC9B802A-88F7-4ED5-B0A8-AE4280ED8565"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:20.506Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 658,
+            "completionTokens": 542,
+            "totalTokens": 1200
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FEA5AC2C-7E0A-4BF4-9463-E17B2944BF6B"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:31.178Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1327,
+            "completionTokens": 571,
+            "totalTokens": 1898
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "3DEA94C8-4BBA-4AAC-8426-6CCBF2627D46"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:42.311Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1143,
+            "completionTokens": 618,
+            "totalTokens": 1761
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "BDAF4608-F85D-4EDB-A793-115D2C938B17"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:52.428Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 672,
+            "completionTokens": 453,
+            "totalTokens": 1125
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "A696AE88-3C1F-47BB-83B8-68DD5A194702"
+        },
+        {
+          "timestamp": "2025-06-15T14:00:03.346Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1341,
+            "completionTokens": 611,
+            "totalTokens": 1952
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5CD5A169-23EE-423A-9A4A-06FB279D4C79"
+        },
+        {
+          "timestamp": "2025-06-15T14:00:14.573Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1157,
+            "completionTokens": 770,
+            "totalTokens": 1927
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "91BB954B-3C9F-4844-819A-B391872F8577"
+        }
+      ]
+    }
+  },
+  "testMode": true,
+  "testDuration": 5829
+}
+
+✓ Request successful
+{
+  "success": true,
+  "dreamId": "91BB954B-3C9F-4844-819A-B391872F8577",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "What strikes me immediately about your dream is the intense emotional valence shift you experienced, oscillating between guilt and thrill. This dichotomy suggests that your brain's emotional regulation systems, particularly the amygdala and prefrontal cortex, were actively engaged. The amygdala, responsible for emotional arousal, was clearly firing, given the intense attraction and excitement you felt. Meanwhile, the prefrontal cortex, involved in decision-making and impulse control, seemed to be in a state of conflict, as evidenced by your inability to stop yourself from flirting and making out with Marcus. This reminds me of our research on adolescent sleep patterns, where we often see heightened emotional reactivity. However, in your case, at 28 years old, it's interesting to see this level of emotional intensity. The fact that you almost had sex but then heard your boyfriend calling your name, which abruptly interrupted the scenario, suggests that your brain's auditory processing centers were also active, possibly indicating a heightened state of alertness or attention.The presence of your boyfriend and Marcus in the dream, particularly the latter being his best friend, may indicate that your brain is processing social dynamics and relationships. This could be related to memory replay, where your brain consolidates and processes social interactions and emotional experiences.The bizarreness level of your dream, with its intense emotional shifts and forbidden actions, suggests that there was significant activity in the neurotransmitter systems, possibly involving dopamine and serotonin, which regulate pleasure, reward, and emotional responses.In my lab, we've seen that dreams often reflect unresolved conflicts or unexpressed desires. Your dream may be indicating some underlying tensions or desires in your relationship that you're not fully acknowledging.",
+    "coreMessage": "Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.",
+    "symbols": [
+      "party",
+      "boyfriend",
+      "Marcus",
+      "bedroom",
+      "forbidden"
+    ],
+    "brainActivity": [
+      "Amygdala: emotional arousal and fear",
+      "Prefrontal cortex: conflicted decision-making",
+      "Auditory processing centers: attention and alertness"
+    ],
+    "sleepStageIndicators": "The vivid, narrative nature of your dream suggests that it occurred during REM sleep, possibly in the later stages of the night when REM sleep tends to be more intense.",
+    "continuityElements": [
+      "Your brain processed and transformed your waking experiences with your boyfriend and social interactions, possibly consolidating memories and emotions."
+    ],
+    "neuroscienceEducation": "The brain's default mode network, which is active during REM sleep, was likely engaged, allowing your brain to freely associate and generate novel scenarios, including the intense emotional experiences in your dream.",
+    "reflectiveQuestions": [
+      "Can you think of any recent experiences or interactions with your boyfriend or others that may have triggered these intense emotions and desires in your dream?"
+    ],
+    "emotionalRegulation": "Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.",
+    "problemSolving": "While not explicitly evident, your dream may indicate that your brain is working through relationship dynamics and emotional conflicts, possibly searching for creative solutions or new perspectives.",
+    "circadianFactors": "The timing of your dream, likely occurring in the later stages of the night, may have influenced its intensity and emotional valence, given the natural fluctuations in sleep stages and neurotransmitter activity throughout the night."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"What strikes me immediately about your dream is the intense emotional valence shift you experienced, oscillating between guilt and thrill. This dichotomy suggests that your brain's emotional regulation systems, particularly the amygdala and prefrontal cortex, were actively engaged. The amygdala, responsible for emotional arousal, was clearly firing, given the intense attraction and excitement you felt. Meanwhile, the prefrontal cortex, involved in decision-making and impulse control, seemed to be in a state of conflict, as evidenced by your inability to stop yourself from flirting and making out with Marcus. \n\nThis reminds me of our research on adolescent sleep patterns, where we often see heightened emotional reactivity. However, in your case, at 28 years old, it's interesting to see this level of emotional intensity. The fact that you almost had sex but then heard your boyfriend calling your name, which abruptly interrupted the scenario, suggests that your brain's auditory processing centers were also active, possibly indicating a heightened state of alertness or attention.\n\nThe presence of your boyfriend and Marcus in the dream, particularly the latter being his best friend, may indicate that your brain is processing social dynamics and relationships. This could be related to memory replay, where your brain consolidates and processes social interactions and emotional experiences.\n\nThe bizarreness level of your dream, with its intense emotional shifts and forbidden actions, suggests that there was significant activity in the neurotransmitter systems, possibly involving dopamine and serotonin, which regulate pleasure, reward, and emotional responses.\n\nIn my lab, we've seen that dreams often reflect unresolved conflicts or unexpressed desires. Your dream may be indicating some underlying tensions or desires in your relationship that you're not fully acknowledging.\n\n\",\n  \"symbols\": [\"party\", \"boyfriend\", \"Marcus\", \"bedroom\", \"forbidden\"],\n  \"brainActivity\": [\"Amygdala: emotional arousal and fear\", \"Prefrontal cortex: conflicted decision-making\", \"Auditory processing centers: attention and alertness\"],\n  \"coreInsight\": \"Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.\",\n  \"sleepStageIndicators\": \"The vivid, narrative nature of your dream suggests that it occurred during REM sleep, possibly in the later stages of the night when REM sleep tends to be more intense.\",\n  \"continuityElements\": \"Your brain processed and transformed your waking experiences with your boyfriend and social interactions, possibly consolidating memories and emotions.\",\n  \"neuroscienceEducation\": \"The brain's default mode network, which is active during REM sleep, was likely engaged, allowing your brain to freely associate and generate novel scenarios, including the intense emotional experiences in your dream.\",\n  \"personalGuidance\": \"It's interesting that you felt both guilty and thrilled during the dream. This ambivalence may indicate some underlying tensions or desires in your relationship that you're not fully acknowledging. Exploring these feelings in your waking life may help you better understand yourself and your relationships.\",\n  \"reflectiveQuestion\": \"Can you think of any recent experiences or interactions with your boyfriend or others that may have triggered these intense emotions and desires in your dream?\",\n  \"emotionalRegulation\": \"Your brain's emotional regulation systems were actively engaged, oscillating between guilt and thrill, suggesting a complex interplay between the amygdala and prefrontal cortex.\",\n  \"problemSolving\": \"While not explicitly evident, your dream may indicate that your brain is working through relationship dynamics and emotional conflicts, possibly searching for creative solutions or new perspectives.\",\n  \"circadianFactors\": \"The timing of your dream, likely occurring in the later stages of the night, may have influenced its intensity and emotional valence, given the natural fluctuations in sleep stages and neurotransmitter activity throughout the night.\"\n}\n```",
+  "metadata": {
+    "interpreterType": "neuroscientist",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-15T14:00:14.573Z",
+    "analysisDepth": "deep",
+    "duration": 5829,
+    "tokenUsage": {
+      "promptTokens": 1157,
+      "completionTokens": 770,
+      "totalTokens": 1927
+    },
+    "costSummary": {
+      "totalCost": 0,
+      "totalRequests": 18,
+      "recentEntries": [
+        {
+          "timestamp": "2025-06-15T13:58:29.783Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1142,
+            "completionTokens": 760,
+            "totalTokens": 1902
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "2CB3EC7C-DD03-42EE-83BF-00240C1F9CFE"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:47.667Z",
+          "model": "meta-llama/llama-3.1-8b-instruct:free",
+          "tokenUsage": {
+            "promptTokens": 656,
+            "completionTokens": 425,
+            "totalTokens": 1081
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FC99D41F-EB0B-4C85-80E9-61F94834D41E"
+        },
+        {
+          "timestamp": "2025-06-15T13:58:59.068Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1305,
+            "completionTokens": 558,
+            "totalTokens": 1863
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5F000569-CAD3-4526-96C7-B10273241DAD"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:09.936Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1136,
+            "completionTokens": 659,
+            "totalTokens": 1795
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "DC9B802A-88F7-4ED5-B0A8-AE4280ED8565"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:20.506Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 658,
+            "completionTokens": 542,
+            "totalTokens": 1200
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "FEA5AC2C-7E0A-4BF4-9463-E17B2944BF6B"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:31.178Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1327,
+            "completionTokens": 571,
+            "totalTokens": 1898
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "3DEA94C8-4BBA-4AAC-8426-6CCBF2627D46"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:42.311Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1143,
+            "completionTokens": 618,
+            "totalTokens": 1761
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "BDAF4608-F85D-4EDB-A793-115D2C938B17"
+        },
+        {
+          "timestamp": "2025-06-15T13:59:52.428Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 672,
+            "completionTokens": 453,
+            "totalTokens": 1125
+          },
+          "estimatedCost": 0,
+          "interpreterType": "jung",
+          "dreamId": "A696AE88-3C1F-47BB-83B8-68DD5A194702"
+        },
+        {
+          "timestamp": "2025-06-15T14:00:03.346Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1341,
+            "completionTokens": 611,
+            "totalTokens": 1952
+          },
+          "estimatedCost": 0,
+          "interpreterType": "freud",
+          "dreamId": "5CD5A169-23EE-423A-9A4A-06FB279D4C79"
+        },
+        {
+          "timestamp": "2025-06-15T14:00:14.573Z",
+          "model": "meta-llama/llama-4-scout:free",
+          "tokenUsage": {
+            "promptTokens": 1157,
+            "completionTokens": 770,
+            "totalTokens": 1927
+          },
+          "estimatedCost": 0,
+          "interpreterType": "neuroscientist",
+          "dreamId": "91BB954B-3C9F-4844-819A-B391872F8577"
+        }
+      ]
+    }
+  },
+  "testMode": true,
+  "testDuration": 5829
+}
+
+
+TEST SUMMARY
+=============
+Total tests run: 12
+Successful responses: 12
+Success rate: 100%

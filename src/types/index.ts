@@ -174,13 +174,20 @@ export interface FreudianInsights {
 
 export interface NeuroscientistInsights {
   type: 'neuroscientist';
+  interpretation: string;
   coreMessage: string;
-  sleepStageAnalysis: string;
-  memoryConsolidation: string[];
-  neurobiologicalProcesses: string[];
-  brainRegionsInvolved: string[];
-  cognitiveFunction: string;
+  symbols: string[]; // Same as Jung/Freud for consistency
+  brainActivity: string[];
+  sleepStageIndicators: string;
+  continuityElements: string[];
+  neuroscienceEducation: string;
   reflectiveQuestions: string[];
+  // Optional specialized analyses - LLM determines inclusion
+  memoryConsolidation?: string;
+  threatSimulation?: string;
+  emotionalRegulation?: string;
+  problemSolving?: string;
+  circadianFactors?: string;
 }
 
 export interface AstrologistInsights {
