@@ -32,19 +32,37 @@ export class DreamInterpretationService {
     const startTime = Date.now();
     
     try {
+      // Validate request first
+      const validation = this.validateRequest(request);
+      if (!validation.valid) {
+        return {
+          success: false,
+          dreamId: request.dreamId,
+          error: `Request validation failed: ${validation.errors.join(', ')}`,
+          metadata: {
+            interpreterType: request.interpreterType,
+            modelUsed: 'validation_failed',
+            processedAt: new Date().toISOString(),
+            analysisDepth: request.analysisDepth || 'initial',
+            duration: Date.now() - startTime
+          }
+        };
+      }
+
       logger.info('🌙 Starting dream interpretation', {
         dreamId: request.dreamId,
         interpreterType: request.interpreterType,
         analysisDepth: request.analysisDepth || 'initial',
         hasUserContext: !!request.userContext,
-        hasPreviousDreams: !!request.previousDreams?.length
+        hasPreviousDreams: !!request.previousDreams?.length,
+        dreamLength: request.dreamTranscription.length
       });
 
       // Step 1: Build contextual prompt using our modular system
       const promptTemplate = await this.buildContextualPrompt(request);
       
-      // Step 2: Generate AI interpretation
-      const aiResponse = await this.generateInterpretation(request, promptTemplate);
+      // Step 2: Generate AI interpretation with timeout
+      const aiResponse = await this.generateInterpretationWithTimeout(request, promptTemplate);
       
       // Step 3: Parse and structure the response
       const structuredInterpretation = await InterpretationParser.parseInterpretationResponse(
@@ -61,7 +79,8 @@ export class DreamInterpretationService {
         duration: Date.now() - startTime,
         modelUsed: aiResponse.model,
         tokenUsage: aiResponse.usage?.totalTokens,
-        responseSize: aiResponse.content.length
+        responseSize: aiResponse.content.length,
+        symbolsFound: structuredInterpretation.symbols?.length || 0
       });
 
       return response;
@@ -107,6 +126,22 @@ export class DreamInterpretationService {
   }
 
   /**
+   * Generate AI interpretation with timeout protection
+   */
+  private async generateInterpretationWithTimeout(
+    request: InterpretationRequest, 
+    promptTemplate: { systemPrompt: string; analysisStructure: string; outputFormat: string; variables: any },
+    timeoutMs: number = 30000 // 30 second timeout
+  ): Promise<{ content: string; usage: TokenUsage; model: string }> {
+    return Promise.race([
+      this.generateInterpretation(request, promptTemplate),
+      new Promise<{ content: string; usage: TokenUsage; model: string }>((_, reject) =>
+        setTimeout(() => reject(new Error('AI generation timeout after 30 seconds')), timeoutMs)
+      )
+    ]);
+  }
+
+  /**
    * Generate AI interpretation using optimal model selection
    */
   private async generateInterpretation(
@@ -115,9 +150,7 @@ export class DreamInterpretationService {
   ) {
     try {
       // Force Llama 4 for Jung interpreter
-      const modelToUse = request.interpreterType === 'jung' 
-        ? 'meta-llama/llama-4-scout:free'
-        : modelConfigService.getBestModelForInterpreter(request.interpreterType);
+      const modelToUse = modelConfigService.getBestModelForInterpreter(request.interpreterType);
       
       // Build the complete prompt
       const fullSystemPrompt = `${promptTemplate.systemPrompt}

@@ -5,16 +5,10 @@ export { dreamInterpretationService, DreamInterpretationService } from './servic
 export { PromptBuilderService, PromptBuilderFactory } from './factory';
 export { BasePromptBuilder } from './base';
 export { InterpretationParser } from './interpretation';
-export { PromptBuilderTestUtil } from './test-utils';
-
-// Universal themes and types
-export { UNIVERSAL_THEMES } from './themes';
-export type { UniversalTheme } from './themes';
 
 // Core types
 export type { 
   DreamAnalysisRequest, 
-  UniversalDreamElements, 
   PromptTemplate 
 } from './base';
 

@@ -24,13 +24,23 @@ export interface CostEntry {
   dreamId: string;
 }
 
+// Quick model switching constants - Easy entry point for model comparison
+export const QUICK_MODELS = {
+  LLAMA_4: 'meta-llama/llama-4-scout:free',
+  GPT_4O_MINI: 'openai/gpt-4o-mini', 
+  CLAUDE_HAIKU: 'anthropic/claude-3-haiku',
+  LLAMA_3_1: 'meta-llama/llama-3.1-8b-instruct:free',
+  GEMMA_2: 'google/gemma-2-9b-it:free'
+} as const;
+
 export class ModelConfigService {
   private readonly availableModels: ModelConfig[];
   private costLog: CostEntry[] = [];
   private totalCost = 0;
   
   // Single source of truth for model configuration
-  private readonly defaultModel = 'meta-llama/llama-4-scout:free';
+  private currentDefaultModel: string = QUICK_MODELS.LLAMA_4; // <-- Change this for easy model switching
+  
   private readonly fallbackChain = [
     'meta-llama/llama-4-scout:free',     // Primary model - free Llama 4
     'meta-llama/llama-3.1-8b-instruct:free',  // Second fallback
@@ -93,19 +103,34 @@ export class ModelConfigService {
       },
     ];
 
-    logger.info('Model configuration initialized with Llama 4 as default', {
-      defaultModel: this.defaultModel,
-      primaryModel: this.availableModels[0]?.name || 'No models available'
+    logger.info('Model configuration initialized', {
+      currentDefaultModel: this.currentDefaultModel,
+      primaryModel: this.availableModels.find(m => m.id === this.currentDefaultModel)?.name || 'Model not found'
     });
   }
 
   /**
-   * Get the best model for Jung interpreter - prioritize Llama 4
+   * Easy model switching - Change the default model at runtime
+   * @param modelId - New model ID from QUICK_MODELS or any valid model ID
+   */
+  setDefaultModel(modelId: string): void {
+    const modelConfig = this.getModelConfig(modelId);
+    if (!modelConfig) {
+      logger.warn(`Model ${modelId} not found in available models. Keeping current default.`);
+      return;
+    }
+    
+    this.currentDefaultModel = modelId;
+    logger.info(`Default model changed to: ${modelConfig.name} (${modelId})`);
+  }
+
+  /**
+   * Get the best model for Jung interpreter - prioritize current default
    */
   getBestModelForInterpreter(interpreterType: InterpreterType): string {
     if (interpreterType === 'jung') {
-      // Always prefer Llama 4 for Jung
-      return this.defaultModel;
+      // Always prefer current default for Jung
+      return this.currentDefaultModel;
     }
     
     // Original logic for other interpreters
@@ -113,27 +138,27 @@ export class ModelConfigService {
       model.interpreterTypes.includes(interpreterType)
     );
 
-    return compatibleModels[0]?.id || this.defaultModel;
+    return compatibleModels[0]?.id || this.currentDefaultModel;
   }
 
   /**
-   * Get model chain ensuring Llama 4 is first
+   * Get model chain ensuring current default is first
    */
   getModelChain(preferredModel?: string): string[] {
-    // If specifically requesting Llama 4, ensure it's first
+    // If specifically requesting current default, ensure it's first
     if (preferredModel?.includes('llama-4')) {
       return [preferredModel, ...this.fallbackChain.filter(m => m !== preferredModel)];
     }
     
-    // Otherwise use our SSOT chain
-    return [...this.fallbackChain];
+    // Otherwise use current default first, then fallback chain
+    return [this.currentDefaultModel, ...this.fallbackChain.filter(m => m !== this.currentDefaultModel)];
   }
 
   /**
    * Get default model - SSOT
    */
   getDefaultModel(): string {
-    return this.defaultModel;
+    return this.currentDefaultModel;
   }
 
   /**
@@ -297,6 +322,50 @@ export class ModelConfigService {
    */
   getAvailableModels(): ModelConfig[] {
     return [...this.availableModels];
+  }
+
+  /**
+   * Quick model switching helpers for easy comparison testing
+   */
+  
+  /**
+   * Switch to GPT-4o Mini for comparison
+   */
+  switchToGPT4oMini(): void {
+    this.setDefaultModel(QUICK_MODELS.GPT_4O_MINI);
+  }
+
+  /**
+   * Switch to Claude Haiku for comparison  
+   */
+  switchToClaude(): void {
+    this.setDefaultModel(QUICK_MODELS.CLAUDE_HAIKU);
+  }
+
+  /**
+   * Switch back to Llama 4 (default)
+   */
+  switchToLlama4(): void {
+    this.setDefaultModel(QUICK_MODELS.LLAMA_4);
+  }
+
+  /**
+   * Switch to Llama 3.1 for comparison
+   */
+  switchToLlama3(): void {
+    this.setDefaultModel(QUICK_MODELS.LLAMA_3_1);
+  }
+
+  /**
+   * Get current model info
+   */
+  getCurrentModelInfo(): { id: string; name: string; cost: number } {
+    const config = this.getModelConfig(this.currentDefaultModel);
+    return {
+      id: this.currentDefaultModel,
+      name: config?.name || 'Unknown Model',
+      cost: config?.costPerKToken || 0
+    };
   }
 }
 

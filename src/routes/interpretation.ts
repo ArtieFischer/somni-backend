@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { dreamInterpretationService } from '../prompts';
+import { modelConfigService } from '../services/modelConfig';
 import { 
   validateInterpretationRequest, 
   validateInterpretationContentLength,
@@ -213,5 +214,76 @@ prodRouter.get('/interpreters', (_req: Request, res: Response) => {
 
 // Mount production routes
 router.use('/', prodRouter);
+
+// Easy model switching endpoint for comparison testing
+router.post('/switch-model', async (req, res) => {
+  try {
+    const { model } = req.body;
+    
+    if (!model) {
+      return res.status(400).json({ 
+        error: 'Model parameter required. Use: llama4, gpt4o-mini, claude, llama3, or a full model ID' 
+      });
+    }
+
+    // Quick switch shortcuts - use the imported service directly
+    
+    switch (model.toLowerCase()) {
+      case 'llama4':
+        modelConfigService.switchToLlama4();
+        break;
+      case 'gpt4o-mini':
+      case 'gpt-4o-mini':
+        modelConfigService.switchToGPT4oMini();
+        break;
+      case 'claude':
+        modelConfigService.switchToClaude();
+        break;
+      case 'llama3':
+        modelConfigService.switchToLlama3();
+        break;
+      default:
+        // Try setting the model directly
+        modelConfigService.setDefaultModel(model);
+    }
+
+    const currentModel = modelConfigService.getCurrentModelInfo();
+    
+    return res.json({
+      success: true,
+      message: `Model switched successfully`,
+      currentModel: {
+        id: currentModel.id,
+        name: currentModel.name,
+        costPerKToken: currentModel.cost
+      }
+    });
+
+  } catch (error) {
+    logger.error('Failed to switch model:', error);
+    return res.status(500).json({ 
+      error: 'Failed to switch model',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+// Get current model info
+router.get('/current-model', async (_req, res) => {
+  try {
+    const currentModel = modelConfigService.getCurrentModelInfo();
+    
+    return res.json({
+      currentModel: {
+        id: currentModel.id,
+        name: currentModel.name,
+        costPerKToken: currentModel.cost
+      }
+    });
+  } catch (error) {
+    logger.error('Failed to get current model:', error);
+    return res.status(500).json({ error: 'Failed to get current model info' });
+  }
+});
 
 export default router; 
