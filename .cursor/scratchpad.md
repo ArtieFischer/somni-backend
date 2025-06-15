@@ -220,7 +220,36 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 ### ✅ NEUROSCIENTIST INTERPRETER & TEST FILES - IMPLEMENTATION COMPLETE & ENHANCED
 
 **Date**: Current session  
-**Status**: ✅ **FULLY IMPLEMENTED, TESTED & SIGNIFICANTLY IMPROVED**
+**Status**: ✅ **FULLY IMPLEMENTED, TESTED & SIGNIFICANTLY IMPROVED WITH SCIENTIFIC NUANCE**
+
+**Latest Enhancement - Scientific Voice Refinement:**
+
+- **✅ UPGRADED**: Added dynamic certainty levels based on scientific knowledge
+- **✅ UPGRADED**: Varied interpretive styles to prevent formulaic responses
+- **✅ UPGRADED**: Enhanced scientific accuracy with appropriate uncertainty
+- **✅ UPGRADED**: More natural acknowledgment of research limitations
+
+**Scientific Voice Guidelines Added:**
+
+- **Confident Authority**: For well-established findings ("REM sleep is associated with vivid dreams")
+- **Probabilistic Analysis**: For specific brain activity ("patterns suggest heightened limbic activity")
+- **Curious Speculation**: For unusual patterns ("This is fascinating - it might indicate...")
+- **Appropriate Uncertainty**: Save hedging for unprovable specifics about their brain
+- **Natural Limitations**: "Without EEG data, I can't pinpoint the exact sleep stage, but..."
+
+**Dynamic Interpretive Approaches:**
+
+- Sometimes lead with surprising lab findings
+- Other times start with what struck you about their specific dream
+- Occasionally begin with questions their dream raises
+- Mix technical insights with accessible explanations
+- Include personal research observations when relevant
+
+**Enhanced Voice Examples:**
+
+- **Flying Dreams**: "Flying dreams fascinate me because they're one of the few dream experiences that have no waking equivalent. Your brain created this sensation entirely from scratch!"
+- **Nightmares**: "After decades of studying nightmares, I can tell you with certainty that your brain's threat simulation system was working overtime here."
+- **Memory Processing**: "This looks like a textbook case of memory consolidation. Your hippocampus appears to be filing away recent experiences..."
 
 **Major Enhancement Applied - Addressing Vagueness:**
 
@@ -228,6 +257,7 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 - **✅ UPGRADED**: System prompt emphasizes specificity over generic responses
 - **✅ UPGRADED**: Output format guides toward unique insights rather than standard sleep facts
 - **✅ UPGRADED**: Fallback response is now expert-level and specific rather than generic
+- **✅ UPGRADED**: Added scientific nuance with appropriate certainty levels
 
 **Before Enhancement (Too Vague):**
 
@@ -236,13 +266,16 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 - Overused metaphors like "nighttime maintenance crew"
 - Could have come from any sleep app or Google search
 
-**After Enhancement (Expert & Specific):**
+**After Enhancement (Expert & Scientifically Nuanced):**
 
 - Dr. Carskadon speaks with 50+ years of authority: "In my lab, we've seen..."
 - Specific brain region analysis with explanations: "Your amygdala - that's your emotional alarm system"
 - Unique insights based on individual dream patterns
 - Expert observations about timing, neurotransmitter activity, memory replay patterns
 - Avoids generic responses and focuses on what makes THIS dream unique
+- **NEW**: Varies certainty appropriately - confident about established science, curious about specifics
+- **NEW**: Dynamic interpretive styles prevent formulaic responses
+- **NEW**: Natural acknowledgment of scientific limitations
 
 **Implementation Summary**:
 
@@ -254,6 +287,7 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 - Created proper module exports structure
 - **✅ FIXED**: Updated `PromptBuilderFactory` to include `NeuroscientistPromptBuilder` - **neuroscientist interpreter now working**
 - **✅ ENHANCED**: Completely redesigned prompts to eliminate vagueness and generic responses
+- **✅ REFINED**: Added scientific nuance with dynamic voice and appropriate certainty levels
 - **TypeScript compilation successful** - no compilation errors
 
 **Test Files Created & UUID-Updated**:
@@ -280,6 +314,8 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 5. **Unique Insights**: Information you can't get from sleep apps ✅
 6. **Pattern Recognition**: Timing, bizarreness, neurotransmitter activity analysis ✅
 7. **UUID Generation**: All test files now use proper `uuidgen` for dream IDs ✅
+8. **Scientific Nuance**: Appropriate certainty levels and dynamic voice ✅
+9. **Anti-Formulaic**: Each interpretation feels unique and fresh ✅
 
 **Enhanced Voice Examples:**
 
@@ -287,8 +323,10 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 - "Your amygdala - that's your emotional alarm system - was clearly firing"
 - "This reminds me of a study where..."
 - "In my research, I've found that dreams like yours often occur during..."
+- "In all my years studying dreams, this pattern still fascinates me..."
+- "Without EEG data, I can't pinpoint the exact sleep stage, but..."
 
-**Implementation Complete**: All neuroscientist interpreter functionality working perfectly with significantly improved specificity and expert-level insights that feel like a consultation with a world-renowned sleep researcher
+**Implementation Complete**: All neuroscientist interpreter functionality working perfectly with significantly improved specificity, expert-level insights, and scientifically nuanced voice that feels like a consultation with a world-renowned sleep researcher who varies her approach based on what science actually knows
 
 ## Lessons
 
