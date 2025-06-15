@@ -80,7 +80,7 @@ export class DreamInterpretationService {
         modelUsed: aiResponse.model,
         tokenUsage: aiResponse.usage?.totalTokens,
         responseSize: aiResponse.content.length,
-        symbolsFound: structuredInterpretation.symbols?.length || 0
+        symbolsFound: this.getSymbolsCount(structuredInterpretation)
       });
 
       return response;
@@ -278,9 +278,9 @@ Remember: Respond with ONLY the JSON object as specified.`
       freud: {
         name: 'Freudian',
         description: 'Classic psychoanalytic interpretation focusing on unconscious desires, repression, and symbolic meanings.',
-        features: ['Unconscious desires', 'Symbolic analysis', 'Childhood connections', 'Repression indicators'],
-        analysisDepths: ['initial', 'deep'],
-        status: 'coming_soon'
+        features: ['Unconscious desires', 'Dream work analysis', 'Childhood connections', 'Repression indicators'],
+        analysisDepths: ['initial', 'deep', 'transformative'],
+        specializations: ['Sexual symbolism', 'Oedipal dynamics', 'Transference analysis', 'Wish fulfillment']
       },
       neuroscientist: {
         name: 'Neuroscientific',
@@ -371,6 +371,18 @@ Remember: Respond with ONLY the JSON object as specified.`
         }
       }
     };
+  }
+
+  /**
+   * Helper to get symbols count from either Jung or Freud interpretations
+   */
+  private getSymbolsCount(interpretation: any): number {
+    if (interpretation.type === 'jungian') {
+      return interpretation.symbols?.length || 0;
+    } else if (interpretation.type === 'freudian') {
+      return interpretation.symbols?.length || 0; // Now both use symbols array
+    }
+    return 0;
   }
 }
 

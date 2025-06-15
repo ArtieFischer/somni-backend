@@ -12,5 +12,6 @@ export type {
   PromptTemplate 
 } from './base';
 
-// Interpreter-specific exports
-export { JungianPromptBuilder } from './interpreters/jung/builder'; 
+// Interpreter-specific exports (modular architecture)
+export { JungianPromptBuilder, JungianInterpreter } from './interpreters/jung';
+export { FreudianPromptBuilder, FreudianInterpreter } from './interpreters/freud'; 

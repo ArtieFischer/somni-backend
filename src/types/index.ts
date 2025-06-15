@@ -156,15 +156,20 @@ export interface JungianInsights {
 export interface FreudianInsights {
   type: 'freudian';
   coreMessage: string;
+  interpretation: string; // Full AI interpretation response
+  symbols: string[]; // Simple array like Jung
   unconsciousDesires: string[];
-  symbolicAnalysis: Array<{
-    symbol: string;
-    symbolicMeaning: string;
-    psychoanalyticInterpretation: string;
-  }>;
-  childhoodConnections?: string[];
-  repressionIndicators?: string[];
+  childhoodConnections: string[];
+  repressionIndicators: string[];
+  oedipalDynamics?: string;
+  transferenceElements?: string;
   reflectiveQuestions: string[];
+  // Optional specialized analyses - only included when LLM detects relevant themes
+  professionalAnalysis?: string;
+  socialDynamicsAnalysis?: string;
+  anxietyAnalysis?: string;
+  sexualAnalysis?: string;
+  transferenceAnalysis?: string;
 }
 
 export interface NeuroscientistInsights {
