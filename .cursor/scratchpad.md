@@ -219,49 +219,6 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
   - Implementation: Add contextual randomization instructions or seed-based selection guidance
   - Quality Check: Variety achieved without compromising authenticity of each interpreter's voice
 
-## Project Status Board
-
-### ✅ Current Sprint: Neuroscientist Interpreter Implementation - COMPLETED ✅
-
-**EXECUTOR MODE** - ✅ **ALL NEUROSCIENTIST IMPLEMENTATION TASKS COMPLETED SUCCESSFULLY**
-
-- [x] ✅ **Task 6.1**: Update types definition for NeuroscientistInsights
-- [x] ✅ **Task 6.2**: Implement NeuroscientistPromptBuilder
-- [x] ✅ **Task 6.3**: Implement NeuroscientistInterpreter parser
-- [x] ✅ **Task 6.4**: Update InterpretationParser to support neuroscientist
-- [x] ✅ **Task 6.5**: Create neuroscientist module exports
-
-**🎉 IMPLEMENTATION COMPLETE**: Dr. Mary Carskadon-inspired evidence-based neuroscience interpreter successfully implemented with:
-
-- Evidence-based framework (Continuity Hypothesis, Threat Simulation, Memory Consolidation, etc.)
-- Intelligent pattern detection for optional specialized analyses
-- Warm, educational voice with scientific accessibility
-- Proper TypeScript integration and error handling
-- Consistent architecture with Jung/Freud interpreters
-
-### 🔄 CURRENT EXECUTOR IMPLEMENTATION: Opening Variety Enhancement - EXECUTION PHASE
-
-**EXECUTOR MODE** - ⚡ **IMPLEMENTING OPENING VARIETY SOLUTIONS**
-
-**✅ REVOLUTIONARY APPROACH IMPLEMENTED**:
-
-- **User Insight**: The problem was the "menu effect" - even categorized selections still create repetitive patterns
-- **First Attempt**: Inspiration-based approach with explicit prohibition against using examples ❌ **FAILED**
-- **User Feedback**: Still seeing repetitive openings, LLM defaulting to first examples even when labeled "DO NOT USE"
-- **RADICAL SOLUTION**: Completely eliminated ALL example openings across all interpreters ❌ **STILL FAILED**
-- **User Analysis**: Devastating evidence that LLM creates its own rigid templates even without examples:
-  - Jung: "I'm struck by... and I sense that..." pattern
-  - Freud: "You find yourself in..." pattern
-  - Neuroscientist: "What fascinates me about your dream is..." **IDENTICAL every time**
-- **NUCLEAR SOLUTION**: Anti-repetition enforcement with explicit forbidden phrases and mandatory variety requirements ❌ **STILL INSUFFICIENT**
-- **USER BREAKTHROUGH INSIGHT**: "Each time we give LLM options to choose from, it chooses the first one - maybe we could add randomization with code?"
-- **REVOLUTIONARY SOLUTION**: Code-based randomization instead of relying on LLM to vary responses naturally
-- **Implementation**:
-  - Jung: 10 randomized opening styles + 8 variety enforcement rules injected via code
-  - Freud: 10 randomized opening styles + 8 analytical approaches injected via code
-  - Neuroscientist: Randomized scientific approaches (in progress)
-  - Each request gets different randomized instructions via Math.random()
-
 ## New Problem Identification: Repetitive Opening Variety
 
 **USER FEEDBACK**: "Every agent now uses the same openings almost every time - there is some issue to be fixed"
@@ -501,3 +458,21 @@ But the selection mechanism is flawed:
 
 1. ✅ `single-neuro-test.sh` - Single dream test with **UUID generation**
 2. ✅ `test-dreams-neuro.sh`
+
+### 🔄 CURRENT EXECUTOR IMPLEMENTATION: Comprehensive Prompt Randomisation Refactoring - EXECUTION PHASE
+
+**EXECUTOR MODE** - ⚡ **IMPLEMENTING PHASE 8: COMPREHENSIVE PROMPT RANDOMISATION REFACTORING**
+
+**TASK**: Implement centralized PromptRandomiser utility with history tracking, forbidden phrase management, and unified JSON schema to eliminate repetitive patterns and improve response variety.
+
+**Current Status**: Starting Phase 8.1 - Foundation Infrastructure
+
+**Implementation Progress**:
+
+- [ ] 🔄 **Sub-Phase 8.1**: Foundation Infrastructure (3 tasks)
+- [ ] ⏳ **Sub-Phase 8.2**: Freudian Builder Refactoring (3 tasks)
+- [ ] ⏳ **Sub-Phase 8.3**: Jungian Builder Refactoring (3 tasks)
+- [ ] ⏳ **Sub-Phase 8.4**: Neuroscientist Builder Refactoring (7 tasks)
+- [ ] ⏳ **Sub-Phase 8.5**: Service Layer Enhancements (2 tasks)
+- [ ] ⏳ **Sub-Phase 8.6**: Testing and Validation (3 tasks)
+- [ ] ⏳ **Sub-Phase 8.7**: Documentation and Cleanup (2 tasks)

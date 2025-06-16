@@ -1,5 +1,5 @@
 import { logger } from '../../../utils/logger';
-import type { FreudianInsights } from '../../../types';
+import type { DreamAnalysis, DebateProcess, DreamAnalysisWithDebate } from '../../../types';
 
 /**
  * Freudian-specific interpretation parsing
@@ -10,16 +10,26 @@ export class FreudianInterpreter {
   /**
    * Parse Freudian interpretation response
    */
-  static parseResponse(aiResponse: string): FreudianInsights {
+  static parseResponse(aiResponse: string): DreamAnalysis {
+    const fullResponse = this.parseResponseWithDebate(aiResponse);
+    return fullResponse.dreamAnalysis;
+  }
+
+  /**
+   * Parse Freudian interpretation response with debate process
+   */
+  static parseResponseWithDebate(aiResponse: string): DreamAnalysisWithDebate {
     try {
-      // First try to find JSON in the response
+      let debateProcess: DebateProcess | undefined;
+
+      // Parse the JSON response
       let jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
+      if (!jsonMatch || !jsonMatch[0]) {
         throw new Error('No JSON found in response');
       }
-
-      let jsonString = jsonMatch[0];
       
+      let jsonString = jsonMatch[0];
+
       // Clean up common JSON issues
       jsonString = jsonString
         .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
@@ -40,32 +50,42 @@ export class FreudianInterpreter {
         parsed = JSON.parse(jsonString);
       }
       
-      // Validate required fields
-      if (!parsed.interpretation || !Array.isArray(parsed.symbols)) {
+      // Validate required fields for new format
+      if (!parsed.dreamTopic || !Array.isArray(parsed.symbols) || !parsed.quickTake || !parsed.dreamWork || !parsed.interpretation || !parsed.selfReflection) {
         throw new Error('Missing required fields in Freudian response');
       }
 
+      // Extract main interpretation
+      const finalInterpretation: DreamAnalysis = {
+        dreamTopic: parsed.dreamTopic,
+        symbols: parsed.symbols,
+        quickTake: parsed.quickTake,
+        dreamWork: parsed.dreamWork,
+        interpretation: parsed.interpretation,
+        selfReflection: parsed.selfReflection
+      };
+
+      // Extract debug/debate information if present
+      if (parsed._debug_hypothesis_a && parsed._debug_hypothesis_b && parsed._debug_hypothesis_c) {
+        debateProcess = {
+          hypothesis_a: parsed._debug_hypothesis_a,
+          hypothesis_b: parsed._debug_hypothesis_b,
+          hypothesis_c: parsed._debug_hypothesis_c,
+          evaluation: parsed._debug_evaluation || 'No evaluation provided',
+          selected_hypothesis: parsed._debug_selected || 'Unknown'
+        };
+      }
+
       logger.info('Successfully parsed Freudian response', {
-        symbolsCount: parsed.symbols.length,
+        symbolsCount: finalInterpretation.symbols.length,
+        hasDebateProcess: !!debateProcess,
         hasUnconscious: !!parsed.unconsciousDesires,
         hasChildhood: !!parsed.childhoodConnections
       });
 
       return {
-        type: 'freudian',
-        interpretation: parsed.interpretation,
-        coreMessage: parsed.coreInsight || 'Your dream reveals profound unconscious dynamics.',
-        symbols: parsed.symbols || [], // Simple string array like Jung
-        unconsciousDesires: parsed.unconsciousDesires ? [parsed.unconsciousDesires] : [],
-        childhoodConnections: parsed.childhoodConnections ? [parsed.childhoodConnections] : [],
-        repressionIndicators: parsed.repressionIndicators ? [parsed.repressionIndicators] : [],
-        reflectiveQuestions: parsed.reflectiveQuestion ? [parsed.reflectiveQuestion] : [],
-        // Optional specialized analyses - only included when LLM detects relevant themes
-        ...(parsed.professionalAnalysis && { professionalAnalysis: parsed.professionalAnalysis }),
-        ...(parsed.socialDynamicsAnalysis && { socialDynamicsAnalysis: parsed.socialDynamicsAnalysis }),
-        ...(parsed.anxietyAnalysis && { anxietyAnalysis: parsed.anxietyAnalysis }),
-        ...(parsed.sexualAnalysis && { sexualAnalysis: parsed.sexualAnalysis }),
-        ...(parsed.transferenceAnalysis && { transferenceAnalysis: parsed.transferenceAnalysis })
+        dreamAnalysis: finalInterpretation,
+        debateProcess
       };
 
     } catch (error) {
@@ -75,23 +95,23 @@ export class FreudianInterpreter {
       });
 
       // Fallback response
-      return this.getFallbackResponse();
+      return {
+        dreamAnalysis: this.getFallbackResponse()
+      };
     }
   }
 
   /**
    * Get fallback Freudian response when parsing fails
    */
-  private static getFallbackResponse(): FreudianInsights {
+  private static getFallbackResponse(): DreamAnalysis {
     return {
-      type: 'freudian',
-      interpretation: 'Your dream presents rich material for psychoanalytic investigation. The unconscious mechanisms at work here reveal significant repressed content that warrants careful exploration.',
-      coreMessage: 'This dream fulfills a disguised unconscious wish.',
-      symbols: [], // Simple string array like Jung
-      unconsciousDesires: ['The dream reveals hidden desires requiring analysis'],
-      childhoodConnections: ['Early experiences influence this dream content'],
-      repressionIndicators: ['The dream shows active repression at work'],
-      reflectiveQuestions: ['What forbidden wish might this dream be fulfilling?']
+      dreamTopic: 'Disguised unconscious wish fulfillment',
+      symbols: [],
+      quickTake: 'This dream reveals significant repressed content that warrants careful psychoanalytic exploration.',
+      dreamWork: 'The unconscious employs displacement and condensation to disguise forbidden desires.',
+      interpretation: 'Your dream presents rich material for psychoanalytic investigation. The unconscious mechanisms at work here reveal significant repressed content that warrants careful exploration. This dream fulfills a disguised unconscious wish through sophisticated defense mechanisms.',
+      selfReflection: 'What forbidden wish might this dream be fulfilling?'
     };
   }
 } 

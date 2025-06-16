@@ -1,5 +1,5 @@
 import { logger } from '../../../utils/logger';
-import type { JungianInsights } from '../../../types';
+import type { DreamAnalysis, DebateProcess, DreamAnalysisWithDebate, JungianInsights } from '../../../types';
 
 /**
  * Jungian-specific interpretation parsing
@@ -10,15 +10,35 @@ export class JungianInterpreter {
   /**
    * Parse Jungian interpretation response with enhanced JSON and text handling
    */
-  static parseResponse(aiResponse: string): JungianInsights {
-    try {
-      // First try to find JSON in the response
-      let jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error('No JSON found in response');
-      }
+  static parseResponse(aiResponse: string): DreamAnalysis | JungianInsights {
+    const fullResponse = this.parseResponseWithDebate(aiResponse);
+    return fullResponse.dreamAnalysis;
+  }
 
-      let jsonString = jsonMatch[0];
+  /**
+   * Parse Jungian interpretation response with debate process
+   */
+  static parseResponseWithDebate(aiResponse: string): DreamAnalysisWithDebate | { dreamAnalysis: JungianInsights; debateProcess?: DebateProcess } {
+    try {
+      let debateProcess: DebateProcess | undefined;
+      let finalInterpretation: DreamAnalysis | JungianInsights;
+
+      // Extract JSON from response (handle both ```json blocks and raw JSON)
+      let jsonString = aiResponse;
+      
+      // Remove ```json wrapper if present
+      const jsonBlockMatch = aiResponse.match(/```json\s*\n?([\s\S]*?)\n?```/);
+      if (jsonBlockMatch && jsonBlockMatch[1]) {
+        jsonString = jsonBlockMatch[1];
+      } else {
+        // Try to find raw JSON
+        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          jsonString = jsonMatch[0];
+        } else {
+          throw new Error('No JSON found in response');
+        }
+      }
       
       // Clean up common JSON issues
       jsonString = jsonString
@@ -41,30 +61,68 @@ export class JungianInterpreter {
         parsed = JSON.parse(jsonString);
       }
       
-      // Validate required fields
-      if (!parsed.interpretation || !Array.isArray(parsed.symbols)) {
-        throw new Error(`Missing required fields. Found: interpretation=${!!parsed.interpretation}, symbols=${Array.isArray(parsed.symbols)}`);
+      // Check if it's the new JungianInsights format
+      if (this.isJungianInsightsFormat(parsed)) {
+        finalInterpretation = this.parseJungianInsights(parsed, aiResponse);
+      } 
+      // Check if it's nested under 'interpretation' key
+      else if (parsed.interpretation && typeof parsed.interpretation === 'object') {
+        if (this.isJungianInsightsFormat(parsed.interpretation)) {
+          finalInterpretation = this.parseJungianInsights(parsed.interpretation, aiResponse);
+        } else {
+          // Fall back to old format
+          finalInterpretation = this.parseOldFormat(parsed);
+        }
+      }
+      // Otherwise try old format
+      else {
+        finalInterpretation = this.parseOldFormat(parsed);
       }
 
+      // Extract debug/debate information if present
+      if (parsed._debug_hypothesis_a && parsed._debug_hypothesis_b && parsed._debug_hypothesis_c) {
+        debateProcess = {
+          hypothesis_a: parsed._debug_hypothesis_a,
+          hypothesis_b: parsed._debug_hypothesis_b,
+          hypothesis_c: parsed._debug_hypothesis_c,
+          evaluation: parsed._debug_evaluation || 'No evaluation provided',
+          selected_hypothesis: parsed._debug_selected || 'Unknown'
+        };
+      }
+
+      const symbolsCount = 'symbols' in finalInterpretation ? finalInterpretation.symbols.length : 0;
+      
       logger.info('Successfully parsed Jungian response', {
-        symbolsCount: parsed.symbols.length,
-        hasCompensatoryFunction: !!parsed.compensatoryFunction,
-        hasShadowAspect: !!parsed.shadowAspect
+        format: 'type' in finalInterpretation && finalInterpretation.type === 'jungian' ? 'JungianInsights' : 'DreamAnalysis',
+        symbolsCount,
+        hasDebateProcess: !!debateProcess
       });
 
-      return {
-        type: 'jungian',
-        interpretation: parsed.interpretation,
-        coreMessage: parsed.coreInsight || 'Your dream reveals profound inner wisdom.',
-        phenomenologicalOpening: parsed.interpretation.split('.')[0] + '.',
-        symbols: parsed.symbols,
-        shadowAspects: parsed.shadowAspect ? [parsed.shadowAspect] : [],
-        compensatoryFunction: parsed.compensatoryFunction || 'This dream brings balance to your conscious perspective.',
-        individuationGuidance: parsed.guidanceForDreamer || 'Work with this dream through reflection.',
-        reflectiveQuestions: parsed.reflectiveQuestion ? [parsed.reflectiveQuestion] : [],
-        isBigDream: parsed.interpretation.toLowerCase().includes('profound') || 
-                   parsed.interpretation.toLowerCase().includes('remarkable')
-      };
+      // Check if it's JungianInsights format
+      if ('type' in finalInterpretation && finalInterpretation.type === 'jungian') {
+        if (debateProcess) {
+          return {
+            dreamAnalysis: finalInterpretation,
+            debateProcess
+          } as { dreamAnalysis: JungianInsights; debateProcess?: DebateProcess };
+        } else {
+          return {
+            dreamAnalysis: finalInterpretation
+          } as { dreamAnalysis: JungianInsights; debateProcess?: DebateProcess };
+        }
+      } else {
+        // It's DreamAnalysis format
+        if (debateProcess) {
+          return {
+            dreamAnalysis: finalInterpretation as DreamAnalysis,
+            debateProcess
+          } as DreamAnalysisWithDebate;
+        } else {
+          return {
+            dreamAnalysis: finalInterpretation as DreamAnalysis
+          } as DreamAnalysisWithDebate;
+        }
+      }
 
     } catch (error) {
       logger.error('Failed to parse Jungian response', { 
@@ -74,25 +132,141 @@ export class JungianInterpreter {
       });
 
       // Fallback response
-      return this.getFallbackResponse();
+      return {
+        dreamAnalysis: this.getFallbackResponse()
+      };
     }
+  }
+
+  /**
+   * Check if the parsed object matches JungianInsights format
+   */
+  private static isJungianInsightsFormat(obj: any): boolean {
+    // Check for key JungianInsights fields
+    return !!(
+      obj.individuationMessage || 
+      obj.compensatoryMessage || 
+      obj.complexExploration ||
+      obj.phenomenologicalOpening ||
+      obj.coreMessage ||
+      obj.compensatoryFunction ||
+      obj.individuationGuidance
+    );
+  }
+
+  /**
+   * Parse new JungianInsights format
+   */
+  private static parseJungianInsights(parsed: any, fullResponse: string): JungianInsights {
+    // Extract symbols from the response
+    const symbols = this.extractSymbols(parsed, fullResponse);
+    
+    return {
+      type: 'jungian',
+      interpretation: fullResponse,
+      coreMessage: parsed.coreMessage || parsed.individuationMessage || 'Your dream reveals profound insights about your individuation journey.',
+      phenomenologicalOpening: parsed.phenomenologicalOpening || parsed.opening || parsed.personalInsight || 'I notice immediate resonance with this dream\'s symbolic landscape.',
+      symbols,
+      shadowAspects: parsed.shadowAspects || this.extractShadowAspects(parsed),
+      compensatoryFunction: parsed.compensatoryFunction || parsed.compensatoryMessage || parsed.compensatory_message || 'This dream compensates for conscious attitudes.',
+      individuationGuidance: parsed.individuationGuidance || parsed.guidance || parsed.individuationPath || 'Continue exploring these symbols in your inner work.',
+      activeImaginationExercise: parsed.activeImaginationExercise,
+      reflectiveQuestions: parsed.reflectiveQuestions || [parsed.selfReflection || 'What aspect of your Self is seeking recognition?'],
+      isBigDream: parsed.isBigDream || false,
+      lifePhaseGuidance: parsed.lifePhaseGuidance,
+      animaAnimusContent: parsed.animaAnimusContent,
+      synchronicityConnection: parsed.synchronicityConnection
+    };
+  }
+
+  /**
+   * Parse old DreamAnalysis format
+   */
+  private static parseOldFormat(parsed: any): DreamAnalysis {
+    // Validate required fields for old format
+    if (!parsed.dreamTopic || !Array.isArray(parsed.symbols) || !parsed.quickTake || !parsed.dreamWork || !parsed.interpretation || !parsed.selfReflection) {
+      throw new Error(`Missing required fields. Found: dreamTopic=${!!parsed.dreamTopic}, symbols=${Array.isArray(parsed.symbols)}, quickTake=${!!parsed.quickTake}, dreamWork=${!!parsed.dreamWork}, interpretation=${!!parsed.interpretation}, selfReflection=${!!parsed.selfReflection}`);
+    }
+
+    return {
+      dreamTopic: parsed.dreamTopic,
+      symbols: parsed.symbols,
+      quickTake: parsed.quickTake,
+      dreamWork: parsed.dreamWork,
+      interpretation: parsed.interpretation,
+      selfReflection: parsed.selfReflection
+    };
+  }
+
+  /**
+   * Extract symbols from various response formats
+   */
+  private static extractSymbols(parsed: any, fullResponse: string): string[] {
+    // If symbols array exists, use it
+    if (Array.isArray(parsed.symbols) && parsed.symbols.length > 0) {
+      return parsed.symbols;
+    }
+
+    // Try to extract from complex exploration or other fields
+    const symbolWords: Set<string> = new Set();
+    
+    // Common Jungian symbols to look for
+    const jungianSymbols = [
+      'shadow', 'anima', 'animus', 'self', 'mandala', 'serpent', 'water', 
+      'fire', 'tree', 'house', 'animal', 'child', 'mother', 'father',
+      'library', 'books', 'light', 'darkness', 'transformation', 'journey',
+      'labyrinth', 'guide', 'symbols', 'door', 'key', 'mirror', 'ocean'
+    ];
+
+    // Search in various fields
+    const fieldsToSearch = [
+      parsed.complexExploration,
+      parsed.archetypalConnection, 
+      parsed.interpretation,
+      parsed.phenomenologicalOpening,
+      fullResponse
+    ];
+
+    for (const field of fieldsToSearch) {
+      if (field && typeof field === 'string') {
+        const fieldLower = field.toLowerCase();
+        for (const symbol of jungianSymbols) {
+          if (fieldLower.includes(symbol)) {
+            symbolWords.add(symbol);
+          }
+        }
+      }
+    }
+
+    // Return up to 8 symbols
+    return Array.from(symbolWords).slice(0, 8);
+  }
+
+  /**
+   * Extract shadow aspects from the response
+   */
+  private static extractShadowAspects(parsed: any): string[] | undefined {
+    if (parsed.shadowAspects) return parsed.shadowAspects;
+    
+    // Try to extract from complex exploration
+    if (parsed.complexExploration && parsed.complexExploration.toLowerCase().includes('shadow')) {
+      return ['Shadow elements present in the dream require further exploration'];
+    }
+    
+    return undefined;
   }
 
   /**
    * Get fallback Jungian response when parsing fails
    */
-  private static getFallbackResponse(): JungianInsights {
+  private static getFallbackResponse(): DreamAnalysis {
     return {
-      type: 'jungian',
-      interpretation: 'I sense this dream carries significant meaning for you. While I cannot fully parse the symbolic content at this moment, your unconscious is clearly communicating something important about your current life situation.',
-      coreMessage: 'Your dream speaks to deep psychological processes.',
-      phenomenologicalOpening: 'This dream presents rich symbolic material.',
+      dreamTopic: 'Unconscious communication seeking integration',
       symbols: [],
-      shadowAspects: [],
-      compensatoryFunction: 'The dream offers balance to consciousness.',
-      individuationGuidance: 'Reflect on what this dream might be showing you.',
-      reflectiveQuestions: ['What does this dream awaken in you?'],
-      isBigDream: false
+      quickTake: 'Your unconscious is clearly communicating something important about your current life situation.',
+      dreamWork: 'The dream offers balance to consciousness through symbolic compensation.',
+      interpretation: 'I sense this dream carries significant meaning for you. While I cannot fully parse the symbolic content at this moment, your unconscious is clearly communicating something important about your current life situation. This dream presents rich symbolic material that warrants deeper reflection.',
+      selfReflection: 'What does this dream awaken in you?'
     };
   }
 } 

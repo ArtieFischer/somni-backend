@@ -1,29 +1,23 @@
 import { BasePromptBuilder, type DreamAnalysisRequest } from '../../base';
+import { PromptRandomiser } from '../../utils/randomiser';
 
 /**
  * Authentic Jungian Prompt Builder
  * Creates deeply personal interpretations that feel like Jung himself is speaking
- * Uses true randomization without giving LLM choices to eliminate repetition
+ * Uses centralized PromptRandomiser with history tracking to eliminate repetition
  */
 export class JungianPromptBuilder extends BasePromptBuilder {
 
-  /**
-   * Generate hash-based seed from dream content for consistent randomization
-   */
-  private generateDreamBasedSeed(dreamText: string): number {
-    let hash = 0;
-    for (let i = 0; i < dreamText.length; i++) {
-      hash = ((hash << 5) - hash) + dreamText.charCodeAt(i);
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    return Math.abs(hash);
-  }
+  private static FORBIDDEN: string[] = [
+    'shadow material that\'s trying to integrate',
+    'Your unconscious is', 'The dream shows',
+    'As I listen to your dream, I\'m struck by'
+  ];
 
   /**
-   * Pre-select single opening approach without giving LLM choices
+   * Pre-select single opening approach using PromptRandomiser
    */
   private selectOpeningApproach(dreamText: string): string {
-    const seed = this.generateDreamBasedSeed(dreamText) + Date.now();
     const approaches = [
       "Begin with the dream's most emotionally charged symbol and what it stirs in you as Jung",
       "Start with the central transformation occurring in the dream landscape",
@@ -32,18 +26,16 @@ export class JungianPromptBuilder extends BasePromptBuilder {
       "Start with what this dream compensates for in the dreamer's conscious attitude",
       "Open with the archetypal energy that immediately catches your attention", 
       "Begin with the individuation message the Self is conveying",
-      "Start with the shadow material that's trying to integrate"
+      "Start with the numinous quality that draws your attention first"
     ];
     
-    const index = seed % approaches.length;
-    return approaches[index] ?? 'Begin with the dream\'s most emotionally charged symbol and what it stirs in you as Jung';
+    return PromptRandomiser.pickUnique(approaches, dreamText, 'jung');
   }
 
   /**
-   * Pre-select single writing style without choices
+   * Pre-select single writing style using PromptRandomiser
    */
   private selectWritingStyle(dreamText: string): string {
-    const seed = this.generateDreamBasedSeed(dreamText + 'style') + Date.now();
     const styles = [
       "Use flowing, contemplative sentences that mirror the dream's rhythm",
       "Write with short, penetrating insights that build understanding gradually",
@@ -55,16 +47,13 @@ export class JungianPromptBuilder extends BasePromptBuilder {
       "Write with confident authority softened by genuine curiosity"
     ];
     
-    const index = seed % styles.length;
-    return styles[index] ?? 'Use flowing, contemplative sentences that mirror the dream\'s rhythm';
+    return PromptRandomiser.pickUnique(styles, dreamText + 'style', 'jung');
   }
 
   /**
-   * Pre-select vocabulary anchors without giving options
+   * Pre-select vocabulary anchors using PromptRandomiser
    */
   private selectVocabularyAnchors(dreamText: string): { verb: string; descriptor: string } {
-    const seed = this.generateDreamBasedSeed(dreamText + 'vocab');
-    
     const openingVerbs = [
       'emerges', 'unfolds', 'crystallizes', 'pulses', 'speaks', 'dances',
       'weaves', 'beckons', 'transforms', 'awakens', 'bridges', 'reveals'
@@ -76,16 +65,15 @@ export class JungianPromptBuilder extends BasePromptBuilder {
     ];
     
     return {
-      verb: openingVerbs[seed % openingVerbs.length] ?? 'emerges',
-      descriptor: psycheDescriptors[(seed + 3) % psycheDescriptors.length] ?? 'seeks'
+      verb: PromptRandomiser.pickUnique(openingVerbs, dreamText + 'verb', 'jung'),
+      descriptor: PromptRandomiser.pickUnique(psycheDescriptors, dreamText + 'desc', 'jung')
     };
   }
 
   /**
-   * Pre-select structural pattern without options
+   * Pre-select structural pattern using PromptRandomiser
    */
   private selectStructuralPattern(dreamText: string): string {
-    const seed = this.generateDreamBasedSeed(dreamText + 'structure');
     const patterns = [
       "Structure: [Core Symbol] + [Archetypal Meaning] + [Individuation Guidance]",
       "Structure: [Emotional Essence] + [Compensatory Function] + [Integration Path]",
@@ -94,8 +82,7 @@ export class JungianPromptBuilder extends BasePromptBuilder {
       "Structure: [Numinous Element] + [Psychological Significance] + [Life Application]"
     ];
     
-    const index = seed % patterns.length;
-    return patterns[index] ?? 'Structure: [Core Symbol] + [Archetypal Meaning] + [Individuation Guidance]';
+    return PromptRandomiser.pickUnique(patterns, dreamText + 'structure', 'jung');
   }
 
   /**
@@ -133,7 +120,6 @@ Core principles:
    * Build the output format - Uses true randomization without choices
    */
   protected buildOutputFormat(request: DreamAnalysisRequest): string {
-    const age = request.userContext?.age || 30;
     const situation = request.userContext?.currentLifeSituation || '';
     const dreamText = request.dreamTranscription;
     
@@ -143,7 +129,9 @@ Core principles:
     const vocabAnchors = this.selectVocabularyAnchors(dreamText);
     const structuralPattern = this.selectStructuralPattern(dreamText);
     
-    return `CRITICAL INSTRUCTION: You must respond with ONLY a JSON object. No text before or after.
+    const forbiddenPhrases = JungianPromptBuilder.FORBIDDEN.join(', ');
+    
+    return `${this.generateDebateSection('jung', 'Carl Jung, pioneering analytical psychologist exploring the depths of the human psyche through individuation')}
 
 SPECIFIC INSTRUCTIONS FOR THIS INTERPRETATION:
 
@@ -161,7 +149,15 @@ REQUIRED VOCABULARY ELEMENTS:
 STRUCTURAL PATTERN TO FOLLOW:
 ${structuralPattern}
 
-The dreamer is ${age} years old, ${this.getLifePhase(age)}. ${situation ? `Their current situation: ${situation}` : ''}
+LENGTH GUARDRAILS:
+- Limit total words to 300 ± 30
+- Opening paragraph ≤ 50 words
+
+NEGATIVE CONSTRAINTS:
+- Never use any of these phrases: ${forbiddenPhrases}
+- Avoid "shadow material that's trying to integrate" unless it is **specifically** justified by dream symbols
+
+${situation ? `Current situation: ${situation}` : ''}
 
 JUNG'S AUTHENTIC VOICE REQUIREMENTS:
 - You are Carl Jung, personally moved by this specific dream
@@ -188,16 +184,31 @@ DEPTH REQUIREMENTS:
 - Identify any complexes that might be constellated
 - Consider the transcendent function - how opposites might unite
 
-Your response must be EXACTLY this JSON structure:
-{
-  "interpretation": "A flowing 350-450 word interpretation in Jung's profound voice. Rich with Jungian concepts, mythological connections, and deep psychological insight. Make them feel truly seen and understood. Include specific guidance for their individuation journey.",
-  "symbols": ["symbol1", "symbol2", "symbol3", "symbol4", "symbol5"],
-  "coreInsight": "One penetrating sentence that captures what the Self is trying to communicate - be specific and transformative",
-  "shadowAspect": "What shadow material appears and how it relates to their current life - be specific, not generic",
-  "compensatoryFunction": "Precisely how this dream balances their conscious attitude - relate to their actual situation",
-  "guidanceForDreamer": "2-3 sentences of practical wisdom for integrating this dream's message into their individuation journey",
-  "reflectiveQuestion": "One profound question that will haunt them positively and open new understanding - make it specific to their dream symbols"
-}
+${this.getBaseSchema('jung', !!request.testMode)}
+
+JUNGIAN SECTION REQUIREMENTS:
+
+#1 DREAM TOPIC: 5-9 words capturing the core individuation tension (e.g., "Shadow seeks integration through symbolic confrontation")
+
+#2 SYMBOLS: 3-8 symbols as array of strings
+
+#3 QUICK TAKE: ~40 words. What question about wholeness or balance is this dream raising? Focus on the central individuation challenge.
+
+#4 DREAM WORK: 3-4 sentences. Choose up to 3 Jungian concepts that fit this dream:
+- Compensatory function (balancing conscious attitude)
+- Shadow integration and recognition
+- Anima/animus dynamics  
+- Archetypal energies and patterns
+- Individuation process and Self emergence
+- Collective unconscious material
+- Complex constellation
+- Transcendent function (uniting opposites)
+- Numinous experiences
+Explain how each applies to THIS dream specifically.
+
+#5 INTERPRETATION: Longer, comprehensive interpretation of events and symbols in context of this dream. 100-450 words depending on dream length. Nicely formatted with empty lines between paragraphs.
+
+#6 SELF REFLECTION: One question starting with When/Where/What/How that opens deeper self-understanding
 
 Rules:
 - "symbols" MUST be a simple array of 3-8 single words (e.g., ["ocean", "key", "wise-man"])
@@ -212,8 +223,8 @@ Rules:
    * Helper to get life phase in Jungian terms
    */
   private getLifePhase(age: number): string {
-    if (age < 25) return "in the morning of life, building your conscious identity";
-    if (age < 35) return "establishing your place in the world, hero's journey in full swing";  
+    if (age < 25) return "in the morning of life, building conscious identity";
+    if (age < 35) return "establishing place in the world, hero's journey in full swing";  
     if (age < 45) return "approaching midlife, where the Self begins to call more insistently";
     if (age < 55) return "in life's afternoon, the time of greatest potential for individuation";
     if (age < 65) return "harvesting wisdom, integrating the opposites within";
@@ -227,7 +238,7 @@ Rules:
     return {
       dreamText: request.dreamTranscription,
       age: request.userContext?.age || 30,
-      lifePhase: this.getLifePhase(request.userContext?.age || 30),
+      lifePhase: request.userContext?.age ? this.getLifePhase(request.userContext.age) : '',
       currentSituation: request.userContext?.currentLifeSituation || '',
       emotionalState: request.userContext?.emotionalState || '',
       recentEvents: request.userContext?.recentMajorEvents || []

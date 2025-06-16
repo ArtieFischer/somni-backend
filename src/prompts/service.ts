@@ -64,14 +64,14 @@ export class DreamInterpretationService {
       // Step 2: Generate AI interpretation with timeout
       const aiResponse = await this.generateInterpretationWithTimeout(request, promptTemplate);
       
-      // Step 3: Parse and structure the response
-      const structuredInterpretation = await InterpretationParser.parseInterpretationResponse(
+      // Step 3: Parse and structure the response with debate process
+      const fullAnalysis = await InterpretationParser.parseInterpretationResponseWithDebate(
         aiResponse.content,
         request.interpreterType
       );
       
       // Step 4: Build final response with metadata
-      const response = this.buildFinalResponse(request, aiResponse, structuredInterpretation, startTime);
+      const response = this.buildFinalResponse(request, aiResponse, fullAnalysis, startTime);
 
       logger.info('✨ Dream interpretation completed successfully', {
         dreamId: request.dreamId,
@@ -80,7 +80,8 @@ export class DreamInterpretationService {
         modelUsed: aiResponse.model,
         tokenUsage: aiResponse.usage?.totalTokens,
         responseSize: aiResponse.content.length,
-        symbolsFound: this.getSymbolsCount(structuredInterpretation)
+        symbolsFound: this.getSymbolsCount(fullAnalysis.dreamAnalysis),
+        hasDebateProcess: !!fullAnalysis.debateProcess
       });
 
       return response;
@@ -102,7 +103,8 @@ export class DreamInterpretationService {
         ...(request.userContext && { userContext: request.userContext }),
         ...(request.previousDreams && { previousDreams: request.previousDreams }),
         analysisDepth: request.analysisDepth || 'initial' as const,
-        ...(request.specialPrompts && { specialPrompts: request.specialPrompts })
+        ...(request.specialPrompts && { specialPrompts: request.specialPrompts }),
+        ...(request.testMode && { testMode: request.testMode })
       };
 
       const promptTemplate = await PromptBuilderService.buildInterpretationPrompt(dreamAnalysisRequest);
@@ -209,15 +211,16 @@ Remember: Respond with ONLY the JSON object as specified.`
   private buildFinalResponse(
     request: InterpretationRequest,
     aiResponse: { content: string; usage: TokenUsage; model: string },
-    structuredInterpretation: any,
+    fullAnalysis: any,
     startTime: number
   ): InterpretationResponse {
     const duration = Date.now() - startTime;
     
-    return {
+    // Prepare response with debate process if available
+    const responseData: any = {
       success: true,
       dreamId: request.dreamId,
-      interpretation: structuredInterpretation,
+      interpretation: fullAnalysis.dreamAnalysis || fullAnalysis, // Support both new and old format
       aiResponse: aiResponse.content, // Raw AI response for debugging
       metadata: {
         interpreterType: request.interpreterType,
@@ -229,6 +232,13 @@ Remember: Respond with ONLY the JSON object as specified.`
         costSummary: InterpretationParser.transformCostSummary(openRouterService.getCostSummary())
       }
     };
+
+    // Add debate process only in test mode for debugging/development
+    if (request.testMode && fullAnalysis.debateProcess) {
+      responseData.debateProcess = fullAnalysis.debateProcess;
+    }
+    
+    return responseData;
   }
 
   /**

@@ -4,6 +4,7 @@ import type {
   InterpreterType
 } from '../types';
 import { logger } from '../utils/logger';
+import { DebateModule } from './utils/debate';
 
 /**
  * Dream analysis request structure
@@ -19,6 +20,7 @@ export interface DreamAnalysisRequest {
     isNightmare?: boolean;
     customContext?: string;
   };
+  testMode?: boolean; // Flag to enable debug features like debate process visibility
 }
 
 /**
@@ -36,6 +38,45 @@ export interface PromptTemplate {
  * Simplified to focus on what we actually use
  */
 export abstract class BasePromptBuilder {
+
+  /**
+   * Unified JSON schema for all interpreters
+   * Structured for optimal user experience with 7 clear sections
+   */
+  protected getBaseSchema(interpreterType: InterpreterType, includeDebugFields: boolean = false): string {
+    
+    const debugFields = includeDebugFields ? `,
+  "_debug_hypothesis_a": "[MUST BE EXACTLY 70-80 WORDS: First detailed interpretation focusing on specific dream elements like the exact type of water, where it appears, how it affects movement, and what this reveals about the dreamer's current emotional state and relationships. Be specific to THIS dream, not generic concepts.]",
+  "_debug_hypothesis_b": "[MUST BE EXACTLY 70-80 WORDS: Second interpretation taking completely different angle on same dream elements. If A focused on emotional blockages, focus on transformation themes. Use same specific symbols but different psychological lens.]",
+  "_debug_hypothesis_c": "[MUST BE EXACTLY 70-80 WORDS: Third interpretation with different focus entirely. Perhaps archetypal vs personal, or past vs future potential. Make distinctly different from A and B while addressing SAME specific dream elements.]",
+  "_debug_evaluation": "[Detailed explanation of which hypothesis you chose and why - consider uniqueness, personal relevance, insight depth]",
+  "_debug_selected": "[A, B, or C]"` : '';
+
+    return `
+Your entire reply MUST be valid JSON with this exact structure:
+{
+  "dreamTopic": "[5-9 word hook capturing core tension - creative title for dream list display]",
+  "symbols": ["symbol1", "symbol2", "symbol3"],
+  "quickTake": "[One or two sentences (~40 words) summarizing the central psychological question posed by the dream]",
+  "dreamWork": "[3-4 sentences mentioning up to 3 core ideas from ${interpreterType} psychology. Explain each idea's relevance in context; no textbook detours]",
+  "interpretation": "[Longer, comprehensive interpretation of events and symbols in context of this dream. 100-450 words depending on dream length. Nicely formatted with empty lines between paragraphs]",
+  "selfReflection": "[One question (≤25 words) starting with When/Where/What/How]"${debugFields}
+}
+
+All fields are required. Keep sections concise and impactful.
+    `.trim();
+  }
+
+  /**
+   * Generate debate instructions for quality improvement
+   * Available to all interpreters for optional integration
+   */
+  protected generateDebateSection(
+    interpreterType: InterpreterType, 
+    interpreterPersonality: string
+  ): string {
+    return DebateModule.generateCompleteDebateSection(interpreterType, interpreterPersonality);
+  }
 
   /**
    * Main entry point - builds complete prompt for interpretation

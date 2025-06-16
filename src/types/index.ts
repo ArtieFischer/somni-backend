@@ -81,7 +81,7 @@ export interface HealthResponse {
   uptime?: number;
 }
 
-// Dream Interpretation types - Enhanced for comprehensive Jungian system
+// Dream Interpretation types - Simplified for new JSON format
 export interface InterpretationRequest {
   dreamId: string;
   dreamTranscription: string;
@@ -94,12 +94,38 @@ export interface InterpretationRequest {
     isNightmare?: boolean;
     customContext?: string;
   };
+  testMode?: boolean; // Flag to enable debug features like debate process visibility
+}
+
+// New unified dream analysis response format
+export interface DreamAnalysis {
+  dreamTopic: string;
+  symbols: string[];
+  quickTake: string;
+  dreamWork: string;
+  interpretation: string;
+  selfReflection: string;
+}
+
+// Internal debate process structure
+export interface DebateProcess {
+  hypothesis_a: string;
+  hypothesis_b: string;
+  hypothesis_c: string;
+  evaluation: string;
+  selected_hypothesis: string;
+}
+
+// Enhanced response with debate process
+export interface DreamAnalysisWithDebate {
+  dreamAnalysis: DreamAnalysis;
+  debateProcess?: DebateProcess | undefined;
 }
 
 export interface InterpretationResponse {
   success: boolean;
   dreamId: string;
-  interpretation?: JungianInsights | FreudianInsights | NeuroscientistInsights | AstrologistInsights;
+  interpretation?: DreamAnalysis | JungianInsights | FreudianInsights | NeuroscientistInsights | AstrologistInsights;
   aiResponse?: string; // Raw AI response for debugging
   metadata?: {
     interpreterType: InterpreterType;

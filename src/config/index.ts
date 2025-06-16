@@ -29,6 +29,7 @@ const envSchema = z.object({
   // Supabase Configuration
   SUPABASE_URL: z.string().url('Invalid Supabase URL'),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1, 'Supabase service role key is required'),
+  SUPABASE_ANON_KEY: z.string().min(1, 'Supabase anon key is required'),
   
   // Security Configuration
   API_SECRET_KEY: z.string().min(32, 'API secret key must be at least 32 characters'),
@@ -91,6 +92,7 @@ export const config = {
   supabase: {
     url: parseResult.data.SUPABASE_URL,
     serviceRoleKey: parseResult.data.SUPABASE_SERVICE_ROLE_KEY,
+    anonKey: parseResult.data.SUPABASE_ANON_KEY,
   },
   
   // Security

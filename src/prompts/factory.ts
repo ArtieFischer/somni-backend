@@ -1,17 +1,26 @@
 import type { InterpreterType } from '../types';
 import { BasePromptBuilder, type DreamAnalysisRequest, type PromptTemplate } from './base';
 import { JungianPromptBuilder } from './interpreters/jung/builder';
+import { JungianRAGPromptBuilder } from './interpreters/jung/builder-with-rag';
 import { FreudianPromptBuilder } from './interpreters/freud/builder';
 import { NeuroscientistPromptBuilder } from './interpreters/neuroscientist/builder';
+import { features } from '../config/features';
+import { PromptRandomiser } from './utils/randomiser';
 
 /**
  * Factory for creating prompt builders
- * Now supports both Jung and Freud interpreters
+ * Now supports both Jung and Freud interpreters with optional RAG enhancement
  */
 export class PromptBuilderFactory {
+  private static randomiser = new PromptRandomiser();
+  
   static create(interpreterType: InterpreterType): BasePromptBuilder {
     switch (interpreterType) {
       case 'jung':
+        // Use RAG-enhanced builder if enabled
+        if (features.rag.enabled && features.rag.interpreters.jung) {
+          return new JungianRAGPromptBuilder(this.randomiser);
+        }
         return new JungianPromptBuilder();
       case 'freud':
         return new FreudianPromptBuilder();

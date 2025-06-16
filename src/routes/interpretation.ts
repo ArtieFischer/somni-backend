@@ -38,8 +38,11 @@ testRouter.post('/interpret', [
   const request = req.body as InterpretationRequest;
   
   try {
+    // Add test mode flag to request
+    const testRequest = { ...request, testMode: true };
+    
     // Use our consolidated service
-    const result = await dreamInterpretationService.interpretDream(request);
+    const result = await dreamInterpretationService.interpretDream(testRequest);
     
     // Add test mode flag
     const testResponse = {

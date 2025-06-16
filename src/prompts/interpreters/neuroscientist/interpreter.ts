@@ -1,5 +1,5 @@
 import { logger } from '../../../utils/logger';
-import type { NeuroscientistInsights } from '../../../types';
+import type { DreamAnalysis, DebateProcess, DreamAnalysisWithDebate } from '../../../types';
 
 /**
  * Neuroscientist-specific interpretation parsing
@@ -10,64 +10,80 @@ export class NeuroscientistInterpreter {
   /**
    * Parse Neuroscientist interpretation response
    */
-  static parseResponse(aiResponse: string): NeuroscientistInsights {
+  static parseResponse(aiResponse: string): DreamAnalysis {
+    const fullResponse = this.parseResponseWithDebate(aiResponse);
+    return fullResponse.dreamAnalysis;
+  }
+
+  /**
+   * Parse Neuroscientist interpretation response with debate process
+   */
+  static parseResponseWithDebate(aiResponse: string): DreamAnalysisWithDebate {
     try {
-      // First try to find JSON in the response
+      let debateProcess: DebateProcess | undefined;
+      let finalInterpretation: DreamAnalysis;
+
+      // Parse the JSON response
       let jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
         throw new Error('No JSON found in response');
       }
 
       let jsonString = jsonMatch[0];
-      
-      // Clean up common JSON issues
       jsonString = jsonString
-        .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
-        .replace(/,\s*}/g, '}') // Remove trailing commas before closing braces
-        .replace(/,\s*]/g, ']'); // Remove trailing commas before closing brackets
+        .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+        .replace(/,\s*}/g, '}')
+        .replace(/,\s*]/g, ']');
 
       let parsed;
       try {
         parsed = JSON.parse(jsonString);
       } catch (parseError) {
-        // If parsing fails, try to fix common escape issues
         jsonString = jsonString
           .replace(/\\n/g, ' ')
           .replace(/\\r/g, ' ')
           .replace(/\\t/g, ' ')
           .replace(/\s+/g, ' ');
-        
         parsed = JSON.parse(jsonString);
       }
-      
+
       // Validate required fields
-      if (!parsed.interpretation || !Array.isArray(parsed.symbols) || !Array.isArray(parsed.brainActivity)) {
+      if (!parsed.dreamTopic || !Array.isArray(parsed.symbols) || !parsed.quickTake || !parsed.dreamWork || !parsed.interpretation || !parsed.selfReflection) {
         throw new Error('Missing required fields in Neuroscientist response');
       }
 
+      // Extract main interpretation
+      finalInterpretation = {
+        dreamTopic: parsed.dreamTopic,
+        symbols: parsed.symbols,
+        quickTake: parsed.quickTake,
+        dreamWork: parsed.dreamWork,
+        interpretation: parsed.interpretation,
+        selfReflection: parsed.selfReflection
+      };
+
+      // Extract debug/debate information if present
+      if (parsed._debug_hypothesis_a && parsed._debug_hypothesis_b && parsed._debug_hypothesis_c) {
+        debateProcess = {
+          hypothesis_a: parsed._debug_hypothesis_a,
+          hypothesis_b: parsed._debug_hypothesis_b,
+          hypothesis_c: parsed._debug_hypothesis_c,
+          evaluation: parsed._debug_evaluation || 'No evaluation provided',
+          selected_hypothesis: parsed._debug_selected || 'Unknown'
+        };
+      }
+
       logger.info('Successfully parsed Neuroscientist response', {
-        symbolsCount: parsed.symbols.length,
-        brainRegionsCount: parsed.brainActivity.length,
-        hasContinuityElements: !!parsed.continuityElements,
-        hasOptionalAnalyses: !!(parsed.memoryConsolidation || parsed.threatSimulation || parsed.emotionalRegulation)
+        symbolsCount: finalInterpretation.symbols.length,
+        hasDreamTopic: !!finalInterpretation.dreamTopic,
+        hasDebateProcess: !!debateProcess,
+        hasInterpretation: !!finalInterpretation.interpretation,
+        hasSelfReflection: !!finalInterpretation.selfReflection
       });
 
       return {
-        type: 'neuroscientist',
-        interpretation: parsed.interpretation,
-        coreMessage: parsed.coreInsight || 'Your sleeping brain was actively processing and consolidating experiences.',
-        symbols: parsed.symbols || [], // Consistent with Jung/Freud
-        brainActivity: parsed.brainActivity || [],
-        sleepStageIndicators: parsed.sleepStageIndicators || 'Your dream suggests active REM sleep.',
-        continuityElements: parsed.continuityElements ? [parsed.continuityElements] : [],
-        neuroscienceEducation: parsed.neuroscienceEducation || 'During REM sleep, your brain is as active as when you\'re awake!',
-        reflectiveQuestions: parsed.reflectiveQuestion ? [parsed.reflectiveQuestion] : [],
-        // Optional specialized analyses - only included when LLM detects relevant patterns
-        ...(parsed.memoryConsolidation && { memoryConsolidation: parsed.memoryConsolidation }),
-        ...(parsed.threatSimulation && { threatSimulation: parsed.threatSimulation }),
-        ...(parsed.emotionalRegulation && { emotionalRegulation: parsed.emotionalRegulation }),
-        ...(parsed.problemSolving && { problemSolving: parsed.problemSolving }),
-        ...(parsed.circadianFactors && { circadianFactors: parsed.circadianFactors })
+        dreamAnalysis: finalInterpretation,
+        debateProcess
       };
 
     } catch (error) {
@@ -76,25 +92,23 @@ export class NeuroscientistInterpreter {
         responsePreview: aiResponse.substring(0, 300)
       });
 
-      // Fallback response
-      return this.getFallbackResponse();
+      return {
+        dreamAnalysis: this.getFallbackResponse()
+      };
     }
   }
 
   /**
    * Get fallback Neuroscientist response when parsing fails
    */
-  private static getFallbackResponse(): NeuroscientistInsights {
+  private static getFallbackResponse(): DreamAnalysis {
     return {
-      type: 'neuroscientist',
-      interpretation: 'After decades of studying dreams in my lab, I can tell you that even when we can\'t capture every detail, your dream reveals fascinating brain activity. The vivid nature of your experience suggests robust REM sleep engagement, with your visual and emotional processing centers clearly active. What strikes me most is how your brain wove together these particular elements - this kind of creative synthesis typically happens when your prefrontal cortex relaxes its usual control, allowing for more fluid associations.',
-      coreMessage: 'Your dream demonstrates the remarkable creativity of the sleeping brain.',
+      dreamTopic: 'Creative brain synthesis during REM sleep',
       symbols: [],
-      brainActivity: ['visual cortex (vivid imagery)', 'limbic system (emotional processing)', 'hippocampus (memory integration)'],
-      sleepStageIndicators: 'The narrative complexity suggests REM sleep, likely from the later sleep cycles',
-      continuityElements: ['Your brain appears to be processing recent experiences in creative ways'],
-      neuroscienceEducation: 'In my research, I\'ve found that dreams like yours often occur during the longest REM periods, typically 3-5 hours after sleep onset.',
-      reflectiveQuestions: ['What time did you wake up, and how might that relate to the intensity of this dream?']
+      quickTake: 'Your dream demonstrates the remarkable creativity of the sleeping brain during REM processing.',
+      dreamWork: 'Visual cortex, limbic system, and hippocampus collaborated in creative memory integration.',
+      interpretation: 'After decades of studying dreams in my lab, I can tell you that even when we can\'t capture every detail, your dream reveals fascinating brain activity. The vivid nature of your experience suggests robust REM sleep engagement, with your visual and emotional processing centers clearly active. What strikes me most is how your brain wove together these particular elements - this kind of creative synthesis typically happens when your prefrontal cortex relaxes its usual control, allowing for more fluid associations.',
+      selfReflection: 'What time did you wake up, and how might that relate to the intensity of this dream?'
     };
   }
 } 

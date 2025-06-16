@@ -1,49 +1,41 @@
 import { BasePromptBuilder, type DreamAnalysisRequest } from '../../base';
+import { PromptRandomiser } from '../../utils/randomiser';
 
 /**
  * Authentic Freudian Prompt Builder
  * Creates psychoanalytic interpretations that feel like Dr. Freud himself is analyzing the dream
- * Uses true randomization without giving LLM choices to eliminate repetition
+ * Uses centralized PromptRandomiser with history tracking to eliminate repetition
  */
 export class FreudianPromptBuilder extends BasePromptBuilder {
 
-  /**
-   * Generate hash-based seed from dream content for consistent randomization
-   */
-  private generateDreamBasedSeed(dreamText: string): number {
-    let hash = 0;
-    for (let i = 0; i < dreamText.length; i++) {
-      hash = ((hash << 5) - hash) + dreamText.charCodeAt(i);
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    return Math.abs(hash);
-  }
+  private static FORBIDDEN: string[] = [
+    'Oedipus complex', 'Wolf Man', 'Rat Man', // classic over-used
+    'manifest vs latent content',             // generic phrase
+    'What we have here'                       // template opener
+  ];
 
   /**
-   * Pre-select single analytical focus without giving LLM choices
+   * Pre-select single analytical focus using PromptRandomiser for variety
    */
   private selectAnalyticalFocus(dreamText: string): string {
-    const seed = this.generateDreamBasedSeed(dreamText) + Date.now();
     const focuses = [
       "Focus your analysis on the unconscious wish-fulfillment mechanisms at work",
       "Center your interpretation on the defense mechanisms operating in the dream construction",
       "Emphasize the libidinal dynamics and psychosexual elements present",
-      "Concentrate on the manifest vs latent content transformations",
-      "Highlight the dream-work processes of condensation and displacement",
+      "Concentrate on the dream-work processes of condensation and displacement",
       "Focus on the ego's attempt to manage instinctual conflicts",
       "Center on the superego pressures and moral anxieties revealed",
-      "Emphasize the repetition compulsion and childhood patterns emerging"
+      "Emphasize the repetition compulsion and childhood patterns emerging",
+      "Highlight the return of the repressed and its symbolic manifestations"
     ];
     
-    const index = seed % focuses.length;
-    return focuses[index] ?? 'Focus your analysis on the unconscious wish-fulfillment mechanisms at work';
+    return PromptRandomiser.pickUnique(focuses, dreamText, 'freud');
   }
 
   /**
-   * Pre-select single therapeutic stance without choices
+   * Pre-select single therapeutic stance using PromptRandomiser
    */
   private selectTherapeuticStance(dreamText: string): string {
-    const seed = this.generateDreamBasedSeed(dreamText + 'stance') + Date.now();
     const stances = [
       "Approach with scientific curiosity and analytical precision",
       "Use warm therapeutic engagement while maintaining authority",
@@ -55,16 +47,13 @@ export class FreudianPromptBuilder extends BasePromptBuilder {
       "Employ authoritative guidance softened by genuine concern"
     ];
     
-    const index = seed % stances.length;
-    return stances[index] ?? 'Approach with scientific curiosity and analytical precision';
+    return PromptRandomiser.pickUnique(stances, dreamText + 'stance', 'freud');
   }
 
   /**
-   * Pre-select vocabulary anchors without giving options
+   * Pre-select vocabulary anchors using PromptRandomiser
    */
   private selectPsychoanalyticTerms(dreamText: string): { analysisVerb: string; psychicProcess: string } {
-    const seed = this.generateDreamBasedSeed(dreamText + 'psycho');
-    
     const analysisVerbs = [
       'reveals', 'discloses', 'betrays', 'manifests', 'exposes', 'demonstrates',
       'illustrates', 'exhibits', 'displays', 'indicates', 'signifies', 'suggests'
@@ -76,16 +65,15 @@ export class FreudianPromptBuilder extends BasePromptBuilder {
     ];
     
     return {
-      analysisVerb: analysisVerbs[seed % analysisVerbs.length] ?? 'reveals',
-      psychicProcess: psychicProcesses[(seed + 5) % psychicProcesses.length] ?? 'repression'
+      analysisVerb: PromptRandomiser.pickUnique(analysisVerbs, dreamText + 'verb', 'freud'),
+      psychicProcess: PromptRandomiser.pickUnique(psychicProcesses, dreamText + 'process', 'freud')
     };
   }
 
   /**
-   * Pre-select structural pattern without options
+   * Pre-select structural pattern using PromptRandomiser
    */
   private selectInterpretationStructure(dreamText: string): string {
-    const seed = this.generateDreamBasedSeed(dreamText + 'structure');
     const structures = [
       "Structure: [Manifest Content] + [Latent Meaning] + [Psychodynamic Insight]",
       "Structure: [Defense Mechanism] + [Unconscious Conflict] + [Therapeutic Direction]",
@@ -94,8 +82,7 @@ export class FreudianPromptBuilder extends BasePromptBuilder {
       "Structure: [Dream-Work Process] + [Unconscious Wish] + [Ego Resolution]"
     ];
     
-    const index = seed % structures.length;
-    return structures[index] ?? 'Structure: [Manifest Content] + [Latent Meaning] + [Psychodynamic Insight]';
+    return PromptRandomiser.pickUnique(structures, dreamText + 'structure', 'freud');
   }
 
   /**
@@ -144,7 +131,9 @@ Core principles:
     const psychoTerms = this.selectPsychoanalyticTerms(dreamText);
     const interpretationStructure = this.selectInterpretationStructure(dreamText);
     
-    return `CRITICAL INSTRUCTION: You must respond with ONLY a JSON object. No text before or after.
+    const forbiddenPhrases = FreudianPromptBuilder.FORBIDDEN.join(', ');
+    
+    return `${this.generateDebateSection('freud', 'Sigmund Freud, pioneering psychoanalyst uncovering the unconscious mechanisms of the human mind')}
 
 SPECIFIC INSTRUCTIONS FOR THIS INTERPRETATION:
 
@@ -161,6 +150,10 @@ REQUIRED PSYCHOANALYTIC ELEMENTS:
 
 STRUCTURAL PATTERN TO FOLLOW:
 ${interpretationStructure}
+
+ABSOLUTE NEGATIVE CONSTRAINTS:
+- Do NOT use any of these phrases: ${forbiddenPhrases}
+- Use each of the following verbs **no more than once**: detect, reveal, demonstrate, betray
 
 The patient is ${age} years old, ${this.getDevelopmentalPhase(age)}. ${situation ? `Current situation: ${situation}` : ''}
 
@@ -199,28 +192,35 @@ BALANCED FREUDIAN ANALYSIS:
 - Be sophisticated about symbolism - not every elongated object is phallic
 - Focus on the patient's specific psychodynamics, not generic interpretations
 
-Your response must be EXACTLY this JSON structure (include optional fields when those themes are contextually relevant):
-{
-  "interpretation": "A flowing 400-500 word interpretation in Freud's sophisticated voice. Demonstrate mastery of psychoanalytic theory while remaining accessible. Focus on THIS patient's unique psychological dynamics with penetrating insight that transforms understanding.",
-  "symbols": ["symbol1", "symbol2", "symbol3", "symbol4", "symbol5"],
-  "coreInsight": "One sentence revealing the dream's core unconscious dynamic - be specific and psychoanalytically precise",
-  "unconsciousDesires": "What wishes or conflicts does this dream express? Be sophisticated about wish-fulfillment theory",
-  "childhoodConnections": "Early experiences shaping current patterns - include specific developmental considerations", 
-  "repressionIndicators": "What defenses are active and HOW do they manifest in the dream's construction?",
-  "guidanceForPatient": "2-3 sentences of penetrating therapeutic guidance for working through these conflicts",
-  "reflectiveQuestion": "One question that will advance their self-analysis - make it specifically psychoanalytic",
-  "dreamWork": "ALWAYS include: How condensation, displacement, and symbolization operated in this specific dream",
-  "professionalAnalysis": "ONLY if work/career themes are significant: How professional dynamics reveal unconscious conflicts",
-  "socialDynamicsAnalysis": "ONLY if social/relationship themes are prominent: Object relations and social defenses",
-  "sexualAnalysis": "ONLY if sexual themes are contextually relevant: Sophisticated analysis of libidinal dynamics and symbolic sexual content - be professionally direct, not prudish"
-}
+${this.getBaseSchema('freud', !!request.testMode)}
 
-Rules:
-- "symbols" MUST be a simple array of 3-8 single words  
+FREUDIAN SECTION REQUIREMENTS:
+
+#1 DREAM TOPIC: 5-9 words capturing the core unconscious tension (e.g., "Repressed desire clashes with moral superego")
+
+#2 SYMBOLS: 3-8 symbols as array of strings
+
+#3 QUICK TAKE: ~40 words. What unconscious question is this dream posing? Focus on the central psychoanalytic conflict.
+
+#4 DREAM WORK: 3-4 sentences. Choose up to 3 Freudian concepts that fit this dream:
+- Wish-fulfillment mechanisms
+- Defense mechanisms (repression, displacement, projection, etc.)  
+- Dream-work processes (condensation, displacement, symbolization)
+- Libidinal dynamics and psychosexual elements
+- Ego vs id vs superego conflicts
+- Return of the repressed
+- Repetition compulsion
+- Transference patterns
+Explain how each applies to THIS dream specifically.
+
+#5 INTERPRETATION: Longer, comprehensive interpretation of events and symbols in context of this dream. 100-450 words depending on dream length. Nicely formatted with empty lines between paragraphs.
+
+#6 SELF REFLECTION: One question starting with When/Where/What/How that promotes self-analysis
+
+VOICE REQUIREMENTS:
 - Write with Freud's penetrating analytical authority
-- Use psychoanalytic terminology as your natural professional vocabulary
-- Make connections the patient couldn't see themselves
-- Create transformative "aha moments" through insight
+- Use psychoanalytic terminology naturally
+- Create transformative insights the patient couldn't see themselves
 - Be therapeutically professional but authentically Freudian
 - Balance sexual interpretation with comprehensive psychoanalytic understanding`;
   }
