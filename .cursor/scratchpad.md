@@ -239,6 +239,61 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 - [x] ✅ Updated output format instructions for contextual sexual theme inclusion
 - [x] ✅ Integrated sexual symbol detection into prompt logic
 
+### ✅ Current Sprint: Comprehensive Interpreter Improvements - IN PROGRESS
+
+**EXECUTOR MODE** - 🔄 **APPLYING MAJOR INTERPRETER ENHANCEMENTS**
+
+**TASK**: Apply comprehensive improvements to all three interpreters (Jung, Freud, Neuroscientist) with enhanced vocabulary, voice, and sophisticated analysis capabilities.
+
+**Key Improvements Being Applied**:
+
+**Jung Interpreter Enhancements:**
+
+- [x] 🔄 **Richer Jungian vocabulary**: Add individuation, Self (capital S), anima/animus, complexes, collective unconscious, transcendent function
+- [x] 🔄 **More personal voice**: Enhanced warmth and direct engagement, making Jung feel more present
+- [x] 🔄 **Deeper insights**: Required connections to mythology/fairy tales and specific compensatory functions
+- [x] 🔄 **Varied openings**: Expanded from 10 to 12 opening variations including references to numinous qualities and years of experience
+- [x] 🔄 **Specific vs generic**: Added explicit requirements to avoid generic statements and make specific connections to dreamer's life
+- [x] 🔄 **Simplified approach**: Removed keyword detection methods, letting LLM do intelligent analysis
+
+**Freud Interpreter Enhancements:**
+
+- [x] 🔄 **Sophisticated psychoanalytic vocabulary**: Add cathexis, libidinal economy, primary/secondary process, parapraxes
+- [x] 🔄 **More authoritative yet warm**: Balanced penetrating insight with therapeutic care
+- [x] 🔄 **Dream-work mechanisms**: Added explicit requirement to explain condensation, displacement, and symbolization
+- [x] 🔄 **Balanced analysis**: Sexual themes important but balanced with other drives (aggression, death drive, ego preservation)
+- [x] 🔄 **Case references**: Added ability to reference famous cases when patterns align
+- [x] 🔄 **Always includes dream-work analysis**: Made this a required field to show sophisticated understanding
+- [x] 🔄 **Simplified approach**: Removed keyword detection methods, letting LLM do intelligent analysis
+
+**Neuroscientist Enhancements:**
+
+- [x] 🔄 **Rich neuroscientific vocabulary**: Add specific brain regions, neurotransmitters, sleep phenomena (PGO waves, sleep spindles, etc.)
+- [x] 🔄 **More enthusiastic voice**: Added expressions like "Now THIS is fascinating!", "extraordinary!", showing genuine excitement
+- [x] 🔄 **Personal research references**: Enhanced with "In my lab...", "This reminds me of a study..."
+- [x] 🔄 **Educational without lecturing**: Natural weaving of neuroscience education with analogies and "fun facts"
+- [x] 🔄 **Specific brain activity**: Required 3 specific brain regions with detailed activity descriptions
+- [x] 🔄 **Sleep stage precision**: Using N1, N2, N3, REM terminology with timing estimates
+- [x] 🔄 **Simplified approach**: Removed keyword detection methods, letting LLM do intelligent analysis
+
+**Overall Improvements:**
+
+- [ ] 🔄 **12-15 opening variations**: Each interpreter now has extensive opening variety to prevent repetition
+- [ ] 🔄 **More explicit requirements**: For avoiding generic responses
+- [ ] 🔄 **Enhanced vocabulary richness**: For each school of thought
+- [ ] 🔄 **Stronger personal voice**: For each interpreter
+- [ ] 🔄 **Better connection**: To the dreamer's specific situation
+- [ ] 🔄 **Required elements**: That showcase each interpreter's unique expertise
+- [ ] 🔄 **Architectural simplification**: Removed keyword detection methods, letting LLM do intelligent analysis
+
+**Implementation Plan:**
+
+- [ ] 🔄 **Task 1**: Update Jung interpreter with enhanced vocabulary and voice
+- [ ] 🔄 **Task 2**: Update Freud interpreter with sophisticated psychoanalytic enhancements
+- [ ] 🔄 **Task 3**: Update Neuroscientist interpreter with rich scientific vocabulary and enthusiasm
+- [ ] 🔄 **Task 4**: Test all interpreters to ensure improvements work correctly
+- [ ] 🔄 **Task 5**: Update scratchpad with completion status
+
 ## Executor's Feedback or Assistance Requests
 
 ### ✅ NEUROSCIENTIST INTERPRETER & TEST FILES - IMPLEMENTATION COMPLETE & ENHANCED
@@ -317,93 +372,4 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 **Test Files Created & UUID-Updated**:
 
 1. ✅ `single-neuro-test.sh` - Single dream test with **UUID generation**
-2. ✅ `test-dreams-neuro.sh` - Comprehensive multi-dream test suite with **UUID generation** for 5 specialized dreams:
-   - Memory consolidation dream (learning theme)
-   - Threat simulation dream (chase/danger theme)
-   - Problem-solving dream (creative theme)
-   - Emotional regulation dream (grief/loss theme)
-   - Circadian factors dream (time/schedule disruption theme)
-3. ✅ `test-controversial-dreams.sh` - Enhanced to include neuroscientist + file output + **UUID generation**:
-   - Added neuroscientist interpreter to all 4 controversial dream tests
-   - Implemented file output to `./test-results/controversial-dreams-TIMESTAMP.txt`
-   - Added detection for neuroscientist specialized analyses
-   - Updated summary for all three interpreters
-
-**Key Features Implemented & Enhanced**:
-
-1. **Expert Authority**: Dr. Carskadon's 50+ years of experience clearly evident ✅
-2. **Specific Analysis**: Individual brain pattern insights, not generic facts ✅
-3. **Research Integration**: References to lab observations and studies ✅
-4. **Precise Language**: Scientific terms immediately explained ✅
-5. **Unique Insights**: Information you can't get from sleep apps ✅
-6. **Pattern Recognition**: Timing, bizarreness, neurotransmitter activity analysis ✅
-7. **UUID Generation**: All test files now use proper `uuidgen` for dream IDs ✅
-8. **Scientific Nuance**: Appropriate certainty levels and dynamic voice ✅
-9. **Anti-Formulaic**: Each interpretation feels unique and fresh ✅
-
-**Enhanced Voice Examples:**
-
-- "After decades of studying dreams in my lab..."
-- "Your amygdala - that's your emotional alarm system - was clearly firing"
-- "This reminds me of a study where..."
-- "In my research, I've found that dreams like yours often occur during..."
-- "In all my years studying dreams, this pattern still fascinates me..."
-- "Without EEG data, I can't pinpoint the exact sleep stage, but..."
-
-**Implementation Complete**: All neuroscientist interpreter functionality working perfectly with significantly improved specificity, expert-level insights, and scientifically nuanced voice that feels like a consultation with a world-renowned sleep researcher who varies her approach based on what science actually knows
-
-## Lessons
-
-### Development Lessons Learned:
-
-- **Pattern Consistency**: Following established patterns accelerates development and maintains code quality
-- **Modular Design**: Interpreter-specific builders in separate directories facilitate maintenance and testing
-- **Type-First Approach**: Defining interfaces before implementation ensures proper API design
-- **Testing Strategy**: Comprehensive test scripts are essential for validating complex AI interpretation systems
-- **Quality Standards**: Matching existing response quality prevents regression and maintains user experience
-
-### Freudian Rebalancing Lessons:
-
-- **Balance Over Avoidance**: Overcorrecting prompt guidance can eliminate authentic interpretative approaches
-- **Symbol Detection Integration**: Technical capabilities should be leveraged in prompt logic, not just implemented
-- **Authentic Voice Preservation**: Maintaining authenticity requires allowing appropriate content while preserving professionalism
-- **Conditional Logic Refinement**: "ONLY if clearly present" criteria can be too restrictive for nuanced psychological analysis
-- **User Feedback Integration**: Real usage patterns reveal when technical implementations miss the mark
-
-# Freudian Dream Interpreter Rebalancing
-
-## Background and Motivation
-
-Rebalancing the Freudian interpreter to address over-avoidance of sexual themes while maintaining sophistication and therapeutic appropriateness.
-
-## Key Challenges and Analysis
-
-1. **Overcautious Prompt Guidance**: Current prompts discourage sexual analysis too strongly
-2. **Unused Technical Capabilities**: Sexual symbol detection not integrated into analysis logic
-3. **Restrictive Conditional Logic**: Too high bar for sexual theme inclusion
-4. **Authenticity vs. Appropriateness**: Need to balance genuine Freudian approach with therapeutic professionalism
-
-### Rebalancing Approach:
-
-**Core Principle**: Freud believed sexual drive (libido) is fundamental to psychology and should be addressed directly but thoughtfully when relevant to dream content.
-
-**Technical Strategy**:
-
-- Refine prompt guidance to encourage rather than discourage appropriate sexual analysis
-- Integrate sexual symbol detection into prompt logic
-- Lower the bar for sexual theme inclusion while maintaining quality
-- Preserve authentic voice while addressing sexual content therapeutically
-
-**Expected Outcome**: Freudian interpreter that includes sexual analysis when contextually appropriate, balanced with other psychoanalytic concepts, maintaining Dr. Freud's authentic analytical approach.
-
-### ✅ Completed
-
-- [x] **Jung interpreter system** - Fully operational with high-quality responses
-- [x] **Freudian interpreter rebalancing** - ✅ **SEXUAL THEME BALANCE SUCCESSFULLY ACHIEVED**
-- [x] **Neuroscientist interpreter system** - ✅ **EVIDENCE-BASED SLEEP SCIENCE INTERPRETATION IMPLEMENTED**
-- [x] **Problem analysis** - Root causes of sexual theme over-avoidance identified and resolved
-- [x] **Authentic Freudian research** - Understanding of appropriate sexual theme balance implemented
-- [x] **Prompt guidance refinement** - System prompts now encourage contextually appropriate sexual analysis
-- [x] **Symbol detection integration** - Sexual symbols actively inform analysis approach
-- [x] **Voice calibration** - Authentic Freudian voice preserved while addressing sexual content therapeutically
-- [x] **Triple-interpreter architecture** - Jung, Freud, and Neuroscientist interpreters fully integrated
+2. ✅ `test-dreams-neuro.sh`
