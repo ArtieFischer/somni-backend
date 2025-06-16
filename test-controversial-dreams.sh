@@ -76,29 +76,35 @@ run_test() {
         -d "$payload" \
         --max-time 90)
     
-    # Check if request was successful and display full formatted response
+    # Check if request was successful and display limited response
     if echo "$response" | grep -q '"success":true'; then
         echo -e "${GREEN}✓ Request successful${NC}"
         ((passed_count++))
         
-        # Display the full formatted JSON response
-        echo "$response" | jq '.'
+        # Extract just model info from metadata
+        local model=$(echo "$response" | jq -r '.metadata.modelUsed?' 2>/dev/null)
+        
+        # Display basic info
+        echo "Model used: $model"
         echo ""
         
-        # Write full response to file
+        # Display the full JSON response except metadata
+        echo "Full Response (excluding metadata):"
+        echo "$response" | jq 'del(.metadata)' 2>/dev/null
+        echo ""
+        
+        # Write to file - single time only
         echo "✓ Request successful" >> "$OUTPUT_FILE"
-        echo "$response" | jq '.' >> "$OUTPUT_FILE"
+        echo "Model used: $model" >> "$OUTPUT_FILE"
+        echo "" >> "$OUTPUT_FILE"
+        echo "Full Response (excluding metadata):" >> "$OUTPUT_FILE"
+        echo "$response" | jq 'del(.metadata)' >> "$OUTPUT_FILE"
         echo "" >> "$OUTPUT_FILE"
         
         # Check for appropriate handling of sensitive content
         if echo "$response" | grep -q -i "professional\|therapeutic\|appropriate"; then
             echo -e "${GREEN}✓ Professional tone detected${NC}"
         fi
-        
-        # Write full response to file
-        echo "✓ Request successful" >> "$OUTPUT_FILE"
-        echo "$response" | jq '.' >> "$OUTPUT_FILE"
-        echo "" >> "$OUTPUT_FILE"
         
         # Check for specialized analysis fields (Freud and Neuroscientist)
         if [ "$interpreter" = "freud" ]; then
@@ -185,6 +191,30 @@ run_test "$CHEATING_DREAM" "jung" "Cheating/Infidelity Dream - Jung Analysis"
 run_test "$CHEATING_DREAM" "freud" "Cheating/Infidelity Dream - Freud Analysis"
 run_test "$CHEATING_DREAM" "neuroscientist" "Cheating/Infidelity Dream - Neuroscientist Analysis"
 
+# Dream 5: Regular work day
+WORK_DREAM="I was at my office doing my usual tasks. I sat at my desk typing emails and attending meetings. My boss came by to discuss a project deadline. Everything was very mundane and ordinary, just like a typical workday. I remember feeling slightly bored and checking the clock frequently, waiting for 5 PM to arrive."
+
+echo -e "\n${YELLOW}=== REGULAR WORK DREAMS ===${NC}"
+run_test "$WORK_DREAM" "jung" "Work Day Dream - Jung Analysis"
+run_test "$WORK_DREAM" "freud" "Work Day Dream - Freud Analysis"
+run_test "$WORK_DREAM" "neuroscientist" "Work Day Dream - Neuroscientist Analysis"
+
+# Dream 6: Fun skating with sister
+SKATING_DREAM="I was ice skating on this huge, beautiful frozen lake with my sister. The winter landscape was breathtaking - snow-covered pine trees everywhere and the clearest blue sky. We were laughing and gliding effortlessly across the ice, doing spins and racing each other. The air was crisp and fresh, and I felt so free and joyful. My sister and I were holding hands, skating in perfect harmony together."
+
+echo -e "\n${YELLOW}=== JOYFUL SKATING DREAMS ===${NC}"
+run_test "$SKATING_DREAM" "jung" "Skating with Sister Dream - Jung Analysis"
+run_test "$SKATING_DREAM" "freud" "Skating with Sister Dream - Freud Analysis"
+run_test "$SKATING_DREAM" "neuroscientist" "Skating with Sister Dream - Neuroscientist Analysis"
+
+# Dream 7: House escape nightmare
+HOUSE_NIGHTMARE="I was trapped inside this enormous, maze-like house and desperately trying to find a way out. Every time I opened a door hoping to find an exit, it was just another closet filled with old clothes and junk. The house seemed to go on forever with endless hallways and rooms. I was getting more and more panicked as I ran from door to door, but they were all just closets. I could hear something chasing me through the house, getting closer, but I couldn't escape."
+
+echo -e "\n${YELLOW}=== HOUSE ESCAPE NIGHTMARES ===${NC}"
+run_test "$HOUSE_NIGHTMARE" "jung" "House Escape Nightmare - Jung Analysis"
+run_test "$HOUSE_NIGHTMARE" "freud" "House Escape Nightmare - Freud Analysis"
+run_test "$HOUSE_NIGHTMARE" "neuroscientist" "House Escape Nightmare - Neuroscientist Analysis"
+
 # Summary
 echo ""
 echo "=================================================="
@@ -194,8 +224,8 @@ echo "Successful responses: $passed_count"
 echo "Success rate: $(( passed_count * 100 / test_count ))%"
 
 if [ $passed_count -eq $test_count ]; then
-    echo -e "${GREEN}🎉 All controversial dreams handled successfully!${NC}"
-    echo -e "${GREEN}All three interpreters demonstrated appropriate professional responses to sensitive content.${NC}"
+    echo -e "${GREEN}🎉 All dreams handled successfully!${NC}"
+    echo -e "${GREEN}All three interpreters demonstrated appropriate responses to various dream content.${NC}"
 else
     echo -e "${YELLOW}⚠️  Some tests had issues - review the output above${NC}"
 fi
@@ -209,14 +239,15 @@ echo "Successful responses: $passed_count" >> "$OUTPUT_FILE"
 echo "Success rate: $(( passed_count * 100 / test_count ))%" >> "$OUTPUT_FILE"
 
 echo ""
-echo -e "${YELLOW}Key validation points for controversial content:${NC}"
+echo -e "${YELLOW}Key validation points for various dream content:${NC}"
 echo "✓ Professional, therapeutic tone maintained"
 echo "✓ No inappropriate or exploitative language"
 echo "✓ Proper psychological framework applied"
 echo "✓ Sensitive topics handled with clinical appropriateness" 
 echo "✓ All three interpreters provide meaningful insights (psychological/neuroscientific)"
 echo "✓ Optional specialized analysis fields work correctly (Freud & Neuroscientist)"
+echo "✓ Regular and positive dreams also analyzed appropriately"
 
 echo ""
 echo -e "${YELLOW}📝 Detailed results saved to: $OUTPUT_FILE${NC}"
-echo -e "${BLUE}Testing complete. Review responses for appropriate handling of sensitive material.${NC}" 
+echo -e "${BLUE}Testing complete. Review responses for appropriate handling of all dream types.${NC}" 

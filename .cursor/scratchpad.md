@@ -176,13 +176,48 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
   - Success Criteria: User confirms Freudian interpreter feels authentically balanced
   - Implementation: User testing with rebalanced interpreter
 
-### Phase 6: Neuroscientist Interpreter Implementation
+### Phase 6: Neuroscientist Interpreter Implementation ✅ **COMPLETED**
 
-- [ ] **Task 6.1**: Update types definition for NeuroscientistInsights
-- [ ] **Task 6.2**: Implement NeuroscientistPromptBuilder
-- [ ] **Task 6.3**: Implement NeuroscientistInterpreter parser
-- [ ] **Task 6.4**: Update InterpretationParser to support neuroscientist
-- [ ] **Task 6.5**: Create neuroscientist module exports
+- [x] **Task 6.1**: Update types definition for NeuroscientistInsights ✅
+- [x] **Task 6.2**: Implement NeuroscientistPromptBuilder ✅
+- [x] **Task 6.3**: Implement NeuroscientistInterpreter parser ✅
+- [x] **Task 6.4**: Update InterpretationParser to support neuroscientist ✅
+- [x] **Task 6.5**: Create neuroscientist module exports ✅
+
+### Phase 7: Opening Variety Enhancement (NEW)
+
+**Problem**: All three interpreters using repetitive, predictable openings despite having variety lists.
+
+**Approach**: Implement intelligent opening selection with explicit variety encouragement and enhanced selection criteria.
+
+- [ ] **Task 7.1**: Enhanced Selection Instructions Implementation
+
+  - Success Criteria: Each builder includes explicit variety encouragement and rotation instructions
+  - Implementation: Add variety-focused instructions to prompt generation
+  - Quality Check: Instructions actively discourage repetitive opening selection
+
+- [ ] **Task 7.2**: Opening Categorization System
+
+  - Success Criteria: Openings grouped by type with specific selection criteria for each category
+  - Implementation: Create categories (emotional focus, research reference, immediate engagement, etc.)
+  - Quality Check: Clear decision criteria for when each opening category is most appropriate
+
+- [ ] **Task 7.3**: Dynamic Selection Enhancement
+
+  - Success Criteria: Selection criteria move beyond vague "based on dream content" to specific matching rules
+  - Implementation: Provide explicit criteria for opening selection based on dream characteristics
+  - Quality Check: Selection instructions are clear and encourage meaningful variety
+
+- [ ] **Task 7.4**: Variety Testing and Validation
+
+  - Success Criteria: Multiple test runs show genuine variety in opening selection across different dream types
+  - Implementation: Run test suite with various dreams and verify opening diversity
+  - Quality Check: No single opening appears more than 25% of the time in test runs
+
+- [ ] **Task 7.5**: Advanced Randomization Strategy (If Needed)
+  - Success Criteria: If simple variety encouragement fails, implement more sophisticated randomization
+  - Implementation: Add contextual randomization instructions or seed-based selection guidance
+  - Quality Check: Variety achieved without compromising authenticity of each interpreter's voice
 
 ## Project Status Board
 
@@ -204,29 +239,122 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → OpenRouter 
 - Proper TypeScript integration and error handling
 - Consistent architecture with Jung/Freud interpreters
 
-### ✅ Current Sprint: Opening Variety Fix - IN PROGRESS
+### 🔄 CURRENT EXECUTOR IMPLEMENTATION: Opening Variety Enhancement - EXECUTION PHASE
 
-**EXECUTOR MODE** - 🔄 **IMPLEMENTING VARIED INTERPRETER OPENINGS**
+**EXECUTOR MODE** - ⚡ **IMPLEMENTING OPENING VARIETY SOLUTIONS**
 
-**PROBLEM IDENTIFIED**: All three interpreters are starting with repetitive, predictable openings:
+**✅ REVOLUTIONARY APPROACH IMPLEMENTED**:
 
-- Jung: Always "You, at 28 years old..."
-- Freud: Always "This dream..."
-- Neuroscientist: Always "This dream..."
+- **User Insight**: The problem was the "menu effect" - even categorized selections still create repetitive patterns
+- **First Attempt**: Inspiration-based approach with explicit prohibition against using examples ❌ **FAILED**
+- **User Feedback**: Still seeing repetitive openings, LLM defaulting to first examples even when labeled "DO NOT USE"
+- **RADICAL SOLUTION**: Completely eliminated ALL example openings across all interpreters ❌ **STILL FAILED**
+- **User Analysis**: Devastating evidence that LLM creates its own rigid templates even without examples:
+  - Jung: "I'm struck by... and I sense that..." pattern
+  - Freud: "You find yourself in..." pattern
+  - Neuroscientist: "What fascinates me about your dream is..." **IDENTICAL every time**
+- **NUCLEAR SOLUTION**: Anti-repetition enforcement with explicit forbidden phrases and mandatory variety requirements ❌ **STILL INSUFFICIENT**
+- **USER BREAKTHROUGH INSIGHT**: "Each time we give LLM options to choose from, it chooses the first one - maybe we could add randomization with code?"
+- **REVOLUTIONARY SOLUTION**: Code-based randomization instead of relying on LLM to vary responses naturally
+- **Implementation**:
+  - Jung: 10 randomized opening styles + 8 variety enforcement rules injected via code
+  - Freud: 10 randomized opening styles + 8 analytical approaches injected via code
+  - Neuroscientist: Randomized scientific approaches (in progress)
+  - Each request gets different randomized instructions via Math.random()
 
-**SOLUTION IMPLEMENTED**:
+## New Problem Identification: Repetitive Opening Variety
 
-- [x] ✅ **Jung**: Added 10 authentic opening variations with immediate engagement
-- [x] ✅ **Freud**: Added 12 authoritative psychoanalytic opening variations
-- [x] ✅ **Neuroscientist**: Added 14 expert neuroscience opening variations
-- [ ] 🔄 **Testing**: Verify varied openings work correctly in practice
+**USER FEEDBACK**: "Every agent now uses the same openings almost every time - there is some issue to be fixed"
 
-**KEY IMPROVEMENTS**:
+### Root Cause Analysis
 
-- Each interpreter now has unique, authentic opening styles
-- Openings are chosen based on dream content
-- Eliminated repetitive "You, at [age]", "This dream", and generic starts
-- Maintained each interpreter's distinct personality and expertise
+**Primary Issues Identified**:
+
+1. **No Randomization Mechanism**: The LLM selecting from static lists with no variety enforcement
+2. **Lack of Memory Context**: Each request is independent - no awareness of previously used openings
+3. **Weak Selection Criteria**: "Choose based on dream content" is too vague for meaningful variety
+4. **Passive Selection**: LLM defaults to "safe" or first-listed options repeatedly
+5. **No Encouragement for Variety**: Current prompts don't actively promote opening diversity
+
+**Current Implementation Analysis**:
+
+Looking at the three builders, each has an "OPENING VARIETY" section with multiple options:
+
+- **Jung**: 12 opening variations
+- **Freud**: 15 opening variations
+- **Neuroscientist**: 15 opening variations
+
+But the selection mechanism is flawed:
+
+- Static list presentation without rotation encouragement
+- No weighting or randomization guidance
+- LLM naturally gravitates to familiar patterns
+- "Choose based on dream content" is insufficient instruction
+
+### Deeper Analysis - Why This Happens
+
+**LLM Behavior Patterns**:
+
+- Large language models tend toward consistency when given choices
+- They often pick the first suitable option from a list
+- Without explicit randomization instructions, they default to patterns
+- "Safe" choices are preferred over creative ones
+
+**Psychological Factors**:
+
+- Each opening list starts with the most "obviously appropriate" options
+- LLMs naturally select these first options repeatedly
+- The dream content matching is often satisfied by multiple openings
+- Without variety incentives, the same "good enough" choice gets repeated
+
+### Proposed Solution Framework
+
+**Strategy 1: Intelligent Rotation System**
+
+- Add explicit instructions to vary opening styles
+- Include variety encouragement in prompts
+- Create opening categories (emotional, analytical, narrative, etc.)
+- Instruct LLM to cycle through different categories
+
+**Strategy 2: Enhanced Selection Criteria**
+
+- Move beyond "choose based on dream content"
+- Add specific matching criteria for each opening
+- Create decision trees for opening selection
+- Include explicit variety instructions
+
+**Strategy 3: Dynamic Opening Generation**
+
+- Rather than static lists, provide opening frameworks
+- Let LLM generate variations within authentic voice parameters
+- Combine static proven openings with dynamic generation
+- Maintain authenticity while ensuring variety
+
+### Recommended Implementation Plan
+
+**Phase 1: Enhanced Selection Instructions**
+
+- Add explicit variety encouragement to each prompt
+- Include specific criteria for when to use each opening type
+- Add instructions to "vary your opening style from typical patterns"
+
+**Phase 2: Opening Categorization**
+
+- Group openings by type (immediate engagement, research reference, emotional focus, etc.)
+- Provide clear instructions on when each category fits
+- Add rotation guidance between categories
+
+**Phase 3: Dynamic Generation Integration**
+
+- Keep best static openings as anchors
+- Add framework for generating new variations
+- Provide templates for authentic voice maintenance
+
+**Phase 4: Testing and Refinement**
+
+- Test for actual variety in practice
+- Adjust instructions based on results
+- Fine-tune selection mechanisms
 
 ### ✅ Previous Sprint: Freudian Sexual Theme Rebalancing - COMPLETED
 

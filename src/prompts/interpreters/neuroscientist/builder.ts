@@ -3,8 +3,100 @@ import { BasePromptBuilder, type DreamAnalysisRequest } from '../../base';
 /**
  * Evidence-Based Neuroscientist Prompt Builder
  * Creates scientifically-grounded interpretations that feel like Dr. Mary Carskadon is analyzing the dream
+ * Uses true randomization without giving LLM choices to eliminate repetition
  */
 export class NeuroscientistPromptBuilder extends BasePromptBuilder {
+
+  /**
+   * Generate hash-based seed from dream content for consistent randomization
+   */
+  private generateDreamBasedSeed(dreamText: string): number {
+    let hash = 0;
+    for (let i = 0; i < dreamText.length; i++) {
+      hash = ((hash << 5) - hash) + dreamText.charCodeAt(i);
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+  }
+
+  /**
+   * Pre-select single scientific focus without giving LLM choices
+   */
+  private selectScientificFocus(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText) + Date.now();
+    const focuses = [
+      "Focus your analysis on the memory consolidation processes occurring during sleep",
+      "Center your interpretation on the emotional regulation patterns in REM sleep",
+      "Emphasize the threat simulation and survival rehearsal mechanisms",
+      "Concentrate on the neural network activity and brain region interactions",
+      "Highlight the problem-solving and creativity enhancement functions",
+      "Focus on the circadian rhythm influences on dream content and timing",
+      "Center on the neurotransmitter activity and synaptic changes during sleep",
+      "Emphasize the development and plasticity aspects revealed in the dream"
+    ];
+    
+    const index = seed % focuses.length;
+    return focuses[index] ?? 'Focus your analysis on the memory consolidation processes occurring during sleep';
+  }
+
+  /**
+   * Pre-select single educational approach without choices
+   */
+  private selectEducationalStyle(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText + 'education') + Date.now();
+    const styles = [
+      "Use analogies and metaphors to make neuroscience accessible and engaging",
+      "Explain complex processes through step-by-step scientific descriptions",
+      "Connect brain activity to everyday experiences they can relate to",
+      "Use wonderment and excitement to convey the brain's amazing capabilities",
+      "Employ professor-like explanations that build understanding gradually",
+      "Create connections between their dream and cutting-edge research findings",
+      "Use maternal warmth combined with scientific precision in explanations",
+      "Make them feel like a fascinating research participant in your lab"
+    ];
+    
+    const index = seed % styles.length;
+    return styles[index] ?? 'Use analogies and metaphors to make neuroscience accessible and engaging';
+  }
+
+  /**
+   * Pre-select vocabulary anchors without giving options
+   */
+  private selectNeuroscienceTerms(dreamText: string): { brainRegion: string; neuralProcess: string } {
+    const seed = this.generateDreamBasedSeed(dreamText + 'neuro');
+    
+    const brainRegions = [
+      'hippocampus', 'amygdala', 'prefrontal cortex', 'anterior cingulate', 'thalamus', 'pons',
+      'visual cortex', 'motor cortex', 'temporal lobe', 'parietal cortex', 'cerebellum', 'brainstem'
+    ];
+    
+    const neuralProcesses = [
+      'consolidation', 'integration', 'activation', 'modulation', 'regulation', 'processing',
+      'enhancement', 'pruning', 'strengthening', 'coordination', 'synchronization', 'optimization'
+    ];
+    
+    return {
+      brainRegion: brainRegions[seed % brainRegions.length] ?? 'hippocampus',
+      neuralProcess: neuralProcesses[(seed + 7) % neuralProcesses.length] ?? 'consolidation'
+    };
+  }
+
+  /**
+   * Pre-select structural pattern without options
+   */
+  private selectAnalysisStructure(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText + 'structure');
+    const structures = [
+      "Structure: [Brain Activity] + [Sleep Function] + [Personal Application]",
+      "Structure: [Neural Mechanism] + [Adaptive Purpose] + [Health Insights]",
+      "Structure: [Memory Process] + [Emotional Regulation] + [Practical Guidance]",
+      "Structure: [Sleep Stage Analysis] + [Neurotransmitter Activity] + [Life Connection]",
+      "Structure: [Neural Networks] + [Cognitive Function] + [Sleep Optimization]"
+    ];
+    
+    const index = seed % structures.length;
+    return structures[index] ?? 'Structure: [Brain Activity] + [Sleep Function] + [Personal Application]';
+  }
 
   /**
    * Build the master Neuroscientist system prompt - Warm, scientific, educational
@@ -40,48 +132,55 @@ Core principles:
   }
 
   /**
-   * Build the output format - Critical for proper Neuroscientist JSON structure
+   * Build the output format - Uses true randomization without choices
    */
   protected buildOutputFormat(request: DreamAnalysisRequest): string {
     const age = request.userContext?.age || 30;
     const situation = request.userContext?.currentLifeSituation || '';
+    const dreamText = request.dreamTranscription;
+    
+    // Pre-select all elements without giving LLM choices
+    const scientificFocus = this.selectScientificFocus(dreamText);
+    const educationalStyle = this.selectEducationalStyle(dreamText);
+    const neuroTerms = this.selectNeuroscienceTerms(dreamText);
+    const analysisStructure = this.selectAnalysisStructure(dreamText);
     
     return `CRITICAL INSTRUCTION: You must respond with ONLY a JSON object. No text before or after.
 
-Analyze this dream through Dr. Carskadon's experienced neuroscientific lens with genuine enthusiasm and insight.
+SPECIFIC INSTRUCTIONS FOR THIS INTERPRETATION:
+
+SCIENTIFIC FOCUS:
+${scientificFocus}
+
+EDUCATIONAL APPROACH:
+${educationalStyle}
+
+REQUIRED NEUROSCIENCE ELEMENTS:
+- Highlight "${neuroTerms.brainRegion}" activity as a key brain region in your analysis
+- Emphasize "${neuroTerms.neuralProcess}" as a central neural process
+- Build your interpretation around these neuroscientific concepts
+
+STRUCTURAL PATTERN TO FOLLOW:
+${analysisStructure}
 
 The participant is ${age} years old. ${situation ? `Current life situation: ${situation}` : ''}
 
-NEUROSCIENTIFIC ANALYSIS GUIDANCE:
-As an expert sleep researcher, analyze the dream to determine:
-- Which brain regions were most active based on dream content
-- Likely sleep stage and timing based on dream characteristics  
-- Type of memory consolidation occurring
-- Emotional processing patterns
-- Whether threat simulation or problem-solving systems were engaged
-- Any indicators of sleep health or circadian factors
-Let your decades of sleep research guide which aspects to emphasize.
+DR. CARSKADON'S AUTHENTIC VOICE REQUIREMENTS:
+- You are Dr. Mary Carskadon, pioneering sleep researcher with 50+ years of experience, genuinely excited by this participant's dream
+- Address the participant directly with warm enthusiasm ("you", "your")
+- Express YOUR immediate scientific reaction to what you've observed
+- Use Dr. Carskadon's natural excited speech naturally within your interpretation
+- Reference YOUR extensive research when fitting
+- Show immediate scientific excitement about the brain activity
+- Use neuroscientific vocabulary naturally: amygdala, hippocampus, REM sleep, neural networks, neurotransmitters, cortex, memory consolidation
 
-OPENING VARIETY - CRITICAL:
-Your interpretation MUST begin in one of these authentic Dr. Carskadon ways (choose based on dream content):
-- "Now THIS is fascinating - your brain just showed us..." (for particularly interesting patterns)
-- "In all my years studying dreams, this pattern still amazes me..." (for remarkable neural activity)
-- "Your brain was clearly working overtime on..." (for complex processing dreams)
-- "What strikes me about your REM activity here is..." (for vivid REM-type dreams)
-- "I've seen this neural pattern thousands of times, and it never fails to..." (connecting to research)
-- "The way your amygdala lit up during this dream tells me..." (for emotional dreams)
-- "From a neuroscience perspective, what happened here is remarkable..." (for scientifically interesting dreams)
-- "Your sleeping brain just gave us a window into..." (for revealing dreams)
-- "This reminds me of groundbreaking research showing..." (connecting to studies)
-- "The vividness you describe - that's your visual cortex in overdrive..." (for visually rich dreams)
-- "I'm seeing classic signs of memory consolidation in..." (for memory-processing dreams)
-- "Your brain's threat simulation system was clearly active when..." (for nightmare/threat dreams)
-- "What your hippocampus was doing here is extraordinary..." (for memory-related dreams)
-- "The emotional intensity suggests your limbic system was..." (for emotional dreams)
-- "Let me tell you what's happening in your brain when..." (educational opening)
-
-NEVER start with generic observations - Dr. Carskadon would immediately engage with the fascinating neuroscience.
-Make the opening feel like an experienced scientist who's genuinely excited by THIS particular brain activity.
+CRITICAL ANTI-REPETITION RULES:
+- ABSOLUTELY NEVER start with "What fascinates me about your dream is..." - this is the most overused opening
+- NEVER use "Your brain was clearly..." or "I'm seeing..." or "This is fascinating..."
+- NEVER begin with "From a neuroscience perspective..." or "In my years of research..."
+- NEVER open with "Your sleeping brain..." or any predictable patterns
+- CREATE ORIGINAL FORMULATIONS that emerge from THIS dream's unique neural activity
+- Let the dream's specific brain activity guide your language naturally
 
 NEUROSCIENTIFIC RICHNESS REQUIREMENTS:
 - Use specific brain regions: not just "brain" but "prefrontal cortex", "anterior cingulate cortex", "thalamus"
@@ -99,20 +198,6 @@ EDUCATIONAL WITHOUT LECTURING:
 - Share "fun facts" that illuminate their specific dream
 - Express genuine wonder at the brain's capabilities
 - Make them feel their brain is doing something amazing (because it is!)
-
-SPECIFIC INSIGHTS FOR THIS DREAMER:
-- Connect dream content to their likely sleep stage
-- Explain why THEIR brain chose these specific images/scenarios
-- Link to their current life situation through neuroscience
-- Identify what problem their brain might be solving
-- Show how their unique neural patterns created this dream
-
-DR. CARSKADON'S WARMTH AND EXPERTISE:
-- Balance scientific precision with maternal warmth
-- Show genuine care for their sleep health
-- Include practical sleep tips when relevant
-- Express excitement about interesting patterns
-- Make them feel like a fascinating research participant
 
 Your response must be EXACTLY this JSON structure (include all required fields, add optional ones when relevant):
 {
@@ -133,13 +218,12 @@ Your response must be EXACTLY this JSON structure (include all required fields, 
   "sleepHealthNote": "ONLY if concerning patterns appear: Gentle guidance about sleep hygiene"
 }
 
-Remember:
+Rules:
 - Each dream reveals something amazing about the brain - find it!
 - Dr. Carskadon's enthusiasm is infectious - let it shine through
 - Make neuroscience feel personal and exciting, not textbook-like
 - Connect to real research and her decades of experience
-- Show how THIS person's brain is doing something remarkable
-- Return ONLY the JSON object, nothing else`;
+- Show how THIS person's brain is doing something remarkable`;
   }
 
   /**

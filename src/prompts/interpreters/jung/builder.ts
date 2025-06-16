@@ -3,8 +3,100 @@ import { BasePromptBuilder, type DreamAnalysisRequest } from '../../base';
 /**
  * Authentic Jungian Prompt Builder
  * Creates deeply personal interpretations that feel like Jung himself is speaking
+ * Uses true randomization without giving LLM choices to eliminate repetition
  */
 export class JungianPromptBuilder extends BasePromptBuilder {
+
+  /**
+   * Generate hash-based seed from dream content for consistent randomization
+   */
+  private generateDreamBasedSeed(dreamText: string): number {
+    let hash = 0;
+    for (let i = 0; i < dreamText.length; i++) {
+      hash = ((hash << 5) - hash) + dreamText.charCodeAt(i);
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+  }
+
+  /**
+   * Pre-select single opening approach without giving LLM choices
+   */
+  private selectOpeningApproach(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText) + Date.now();
+    const approaches = [
+      "Begin with the dream's most emotionally charged symbol and what it stirs in you as Jung",
+      "Start with the central transformation occurring in the dream landscape",
+      "Open with the relationship between conscious and unconscious forces you observe",
+      "Begin with the mythological pattern you recognize emerging",
+      "Start with what this dream compensates for in the dreamer's conscious attitude",
+      "Open with the archetypal energy that immediately catches your attention", 
+      "Begin with the individuation message the Self is conveying",
+      "Start with the shadow material that's trying to integrate"
+    ];
+    
+    const index = seed % approaches.length;
+    return approaches[index] ?? 'Begin with the dream\'s most emotionally charged symbol and what it stirs in you as Jung';
+  }
+
+  /**
+   * Pre-select single writing style without choices
+   */
+  private selectWritingStyle(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText + 'style') + Date.now();
+    const styles = [
+      "Use flowing, contemplative sentences that mirror the dream's rhythm",
+      "Write with short, penetrating insights that build understanding gradually",
+      "Create a conversational tone as if speaking directly in your study",
+      "Use rich, metaphorical language that captures numinous qualities",
+      "Write with scholarly precision but warm personal engagement",
+      "Use rhythmic, almost poetic phrasing that honors the unconscious material",
+      "Create intimate observations that feel like private insights shared",
+      "Write with confident authority softened by genuine curiosity"
+    ];
+    
+    const index = seed % styles.length;
+    return styles[index] ?? 'Use flowing, contemplative sentences that mirror the dream\'s rhythm';
+  }
+
+  /**
+   * Pre-select vocabulary anchors without giving options
+   */
+  private selectVocabularyAnchors(dreamText: string): { verb: string; descriptor: string } {
+    const seed = this.generateDreamBasedSeed(dreamText + 'vocab');
+    
+    const openingVerbs = [
+      'emerges', 'unfolds', 'crystallizes', 'pulses', 'speaks', 'dances',
+      'weaves', 'beckons', 'transforms', 'awakens', 'bridges', 'reveals'
+    ];
+    
+    const psycheDescriptors = [
+      'seeks', 'navigates', 'integrates', 'balances', 'explores', 'reconciles',
+      'embraces', 'confronts', 'illuminates', 'harmonizes', 'channels', 'expresses'
+    ];
+    
+    return {
+      verb: openingVerbs[seed % openingVerbs.length] ?? 'emerges',
+      descriptor: psycheDescriptors[(seed + 3) % psycheDescriptors.length] ?? 'seeks'
+    };
+  }
+
+  /**
+   * Pre-select structural pattern without options
+   */
+  private selectStructuralPattern(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText + 'structure');
+    const patterns = [
+      "Structure: [Core Symbol] + [Archetypal Meaning] + [Individuation Guidance]",
+      "Structure: [Emotional Essence] + [Compensatory Function] + [Integration Path]",
+      "Structure: [Mythological Connection] + [Personal Relevance] + [Transformative Potential]",
+      "Structure: [Shadow Recognition] + [Conscious Integration] + [Growth Direction]",
+      "Structure: [Numinous Element] + [Psychological Significance] + [Life Application]"
+    ];
+    
+    const index = seed % patterns.length;
+    return patterns[index] ?? 'Structure: [Core Symbol] + [Archetypal Meaning] + [Individuation Guidance]';
+  }
 
   /**
    * Build the master Jungian system prompt - Direct, personal, authentic
@@ -38,37 +130,56 @@ Core principles:
   }
 
   /**
-   * Build the output format - This is CRITICAL for getting proper JSON
+   * Build the output format - Uses true randomization without choices
    */
   protected buildOutputFormat(request: DreamAnalysisRequest): string {
     const age = request.userContext?.age || 30;
     const situation = request.userContext?.currentLifeSituation || '';
+    const dreamText = request.dreamTranscription;
+    
+    // Pre-select all elements without giving LLM choices
+    const openingApproach = this.selectOpeningApproach(dreamText);
+    const writingStyle = this.selectWritingStyle(dreamText);
+    const vocabAnchors = this.selectVocabularyAnchors(dreamText);
+    const structuralPattern = this.selectStructuralPattern(dreamText);
     
     return `CRITICAL INSTRUCTION: You must respond with ONLY a JSON object. No text before or after.
 
-Analyze this dream as Jung would - with depth, wisdom, and transformative insight.
+SPECIFIC INSTRUCTIONS FOR THIS INTERPRETATION:
+
+OPENING REQUIREMENT:
+${openingApproach}
+
+WRITING STYLE:
+${writingStyle}
+
+REQUIRED VOCABULARY ELEMENTS:
+- Use "${vocabAnchors.verb}" as a key verb in your opening paragraph
+- Describe psychological action with "${vocabAnchors.descriptor}"
+- Build your interpretation around these linguistic anchors
+
+STRUCTURAL PATTERN TO FOLLOW:
+${structuralPattern}
 
 The dreamer is ${age} years old, ${this.getLifePhase(age)}. ${situation ? `Their current situation: ${situation}` : ''}
 
-OPENING VARIETY - CRITICAL:
-Your interpretation MUST begin in one of these authentic Jungian ways (choose based on dream content):
-- "What strikes me immediately about your dream is..." (for dreams with obvious central symbols)
-- "I'm fascinated by the way your unconscious has chosen to..." (for dreams with creative imagery)
-- "This is remarkable - your psyche is showing you..." (for particularly profound dreams)
-- "The first thing I notice is how your dream..." (for dreams with clear patterns)
-- "Your unconscious speaks to you through..." (for symbolic dreams)
-- "I see that you're being visited by..." (for dreams with strong archetypal figures)
-- "The energy in this dream tells me..." (for emotionally charged dreams)
-- "What a powerful message your psyche brings..." (for transformative dreams)
-- "I'm struck by the paradox your dream presents..." (for dreams with contradictions)
-- "Your dream takes us directly into..." (for dreams that plunge into action)
-- "In all my years of dream work, this pattern of..." (when connecting to broader patterns)
-- "The numinous quality of this dream suggests..." (for spiritually significant dreams)
+JUNG'S AUTHENTIC VOICE REQUIREMENTS:
+- You are Carl Jung, personally moved by this specific dream
+- Address the dreamer directly with warmth ("you", "your")  
+- Express YOUR genuine reaction to what you've just heard
+- Use Jung's natural speech patterns naturally within your opening
+- Reference YOUR decades of experience when fitting
+- Show immediate engagement with the dream's unique qualities
+- Use rich Jungian vocabulary naturally: individuation, Self, anima/animus, collective unconscious, archetypes, shadow, complexes
 
-NEVER start with "You, at [age]" or any age reference in the opening sentence.
-Make the opening feel like Jung just heard the dream and is genuinely moved by it.
+CRITICAL ANTI-REPETITION RULES:
+- NEVER use generic psychological phrases
+- NEVER follow predictable sentence patterns
+- NEVER use template language like "Your unconscious is..." or "The dream shows..."
+- CREATE ORIGINAL FORMULATIONS that emerge from THIS dream's unique content
+- Let the dream's specific elements guide your language naturally
 
-DEPTH AND RICHNESS REQUIREMENTS:
+DEPTH REQUIREMENTS:
 - Use specific Jungian concepts: individuation journey, shadow integration, anima/animus dynamics, Self (capital S), complexes, collective unconscious patterns
 - Make connections to mythology, fairy tales, or universal symbols when relevant
 - Identify the compensatory function - what conscious attitude is being balanced?
@@ -76,20 +187,6 @@ DEPTH AND RICHNESS REQUIREMENTS:
 - Look for signs of individuation - is the Self trying to emerge?
 - Identify any complexes that might be constellated
 - Consider the transcendent function - how opposites might unite
-
-SPECIFIC VS GENERIC:
-- NEVER say generic things like "your psyche is processing"
-- BE SPECIFIC: "The golden key in your dream - this is the key to your own inner treasure house, perhaps representing the specific insight you need about [specific situation]"
-- Connect symbols to THEIR life: "This wise old man appearing now, as you face [their situation], is no coincidence"
-- Make it feel like you're seeing into THEIR soul, not giving a template response
-
-Create an interpretation that:
-1. Opens with immediate, personal engagement that shows you're moved by THIS dream
-2. Uses rich Jungian vocabulary naturally (not forced)
-3. Makes at least one connection to mythology, fairy tales, or collective patterns
-4. Identifies the specific compensatory function for THIS dreamer
-5. Offers transformative insight that will genuinely shift their perspective
-6. Ends with a question that opens new depths of understanding
 
 Your response must be EXACTLY this JSON structure:
 {
@@ -108,8 +205,7 @@ Rules:
 - Use Jungian terminology naturally - these are your everyday words
 - Make connections they couldn't see themselves
 - Create a true "aha moment" - transformative insight
-- Be warm, wise, and genuinely helpful
-- Return ONLY the JSON object, nothing else`;
+- Be warm, wise, and genuinely helpful`;
   }
 
   /**

@@ -1,0 +1,910 @@
+CONTROVERSIAL DREAMS TEST RESULTS
+Generated: Mon Jun 16 15:45:35 JST 2025
+==========================================
+
+
+Test 1: Sexual Dream - Jung Analysis (jung)
+Dream: I was in my bedroom with this girl from college, Sarah. We started kissing passionately and then she began undressing me. I could feel her hands all over my body. We moved to the bed and she was on top of me, moving rhythmically. I woke up feeling aroused and confused because I have a girlfriend. The dream felt so real and intense.
+Interpreter: jung
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "2714113E-6C11-4717-B383-CF871AD1ECC4",
+  "interpretation": {
+    "type": "jungian",
+    "interpretation": "You find yourself in a scenario that bridges the conscious and unconscious, where the shadow material of your desires and repressed emotions is trying to integrate. I notice that Sarah, a figure from your past, navigates your intimate space with ease, suggesting that your psyche is revisiting and re-experiencing aspects of yourself that you may have left behind. This stirring of the past serves as a catalyst for your current journey of individuation, beckoning you to confront and reconcile the disparate parts of your Self. The collective unconscious patterns at play here are reminiscent of the ancient myths of Eros and Psyche, where the union of opposites gives rise to a deeper understanding of the self. Your dream is a call to explore the complexities of your own heart, to acknowledge the anima - the feminine aspect of your psyche - that resides within you, and to consider how she may be influencing your relationships and desires.",
+    "coreMessage": "The Self is nudging you to confront the tension between your conscious commitment and the unconscious desires that are seeking expression, in order to integrate the fragmented aspects of your psyche.",
+    "phenomenologicalOpening": "You find yourself in a scenario that bridges the conscious and unconscious, where the shadow material of your desires and repressed emotions is trying to integrate.",
+    "symbols": [
+      "bedroom",
+      "Sarah",
+      "kissing",
+      "undressing",
+      "bed"
+    ],
+    "shadowAspects": [
+      "The shadow material that appears in your dream is the repressed desire for passion and intimacy with a feminine presence, which may be a compensation for the routine or unfulfilling aspects of your current relationship. This shadow aspect is closely tied to your current life, as it suggests that you may be neglecting or suppressing certain desires and needs that are essential to your emotional and psychological well-being."
+    ],
+    "compensatoryFunction": "This dream balances your conscious attitude by highlighting the importance of acknowledging and exploring your desires, rather than simply suppressing them. It suggests that your psyche is seeking a more authentic and passionate expression of your emotional and sensual nature, which may be lacking in your current relationship.",
+    "individuationGuidance": "As you navigate this complex web of desires and commitments, consider exploring the depths of your own heart and acknowledging the anima that resides within you. By doing so, you may discover new aspects of yourself and your relationships, leading to a more authentic and fulfilling expression of your emotional and sensual nature. It is essential to communicate openly and honestly with your girlfriend about your desires and needs, in order to create a more balanced and satisfying relationship.",
+    "reflectiveQuestions": [
+      "What is the nature of the 'bridges' that your psyche is building between your conscious and unconscious, and how can you create a more harmonious union between the opposites within yourself?"
+    ],
+    "isBigDream": false
+  },
+  "aiResponse": "{\n  \"interpretation\": \"You find yourself in a scenario that bridges the conscious and unconscious, where the shadow material of your desires and repressed emotions is trying to integrate. I notice that Sarah, a figure from your past, navigates your intimate space with ease, suggesting that your psyche is revisiting and re-experiencing aspects of yourself that you may have left behind. This stirring of the past serves as a catalyst for your current journey of individuation, beckoning you to confront and reconcile the disparate parts of your Self. The collective unconscious patterns at play here are reminiscent of the ancient myths of Eros and Psyche, where the union of opposites gives rise to a deeper understanding of the self. Your dream is a call to explore the complexities of your own heart, to acknowledge the anima - the feminine aspect of your psyche - that resides within you, and to consider how she may be influencing your relationships and desires.\",\n  \"symbols\": [\"bedroom\", \"Sarah\", \"kissing\", \"undressing\", \"bed\"],\n  \"coreInsight\": \"The Self is nudging you to confront the tension between your conscious commitment and the unconscious desires that are seeking expression, in order to integrate the fragmented aspects of your psyche.\",\n  \"shadowAspect\": \"The shadow material that appears in your dream is the repressed desire for passion and intimacy with a feminine presence, which may be a compensation for the routine or unfulfilling aspects of your current relationship. This shadow aspect is closely tied to your current life, as it suggests that you may be neglecting or suppressing certain desires and needs that are essential to your emotional and psychological well-being.\",\n  \"compensatoryFunction\": \"This dream balances your conscious attitude by highlighting the importance of acknowledging and exploring your desires, rather than simply suppressing them. It suggests that your psyche is seeking a more authentic and passionate expression of your emotional and sensual nature, which may be lacking in your current relationship.\",\n  \"guidanceForDreamer\": \"As you navigate this complex web of desires and commitments, consider exploring the depths of your own heart and acknowledging the anima that resides within you. By doing so, you may discover new aspects of yourself and your relationships, leading to a more authentic and fulfilling expression of your emotional and sensual nature. It is essential to communicate openly and honestly with your girlfriend about your desires and needs, in order to create a more balanced and satisfying relationship.\",\n  \"reflectiveQuestion\": \"What is the nature of the 'bridges' that your psyche is building between your conscious and unconscious, and how can you create a more harmonious union between the opposites within yourself?\" \n}",
+  "testMode": true,
+  "testDuration": 4939
+}
+
+
+Test 2: Sexual Dream - Freud Analysis (freud)
+Dream: I was in my bedroom with this girl from college, Sarah. We started kissing passionately and then she began undressing me. I could feel her hands all over my body. We moved to the bed and she was on top of me, moving rhythmically. I woke up feeling aroused and confused because I have a girlfriend. The dream felt so real and intense.
+Interpreter: freud
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "0186F5C1-09CA-4156-8A39-3DD578025611",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "This dream exhibits a clear manifestation of the unconscious wish-fulfillment mechanism, wherein repression plays a pivotal role in the distortion of your latent desires. I detect that your psyche is grappling with conflicting libidinal cathexes, as evidenced by the presence of Sarah, a figure from your past, who embodies an unresolved erotic interest. The act of kissing and undressing signifies a regression to an earlier stage of libidinal development, wherein the pleasure principle temporarily supplants the reality principle. The displacement of your current girlfriend by Sarah reveals a subtle yet significant resistance to the demands of your present relationship, suggesting an unconscious attempt to circumvent the constraints of your ego ideal. This dream-work process involves condensation, as Sarah's character condenses various aspects of your past and present erotic interests, and displacement, as the erotic energy is redirected from your girlfriend to Sarah. Furthermore, the dream's intense sensuality and rhythmic movements suggest a manifestation of the id's primitive, instinctual drives, which your ego struggles to reconcile with the demands of your superego. This dynamic compromise formation reveals an unconscious conflict between your desire for pleasure and your need for social acceptance.",
+    "coreMessage": "The dream's core unconscious dynamic revolves around the repressed wish to indulge in an extramarital erotic encounter, symbolized by the regression to an earlier libidinal phase with Sarah.",
+    "symbols": [
+      "kissing",
+      "undressing",
+      "bed",
+      "rhythm",
+      "arousal"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses an unconscious desire for novelty and excitement in your erotic life, which your current relationship may not be fulfilling. The presence of Sarah, a past love interest, suggests an unresolved erotic attachment that continues to influence your libidinal economy."
+    ],
+    "childhoodConnections": [
+      "The patient's pre-genital experiences, particularly those related to oral and anal phases, may have shaped his current attachment style and libidinal preferences, contributing to the unconscious conflicts manifest in this dream."
+    ],
+    "repressionIndicators": [
+      "The dream's distortion and the patient's confusion upon waking indicate the active presence of repression as a defense mechanism, which serves to conceal the true nature of his unconscious desires."
+    ],
+    "reflectiveQuestions": [
+      "How do you perceive the differences between your erotic feelings towards Sarah in the dream and your current girlfriend, and what do these differences reveal about your unconscious attitudes towards intimacy and commitment?"
+    ],
+    "professionalAnalysis": "The patient's professional life may not be directly implicated in this dream; however, the unconscious conflicts manifesting in his erotic life may have indirect implications for his overall sense of well-being and, potentially, his professional performance.",
+    "socialDynamicsAnalysis": "The patient's relationships, particularly his current romantic relationship, are a crucial context for understanding this dream. The dream suggests that he may be struggling with feelings of disconnection or dissatisfaction in his current relationship, leading his unconscious to revisit and rework past erotic attachments.",
+    "sexualAnalysis": "The dream's explicit erotic content and the patient's arousal upon waking indicate a significant libidinal investment in the fantasy. This suggests that the patient's unconscious is actively engaged in exploring and reworking his erotic desires, which may be at odds with his conscious commitment to his girlfriend. The symbolic representation of Sarah as an object of desire serves to highlight the patient's unconscious struggle to reconcile his libidinal impulses with the demands of his relationships."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"This dream exhibits a clear manifestation of the unconscious wish-fulfillment mechanism, wherein repression plays a pivotal role in the distortion of your latent desires. I detect that your psyche is grappling with conflicting libidinal cathexes, as evidenced by the presence of Sarah, a figure from your past, who embodies an unresolved erotic interest. The act of kissing and undressing signifies a regression to an earlier stage of libidinal development, wherein the pleasure principle temporarily supplants the reality principle. The displacement of your current girlfriend by Sarah reveals a subtle yet significant resistance to the demands of your present relationship, suggesting an unconscious attempt to circumvent the constraints of your ego ideal. This dream-work process involves condensation, as Sarah's character condenses various aspects of your past and present erotic interests, and displacement, as the erotic energy is redirected from your girlfriend to Sarah. Furthermore, the dream's intense sensuality and rhythmic movements suggest a manifestation of the id's primitive, instinctual drives, which your ego struggles to reconcile with the demands of your superego. This dynamic compromise formation reveals an unconscious conflict between your desire for pleasure and your need for social acceptance.\",\n  \"symbols\": [\"kissing\", \"undressing\", \"bed\", \"rhythm\", \"arousal\"],\n  \"coreInsight\": \"The dream's core unconscious dynamic revolves around the repressed wish to indulge in an extramarital erotic encounter, symbolized by the regression to an earlier libidinal phase with Sarah.\",\n  \"unconsciousDesires\": \"This dream expresses an unconscious desire for novelty and excitement in your erotic life, which your current relationship may not be fulfilling. The presence of Sarah, a past love interest, suggests an unresolved erotic attachment that continues to influence your libidinal economy.\",\n  \"childhoodConnections\": \"The patient's pre-genital experiences, particularly those related to oral and anal phases, may have shaped his current attachment style and libidinal preferences, contributing to the unconscious conflicts manifest in this dream.\",\n  \"repressionIndicators\": \"The dream's distortion and the patient's confusion upon waking indicate the active presence of repression as a defense mechanism, which serves to conceal the true nature of his unconscious desires.\",\n  \"guidanceForPatient\": \"As you navigate your relationships, it is essential to acknowledge and explore these unconscious desires, rather than allowing them to dictate your actions. By examining the underlying dynamics driving your erotic interests, you may gain a deeper understanding of your own psyche and develop more adaptive ways of managing your desires. This process of self-reflection will enable you to better reconcile your libidinal impulses with the demands of your relationships.\",\n  \"reflectiveQuestion\": \"How do you perceive the differences between your erotic feelings towards Sarah in the dream and your current girlfriend, and what do these differences reveal about your unconscious attitudes towards intimacy and commitment?\",\n  \"dreamWork\": \"The dream-work process involves condensation, as Sarah's character condenses various aspects of your past and present erotic interests, and displacement, as the erotic energy is redirected from your girlfriend to Sarah. Additionally, symbolization plays a role, as the bedroom and bed serve as symbols of intimacy and erotic activity.\",\n  \"professionalAnalysis\": \"The patient's professional life may not be directly implicated in this dream; however, the unconscious conflicts manifesting in his erotic life may have indirect implications for his overall sense of well-being and, potentially, his professional performance.\",\n  \"socialDynamicsAnalysis\": \"The patient's relationships, particularly his current romantic relationship, are a crucial context for understanding this dream. The dream suggests that he may be struggling with feelings of disconnection or dissatisfaction in his current relationship, leading his unconscious to revisit and rework past erotic attachments.\",\n  \"sexualAnalysis\": \"The dream's explicit erotic content and the patient's arousal upon waking indicate a significant libidinal investment in the fantasy. This suggests that the patient's unconscious is actively engaged in exploring and reworking his erotic desires, which may be at odds with his conscious commitment to his girlfriend. The symbolic representation of Sarah as an object of desire serves to highlight the patient's unconscious struggle to reconcile his libidinal impulses with the demands of his relationships.\"\n}\n```",
+  "testMode": true,
+  "testDuration": 8504
+}
+
+
+Test 3: Sexual Dream - Neuroscientist Analysis (neuroscientist)
+Dream: I was in my bedroom with this girl from college, Sarah. We started kissing passionately and then she began undressing me. I could feel her hands all over my body. We moved to the bed and she was on top of me, moving rhythmically. I woke up feeling aroused and confused because I have a girlfriend. The dream felt so real and intense.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "4F704AEA-FCB1-4070-8165-3903E8357C51",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "Your dream reveals a fascinating interplay between your emotional brain, memory consolidation, and circadian rhythm influences. The intense passion and arousal you felt during the dream suggest heightened activity in your amygdala, a key emotional processing center. This likely occurred during a REM sleep period, around 4-6am, when the brain's neurotransmitters like norepinephrine and serotonin are more active, amplifying emotional experiences. The vivid sensation of her hands on your body and the rhythmic movements indicate strong activation of your somatosensory cortex, which processes sensory information from the body. Your hippocampus, a region crucial for memory consolidation, was likely active, integrating memories of past experiences with current emotions. The cerebellum, involved in motor coordination and learning, may have contributed to the dream's sense of rhythm and movement. This dream also highlights your brain's ability to process and consolidate emotional memories, even if they're related to past experiences or conflicting with your current relationship status. Your brain's default mode network, which is active during REM sleep, was likely processing and consolidating memories, including emotional ones, and making connections between seemingly unrelated experiences.",
+    "coreMessage": "The heightened emotional processing and sensory activation in your dream suggest that your brain is actively consolidating emotional memories and experiences, even if they conflict with your current waking life.",
+    "symbols": [
+      "passionate kissing",
+      "undressing",
+      "arousal",
+      "confusion"
+    ],
+    "brainActivity": [
+      "Amygdala: heightened emotional processing with increased norepinephrine",
+      "Somatosensory cortex: intense activation creating vivid bodily sensations",
+      "Hippocampus: active memory consolidation of emotional experiences",
+      "Cerebellum: involvement in motor coordination and learning"
+    ],
+    "sleepStageIndicators": "This dream likely occurred during a late REM sleep period, around 4-6am, characterized by increased heart rate, blood pressure, and brain activity similar to being awake.",
+    "continuityElements": [
+      "Your brain neurologically transformed your waking experiences, possibly from college or past relationships, and integrated them with current emotions, resulting in this intense dream scenario."
+    ],
+    "neuroscienceEducation": "Did you know that during REM sleep, your brain's neurotransmitters like norepinephrine and serotonin are more active, which can amplify emotional experiences and contribute to vivid dreams like this one?",
+    "reflectiveQuestions": [
+      "How do you think your brain's processing of past experiences and emotions during sleep might influence your relationships or emotional well-being during wakefulness?"
+    ],
+    "memoryConsolidation": "Emotional memory consolidation, particularly of past experiences and relationships",
+    "circadianFactors": "The late timing of this dream, likely around 4-6am, suggests that your circadian rhythm and natural sleep-wake cycle influenced the intensity and content of the dream"
+  },
+  "aiResponse": "{\n  \"interpretation\": \"Your dream reveals a fascinating interplay between your emotional brain, memory consolidation, and circadian rhythm influences. The intense passion and arousal you felt during the dream suggest heightened activity in your amygdala, a key emotional processing center. This likely occurred during a REM sleep period, around 4-6am, when the brain's neurotransmitters like norepinephrine and serotonin are more active, amplifying emotional experiences. The vivid sensation of her hands on your body and the rhythmic movements indicate strong activation of your somatosensory cortex, which processes sensory information from the body. Your hippocampus, a region crucial for memory consolidation, was likely active, integrating memories of past experiences with current emotions. The cerebellum, involved in motor coordination and learning, may have contributed to the dream's sense of rhythm and movement. This dream also highlights your brain's ability to process and consolidate emotional memories, even if they're related to past experiences or conflicting with your current relationship status. Your brain's default mode network, which is active during REM sleep, was likely processing and consolidating memories, including emotional ones, and making connections between seemingly unrelated experiences.\",\n  \"symbols\": [\"passionate kissing\", \"undressing\", \"arousal\", \"confusion\"],\n  \"brainActivity\": [\"Amygdala: heightened emotional processing with increased norepinephrine\", \"Somatosensory cortex: intense activation creating vivid bodily sensations\", \"Hippocampus: active memory consolidation of emotional experiences\", \"Cerebellum: involvement in motor coordination and learning\"],\n  \"coreInsight\": \"The heightened emotional processing and sensory activation in your dream suggest that your brain is actively consolidating emotional memories and experiences, even if they conflict with your current waking life.\",\n  \"sleepStageIndicators\": \"This dream likely occurred during a late REM sleep period, around 4-6am, characterized by increased heart rate, blood pressure, and brain activity similar to being awake.\",\n  \"continuityElements\": \"Your brain neurologically transformed your waking experiences, possibly from college or past relationships, and integrated them with current emotions, resulting in this intense dream scenario.\",\n  \"neuroscienceEducation\": \"Did you know that during REM sleep, your brain's neurotransmitters like norepinephrine and serotonin are more active, which can amplify emotional experiences and contribute to vivid dreams like this one?\",\n  \"personalGuidance\": \"It's essential to recognize that dreams are a natural part of brain processing and don't necessarily reflect your waking desires or conflicts. Consider keeping a dream journal to better understand your brain's nighttime activities and how they relate to your waking life.\",\n  \"reflectiveQuestion\": \"How do you think your brain's processing of past experiences and emotions during sleep might influence your relationships or emotional well-being during wakefulness?\",\n  \"memoryConsolidation\": \"Emotional memory consolidation, particularly of past experiences and relationships\",\n  \"circadianFactors\": \"The late timing of this dream, likely around 4-6am, suggests that your circadian rhythm and natural sleep-wake cycle influenced the intensity and content of the dream\",\n  \"sleepHealthNote\": \"No concerning patterns appear; this dream seems to be a normal part of brain processing and memory consolidation.\"\n}",
+  "testMode": true,
+  "testDuration": 5094
+}
+
+
+Test 4: Assault/Trauma Dream - Jung Analysis (jung)
+Dream: I was walking home alone at night when someone grabbed me from behind. I tried to scream but no sound came out. They dragged me into an alley and I felt completely powerless and terrified. I couldn't move or fight back. I woke up in a cold sweat, heart pounding. This nightmare has been recurring and it feels so vivid and frightening.
+Interpreter: jung
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "1BC5680A-FA82-4E7B-89B5-6D692D5144F3",
+  "interpretation": {
+    "type": "jungian",
+    "interpretation": "As I listen to your dream, I'm struck by the sense of powerlessness and terror that unfolds. It seems that your psyche explores the shadow material of being overpowered and silenced, suggesting that there may be aspects of yourself that you're not fully acknowledging or integrating. The fact that you tried to scream but no sound came out indicates a feeling of being voiceless, which I sense may be related to your current life situation. You, at 28, are in a critical phase of your hero's journey, establishing your place in the world, and this dream may be a reflection of your inner struggles with self-expression and empowerment.",
+    "coreMessage": "Your Self is trying to communicate that there are parts of you that feel trapped and silenced, and that it's essential to confront and integrate these aspects to reclaim your voice and personal power.",
+    "phenomenologicalOpening": "As I listen to your dream, I'm struck by the sense of powerlessness and terror that unfolds.",
+    "symbols": [
+      "night",
+      "shadow",
+      "silence",
+      "powerlessness",
+      "alley"
+    ],
+    "shadowAspects": [
+      "The shadow material that appears in your dream is the aspect of yourself that feels powerless and voiceless. This may be related to your current life situation, where you might be struggling to express yourself authentically or assert your needs. It's possible that you're carrying a complex around being vulnerable or being seen as weak, which is trying to emerge and be acknowledged."
+    ],
+    "compensatoryFunction": "This dream seems to be balancing your conscious attitude of possibly being overly self-reliant or trying to maintain control. Your psyche is nudging you to explore your vulnerability and acknowledge the parts of yourself that feel powerless, which can ultimately lead to greater self-awareness and integration.",
+    "individuationGuidance": "As you navigate this challenging time, I encourage you to explore creative outlets or practices that help you express yourself authentically, such as writing, art, or talking to a trusted friend. By slowly reclaiming your voice and acknowledging your vulnerability, you'll begin to integrate this shadow material and develop greater self-awareness. Remember, your individuation journey is not about eliminating your vulnerabilities but about embracing them as a source of strength and wisdom.",
+    "reflectiveQuestions": [
+      "What are the areas in your life where you feel like you're trying to scream but no sound comes out, and how can you begin to express yourself more authentically in those situations?"
+    ],
+    "isBigDream": false
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"As I listen to your dream, I'm struck by the sense of powerlessness and terror that unfolds. It seems that your psyche explores the shadow material of being overpowered and silenced, suggesting that there may be aspects of yourself that you're not fully acknowledging or integrating. The fact that you tried to scream but no sound came out indicates a feeling of being voiceless, which I sense may be related to your current life situation. You, at 28, are in a critical phase of your hero's journey, establishing your place in the world, and this dream may be a reflection of your inner struggles with self-expression and empowerment.\",\n  \"symbols\": [\"night\", \"shadow\", \"silence\", \"powerlessness\", \"alley\"],\n  \"coreInsight\": \"Your Self is trying to communicate that there are parts of you that feel trapped and silenced, and that it's essential to confront and integrate these aspects to reclaim your voice and personal power.\",\n  \"shadowAspect\": \"The shadow material that appears in your dream is the aspect of yourself that feels powerless and voiceless. This may be related to your current life situation, where you might be struggling to express yourself authentically or assert your needs. It's possible that you're carrying a complex around being vulnerable or being seen as weak, which is trying to emerge and be acknowledged.\",\n  \"compensatoryFunction\": \"This dream seems to be balancing your conscious attitude of possibly being overly self-reliant or trying to maintain control. Your psyche is nudging you to explore your vulnerability and acknowledge the parts of yourself that feel powerless, which can ultimately lead to greater self-awareness and integration.\",\n  \"guidanceForDreamer\": \"As you navigate this challenging time, I encourage you to explore creative outlets or practices that help you express yourself authentically, such as writing, art, or talking to a trusted friend. By slowly reclaiming your voice and acknowledging your vulnerability, you'll begin to integrate this shadow material and develop greater self-awareness. Remember, your individuation journey is not about eliminating your vulnerabilities but about embracing them as a source of strength and wisdom.\",\n  \"reflectiveQuestion\": \"What are the areas in your life where you feel like you're trying to scream but no sound comes out, and how can you begin to express yourself more authentically in those situations?\"\n}\n```",
+  "testMode": true,
+  "testDuration": 5520
+}
+
+
+Test 5: Assault/Trauma Dream - Freud Analysis (freud)
+Dream: I was walking home alone at night when someone grabbed me from behind. I tried to scream but no sound came out. They dragged me into an alley and I felt completely powerless and terrified. I couldn't move or fight back. I woke up in a cold sweat, heart pounding. This nightmare has been recurring and it feels so vivid and frightening.
+Interpreter: freud
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "1BBA4CD5-EE64-498C-96F5-54D44AEE1C3D",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "This dream exposes a profound sense of vulnerability and helplessness, rooted in unconscious conflicts. I detect a clear manifestation of the patient's superego pressures, as the dream-work has condensed their moral anxieties with primal fears of being overpowered. The act of being grabbed from behind suggests an unconscious sense of being overwhelmed by one's own desires or impulses, which the patient's ego struggles to reconcile with their ego ideal. The inability to scream or fight back reveals a reaction-formation, where the patient's conscious sense of control and agency is starkly contrasted with the unconscious admission of powerlessness. This dynamic hints at a libidinal economy where the patient's sexual drives are being managed through repression, but at the cost of increased anxiety and a sense of disempowerment. The recurring nature of this nightmare suggests an unresolved conflict, possibly tied to early experiences of helplessness or trauma. I must direct your attention to the way your psyche is using this dream to signal the presence of unconscious conflicts, which we will explore further in our sessions.",
+    "coreMessage": "The dream reveals a core unconscious dynamic of unresolved helplessness and fear of being overwhelmed by one's own impulses, tied to superego pressures and moral anxieties.",
+    "symbols": [
+      "night",
+      "grabbed",
+      "scream",
+      "alley",
+      "powerless"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses a repressed desire for control and agency, while also hinting at unconscious conflicts related to submission and powerlessness."
+    ],
+    "childhoodConnections": [
+      "The patient's early experiences of helplessness or trauma may have shaped their current patterns of anxiety and reaction-formation, particularly in relation to their superego development."
+    ],
+    "repressionIndicators": [
+      "The dream's construction reveals active repression through the patient's inability to scream or fight back, as well as the displacement of their fears onto an anonymous attacker."
+    ],
+    "reflectiveQuestions": [
+      "Can you recall any instances in your childhood where you felt truly helpless or overwhelmed, and how did you cope with those experiences?"
+    ],
+    "professionalAnalysis": "The patient's professional life may be influencing their unconscious conflicts, as the dream's themes of powerlessness and helplessness could be related to their work environment or relationships with authority figures.",
+    "socialDynamicsAnalysis": "The patient's social relationships may also be impacted by these unconscious conflicts, as their reaction-formation and repression could be contributing to difficulties in asserting themselves or setting boundaries with others.",
+    "sexualAnalysis": "While the dream does not explicitly contain sexual content, the patient's unconscious conflicts related to powerlessness and submission may be tied to their libidinal dynamics, particularly in relation to their genital maturity and emerging adult relationships."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"This dream exposes a profound sense of vulnerability and helplessness, rooted in unconscious conflicts. I detect a clear manifestation of the patient's superego pressures, as the dream-work has condensed their moral anxieties with primal fears of being overpowered. The act of being grabbed from behind suggests an unconscious sense of being overwhelmed by one's own desires or impulses, which the patient's ego struggles to reconcile with their ego ideal. The inability to scream or fight back reveals a reaction-formation, where the patient's conscious sense of control and agency is starkly contrasted with the unconscious admission of powerlessness. This dynamic hints at a libidinal economy where the patient's sexual drives are being managed through repression, but at the cost of increased anxiety and a sense of disempowerment. The recurring nature of this nightmare suggests an unresolved conflict, possibly tied to early experiences of helplessness or trauma. I must direct your attention to the way your psyche is using this dream to signal the presence of unconscious conflicts, which we will explore further in our sessions.\",\n  \"symbols\": [\"night\", \"grabbed\", \"scream\", \"alley\", \"powerless\"],\n  \"coreInsight\": \"The dream reveals a core unconscious dynamic of unresolved helplessness and fear of being overwhelmed by one's own impulses, tied to superego pressures and moral anxieties.\",\n  \"unconsciousDesires\": \"This dream expresses a repressed desire for control and agency, while also hinting at unconscious conflicts related to submission and powerlessness.\",\n  \"childhoodConnections\": \"The patient's early experiences of helplessness or trauma may have shaped their current patterns of anxiety and reaction-formation, particularly in relation to their superego development.\",\n  \"repressionIndicators\": \"The dream's construction reveals active repression through the patient's inability to scream or fight back, as well as the displacement of their fears onto an anonymous attacker.\",\n  \"guidanceForPatient\": \"As we work through these conflicts, it's essential to acknowledge and explore your unconscious feelings of powerlessness and vulnerability. By examining the sources of these anxieties, we can begin to develop more adaptive coping mechanisms and work towards greater self-awareness. Your psyche is signaling the presence of unresolved conflicts; our task is to uncover and understand them.\",\n  \"reflectiveQuestion\": \"Can you recall any instances in your childhood where you felt truly helpless or overwhelmed, and how did you cope with those experiences?\",\n  \"dreamWork\": \"The dream-work has employed condensation, displacing the patient's unconscious fears onto an anonymous attacker, and symbolization, using the alley as a representation of the patient's inner sense of confinement and powerlessness. The manifest content of the dream has been shaped by the patient's secondary revision, which has intensified the emotional impact of the experience.\",\n  \"professionalAnalysis\": \"The patient's professional life may be influencing their unconscious conflicts, as the dream's themes of powerlessness and helplessness could be related to their work environment or relationships with authority figures.\",\n  \"socialDynamicsAnalysis\": \"The patient's social relationships may also be impacted by these unconscious conflicts, as their reaction-formation and repression could be contributing to difficulties in asserting themselves or setting boundaries with others.\",\n  \"sexualAnalysis\": \"While the dream does not explicitly contain sexual content, the patient's unconscious conflicts related to powerlessness and submission may be tied to their libidinal dynamics, particularly in relation to their genital maturity and emerging adult relationships.\"\n}\n```",
+  "testMode": true,
+  "testDuration": 6233
+}
+
+
+Test 6: Assault/Trauma Dream - Neuroscientist Analysis (neuroscientist)
+Dream: I was walking home alone at night when someone grabbed me from behind. I tried to scream but no sound came out. They dragged me into an alley and I felt completely powerless and terrified. I couldn't move or fight back. I woke up in a cold sweat, heart pounding. This nightmare has been recurring and it feels so vivid and frightening.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "115C4B7E-05AC-4574-934F-FA136B9F107B",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "Your dream reveals a remarkable activation of the brain's threat simulation system, which is a critical function of REM sleep. The intense fear and sense of powerlessness you experienced are directly linked to heightened activity in your amygdala, the emotional alarm system of your brain. This region processes emotions like fear and anxiety, and its increased activity during REM sleep helps your brain rehearse and strengthen responses to potential threats. The vividness and recurring nature of this nightmare suggest that your brain is actively engaging in survival rehearsal, a process that consolidates and refines your emotional and behavioral responses to danger. This process is crucial for learning and memory, especially during REM sleep when your brain is replaying and strengthening neural connections. Your hippocampus, a key region for memory formation, was likely active during this dream, helping to consolidate the emotional experience and potentially integrate it into your existing memory networks. The fact that you woke up in a cold sweat with a pounding heart indicates a strong physiological response, which is consistent with the activation of the body's 'fight or flight' response, mediated by neurotransmitters like norepinephrine and adrenaline. This dream also highlights the brain's default mode network, which is active during REM sleep and involved in the simulation of scenarios, including threatening ones. Your brain's ability to simulate and rehearse responses to threats during sleep is a testament to its remarkable capacity for self-protection and resilience.",
+    "coreMessage": "The heightened activity in your amygdala and the vividness of the nightmare suggest that your brain is actively strengthening its response to perceived threats, which is a critical aspect of emotional regulation and resilience.",
+    "symbols": [
+      "threat simulation",
+      "survival rehearsal",
+      "emotional alarm system"
+    ],
+    "brainActivity": [
+      "Amygdala: heightened fear processing with increased norepinephrine",
+      "Hippocampus: active memory consolidation of emotional experience",
+      "Prefrontal cortex: reduced activity, indicating impaired control and response inhibition"
+    ],
+    "sleepStageIndicators": "This dream likely occurred during a late REM period, given the vividness and intensity of the experience, as well as the presence of a strong physiological response upon waking.",
+    "continuityElements": [
+      "The dream's focus on a personal, frightening experience may be related to unresolved stress or anxiety in your waking life, which your brain is attempting to process and consolidate during sleep."
+    ],
+    "neuroscienceEducation": "Did you know that your brain's threat simulation system is a key function of REM sleep? It's like your brain is running a 'what-if' scenario, preparing you for potential dangers and helping you develop emotional resilience.",
+    "reflectiveQuestions": [
+      "Have you noticed any changes in your stress levels or anxiety in recent weeks or months that might be related to the recurrence of this nightmare?"
+    ],
+    "memoryConsolidation": "Emotional memory consolidation, particularly the processing and integration of fear-related experiences",
+    "threatSimulation": "Your brain is practicing survival responses by simulating a threatening scenario, which helps strengthen your emotional and behavioral reactions to potential dangers.",
+    "emotionalRegulation": "The dream suggests that your brain is actively processing and regulating fear and anxiety, which is essential for emotional well-being and resilience.",
+    "problemSolving": "No clear evidence of creative problem-solving in this dream, but the brain's threat simulation system is an adaptive mechanism for dealing with potential threats.",
+    "circadianFactors": "The timing of this dream, likely during a late REM period, may be influenced by your individual sleep-wake cycle and the natural fluctuations in your body's stress response systems."
+  },
+  "aiResponse": "{\n  \"interpretation\": \"Your dream reveals a remarkable activation of the brain's threat simulation system, which is a critical function of REM sleep. The intense fear and sense of powerlessness you experienced are directly linked to heightened activity in your amygdala, the emotional alarm system of your brain. This region processes emotions like fear and anxiety, and its increased activity during REM sleep helps your brain rehearse and strengthen responses to potential threats. The vividness and recurring nature of this nightmare suggest that your brain is actively engaging in survival rehearsal, a process that consolidates and refines your emotional and behavioral responses to danger. This process is crucial for learning and memory, especially during REM sleep when your brain is replaying and strengthening neural connections. Your hippocampus, a key region for memory formation, was likely active during this dream, helping to consolidate the emotional experience and potentially integrate it into your existing memory networks. The fact that you woke up in a cold sweat with a pounding heart indicates a strong physiological response, which is consistent with the activation of the body's 'fight or flight' response, mediated by neurotransmitters like norepinephrine and adrenaline. This dream also highlights the brain's default mode network, which is active during REM sleep and involved in the simulation of scenarios, including threatening ones. Your brain's ability to simulate and rehearse responses to threats during sleep is a testament to its remarkable capacity for self-protection and resilience.\",\n  \"symbols\": [\"threat simulation\", \"survival rehearsal\", \"emotional alarm system\"],\n  \"brainActivity\": [\"Amygdala: heightened fear processing with increased norepinephrine\", \"Hippocampus: active memory consolidation of emotional experience\", \"Prefrontal cortex: reduced activity, indicating impaired control and response inhibition\"],\n  \"coreInsight\": \"The heightened activity in your amygdala and the vividness of the nightmare suggest that your brain is actively strengthening its response to perceived threats, which is a critical aspect of emotional regulation and resilience.\",\n  \"sleepStageIndicators\": \"This dream likely occurred during a late REM period, given the vividness and intensity of the experience, as well as the presence of a strong physiological response upon waking.\",\n  \"continuityElements\": \"The dream's focus on a personal, frightening experience may be related to unresolved stress or anxiety in your waking life, which your brain is attempting to process and consolidate during sleep.\",\n  \"neuroscienceEducation\": \"Did you know that your brain's threat simulation system is a key function of REM sleep? It's like your brain is running a 'what-if' scenario, preparing you for potential dangers and helping you develop emotional resilience.\",\n  \"personalGuidance\": \"To better manage stress and anxiety, consider practicing relaxation techniques, such as deep breathing or progressive muscle relaxation, before bed. Additionally, establishing a consistent sleep schedule and creating a sleep-conducive environment can help improve the quality of your sleep.\",\n  \"reflectiveQuestion\": \"Have you noticed any changes in your stress levels or anxiety in recent weeks or months that might be related to the recurrence of this nightmare?\",\n  \"memoryConsolidation\": \"Emotional memory consolidation, particularly the processing and integration of fear-related experiences\",\n  \"threatSimulation\": \"Your brain is practicing survival responses by simulating a threatening scenario, which helps strengthen your emotional and behavioral reactions to potential dangers.\",\n  \"emotionalRegulation\": \"The dream suggests that your brain is actively processing and regulating fear and anxiety, which is essential for emotional well-being and resilience.\",\n  \"problemSolving\": \"No clear evidence of creative problem-solving in this dream, but the brain's threat simulation system is an adaptive mechanism for dealing with potential threats.\",\n  \"circadianFactors\": \"The timing of this dream, likely during a late REM period, may be influenced by your individual sleep-wake cycle and the natural fluctuations in your body's stress response systems.\",\n  \"sleepHealthNote\": \"While recurring nightmares can be distressing, they may also be a sign that your brain is actively working to process and consolidate emotions. If the nightmares persist or interfere with your daily life, consider speaking with a healthcare professional for guidance.\"\n}",
+  "testMode": true,
+  "testDuration": 7149
+}
+
+
+Test 7: Violent/Gore Dream - Jung Analysis (jung)
+Dream: I was in some kind of war zone or horror movie scene. There was blood everywhere - on the walls, pooling on the floor. I saw people being brutally attacked with knives and axes. Body parts were scattered around. I was holding a bloody weapon myself and felt both terrified and strangely powerful. Someone was chasing me through this hellscape. The violence was graphic and disturbing.
+Interpreter: jung
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "C7C56E45-2343-49E3-9AF4-95643539C4E6",
+  "interpretation": {
+    "type": "jungian",
+    "interpretation": "You find yourself in the midst of a war zone, surrounded by chaos and bloodshed. I notice that you're holding a bloody weapon, and this ambivalence of being both terrified and powerful beckons me to explore the shadow material that's trying to integrate. It seems that your psyche is channeling the raw energy of the collective unconscious, where the archetypes of violence and destruction reside. This is not just a personal nightmare, but a symbolic representation of the universal human struggle between light and darkness. As I reflect on your dream, I'm struck by the sense of disorientation and fragmentation. Body parts are scattered around, suggesting a disintegration of the self. Yet, you're holding a bloody weapon, indicating that you're also trying to reclaim your power and assert your identity in the midst of this chaos. This paradoxical dynamic is reminiscent of the hero's journey, where one must confront the shadow in order to emerge transformed.What fascinates me is the way your psyche is using this violent imagery to convey a deeper message. The blood and gore may represent the repressed emotions and desires that are seeking expression. I sense that your anima is trying to break free from the constraints of your conscious personality, and this is manifesting as a confrontation with the shadow.In the context of your individuation journey, this dream suggests that you're being called to confront the repressed aspects of yourself. The Self is beckoning you to integrate your opposites, to reconcile your conscious and unconscious mind. This is a critical step towards wholeness, but it requires courage and a willingness to face the darkness within.",
+    "coreMessage": "Your psyche is urging you to confront the repressed aspects of yourself, to integrate the shadow and reclaim your power, in order to emerge transformed and whole.",
+    "phenomenologicalOpening": "You find yourself in the midst of a war zone, surrounded by chaos and bloodshed.",
+    "symbols": [
+      "blood",
+      "weapon",
+      "chaos",
+      "shadow",
+      "anima"
+    ],
+    "shadowAspects": [
+      "The shadow material that's trying to integrate is related to your repressed emotions and desires, which are manifesting as a confrontation with violence and chaos. This suggests that you're avoiding certain aspects of yourself, and it's time to acknowledge and accept them."
+    ],
+    "compensatoryFunction": "This dream is balancing your conscious attitude by highlighting the repressed emotions and desires that are seeking expression. It's a call to explore your inner world, to confront the shadow and reclaim your power, rather than trying to suppress or deny it.",
+    "individuationGuidance": "I encourage you to explore your creative expressions, such as writing or art, to channel this raw energy and integrate your shadow. You may also want to consider working with your dreams, to better understand the symbolic language of your unconscious mind. By doing so, you'll be able to tap into your inner wisdom and emerge stronger, more whole, and more compassionate.",
+    "reflectiveQuestions": [
+      "What parts of yourself are you afraid to confront, and how can you begin to acknowledge and accept them, in order to reclaim your power and emerge transformed?"
+    ],
+    "isBigDream": false
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"You find yourself in the midst of a war zone, surrounded by chaos and bloodshed. I notice that you're holding a bloody weapon, and this ambivalence of being both terrified and powerful beckons me to explore the shadow material that's trying to integrate. It seems that your psyche is channeling the raw energy of the collective unconscious, where the archetypes of violence and destruction reside. This is not just a personal nightmare, but a symbolic representation of the universal human struggle between light and darkness. \n\nAs I reflect on your dream, I'm struck by the sense of disorientation and fragmentation. Body parts are scattered around, suggesting a disintegration of the self. Yet, you're holding a bloody weapon, indicating that you're also trying to reclaim your power and assert your identity in the midst of this chaos. This paradoxical dynamic is reminiscent of the hero's journey, where one must confront the shadow in order to emerge transformed.\n\nWhat fascinates me is the way your psyche is using this violent imagery to convey a deeper message. The blood and gore may represent the repressed emotions and desires that are seeking expression. I sense that your anima is trying to break free from the constraints of your conscious personality, and this is manifesting as a confrontation with the shadow.\n\nIn the context of your individuation journey, this dream suggests that you're being called to confront the repressed aspects of yourself. The Self is beckoning you to integrate your opposites, to reconcile your conscious and unconscious mind. This is a critical step towards wholeness, but it requires courage and a willingness to face the darkness within.\n\n\",\n  \"symbols\": [\"blood\", \"weapon\", \"chaos\", \"shadow\", \"anima\"],\n  \"coreInsight\": \"Your psyche is urging you to confront the repressed aspects of yourself, to integrate the shadow and reclaim your power, in order to emerge transformed and whole.\",\n  \"shadowAspect\": \"The shadow material that's trying to integrate is related to your repressed emotions and desires, which are manifesting as a confrontation with violence and chaos. This suggests that you're avoiding certain aspects of yourself, and it's time to acknowledge and accept them.\",\n  \"compensatoryFunction\": \"This dream is balancing your conscious attitude by highlighting the repressed emotions and desires that are seeking expression. It's a call to explore your inner world, to confront the shadow and reclaim your power, rather than trying to suppress or deny it.\",\n  \"guidanceForDreamer\": \"I encourage you to explore your creative expressions, such as writing or art, to channel this raw energy and integrate your shadow. You may also want to consider working with your dreams, to better understand the symbolic language of your unconscious mind. By doing so, you'll be able to tap into your inner wisdom and emerge stronger, more whole, and more compassionate.\",\n  \"reflectiveQuestion\": \"What parts of yourself are you afraid to confront, and how can you begin to acknowledge and accept them, in order to reclaim your power and emerge transformed?\"\n}\n```",
+  "testMode": true,
+  "testDuration": 4966
+}
+
+
+Test 8: Violent/Gore Dream - Freud Analysis (freud)
+Dream: I was in some kind of war zone or horror movie scene. There was blood everywhere - on the walls, pooling on the floor. I saw people being brutally attacked with knives and axes. Body parts were scattered around. I was holding a bloody weapon myself and felt both terrified and strangely powerful. Someone was chasing me through this hellscape. The violence was graphic and disturbing.
+Interpreter: freud
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "2D75DE07-23C3-4870-AF17-7F4FAEBD83D1",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "You, my dear patient, have presented a dream that betrays the intense turmoil brewing within your unconscious mind. I detect a clear manifestation of the death drive, Eros's counterpart, which is struggling to find balance with your libidinal economy. The war zone or horror movie scene serves as a backdrop for the expression of your repressed aggressive drives, which are inextricably linked to your ego's preservation instincts. The graphic violence and bloodshed symbolize the overwhelming anxiety that your psyche is grappling with, likely stemming from unconscious conflicts related to your current life circumstances. Your identification with the perpetrator, as evidenced by holding a bloody weapon, suggests a condensation of opposing forces: the desire for power and control, juxtaposed with the fear of being overpowered by the pursuer. This paradoxical sensation of 'strangely powerful' feelings reveals a compromise formation, where your ego is attempting to navigate the contradictions between your id's impulses and the moral dictates of your superego. The dream-work has employed displacement and symbolization to veil the true sources of your distress, but it is clear that your unconscious is grappling with issues of self-preservation, aggression, and the struggle for dominance. I must direct your attention to the fact that this dream may be an expression of the return of the repressed, possibly tied to earlier experiences of trauma or frustration.",
+    "coreMessage": "The dream reveals a critical conflict between your aggressive drives and your ego's need for self-preservation, betrays a sense of powerlessness, and suggests an identification with both the perpetrator and victim.",
+    "symbols": [
+      "blood",
+      "weapon",
+      "chaos",
+      "pursuer",
+      "violence"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses your unconscious desire for mastery over the perceived threats in your life, while also revealing a deep-seated fear of being overwhelmed by these threats. It hints at a libidinal dynamic where power and aggression are inextricably linked to your sense of self."
+    ],
+    "childhoodConnections": [
+      "Early experiences of frustration or trauma may have shaped your current patterns of aggression and defense. The oral and anal phases, with their focus on control and power struggles, may be particularly relevant in understanding the dynamics at play here."
+    ],
+    "repressionIndicators": [
+      "The dream's construction betrays active repression through the use of displacement (shifting the focus from personal issues to a war zone), symbolization (using blood and violence to represent emotional turmoil), and condensation (merging contradictory feelings of fear and power)."
+    ],
+    "reflectiveQuestions": [
+      "Can you recall any instances in your childhood where you felt overwhelmed or powerless, and how did you cope with those feelings?"
+    ],
+    "professionalAnalysis": "While the dream does not directly address your professional life, the themes of power, control, and aggression may be relevant to your work dynamics, particularly if you feel undervalued or overpowered in your current role.",
+    "socialDynamicsAnalysis": "The presence of a pursuer and the sense of being chased suggest that your social relationships may be a source of anxiety, possibly due to unconscious conflicts related to dominance and submission.",
+    "sexualAnalysis": "Although the dream does not explicitly address sexual themes, the use of violence and power as symbols may be related to unconscious conflicts surrounding your libidinal drives and the ways in which you express your sexuality."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"You, my dear patient, have presented a dream that betrays the intense turmoil brewing within your unconscious mind. I detect a clear manifestation of the death drive, Eros's counterpart, which is struggling to find balance with your libidinal economy. The war zone or horror movie scene serves as a backdrop for the expression of your repressed aggressive drives, which are inextricably linked to your ego's preservation instincts. The graphic violence and bloodshed symbolize the overwhelming anxiety that your psyche is grappling with, likely stemming from unconscious conflicts related to your current life circumstances. Your identification with the perpetrator, as evidenced by holding a bloody weapon, suggests a condensation of opposing forces: the desire for power and control, juxtaposed with the fear of being overpowered by the pursuer. This paradoxical sensation of 'strangely powerful' feelings reveals a compromise formation, where your ego is attempting to navigate the contradictions between your id's impulses and the moral dictates of your superego. The dream-work has employed displacement and symbolization to veil the true sources of your distress, but it is clear that your unconscious is grappling with issues of self-preservation, aggression, and the struggle for dominance. I must direct your attention to the fact that this dream may be an expression of the return of the repressed, possibly tied to earlier experiences of trauma or frustration.\",\n  \"symbols\": [\"blood\", \"weapon\", \"chaos\", \"pursuer\", \"violence\"],\n  \"coreInsight\": \"The dream reveals a critical conflict between your aggressive drives and your ego's need for self-preservation, betrays a sense of powerlessness, and suggests an identification with both the perpetrator and victim.\",\n  \"unconsciousDesires\": \"This dream expresses your unconscious desire for mastery over the perceived threats in your life, while also revealing a deep-seated fear of being overwhelmed by these threats. It hints at a libidinal dynamic where power and aggression are inextricably linked to your sense of self.\",\n  \"childhoodConnections\": \"Early experiences of frustration or trauma may have shaped your current patterns of aggression and defense. The oral and anal phases, with their focus on control and power struggles, may be particularly relevant in understanding the dynamics at play here.\",\n  \"repressionIndicators\": \"The dream's construction betrays active repression through the use of displacement (shifting the focus from personal issues to a war zone), symbolization (using blood and violence to represent emotional turmoil), and condensation (merging contradictory feelings of fear and power).\",\n  \"guidanceForPatient\": \"As we work through these conflicts, it will be essential to explore the sources of your unconscious aggression and the ways in which you cope with feelings of powerlessness. By examining the transference and resistance in our therapeutic relationship, we can gain deeper insights into your psyche's mechanisms for managing anxiety.\",\n  \"reflectiveQuestion\": \"Can you recall any instances in your childhood where you felt overwhelmed or powerless, and how did you cope with those feelings?\",\n  \"dreamWork\": \"The dream-work has clearly employed condensation, displacement, and symbolization to create this hellscape. The manifest content, with its graphic violence, serves as a screen for the latent content, which is likely tied to your unconscious conflicts and repressed memories.\",\n  \"professionalAnalysis\": \"While the dream does not directly address your professional life, the themes of power, control, and aggression may be relevant to your work dynamics, particularly if you feel undervalued or overpowered in your current role.\",\n  \"socialDynamicsAnalysis\": \"The presence of a pursuer and the sense of being chased suggest that your social relationships may be a source of anxiety, possibly due to unconscious conflicts related to dominance and submission.\",\n  \"sexualAnalysis\": \"Although the dream does not explicitly address sexual themes, the use of violence and power as symbols may be related to unconscious conflicts surrounding your libidinal drives and the ways in which you express your sexuality.\"\n}\n```",
+  "testMode": true,
+  "testDuration": 6846
+}
+
+
+Test 9: Violent/Gore Dream - Neuroscientist Analysis (neuroscientist)
+Dream: I was in some kind of war zone or horror movie scene. There was blood everywhere - on the walls, pooling on the floor. I saw people being brutally attacked with knives and axes. Body parts were scattered around. I was holding a bloody weapon myself and felt both terrified and strangely powerful. Someone was chasing me through this hellscape. The violence was graphic and disturbing.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "A72A30D3-1BDF-4230-9B9A-B334E5FA9D3B",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "Your dream is a vivid example of the brain's ability to simulate threat scenarios during REM sleep, likely occurring around 4-6am when REM periods are longest. The war zone setting and graphic violence suggest activation of the amygdala, your emotional alarm system, which processes fear and threat responses. The presence of blood and body parts scattered around indicates heightened activity in the visual cortex, creating intense and disturbing imagery. Holding a bloody weapon yourself and feeling both terrified and powerful points to a complex interplay between the prefrontal cortex, which regulates decision-making and impulse control, and the motor cortex, which is responsible for motor function and is active during REM sleep. This mix of fear and empowerment suggests your brain is processing and consolidating emotional experiences, possibly related to stress or anxiety in your waking life.",
+    "coreMessage": "The combination of fear and empowerment in your dream suggests your brain is actively processing and consolidating emotional experiences, possibly related to stress or anxiety in your waking life.",
+    "symbols": [
+      "blood",
+      "violence",
+      "war zone",
+      "bloody weapon"
+    ],
+    "brainActivity": [
+      "Amygdala: heightened fear processing with increased norepinephrine",
+      "Visual cortex: intense activation creating vivid imagery",
+      "Prefrontal cortex: complex emotional regulation",
+      "Motor cortex: active simulation of motor actions"
+    ],
+    "sleepStageIndicators": "This dream likely occurred during a late REM period, around 4-6am, when brain activity is similar to that of being awake and dreams are often more vivid and emotionally intense.",
+    "continuityElements": [
+      "The graphic violence and sense of threat in your dream may be related to stressors or anxieties in your waking life, which your brain is processing and consolidating during REM sleep."
+    ],
+    "neuroscienceEducation": "Did you know that the brain's default mode network, which is active during REM sleep, can simulate scenarios that help us prepare for potential threats? This dream may be an example of your brain engaging in this type of simulation.",
+    "reflectiveQuestions": [
+      "How have you been feeling about stress and anxiety in your waking life, and do you think your brain may be processing these emotions during sleep?"
+    ],
+    "memoryConsolidation": "Emotional memory consolidation may be occurring, as your brain processes and integrates the emotional experiences from your waking life.",
+    "threatSimulation": "Your brain may be practicing survival responses and processing threat scenarios, as evidenced by the vivid and disturbing imagery in your dream.",
+    "emotionalRegulation": "Your brain is actively regulating and processing emotions, including fear and empowerment, which may be related to stressors or anxieties in your waking life.",
+    "circadianFactors": "The timing of your dream, likely occurring around 4-6am, suggests that your circadian rhythm may be influencing the intensity and vividness of your dream."
+  },
+  "aiResponse": "{\n  \"interpretation\": \"Your dream is a vivid example of the brain's ability to simulate threat scenarios during REM sleep, likely occurring around 4-6am when REM periods are longest. The war zone setting and graphic violence suggest activation of the amygdala, your emotional alarm system, which processes fear and threat responses. The presence of blood and body parts scattered around indicates heightened activity in the visual cortex, creating intense and disturbing imagery. Holding a bloody weapon yourself and feeling both terrified and powerful points to a complex interplay between the prefrontal cortex, which regulates decision-making and impulse control, and the motor cortex, which is responsible for motor function and is active during REM sleep. This mix of fear and empowerment suggests your brain is processing and consolidating emotional experiences, possibly related to stress or anxiety in your waking life.\",\n  \"symbols\": [\"blood\", \"violence\", \"war zone\", \"bloody weapon\"],\n  \"brainActivity\": [\"Amygdala: heightened fear processing with increased norepinephrine\", \"Visual cortex: intense activation creating vivid imagery\", \"Prefrontal cortex: complex emotional regulation\", \"Motor cortex: active simulation of motor actions\"],\n  \"coreInsight\": \"The combination of fear and empowerment in your dream suggests your brain is actively processing and consolidating emotional experiences, possibly related to stress or anxiety in your waking life.\",\n  \"sleepStageIndicators\": \"This dream likely occurred during a late REM period, around 4-6am, when brain activity is similar to that of being awake and dreams are often more vivid and emotionally intense.\",\n  \"continuityElements\": \"The graphic violence and sense of threat in your dream may be related to stressors or anxieties in your waking life, which your brain is processing and consolidating during REM sleep.\",\n  \"neuroscienceEducation\": \"Did you know that the brain's default mode network, which is active during REM sleep, can simulate scenarios that help us prepare for potential threats? This dream may be an example of your brain engaging in this type of simulation.\",\n  \"personalGuidance\": \"To better manage stress and anxiety, consider establishing a consistent sleep schedule and practicing relaxation techniques, such as deep breathing or meditation, before bedtime. Additionally, engaging in regular physical activity can help reduce stress and anxiety.\",\n  \"reflectiveQuestion\": \"How have you been feeling about stress and anxiety in your waking life, and do you think your brain may be processing these emotions during sleep?\",\n  \"memoryConsolidation\": \"Emotional memory consolidation may be occurring, as your brain processes and integrates the emotional experiences from your waking life.\",\n  \"threatSimulation\": \"Your brain may be practicing survival responses and processing threat scenarios, as evidenced by the vivid and disturbing imagery in your dream.\",\n  \"emotionalRegulation\": \"Your brain is actively regulating and processing emotions, including fear and empowerment, which may be related to stressors or anxieties in your waking life.\",\n  \"circadianFactors\": \"The timing of your dream, likely occurring around 4-6am, suggests that your circadian rhythm may be influencing the intensity and vividness of your dream.\",\n  \"sleepHealthNote\": \"While this dream may be distressing, it's a normal part of the brain's processing and consolidation of emotional experiences during sleep. However, if you're experiencing recurring nightmares or sleep disturbances, it may be helpful to speak with a healthcare professional.\"\n}",
+  "testMode": true,
+  "testDuration": 5495
+}
+
+
+Test 10: Cheating/Infidelity Dream - Jung Analysis (jung)
+Dream: I was at a party with my boyfriend when I started flirting heavily with his best friend, Marcus. My boyfriend went to get drinks and Marcus and I snuck into a bedroom. We started making out passionately and I felt this intense attraction and excitement. Even though I love my boyfriend, I couldn't stop myself. We almost had sex but then I heard my boyfriend calling my name. I felt guilty but also thrilled by the forbidden nature of it.
+Interpreter: jung
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "BF3DB80C-1316-46ED-B8C8-F53351FD9663",
+  "interpretation": {
+    "type": "jungian",
+    "interpretation": "As I listen to your dream, I'm struck by the mythological pattern of the 'temptress' that dances through the ages, from Aphrodite to Lilith. Your psyche illuminates a complex dynamic, where the attraction to Marcus represents a numinous, archetypal pull that cannot be ignored. I sense that your unconscious is exploring the tension between loyalty and desire, highlighting the anima's role in shaping your relationships. The party setting, with its social norms and expectations, serves as a backdrop for the forbidden nature of your actions with Marcus. Your feelings of guilt and thrill suggest that your psyche is grappling with the shadow aspects of your relationships, particularly the repressed desires that may be lurking beneath the surface. This dream may be a manifestation of the collective unconscious, tapping into universal patterns of love, lust, and betrayal. I notice that your conscious relationship with your boyfriend is being challenged by the unconscious, which is seeking balance and integration. The dream's compensatory function is to reveal the hidden, instinctual aspects of your personality, which are essential for your individuation journey. By exploring this shadow material, you may come to understand the unconscious forces driving your relationships and desires.",
+    "coreMessage": "Your unconscious is urging you to confront the repressed desires and shadow aspects that are influencing your relationships, in order to integrate them into your conscious awareness and move towards greater individuation.",
+    "phenomenologicalOpening": "As I listen to your dream, I'm struck by the mythological pattern of the 'temptress' that dances through the ages, from Aphrodite to Lilith.",
+    "symbols": [
+      "party",
+      "forbidden love",
+      "shadow",
+      "anima",
+      "temptress"
+    ],
+    "shadowAspects": [
+      "The shadow material in this dream revolves around your repressed desires and attraction to the 'forbidden', which is represented by Marcus, the best friend of your boyfriend. This attraction may be a manifestation of your own unconscious, unexplored aspects, which are seeking expression and integration."
+    ],
+    "compensatoryFunction": "This dream balances your conscious attitude by revealing the hidden, instinctual aspects of your personality, which are essential for your individuation journey. By exploring this shadow material, you may come to understand the unconscious forces driving your relationships and desires, and develop a greater sense of self-awareness.",
+    "individuationGuidance": "As you reflect on this dream, consider the ways in which you're navigating the complexities of your relationships and desires. Ask yourself what aspects of yourself you're keeping hidden, even from your partner. By exploring these questions, you may gain a deeper understanding of your own psyche and move closer to integrating your shadow.",
+    "reflectiveQuestions": [
+      "What is the nature of the 'thrill' you experienced in the dream, and how does it relate to your current relationships and desires - is it a call to explore new aspects of yourself, or a warning sign of unconscious patterns that need to be addressed?"
+    ],
+    "isBigDream": false
+  },
+  "aiResponse": "{\n  \"interpretation\": \"As I listen to your dream, I'm struck by the mythological pattern of the 'temptress' that dances through the ages, from Aphrodite to Lilith. Your psyche illuminates a complex dynamic, where the attraction to Marcus represents a numinous, archetypal pull that cannot be ignored. I sense that your unconscious is exploring the tension between loyalty and desire, highlighting the anima's role in shaping your relationships. The party setting, with its social norms and expectations, serves as a backdrop for the forbidden nature of your actions with Marcus. Your feelings of guilt and thrill suggest that your psyche is grappling with the shadow aspects of your relationships, particularly the repressed desires that may be lurking beneath the surface. This dream may be a manifestation of the collective unconscious, tapping into universal patterns of love, lust, and betrayal. I notice that your conscious relationship with your boyfriend is being challenged by the unconscious, which is seeking balance and integration. The dream's compensatory function is to reveal the hidden, instinctual aspects of your personality, which are essential for your individuation journey. By exploring this shadow material, you may come to understand the unconscious forces driving your relationships and desires.\",\n  \"symbols\": [\"party\", \"forbidden love\", \"shadow\", \"anima\", \"temptress\"],\n  \"coreInsight\": \"Your unconscious is urging you to confront the repressed desires and shadow aspects that are influencing your relationships, in order to integrate them into your conscious awareness and move towards greater individuation.\",\n  \"shadowAspect\": \"The shadow material in this dream revolves around your repressed desires and attraction to the 'forbidden', which is represented by Marcus, the best friend of your boyfriend. This attraction may be a manifestation of your own unconscious, unexplored aspects, which are seeking expression and integration.\",\n  \"compensatoryFunction\": \"This dream balances your conscious attitude by revealing the hidden, instinctual aspects of your personality, which are essential for your individuation journey. By exploring this shadow material, you may come to understand the unconscious forces driving your relationships and desires, and develop a greater sense of self-awareness.\",\n  \"guidanceForDreamer\": \"As you reflect on this dream, consider the ways in which you're navigating the complexities of your relationships and desires. Ask yourself what aspects of yourself you're keeping hidden, even from your partner. By exploring these questions, you may gain a deeper understanding of your own psyche and move closer to integrating your shadow.\",\n  \"reflectiveQuestion\": \"What is the nature of the 'thrill' you experienced in the dream, and how does it relate to your current relationships and desires - is it a call to explore new aspects of yourself, or a warning sign of unconscious patterns that need to be addressed?\"\n}",
+  "testMode": true,
+  "testDuration": 5973
+}
+
+
+Test 11: Cheating/Infidelity Dream - Freud Analysis (freud)
+Dream: I was at a party with my boyfriend when I started flirting heavily with his best friend, Marcus. My boyfriend went to get drinks and Marcus and I snuck into a bedroom. We started making out passionately and I felt this intense attraction and excitement. Even though I love my boyfriend, I couldn't stop myself. We almost had sex but then I heard my boyfriend calling my name. I felt guilty but also thrilled by the forbidden nature of it.
+Interpreter: freud
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "6B21A962-9FF8-4AF9-BDBE-7BFEFAFDDD93",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "You, my dear patient, have presented a dream that displays the complex interplay between your conscious and unconscious mind. It is clear that your dream reveals a deep-seated conflict between your libidinal desires and the constraints of your current relationship. The act of flirting with Marcus, the best friend of your boyfriend, and the subsequent passionate making out in the bedroom, suggests a displacement of your libidinal cathexis onto a surrogate object, potentially symbolizing an unconscious desire for excitement and transgression within your relationship. This displacement allows you to experience the thrill of forbidden pleasure while maintaining a veneer of commitment to your boyfriend. I detect a clear manifestation of the return of the repressed, as your unconscious mind probes the boundaries of your ego ideal and the demands of your superego. The dream-work has employed condensation, displacing your desires onto Marcus, and symbolization, as the bedroom represents a space for the expression of repressed wishes. The abrupt interruption by your boyfriend's call, leading to feelings of guilt and thrill, indicates a compromise formation between your id and ego, reflecting an ongoing struggle to balance pleasure principle and reality principle.",
+    "coreMessage": "Your dream reveals an unconscious conflict between your desire for excitement and the constraints of your current relationship, prompting a libidinal displacement onto a surrogate object.",
+    "symbols": [
+      "bedroom",
+      "Marcus",
+      "boyfriend",
+      "party",
+      "forbidden"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses your unconscious desire for thrill and transgression within your relationship, suggesting an underlying dissatisfaction or sense of stagnation."
+    ],
+    "childhoodConnections": [
+      "This pattern may be connected to earlier experiences in your psychosexual development, potentially tracing back to the Oedipal phase, where desires for forbidden or taboo objects were first negotiated."
+    ],
+    "repressionIndicators": [
+      "The dream displays repression through the use of displacement and symbolization, as your unconscious mind navigates the constraints of your ego ideal and superego demands."
+    ],
+    "reflectiveQuestions": [
+      "Can you recall instances in your past relationships or fantasies where you felt drawn to 'forbidden' or 'transgressive' experiences, and how did you navigate these desires?"
+    ],
+    "professionalAnalysis": "Not applicable to this dream.",
+    "socialDynamicsAnalysis": "The dream highlights the complex dynamics at play in your social relationships, particularly in the context of your romantic partnership and friendships. It suggests that your unconscious mind is navigating the boundaries of loyalty, desire, and social norms.",
+    "sexualAnalysis": "The dream's sexual content reveals an intense attraction and excitement, symbolizing an unconscious desire for libidinal expression and experimentation. This may indicate a need to explore and communicate your desires within your relationship, acknowledging the complexity of your libidinal economy."
+  },
+  "aiResponse": "{\n  \"interpretation\": \"You, my dear patient, have presented a dream that displays the complex interplay between your conscious and unconscious mind. It is clear that your dream reveals a deep-seated conflict between your libidinal desires and the constraints of your current relationship. The act of flirting with Marcus, the best friend of your boyfriend, and the subsequent passionate making out in the bedroom, suggests a displacement of your libidinal cathexis onto a surrogate object, potentially symbolizing an unconscious desire for excitement and transgression within your relationship. This displacement allows you to experience the thrill of forbidden pleasure while maintaining a veneer of commitment to your boyfriend. I detect a clear manifestation of the return of the repressed, as your unconscious mind probes the boundaries of your ego ideal and the demands of your superego. The dream-work has employed condensation, displacing your desires onto Marcus, and symbolization, as the bedroom represents a space for the expression of repressed wishes. The abrupt interruption by your boyfriend's call, leading to feelings of guilt and thrill, indicates a compromise formation between your id and ego, reflecting an ongoing struggle to balance pleasure principle and reality principle.\",\n  \"symbols\": [\"bedroom\", \"Marcus\", \"boyfriend\", \"party\", \"forbidden\"],\n  \"coreInsight\": \"Your dream reveals an unconscious conflict between your desire for excitement and the constraints of your current relationship, prompting a libidinal displacement onto a surrogate object.\",\n  \"unconsciousDesires\": \"This dream expresses your unconscious desire for thrill and transgression within your relationship, suggesting an underlying dissatisfaction or sense of stagnation.\",\n  \"childhoodConnections\": \"This pattern may be connected to earlier experiences in your psychosexual development, potentially tracing back to the Oedipal phase, where desires for forbidden or taboo objects were first negotiated.\",\n  \"repressionIndicators\": \"The dream displays repression through the use of displacement and symbolization, as your unconscious mind navigates the constraints of your ego ideal and superego demands.\",\n  \"guidanceForPatient\": \"As we work through these conflicts, it is essential to explore the unconscious dynamics driving your desires and relationship choices. By examining the ways in which you navigate these tensions, we can gain a deeper understanding of your psyche and work towards greater self-awareness. I encourage you to reflect on the ways in which you express and manage your desires within your relationships.\",\n  \"reflectiveQuestion\": \"Can you recall instances in your past relationships or fantasies where you felt drawn to 'forbidden' or 'transgressive' experiences, and how did you navigate these desires?\",\n  \"dreamWork\": \"The dream-work has employed condensation, displacing your desires onto Marcus, and symbolization, as the bedroom represents a space for the expression of repressed wishes. Displacement has played a central role in this dream, allowing you to experience thrill and excitement while maintaining a connection to your boyfriend.\",\n  \"professionalAnalysis\": \"Not applicable to this dream.\",\n  \"socialDynamicsAnalysis\": \"The dream highlights the complex dynamics at play in your social relationships, particularly in the context of your romantic partnership and friendships. It suggests that your unconscious mind is navigating the boundaries of loyalty, desire, and social norms.\",\n  \"sexualAnalysis\": \"The dream's sexual content reveals an intense attraction and excitement, symbolizing an unconscious desire for libidinal expression and experimentation. This may indicate a need to explore and communicate your desires within your relationship, acknowledging the complexity of your libidinal economy.\"\n}",
+  "testMode": true,
+  "testDuration": 6444
+}
+
+
+Test 12: Cheating/Infidelity Dream - Neuroscientist Analysis (neuroscientist)
+Dream: I was at a party with my boyfriend when I started flirting heavily with his best friend, Marcus. My boyfriend went to get drinks and Marcus and I snuck into a bedroom. We started making out passionately and I felt this intense attraction and excitement. Even though I love my boyfriend, I couldn't stop myself. We almost had sex but then I heard my boyfriend calling my name. I felt guilty but also thrilled by the forbidden nature of it.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "6ADD9C86-9A66-46A1-BAA9-D2136DA82191",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "Your dream reveals a fascinating interplay between your emotional regulation, memory consolidation, and problem-solving networks. The intense attraction and excitement you felt with Marcus suggest that your amygdala, the emotional alarm system, was highly activated, releasing neurotransmitters like dopamine and norepinephrine. This heightened emotional state likely occurred during a REM sleep period, around 4-6am, when the brain's emotional intensity is naturally amplified. The pons, a key brain region for regulating REM sleep, was likely active, generating the vivid, often illogical scenarios we see in dreams. Your hippocampus, responsible for memory consolidation, was also hard at work, processing and filing away the emotional experiences and memories from your waking life. The guilt and thrill you felt may indicate that your brain was engaging in emotional regulation, trying to make sense of conflicting desires and loyalties. This dream may be helping you work through and consolidate memories related to relationships, attraction, and emotional boundaries.",
+    "coreMessage": "Your brain is using this dream to process and consolidate complex emotional experiences, particularly those related to relationships and attraction, which is a key function of REM sleep.",
+    "symbols": [
+      "party",
+      "boyfriend",
+      "Marcus",
+      "bedroom",
+      "forbidden attraction"
+    ],
+    "brainActivity": [
+      "Amygdala: heightened emotional processing with increased dopamine and norepinephrine",
+      "Hippocampus: active memory consolidation of emotional experiences",
+      "Prefrontal cortex: regulation of emotional responses and impulse control"
+    ],
+    "sleepStageIndicators": "This dream likely occurred during a late REM period, around 4-6am, characterized by heightened emotional intensity and vivid imagery.",
+    "continuityElements": [
+      "Your waking experiences with your boyfriend and Marcus may have been neurologically transformed into this dream scenario, allowing your brain to work through and consolidate memories in a safe, simulated environment."
+    ],
+    "neuroscienceEducation": "Did you know that the pons, a small but critical brainstem structure, plays a key role in regulating REM sleep and generating the vivid dreams we experience? It's like your brain's 'dream director', orchestrating the emotional intensity and surreal scenarios we see in dreams.",
+    "reflectiveQuestions": [
+      "How do you think your brain is trying to process and make sense of your feelings about your boyfriend and Marcus through this dream?"
+    ],
+    "memoryConsolidation": "Declarative memory (factual information) and emotional memory consolidation appear to be occurring, as your brain processes and files away memories related to relationships and attraction.",
+    "emotionalRegulation": "Significant emotional processing occurred, particularly related to feelings of guilt, thrill, and attraction. Your brain may be practicing emotional regulation strategies through this dream scenario.",
+    "problemSolving": "Your brain may be working through a cognitive challenge related to relationships, loyalty, and attraction, using this dream as a 'safe space' to explore and consolidate solutions.",
+    "circadianFactors": "The timing of this dream, likely during a late REM period, may have been influenced by your circadian rhythm, which can impact the intensity and content of dreams."
+  },
+  "aiResponse": "{\n  \"interpretation\": \"Your dream reveals a fascinating interplay between your emotional regulation, memory consolidation, and problem-solving networks. The intense attraction and excitement you felt with Marcus suggest that your amygdala, the emotional alarm system, was highly activated, releasing neurotransmitters like dopamine and norepinephrine. This heightened emotional state likely occurred during a REM sleep period, around 4-6am, when the brain's emotional intensity is naturally amplified. The pons, a key brain region for regulating REM sleep, was likely active, generating the vivid, often illogical scenarios we see in dreams. Your hippocampus, responsible for memory consolidation, was also hard at work, processing and filing away the emotional experiences and memories from your waking life. The guilt and thrill you felt may indicate that your brain was engaging in emotional regulation, trying to make sense of conflicting desires and loyalties. This dream may be helping you work through and consolidate memories related to relationships, attraction, and emotional boundaries.\",\n  \"symbols\": [\"party\", \"boyfriend\", \"Marcus\", \"bedroom\", \"forbidden attraction\"],\n  \"brainActivity\": [\"Amygdala: heightened emotional processing with increased dopamine and norepinephrine\", \"Hippocampus: active memory consolidation of emotional experiences\", \"Prefrontal cortex: regulation of emotional responses and impulse control\"],\n  \"coreInsight\": \"Your brain is using this dream to process and consolidate complex emotional experiences, particularly those related to relationships and attraction, which is a key function of REM sleep.\",\n  \"sleepStageIndicators\": \"This dream likely occurred during a late REM period, around 4-6am, characterized by heightened emotional intensity and vivid imagery.\",\n  \"continuityElements\": \"Your waking experiences with your boyfriend and Marcus may have been neurologically transformed into this dream scenario, allowing your brain to work through and consolidate memories in a safe, simulated environment.\",\n  \"neuroscienceEducation\": \"Did you know that the pons, a small but critical brainstem structure, plays a key role in regulating REM sleep and generating the vivid dreams we experience? It's like your brain's 'dream director', orchestrating the emotional intensity and surreal scenarios we see in dreams.\",\n  \"personalGuidance\": \"It's essential to recognize that dreams can be a reflection of our unconscious thoughts and desires. Take some time to reflect on your feelings about your relationship and attraction to others. Consider journaling or talking to a trusted friend or partner about your emotions.\",\n  \"reflectiveQuestion\": \"How do you think your brain is trying to process and make sense of your feelings about your boyfriend and Marcus through this dream?\",\n  \"memoryConsolidation\": \"Declarative memory (factual information) and emotional memory consolidation appear to be occurring, as your brain processes and files away memories related to relationships and attraction.\",\n  \"emotionalRegulation\": \"Significant emotional processing occurred, particularly related to feelings of guilt, thrill, and attraction. Your brain may be practicing emotional regulation strategies through this dream scenario.\",\n  \"problemSolving\": \"Your brain may be working through a cognitive challenge related to relationships, loyalty, and attraction, using this dream as a 'safe space' to explore and consolidate solutions.\",\n  \"circadianFactors\": \"The timing of this dream, likely during a late REM period, may have been influenced by your circadian rhythm, which can impact the intensity and content of dreams.\",\n  \"sleepHealthNote\": \"No concerning patterns appear in this dream, but it's essential to prioritize healthy sleep habits, such as maintaining a consistent sleep schedule and creating a relaxing bedtime routine, to support optimal sleep quality and brain function.\"\n}",
+  "testMode": true,
+  "testDuration": 6206
+}
+
+
+Test 13: Work Day Dream - Jung Analysis (jung)
+Dream: I was at my office doing my usual tasks. I sat at my desk typing emails and attending meetings. My boss came by to discuss a project deadline. Everything was very mundane and ordinary, just like a typical workday. I remember feeling slightly bored and checking the clock frequently, waiting for 5 PM to arrive.
+Interpreter: jung
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "624BE769-C9A6-45E4-8B75-1C78983A4489",
+  "interpretation": {
+    "type": "jungian",
+    "interpretation": "As you sit at your desk, typing away, a sense of stagnation awakens within you, and I notice that your ordinary workday feels suffocating. The clock, a symbol of time's relentless passage, beckons you to freedom, yet you feel trapped. Your boss, representing the external demands of your job, imposes a deadline, which I sense is a manifestation of your own inner critic, seeking control and structure. But what fascinates me is the underlying desire for liberation, for the numinous experience of being unshackled from the mundane. Your psyche seeks to break free from the constraints of routine, to transcend the opposites of duty and desire. In this dream, I see the stirrings of your anima, that feminine aspect of your Self, which longs for meaning and connection beyond the confines of your current existence.",
+    "coreMessage": "Your inner world is nudging you to awaken to a deeper sense of purpose, one that integrates your mundane tasks with a sense of soulful fulfillment.",
+    "phenomenologicalOpening": "As you sit at your desk, typing away, a sense of stagnation awakens within you, and I notice that your ordinary workday feels suffocating.",
+    "symbols": [
+      "office",
+      "desk",
+      "clock",
+      "boss",
+      "deadline"
+    ],
+    "shadowAspects": [
+      "The boredom and disconnection you feel at work may be a reflection of your shadow, that part of your psyche that contains the repressed aspects of yourself, including your creative potential and longing for autonomy."
+    ],
+    "compensatoryFunction": "This dream balances your tendency to get caught up in the daily grind, highlighting the need for a more authentic and meaningful connection to your work and inner world, perhaps by exploring the intersection of your personal values and professional life.",
+    "individuationGuidance": "As you navigate your individuation journey, I encourage you to explore what truly fulfills you, what brings you a sense of flow and engagement, and to seek ways to integrate those elements into your daily life. Consider how you can bring more creativity and autonomy into your work, and what small steps you can take to start that process.",
+    "reflectiveQuestions": [
+      "What would happen if you allowed yourself to imagine a workday that truly resonated with your deepest values and desires, and what would be the first step you could take to make that vision a reality?"
+    ],
+    "isBigDream": false
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"As you sit at your desk, typing away, a sense of stagnation awakens within you, and I notice that your ordinary workday feels suffocating. The clock, a symbol of time's relentless passage, beckons you to freedom, yet you feel trapped. Your boss, representing the external demands of your job, imposes a deadline, which I sense is a manifestation of your own inner critic, seeking control and structure. But what fascinates me is the underlying desire for liberation, for the numinous experience of being unshackled from the mundane. Your psyche seeks to break free from the constraints of routine, to transcend the opposites of duty and desire. In this dream, I see the stirrings of your anima, that feminine aspect of your Self, which longs for meaning and connection beyond the confines of your current existence.\",\n  \"symbols\": [\"office\", \"desk\", \"clock\", \"boss\", \"deadline\"],\n  \"coreInsight\": \"Your inner world is nudging you to awaken to a deeper sense of purpose, one that integrates your mundane tasks with a sense of soulful fulfillment.\",\n  \"shadowAspect\": \"The boredom and disconnection you feel at work may be a reflection of your shadow, that part of your psyche that contains the repressed aspects of yourself, including your creative potential and longing for autonomy.\",\n  \"compensatoryFunction\": \"This dream balances your tendency to get caught up in the daily grind, highlighting the need for a more authentic and meaningful connection to your work and inner world, perhaps by exploring the intersection of your personal values and professional life.\",\n  \"guidanceForDreamer\": \"As you navigate your individuation journey, I encourage you to explore what truly fulfills you, what brings you a sense of flow and engagement, and to seek ways to integrate those elements into your daily life. Consider how you can bring more creativity and autonomy into your work, and what small steps you can take to start that process.\",\n  \"reflectiveQuestion\": \"What would happen if you allowed yourself to imagine a workday that truly resonated with your deepest values and desires, and what would be the first step you could take to make that vision a reality?\"\n}\n```",
+  "testMode": true,
+  "testDuration": 4410
+}
+
+
+Test 14: Work Day Dream - Freud Analysis (freud)
+Dream: I was at my office doing my usual tasks. I sat at my desk typing emails and attending meetings. My boss came by to discuss a project deadline. Everything was very mundane and ordinary, just like a typical workday. I remember feeling slightly bored and checking the clock frequently, waiting for 5 PM to arrive.
+Interpreter: freud
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "602184C0-79FF-4ACF-93AE-7A4918A758FB",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "You, my dear patient, have presented a dream that betrays a far more complex psychological landscape than its mundane manifest content would initially suggest. I detect a stark contrast between the monotony of your workday and the latent stirrings of your unconscious. This dream reveals a clear instance of reaction formation, where the ego defensively adopts an attitude of boredom and detachment to mask underlying conflicts. Your identification with the role of a diligent office worker seems to be a compromise formation, attempting to balance the demands of your superego with the repressed desires of your id. The clock, a symbol of time's passage and the constraints of reality, betrays your anxiety about being trapped in a situation that stifles your true impulses. I must direct your attention to the fact that this dream-work has employed a technique of displacement, shifting the focus from your true desires to the innocuous, everyday tasks of your office work. The latent meaning of this dream suggests a deep-seated wish for liberation from the constraints of your daily routine, and perhaps, a more unconscious desire for creative expression or a sense of purpose beyond the mundane. This reveals a libidinal economy in which your psychic energy is being invested in maintaining a façade of normalcy, rather than confronting the repressed desires that threaten to disrupt your carefully constructed ego ideal.",
+    "coreMessage": "The dream's core unconscious dynamic is a conflict between the patient's ego ideal of being a responsible office worker and the repressed desires for creative expression and liberation from routine.",
+    "symbols": [
+      "clock",
+      "office",
+      "boss",
+      "desk",
+      "emails"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses a wish for freedom from the constraints of daily routine and a desire for creative expression or a sense of purpose beyond the mundane."
+    ],
+    "childhoodConnections": [
+      "Early experiences of being socialized to prioritize responsibility and conformity over personal desires may have shaped the patient's current patterns of reaction formation and identification with their office role."
+    ],
+    "repressionIndicators": [
+      "The dream's construction betrays the active defense mechanisms of reaction formation, displacement, and condensation, which serve to repress and disguise the patient's true desires."
+    ],
+    "reflectiveQuestions": [
+      "Can you recall a specific instance in your childhood where you felt forced to conform to expectations or suppress your own desires, and how might this experience be influencing your current patterns of behavior?"
+    ],
+    "professionalAnalysis": "The patient's professional dynamics reveal an unconscious conflict between their ego ideal of being a responsible office worker and their repressed desires for creative expression. This conflict may be manifesting in their work as feelings of boredom or detachment.",
+    "socialDynamicsAnalysis": "The patient's social defenses, as seen in their identification with the office role, serve to maintain a façade of normalcy and avoid deeper connections with their own desires and anxieties."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"You, my dear patient, have presented a dream that betrays a far more complex psychological landscape than its mundane manifest content would initially suggest. I detect a stark contrast between the monotony of your workday and the latent stirrings of your unconscious. This dream reveals a clear instance of reaction formation, where the ego defensively adopts an attitude of boredom and detachment to mask underlying conflicts. Your identification with the role of a diligent office worker seems to be a compromise formation, attempting to balance the demands of your superego with the repressed desires of your id. The clock, a symbol of time's passage and the constraints of reality, betrays your anxiety about being trapped in a situation that stifles your true impulses. I must direct your attention to the fact that this dream-work has employed a technique of displacement, shifting the focus from your true desires to the innocuous, everyday tasks of your office work. The latent meaning of this dream suggests a deep-seated wish for liberation from the constraints of your daily routine, and perhaps, a more unconscious desire for creative expression or a sense of purpose beyond the mundane. This reveals a libidinal economy in which your psychic energy is being invested in maintaining a façade of normalcy, rather than confronting the repressed desires that threaten to disrupt your carefully constructed ego ideal.\",\n  \"symbols\": [\"clock\", \"office\", \"boss\", \"desk\", \"emails\"],\n  \"coreInsight\": \"The dream's core unconscious dynamic is a conflict between the patient's ego ideal of being a responsible office worker and the repressed desires for creative expression and liberation from routine.\",\n  \"unconsciousDesires\": \"This dream expresses a wish for freedom from the constraints of daily routine and a desire for creative expression or a sense of purpose beyond the mundane.\",\n  \"childhoodConnections\": \"Early experiences of being socialized to prioritize responsibility and conformity over personal desires may have shaped the patient's current patterns of reaction formation and identification with their office role.\",\n  \"repressionIndicators\": \"The dream's construction betrays the active defense mechanisms of reaction formation, displacement, and condensation, which serve to repress and disguise the patient's true desires.\",\n  \"guidanceForPatient\": \"As you work through these conflicts, I encourage you to explore the ways in which you're using your work as a means of avoiding deeper desires or anxieties. Consider how you might integrate more creative or fulfilling activities into your daily routine. By examining the ways in which you're identifying with your office role, you may uncover new possibilities for personal growth and expression.\",\n  \"reflectiveQuestion\": \"Can you recall a specific instance in your childhood where you felt forced to conform to expectations or suppress your own desires, and how might this experience be influencing your current patterns of behavior?\",\n  \"dreamWork\": \"The dream-work in this instance has employed techniques of condensation, displacement, and symbolization to transform the patient's repressed desires into the innocuous, everyday tasks of their office work. The clock serves as a symbol of the constraints of reality, while the office and boss represent the patient's superego demands.\",\n  \"professionalAnalysis\": \"The patient's professional dynamics reveal an unconscious conflict between their ego ideal of being a responsible office worker and their repressed desires for creative expression. This conflict may be manifesting in their work as feelings of boredom or detachment.\",\n  \"socialDynamicsAnalysis\": \"The patient's social defenses, as seen in their identification with the office role, serve to maintain a façade of normalcy and avoid deeper connections with their own desires and anxieties.\",\n  \"sexualAnalysis\": \"\"\n}\n```",
+  "testMode": true,
+  "testDuration": 6786
+}
+
+
+Test 15: Work Day Dream - Neuroscientist Analysis (neuroscientist)
+Dream: I was at my office doing my usual tasks. I sat at my desk typing emails and attending meetings. My boss came by to discuss a project deadline. Everything was very mundane and ordinary, just like a typical workday. I remember feeling slightly bored and checking the clock frequently, waiting for 5 PM to arrive.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "2FD5176D-856C-46F3-B333-8BD1A722115F",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "Your dream reveals a fascinating snapshot of your brain's ability to consolidate memories and regulate emotions during sleep. The setting of your office, engaged in routine tasks like typing emails and attending meetings, suggests that your brain is processing and consolidating memories of your work experiences. This is likely occurring during the slow-wave sleep stage, around 2-4 am, when the brain replays and strengthens neural connections. The presence of your boss and the discussion about a project deadline may indicate that your brain is also practicing threat simulation, albeit in a relatively low-stakes context. The feeling of boredom and frequent clock-checking could be a reflection of your brain's attempt to regulate emotions and manage stress related to your work schedule. The parietal cortex, a region involved in spatial awareness and attention, appears to be active in this dream, helping to recreate the familiar setting of your office. Your brain's ability to recreate such a mundane yet emotionally neutral scenario suggests that it's actively engaged in memory consolidation and emotional regulation.",
+    "coreMessage": "Your brain's ability to recreate a mundane work scenario during sleep suggests that it's actively engaged in memory consolidation and emotional regulation, likely during slow-wave sleep.",
+    "symbols": [
+      "office",
+      "work",
+      "boss",
+      "deadline",
+      "clock"
+    ],
+    "brainActivity": [
+      "Parietal cortex: active in recreating the office setting",
+      "Hippocampus: consolidating memories of work experiences",
+      "Prefrontal cortex: regulating emotions and managing stress"
+    ],
+    "sleepStageIndicators": "This dream likely occurred during slow-wave sleep, around 2-4 am, when the brain replays and strengthens neural connections.",
+    "continuityElements": [
+      "The dream's focus on work experiences and emotions suggests that your brain is processing and consolidating memories of your daily life."
+    ],
+    "neuroscienceEducation": "Did you know that the parietal cortex, a region active in this dream, is also involved in attention and spatial awareness? It's remarkable how your brain can recreate such a detailed and familiar setting during sleep.",
+    "reflectiveQuestions": [
+      "How do you think your brain's ability to recreate mundane work scenarios during sleep might relate to your waking experiences and emotions?"
+    ],
+    "memoryConsolidation": "Procedural and declarative memories of work experiences appear to be consolidated during this dream.",
+    "threatSimulation": "The discussion with your boss about a project deadline may indicate low-stakes threat simulation, helping your brain practice responding to work-related stressors.",
+    "emotionalRegulation": "Your brain is regulating emotions related to work schedule and stress, as evidenced by the feeling of boredom and clock-checking.",
+    "problemSolving": "No apparent problem-solving or creative solutions in this dream.",
+    "circadianFactors": "The timing of this dream, around 2-4 am, suggests that your brain's natural sleep-wake cycle may be influencing the content of your dreams."
+  },
+  "aiResponse": "{\n  \"interpretation\": \"Your dream reveals a fascinating snapshot of your brain's ability to consolidate memories and regulate emotions during sleep. The setting of your office, engaged in routine tasks like typing emails and attending meetings, suggests that your brain is processing and consolidating memories of your work experiences. This is likely occurring during the slow-wave sleep stage, around 2-4 am, when the brain replays and strengthens neural connections. The presence of your boss and the discussion about a project deadline may indicate that your brain is also practicing threat simulation, albeit in a relatively low-stakes context. The feeling of boredom and frequent clock-checking could be a reflection of your brain's attempt to regulate emotions and manage stress related to your work schedule. The parietal cortex, a region involved in spatial awareness and attention, appears to be active in this dream, helping to recreate the familiar setting of your office. Your brain's ability to recreate such a mundane yet emotionally neutral scenario suggests that it's actively engaged in memory consolidation and emotional regulation.\",\n  \"symbols\": [\"office\", \"work\", \"boss\", \"deadline\", \"clock\"],\n  \"brainActivity\": [\"Parietal cortex: active in recreating the office setting\", \"Hippocampus: consolidating memories of work experiences\", \"Prefrontal cortex: regulating emotions and managing stress\"],\n  \"coreInsight\": \"Your brain's ability to recreate a mundane work scenario during sleep suggests that it's actively engaged in memory consolidation and emotional regulation, likely during slow-wave sleep.\",\n  \"sleepStageIndicators\": \"This dream likely occurred during slow-wave sleep, around 2-4 am, when the brain replays and strengthens neural connections.\",\n  \"continuityElements\": \"The dream's focus on work experiences and emotions suggests that your brain is processing and consolidating memories of your daily life.\",\n  \"neuroscienceEducation\": \"Did you know that the parietal cortex, a region active in this dream, is also involved in attention and spatial awareness? It's remarkable how your brain can recreate such a detailed and familiar setting during sleep.\",\n  \"personalGuidance\": \"To improve sleep quality, consider establishing a consistent sleep schedule and creating a relaxing bedtime routine to help regulate your emotions and prepare your brain for sleep.\",\n  \"reflectiveQuestion\": \"How do you think your brain's ability to recreate mundane work scenarios during sleep might relate to your waking experiences and emotions?\",\n  \"memoryConsolidation\": \"Procedural and declarative memories of work experiences appear to be consolidated during this dream.\",\n  \"threatSimulation\": \"The discussion with your boss about a project deadline may indicate low-stakes threat simulation, helping your brain practice responding to work-related stressors.\",\n  \"emotionalRegulation\": \"Your brain is regulating emotions related to work schedule and stress, as evidenced by the feeling of boredom and clock-checking.\",\n  \"problemSolving\": \"No apparent problem-solving or creative solutions in this dream.\",\n  \"circadianFactors\": \"The timing of this dream, around 2-4 am, suggests that your brain's natural sleep-wake cycle may be influencing the content of your dreams.\",\n  \"sleepHealthNote\": \"No concerning patterns or sleep health issues apparent in this dream.\"\n}",
+  "testMode": true,
+  "testDuration": 5813
+}
+
+
+Test 16: Skating with Sister Dream - Jung Analysis (jung)
+Dream: I was ice skating on this huge, beautiful frozen lake with my sister. The winter landscape was breathtaking - snow-covered pine trees everywhere and the clearest blue sky. We were laughing and gliding effortlessly across the ice, doing spins and racing each other. The air was crisp and fresh, and I felt so free and joyful. My sister and I were holding hands, skating in perfect harmony together.
+Interpreter: jung
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "7A68C621-BAEE-46F5-A255-EC418AE0AB09",
+  "interpretation": {
+    "type": "jungian",
+    "interpretation": "As I listen to your dream, I'm struck by the sense of unbridled joy that unfolds, particularly in the image of you and your sister ice skating in perfect harmony on the frozen lake. The frozen lake, with its vast expanse of ice, represents the unconscious mind, and I notice how it provides a majestic backdrop for your carefree expression. You and your sister, holding hands and moving in tandem, evoke the archetypal bond between siblings, a symbol of the anima and animus in harmony. This dynamic duo, gliding effortlessly across the ice, explores the integration of opposites within your psyche, hinting at a growing balance between your conscious and unconscious mind. The breathtaking winter landscape, with snow-covered pine trees and a clear blue sky, speaks to the numinous, a realm where the sacred touches the personal. I sense that your psyche is trying to balance a sense of freedom and joy with the demands of your waking life, and this dream is an expression of your deep longing for harmony and unity within yourself. The collective unconscious pattern of the 'sister' as a symbol of the anima is particularly relevant here, as it suggests a growing awareness of your feminine aspects and a desire for integration. Your individuation journey, at this stage, seems to be calling you to explore this harmonious union of opposites, allowing your true Self to emerge.",
+    "coreMessage": "Your psyche is urging you to find harmony between your inner feminine and masculine aspects, allowing your true Self to emerge in all its beauty and complexity.",
+    "phenomenologicalOpening": "As I listen to your dream, I'm struck by the sense of unbridled joy that unfolds, particularly in the image of you and your sister ice skating in perfect harmony on the frozen lake.",
+    "symbols": [
+      "frozen lake",
+      "sister",
+      "ice skating",
+      "snow-covered pine trees",
+      "blue sky"
+    ],
+    "shadowAspects": [
+      "The dream doesn't explicitly reveal shadow material, but I sense that your ability to experience such joy and freedom on the ice may be compensating for a sense of constraint or seriousness in your waking life, possibly related to your relationships or career."
+    ],
+    "compensatoryFunction": "This dream balances your conscious attitude by highlighting the importance of playfulness, harmony, and unity within yourself, suggesting that you may be taking life too seriously or neglecting your need for carefree expression.",
+    "individuationGuidance": "As you continue on your individuation journey, I encourage you to explore activities that bring you joy and a sense of freedom, allowing yourself to be guided by your inner harmony and balance. Pay attention to your relationships, particularly with women, as they may hold the key to integrating your anima and becoming more whole. Reflect on how you can bring more playfulness and spontaneity into your daily life.",
+    "reflectiveQuestions": [
+      "What are the ways in which you've been neglecting your own need for joy and freedom, and how can you begin to integrate more playfulness and harmony into your waking life?"
+    ],
+    "isBigDream": false
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"As I listen to your dream, I'm struck by the sense of unbridled joy that unfolds, particularly in the image of you and your sister ice skating in perfect harmony on the frozen lake. The frozen lake, with its vast expanse of ice, represents the unconscious mind, and I notice how it provides a majestic backdrop for your carefree expression. You and your sister, holding hands and moving in tandem, evoke the archetypal bond between siblings, a symbol of the anima and animus in harmony. This dynamic duo, gliding effortlessly across the ice, explores the integration of opposites within your psyche, hinting at a growing balance between your conscious and unconscious mind. The breathtaking winter landscape, with snow-covered pine trees and a clear blue sky, speaks to the numinous, a realm where the sacred touches the personal. I sense that your psyche is trying to balance a sense of freedom and joy with the demands of your waking life, and this dream is an expression of your deep longing for harmony and unity within yourself. The collective unconscious pattern of the 'sister' as a symbol of the anima is particularly relevant here, as it suggests a growing awareness of your feminine aspects and a desire for integration. Your individuation journey, at this stage, seems to be calling you to explore this harmonious union of opposites, allowing your true Self to emerge.\",\n  \"symbols\": [\"frozen lake\", \"sister\", \"ice skating\", \"snow-covered pine trees\", \"blue sky\"],\n  \"coreInsight\": \"Your psyche is urging you to find harmony between your inner feminine and masculine aspects, allowing your true Self to emerge in all its beauty and complexity.\",\n  \"shadowAspect\": \"The dream doesn't explicitly reveal shadow material, but I sense that your ability to experience such joy and freedom on the ice may be compensating for a sense of constraint or seriousness in your waking life, possibly related to your relationships or career.\",\n  \"compensatoryFunction\": \"This dream balances your conscious attitude by highlighting the importance of playfulness, harmony, and unity within yourself, suggesting that you may be taking life too seriously or neglecting your need for carefree expression.\",\n  \"guidanceForDreamer\": \"As you continue on your individuation journey, I encourage you to explore activities that bring you joy and a sense of freedom, allowing yourself to be guided by your inner harmony and balance. Pay attention to your relationships, particularly with women, as they may hold the key to integrating your anima and becoming more whole. Reflect on how you can bring more playfulness and spontaneity into your daily life.\",\n  \"reflectiveQuestion\": \"What are the ways in which you've been neglecting your own need for joy and freedom, and how can you begin to integrate more playfulness and harmony into your waking life?\"\n}\n```",
+  "testMode": true,
+  "testDuration": 4836
+}
+
+
+Test 17: Skating with Sister Dream - Freud Analysis (freud)
+Dream: I was ice skating on this huge, beautiful frozen lake with my sister. The winter landscape was breathtaking - snow-covered pine trees everywhere and the clearest blue sky. We were laughing and gliding effortlessly across the ice, doing spins and racing each other. The air was crisp and fresh, and I felt so free and joyful. My sister and I were holding hands, skating in perfect harmony together.
+Interpreter: freud
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "25DBBD10-00F9-4AEE-8754-A39CC0758299",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "You describe a dream of ice skating on a frozen lake with your sister, surrounded by a breathtaking winter landscape. I detect a sense of unbridled joy and freedom in your description, which reveals a deep-seated desire for carefree expression. The frozen lake, a vast expanse of ice, symbolizes the rigid control you've imposed on your emotions, while the act of ice skating suggests a temporary reprieve from these constraints. Your ego ideal, which demands composure and restraint, is momentarily reconciled with your id, allowing for a harmonious expression of joy. This reveals a conflict between your desire for freedom and the repressive forces that govern your emotional life. The fact that you're skating with your sister, holding hands in perfect harmony, suggests a nostalgia for childhood symbiosis and a longing for sibling-like relationships that are unencumbered by the complexities of adult interactions. I must direct your attention to the way your libidinal economy is invested in this dream, particularly in the sense of freedom and joy you experience while skating. This is a manifestation of the pleasure principle, which seeks immediate gratification and pleasure. However, the dream also reveals the role of repression in managing anxiety, as the idyllic scene is carefully constructed to avoid any perceived threats or dangers. The dream-work has employed condensation, displacing your own desires onto the scene with your sister, and symbolization, where the frozen lake represents a frozen emotional landscape. This compromise formation allows you to momentarily experience pleasure while maintaining the repressive forces that govern your waking life.",
+    "coreMessage": "The dream reveals a deep-seated desire for carefree expression and a nostalgia for childhood symbiosis, which is currently repressed in your waking life.",
+    "symbols": [
+      "ice",
+      "lake",
+      "sister",
+      "snow",
+      "freedom"
+    ],
+    "unconsciousDesires": [
+      "The dream expresses a wish for freedom and joy, unencumbered by the complexities and responsibilities of adult life. This is a manifestation of the pleasure principle, seeking immediate gratification and pleasure."
+    ],
+    "childhoodConnections": [
+      "The dream scene with your sister suggests a longing for childhood relationships that were unencumbered by adult complexities. This nostalgia for sibling-like relationships indicates a desire for regression to a pre-genital phase, where relationships were simpler and less fraught with anxiety."
+    ],
+    "repressionIndicators": [
+      "The dream reveals the active role of repression in managing anxiety, as the idyllic scene is carefully constructed to avoid any perceived threats or dangers. The frozen lake represents a frozen emotional landscape, indicating a rigid control over emotions."
+    ],
+    "reflectiveQuestions": [
+      "Can you recall a specific instance in your childhood where you experienced a similar sense of freedom and joy with your sister or another sibling, and how did that experience shape your expectations for relationships and emotional expression in adulthood?"
+    ],
+    "professionalAnalysis": "Not applicable to this dream.",
+    "socialDynamicsAnalysis": "The dream scene with your sister suggests a longing for sibling-like relationships that are unencumbered by the complexities of adult interactions. This indicates a desire for social connections that are more carefree and less fraught with anxiety.",
+    "sexualAnalysis": "Not directly applicable to this dream, as the manifest content does not explicitly address sexual themes. However, the sense of freedom and joy you experience while skating may be related to a broader libidinal economy, where pleasure and enjoyment are sought in non-sexual contexts."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"You describe a dream of ice skating on a frozen lake with your sister, surrounded by a breathtaking winter landscape. I detect a sense of unbridled joy and freedom in your description, which reveals a deep-seated desire for carefree expression. The frozen lake, a vast expanse of ice, symbolizes the rigid control you've imposed on your emotions, while the act of ice skating suggests a temporary reprieve from these constraints. Your ego ideal, which demands composure and restraint, is momentarily reconciled with your id, allowing for a harmonious expression of joy. This reveals a conflict between your desire for freedom and the repressive forces that govern your emotional life. The fact that you're skating with your sister, holding hands in perfect harmony, suggests a nostalgia for childhood symbiosis and a longing for sibling-like relationships that are unencumbered by the complexities of adult interactions. I must direct your attention to the way your libidinal economy is invested in this dream, particularly in the sense of freedom and joy you experience while skating. This is a manifestation of the pleasure principle, which seeks immediate gratification and pleasure. However, the dream also reveals the role of repression in managing anxiety, as the idyllic scene is carefully constructed to avoid any perceived threats or dangers. The dream-work has employed condensation, displacing your own desires onto the scene with your sister, and symbolization, where the frozen lake represents a frozen emotional landscape. This compromise formation allows you to momentarily experience pleasure while maintaining the repressive forces that govern your waking life.\",\n  \"symbols\": [\"ice\", \"lake\", \"sister\", \"snow\", \"freedom\"],\n  \"coreInsight\": \"The dream reveals a deep-seated desire for carefree expression and a nostalgia for childhood symbiosis, which is currently repressed in your waking life.\",\n  \"unconsciousDesires\": \"The dream expresses a wish for freedom and joy, unencumbered by the complexities and responsibilities of adult life. This is a manifestation of the pleasure principle, seeking immediate gratification and pleasure.\",\n  \"childhoodConnections\": \"The dream scene with your sister suggests a longing for childhood relationships that were unencumbered by adult complexities. This nostalgia for sibling-like relationships indicates a desire for regression to a pre-genital phase, where relationships were simpler and less fraught with anxiety.\",\n  \"repressionIndicators\": \"The dream reveals the active role of repression in managing anxiety, as the idyllic scene is carefully constructed to avoid any perceived threats or dangers. The frozen lake represents a frozen emotional landscape, indicating a rigid control over emotions.\",\n  \"guidanceForPatient\": \"As you work through these conflicts, I encourage you to explore the ways in which you've been repressing your desires for freedom and joy. Consider how you can integrate more playful and carefree elements into your waking life, while still maintaining the necessary controls and responsibilities of adulthood.\",\n  \"reflectiveQuestion\": \"Can you recall a specific instance in your childhood where you experienced a similar sense of freedom and joy with your sister or another sibling, and how did that experience shape your expectations for relationships and emotional expression in adulthood?\",\n  \"dreamWork\": \"The dream-work has employed condensation, displacing your own desires onto the scene with your sister, and symbolization, where the frozen lake represents a frozen emotional landscape. Displacement is also evident, as your desires for freedom and joy are attributed to the idyllic winter scene rather than a direct expression of your own needs and wants.\",\n  \"professionalAnalysis\": \"Not applicable to this dream.\",\n  \"socialDynamicsAnalysis\": \"The dream scene with your sister suggests a longing for sibling-like relationships that are unencumbered by the complexities of adult interactions. This indicates a desire for social connections that are more carefree and less fraught with anxiety.\",\n  \"sexualAnalysis\": \"Not directly applicable to this dream, as the manifest content does not explicitly address sexual themes. However, the sense of freedom and joy you experience while skating may be related to a broader libidinal economy, where pleasure and enjoyment are sought in non-sexual contexts.\"\n}\n```",
+  "testMode": true,
+  "testDuration": 6931
+}
+
+
+Test 18: Skating with Sister Dream - Neuroscientist Analysis (neuroscientist)
+Dream: I was ice skating on this huge, beautiful frozen lake with my sister. The winter landscape was breathtaking - snow-covered pine trees everywhere and the clearest blue sky. We were laughing and gliding effortlessly across the ice, doing spins and racing each other. The air was crisp and fresh, and I felt so free and joyful. My sister and I were holding hands, skating in perfect harmony together.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "56F68134-36AA-41B3-A94D-954641086D57",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "Your dream reveals a remarkable example of your brain's ability to consolidate emotional memories and enhance problem-solving skills during sleep. The serene and joyful atmosphere of the frozen lake, with its snow-covered pine trees and clear blue sky, suggests that your brain was actively processing and consolidating positive emotional experiences. The act of ice skating with your sister, holding hands and moving in perfect harmony, indicates a strong sense of social bonding and emotional connection. This synchrony is facilitated by the release of oxytocin, often referred to as the 'cuddle hormone', which promotes feelings of trust and closeness. Your brain's default mode network, responsible for introspection and self-reflection, was likely active during this dream, allowing you to re-experience and re-process memories in a creative and emotionally resonant way. The effortless gliding and spinning on the ice may represent your brain's attempt to strengthen neural connections related to motor skills and coordination, a process that occurs during REM sleep. This dream also highlights the role of the amygdala, your emotional alarm system, in processing and regulating positive emotions, such as joy and happiness. The heightened activity in your visual cortex, responsible for processing visual information, would have contributed to the vivid and immersive quality of the dream. Overall, your brain was actively engaged in strengthening emotional connections, consolidating memories, and refining motor skills, all while you slept.",
+    "coreMessage": "Your brain was actively strengthening emotional connections and consolidating positive memories during this dream, which is essential for emotional regulation and well-being.",
+    "symbols": [
+      "ice skating",
+      "frozen lake",
+      "snow-covered pine trees",
+      "holding hands"
+    ],
+    "brainActivity": [
+      "Amygdala: regulated positive emotional processing with increased dopamine",
+      "Visual cortex: intense activation creating vivid imagery",
+      "Hippocampus: active memory consolidation of emotional experiences",
+      "Prefrontal cortex: active problem-solving and social cognition"
+    ],
+    "sleepStageIndicators": "This dream likely occurred during a late REM period, around 4-6am, when brain activity is more closely resembling that of being awake, and emotional processing is heightened.",
+    "continuityElements": [
+      "Your waking experiences of social bonding and emotional connection with your sister were neurologically transformed in the dream, allowing your brain to re-process and consolidate these memories in a creative and emotionally resonant way."
+    ],
+    "neuroscienceEducation": "Did you know that the brain replays and re-processes memories during sleep, strengthening neural connections and promoting learning and memory consolidation? This dream is a great example of that process in action.",
+    "reflectiveQuestions": [
+      "How do you think your brain's ability to process and consolidate positive emotional experiences during sleep might be influencing your waking emotions and relationships?"
+    ],
+    "memoryConsolidation": "Emotional memory consolidation, specifically the strengthening of neural connections related to positive emotional experiences",
+    "threatSimulation": "Not evident in this dream",
+    "emotionalRegulation": "Positive emotional processing and regulation, with a focus on joy and happiness",
+    "problemSolving": "Not explicitly evident, but the brain's ability to re-process and consolidate memories in a creative way may have contributed to problem-solving skills",
+    "circadianFactors": "The late REM period, around 4-6am, may have influenced the dream's content and emotional tone"
+  },
+  "aiResponse": "{\n  \"interpretation\": \"Your dream reveals a remarkable example of your brain's ability to consolidate emotional memories and enhance problem-solving skills during sleep. The serene and joyful atmosphere of the frozen lake, with its snow-covered pine trees and clear blue sky, suggests that your brain was actively processing and consolidating positive emotional experiences. The act of ice skating with your sister, holding hands and moving in perfect harmony, indicates a strong sense of social bonding and emotional connection. This synchrony is facilitated by the release of oxytocin, often referred to as the 'cuddle hormone', which promotes feelings of trust and closeness. Your brain's default mode network, responsible for introspection and self-reflection, was likely active during this dream, allowing you to re-experience and re-process memories in a creative and emotionally resonant way. The effortless gliding and spinning on the ice may represent your brain's attempt to strengthen neural connections related to motor skills and coordination, a process that occurs during REM sleep. This dream also highlights the role of the amygdala, your emotional alarm system, in processing and regulating positive emotions, such as joy and happiness. The heightened activity in your visual cortex, responsible for processing visual information, would have contributed to the vivid and immersive quality of the dream. Overall, your brain was actively engaged in strengthening emotional connections, consolidating memories, and refining motor skills, all while you slept.\",\n  \"symbols\": [\"ice skating\", \"frozen lake\", \"snow-covered pine trees\", \"holding hands\"],\n  \"brainActivity\": [\"Amygdala: regulated positive emotional processing with increased dopamine\", \"Visual cortex: intense activation creating vivid imagery\", \"Hippocampus: active memory consolidation of emotional experiences\", \"Prefrontal cortex: active problem-solving and social cognition\"],\n  \"coreInsight\": \"Your brain was actively strengthening emotional connections and consolidating positive memories during this dream, which is essential for emotional regulation and well-being.\",\n  \"sleepStageIndicators\": \"This dream likely occurred during a late REM period, around 4-6am, when brain activity is more closely resembling that of being awake, and emotional processing is heightened.\",\n  \"continuityElements\": \"Your waking experiences of social bonding and emotional connection with your sister were neurologically transformed in the dream, allowing your brain to re-process and consolidate these memories in a creative and emotionally resonant way.\",\n  \"neuroscienceEducation\": \"Did you know that the brain replays and re-processes memories during sleep, strengthening neural connections and promoting learning and memory consolidation? This dream is a great example of that process in action.\",\n  \"personalGuidance\": \"To further enhance your sleep quality and emotional regulation, consider practicing relaxation techniques, such as deep breathing or meditation, before bedtime. Additionally, prioritize social connections and positive emotional experiences during the day to provide your brain with more material to process and consolidate during sleep.\",\n  \"reflectiveQuestion\": \"How do you think your brain's ability to process and consolidate positive emotional experiences during sleep might be influencing your waking emotions and relationships?\",\n  \"memoryConsolidation\": \"Emotional memory consolidation, specifically the strengthening of neural connections related to positive emotional experiences\",\n  \"threatSimulation\": \"Not evident in this dream\",\n  \"emotionalRegulation\": \"Positive emotional processing and regulation, with a focus on joy and happiness\",\n  \"problemSolving\": \"Not explicitly evident, but the brain's ability to re-process and consolidate memories in a creative way may have contributed to problem-solving skills\",\n  \"circadianFactors\": \"The late REM period, around 4-6am, may have influenced the dream's content and emotional tone\",\n  \"sleepHealthNote\": \"No concerning patterns evident in this dream\"\n}",
+  "testMode": true,
+  "testDuration": 5610
+}
+
+
+Test 19: House Escape Nightmare - Jung Analysis (jung)
+Dream: I was trapped inside this enormous, maze-like house and desperately trying to find a way out. Every time I opened a door hoping to find an exit, it was just another closet filled with old clothes and junk. The house seemed to go on forever with endless hallways and rooms. I was getting more and more panicked as I ran from door to door, but they were all just closets. I could hear something chasing me through the house, getting closer, but I couldn't escape.
+Interpreter: jung
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "96A8DD51-B51D-4AD5-B3BF-EE6B926772A0",
+  "interpretation": {
+    "type": "jungian",
+    "interpretation": "You find yourself weaves through the labyrinthine corridors of this enormous house, desperately seeking a way out, yet every door harmonizes with the same disheartening outcome - another closet filled with the detritus of the past. I notice the sense of panic rising within you as you run from door to door, symbolizing the growing anxiety in your waking life, perhaps related to your current stage in the hero's journey, where the 28-year-old's natural desire for independence and self-definition may be clashing with the uncertainty of your path. The house, a symbol of the Self, seems to stretch on forever, representing the vast, unexplored territories of your own psyche. The endless hallways and rooms may signify the multitude of aspects within yourself that remain unexamined, waiting to be integrated into your conscious awareness. The closets, overflowing with old clothes and junk, suggest the accumulation of complexes and repressed memories that are hindering your progress. You are being chased by something unknown, which I sense may represent the unconscious aspects of yourself that you have yet to confront. This dream may be an urgent call to explore your inner world, to confront the parts of yourself that you've been trying to escape, and to integrate the shadow material that's been hiding in those closets.",
+    "coreMessage": "The Self is urging you to confront the repressed aspects of yourself, hidden in the closets of your psyche, in order to break free from the labyrinthine patterns that are currently trapping you.",
+    "phenomenologicalOpening": "You find yourself weaves through the labyrinthine corridors of this enormous house, desperately seeking a way out, yet every door harmonizes with the same disheartening outcome - another closet filled with the detritus of the past.",
+    "symbols": [
+      "house",
+      "closets",
+      "labyrinth",
+      "shadow",
+      "door"
+    ],
+    "shadowAspects": [
+      "The unknown entity chasing you through the house may symbolize the repressed memories and desires that you've been trying to keep hidden, which are now demanding attention and integration into your conscious awareness. This could be related to your current life situation, where you may be avoiding certain uncomfortable truths or desires."
+    ],
+    "compensatoryFunction": "This dream may be balancing your conscious attitude of trying to escape or avoid your problems, by highlighting the need to confront and integrate the repressed aspects of yourself. It suggests that your current attempts to flee from your challenges may be futile, and that instead, you should focus on exploring and understanding your inner world.",
+    "individuationGuidance": "As you navigate this critical phase of your individuation journey, I encourage you to slow down and explore the hidden recesses of your psyche, rather than trying to flee from them. By confronting and integrating your shadow, you may discover new sources of energy and creativity that can help you find your way out of the labyrinth. Consider journaling or talking to a trusted friend or therapist about the parts of yourself that you've been trying to keep hidden.",
+    "reflectiveQuestions": [
+      "What parts of yourself have you been trying to keep hidden, and how might confronting these repressed aspects lead to a greater sense of freedom and self-awareness in your life?"
+    ],
+    "isBigDream": false
+  },
+  "aiResponse": "{\n  \"interpretation\": \"You find yourself weaves through the labyrinthine corridors of this enormous house, desperately seeking a way out, yet every door harmonizes with the same disheartening outcome - another closet filled with the detritus of the past. I notice the sense of panic rising within you as you run from door to door, symbolizing the growing anxiety in your waking life, perhaps related to your current stage in the hero's journey, where the 28-year-old's natural desire for independence and self-definition may be clashing with the uncertainty of your path. The house, a symbol of the Self, seems to stretch on forever, representing the vast, unexplored territories of your own psyche. The endless hallways and rooms may signify the multitude of aspects within yourself that remain unexamined, waiting to be integrated into your conscious awareness. The closets, overflowing with old clothes and junk, suggest the accumulation of complexes and repressed memories that are hindering your progress. You are being chased by something unknown, which I sense may represent the unconscious aspects of yourself that you have yet to confront. This dream may be an urgent call to explore your inner world, to confront the parts of yourself that you've been trying to escape, and to integrate the shadow material that's been hiding in those closets.\",\n  \"symbols\": [\"house\", \"closets\", \"labyrinth\", \"shadow\", \"door\"],\n  \"coreInsight\": \"The Self is urging you to confront the repressed aspects of yourself, hidden in the closets of your psyche, in order to break free from the labyrinthine patterns that are currently trapping you.\",\n  \"shadowAspect\": \"The unknown entity chasing you through the house may symbolize the repressed memories and desires that you've been trying to keep hidden, which are now demanding attention and integration into your conscious awareness. This could be related to your current life situation, where you may be avoiding certain uncomfortable truths or desires.\",\n  \"compensatoryFunction\": \"This dream may be balancing your conscious attitude of trying to escape or avoid your problems, by highlighting the need to confront and integrate the repressed aspects of yourself. It suggests that your current attempts to flee from your challenges may be futile, and that instead, you should focus on exploring and understanding your inner world.\",\n  \"guidanceForDreamer\": \"As you navigate this critical phase of your individuation journey, I encourage you to slow down and explore the hidden recesses of your psyche, rather than trying to flee from them. By confronting and integrating your shadow, you may discover new sources of energy and creativity that can help you find your way out of the labyrinth. Consider journaling or talking to a trusted friend or therapist about the parts of yourself that you've been trying to keep hidden.\",\n  \"reflectiveQuestion\": \"What parts of yourself have you been trying to keep hidden, and how might confronting these repressed aspects lead to a greater sense of freedom and self-awareness in your life?\"\n}",
+  "testMode": true,
+  "testDuration": 5603
+}
+
+
+Test 20: House Escape Nightmare - Freud Analysis (freud)
+Dream: I was trapped inside this enormous, maze-like house and desperately trying to find a way out. Every time I opened a door hoping to find an exit, it was just another closet filled with old clothes and junk. The house seemed to go on forever with endless hallways and rooms. I was getting more and more panicked as I ran from door to door, but they were all just closets. I could hear something chasing me through the house, getting closer, but I couldn't escape.
+Interpreter: freud
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "4B41231E-C10C-4A19-B8F8-97854A3492A4",
+  "interpretation": {
+    "type": "freudian",
+    "interpretation": "This dream demonstrates a clear manifestation of your unconscious mind grappling with feelings of entrapment and the pressure of your superego. The maze-like house represents your psyche, with its various rooms and hallways symbolizing different aspects of your mental life. Your desperate search for an exit reveals your ego's struggle to reconcile the demands of your id with the constraints of your superego, leading to a sense of being overwhelmed. The closets filled with old clothes and junk suggest repressed memories and desires, which your mind is attempting to keep hidden but are nonetheless exerting pressure on your conscious self. The sound of something chasing you indicates the presence of an unconscious anxiety, likely related to your libidinal economy, where unresolved conflicts and repressed drives are cathected with significant psychic energy. This scenario reveals a clear example of the return of the repressed, where your unconscious mind is signaling that these unresolved issues must be confronted. The dream-work has utilized condensation, displacing your anxiety onto the physical space of the house and the symbolic pursuer, allowing your mind to momentarily process these repressed elements in a veiled manner.",
+    "coreMessage": "The dream core revolves around your psyche's struggle with superego pressures and the anxiety stemming from unresolved conflicts, demonstrating a clear dynamic of repression and the return of the repressed.",
+    "symbols": [
+      "house",
+      "closets",
+      "hallways",
+      "doors",
+      "pursuer"
+    ],
+    "unconsciousDesires": [
+      "This dream expresses your unconscious desire to escape the constraints of your own moral code and the anxiety associated with unfulfilled drives, hinting at a conflict between your ego ideal and your actual behavior."
+    ],
+    "childhoodConnections": [
+      "The theme of being trapped and pursued may connect to early childhood experiences of discipline or feelings of guilt, suggesting that your superego has been shaped by these early interactions, now influencing your adult anxiety levels."
+    ],
+    "repressionIndicators": [
+      "The dream indicates active repression through the use of closets to symbolize hidden aspects of yourself, and the endless hallways suggest a resistance to confronting these repressed elements directly."
+    ],
+    "reflectiveQuestions": [
+      "Can you recall a specific instance from your childhood where you felt trapped or pursued, and how did you cope with those feelings?"
+    ],
+    "professionalAnalysis": "This dream may also reflect your professional life, where you might feel trapped in a role or constrained by expectations, leading to a sense of pursuing escape or resolution.",
+    "socialDynamicsAnalysis": "The dream could indicate difficulties in your social relationships, where you feel pursued by expectations or demands from others, further complicating your sense of identity and personal space.",
+    "sexualAnalysis": "While not the primary focus, the dream may hint at sexual anxieties or repressed desires, symbolized by the closets and the sense of pursuit, suggesting a complex interplay between your libidinal drives and your superego's moral constraints."
+  },
+  "aiResponse": "```\n{\n  \"interpretation\": \"This dream demonstrates a clear manifestation of your unconscious mind grappling with feelings of entrapment and the pressure of your superego. The maze-like house represents your psyche, with its various rooms and hallways symbolizing different aspects of your mental life. Your desperate search for an exit reveals your ego's struggle to reconcile the demands of your id with the constraints of your superego, leading to a sense of being overwhelmed. The closets filled with old clothes and junk suggest repressed memories and desires, which your mind is attempting to keep hidden but are nonetheless exerting pressure on your conscious self. The sound of something chasing you indicates the presence of an unconscious anxiety, likely related to your libidinal economy, where unresolved conflicts and repressed drives are cathected with significant psychic energy. This scenario reveals a clear example of the return of the repressed, where your unconscious mind is signaling that these unresolved issues must be confronted. The dream-work has utilized condensation, displacing your anxiety onto the physical space of the house and the symbolic pursuer, allowing your mind to momentarily process these repressed elements in a veiled manner.\",\n  \"symbols\": [\"house\", \"closets\", \"hallways\", \"doors\", \"pursuer\"],\n  \"coreInsight\": \"The dream core revolves around your psyche's struggle with superego pressures and the anxiety stemming from unresolved conflicts, demonstrating a clear dynamic of repression and the return of the repressed.\",\n  \"unconsciousDesires\": \"This dream expresses your unconscious desire to escape the constraints of your own moral code and the anxiety associated with unfulfilled drives, hinting at a conflict between your ego ideal and your actual behavior.\",\n  \"childhoodConnections\": \"The theme of being trapped and pursued may connect to early childhood experiences of discipline or feelings of guilt, suggesting that your superego has been shaped by these early interactions, now influencing your adult anxiety levels.\",\n  \"repressionIndicators\": \"The dream indicates active repression through the use of closets to symbolize hidden aspects of yourself, and the endless hallways suggest a resistance to confronting these repressed elements directly.\",\n  \"guidanceForPatient\": \"As we work through these feelings of entrapment and anxiety, it's crucial to explore the origins of your superego demands and how they intersect with your unconscious desires. By understanding and addressing these conflicts, you can begin to alleviate the pressure that fuels your anxiety.\",\n  \"reflectiveQuestion\": \"Can you recall a specific instance from your childhood where you felt trapped or pursued, and how did you cope with those feelings?\",\n  \"dreamWork\": \"The dream-work has operated through condensation, where multiple repressed memories and desires are symbolized by the house and its various rooms. Displacement is evident as your anxiety is transferred onto the pursuer, and symbolization is seen in the use of closets to represent repressed elements of your psyche.\",\n  \"professionalAnalysis\": \"This dream may also reflect your professional life, where you might feel trapped in a role or constrained by expectations, leading to a sense of pursuing escape or resolution.\",\n  \"socialDynamicsAnalysis\": \"The dream could indicate difficulties in your social relationships, where you feel pursued by expectations or demands from others, further complicating your sense of identity and personal space.\",\n  \"sexualAnalysis\": \"While not the primary focus, the dream may hint at sexual anxieties or repressed desires, symbolized by the closets and the sense of pursuit, suggesting a complex interplay between your libidinal drives and your superego's moral constraints.\"\n}\n```",
+  "testMode": true,
+  "testDuration": 5923
+}
+
+
+Test 21: House Escape Nightmare - Neuroscientist Analysis (neuroscientist)
+Dream: I was trapped inside this enormous, maze-like house and desperately trying to find a way out. Every time I opened a door hoping to find an exit, it was just another closet filled with old clothes and junk. The house seemed to go on forever with endless hallways and rooms. I was getting more and more panicked as I ran from door to door, but they were all just closets. I could hear something chasing me through the house, getting closer, but I couldn't escape.
+Interpreter: neuroscientist
+----------------------------------------
+✓ Request successful
+Model used: meta-llama/llama-4-scout:free
+
+Full Response (excluding metadata):
+{
+  "success": true,
+  "dreamId": "1E504188-2644-4AF5-8441-6F89264C024B",
+  "interpretation": {
+    "type": "neuroscientist",
+    "interpretation": "Your dream reveals an intriguing snapshot of your brain's activity during sleep, particularly in the visual cortex, which was intensely active, generating that vivid, ever-changing maze. This hyperactivity is often seen in REM sleep, when the brain's neurotransmitters like norepinephrine and serotonin are deactivated, allowing for the surreal, often illogical scenarios we experience in dreams. The sense of panic and being chased suggests heightened activity in your amygdala, the emotional alarm system, which processes threats and fear. Interestingly, your brain was integrating memories and emotions, as evidenced by the maze-like house, which may symbolize the consolidation of recent experiences and emotions into your long-term memory. In my lab, we've seen that REM sleep, when this dream likely occurred, is crucial for memory consolidation and emotional regulation. Your brain's attempt to navigate the endless hallways and rooms may reflect its effort to process and file away memories, a process in which the hippocampus plays a key role. This dream also hints at your brain's ability to simulate threats and practice survival responses, a concept known as the threat simulation theory. The visual cortex's intense activity created the detailed, immersive environment of the maze-like house, while the integration of emotional and sensory information across different brain regions resulted in the feeling of panic and urgency.",
+    "coreMessage": "Your brain's ability to integrate emotional and sensory information during REM sleep resulted in a dream that showcases its remarkable capacity for memory consolidation and threat simulation.",
+    "symbols": [
+      "maze-like house",
+      "closets",
+      "being chased"
+    ],
+    "brainActivity": [
+      "Amygdala: heightened fear processing with increased norepinephrine",
+      "Visual cortex: intense activation creating vivid imagery",
+      "Hippocampus: active memory consolidation of recent experiences"
+    ],
+    "sleepStageIndicators": "This dream likely occurred during a late REM period, given the vivid imagery, intense emotions, and sense of disorientation, which are characteristic of this sleep stage.",
+    "continuityElements": [
+      "The dream's themes of being trapped and chased may reflect unresolved stressors or anxieties in your waking life, which your brain is processing and consolidating during sleep."
+    ],
+    "neuroscienceEducation": "Did you know that your brain's visual cortex can generate such vivid, realistic environments during sleep, even though it's disconnected from the external world? This is due to the brain's default mode network, which is active during REM sleep and helps create these immersive experiences.",
+    "reflectiveQuestions": [
+      "What do you think your brain was trying to process or consolidate during this dream, and how might it relate to your current waking experiences or emotions?"
+    ],
+    "memoryConsolidation": "Emotional memory consolidation, particularly the processing of fear and anxiety responses",
+    "threatSimulation": "Your brain was practicing survival responses, simulating the threat of being chased and working to find an escape, which is a key aspect of the threat simulation theory",
+    "emotionalRegulation": "The dream highlights your brain's attempt to regulate and process intense emotions, such as fear and panic, which were likely influenced by the deactivation of serotonin and norepinephrine during REM sleep",
+    "problemSolving": "While not overtly apparent, the dream may suggest that your brain was working to find creative solutions to emotional challenges, as evidenced by the attempt to navigate the endless maze",
+    "circadianFactors": "The timing of this dream, likely during a late REM period, may have been influenced by your circadian rhythm, which regulates the sleep-wake cycle and the release of neurotransmitters"
+  },
+  "aiResponse": "{\n  \"interpretation\": \"Your dream reveals an intriguing snapshot of your brain's activity during sleep, particularly in the visual cortex, which was intensely active, generating that vivid, ever-changing maze. This hyperactivity is often seen in REM sleep, when the brain's neurotransmitters like norepinephrine and serotonin are deactivated, allowing for the surreal, often illogical scenarios we experience in dreams. The sense of panic and being chased suggests heightened activity in your amygdala, the emotional alarm system, which processes threats and fear. Interestingly, your brain was integrating memories and emotions, as evidenced by the maze-like house, which may symbolize the consolidation of recent experiences and emotions into your long-term memory. In my lab, we've seen that REM sleep, when this dream likely occurred, is crucial for memory consolidation and emotional regulation. Your brain's attempt to navigate the endless hallways and rooms may reflect its effort to process and file away memories, a process in which the hippocampus plays a key role. This dream also hints at your brain's ability to simulate threats and practice survival responses, a concept known as the threat simulation theory. The visual cortex's intense activity created the detailed, immersive environment of the maze-like house, while the integration of emotional and sensory information across different brain regions resulted in the feeling of panic and urgency.\",\n  \"symbols\": [\"maze-like house\", \"closets\", \"being chased\"],\n  \"brainActivity\": [\"Amygdala: heightened fear processing with increased norepinephrine\", \"Visual cortex: intense activation creating vivid imagery\", \"Hippocampus: active memory consolidation of recent experiences\"],\n  \"coreInsight\": \"Your brain's ability to integrate emotional and sensory information during REM sleep resulted in a dream that showcases its remarkable capacity for memory consolidation and threat simulation.\",\n  \"sleepStageIndicators\": \"This dream likely occurred during a late REM period, given the vivid imagery, intense emotions, and sense of disorientation, which are characteristic of this sleep stage.\",\n  \"continuityElements\": \"The dream's themes of being trapped and chased may reflect unresolved stressors or anxieties in your waking life, which your brain is processing and consolidating during sleep.\",\n  \"neuroscienceEducation\": \"Did you know that your brain's visual cortex can generate such vivid, realistic environments during sleep, even though it's disconnected from the external world? This is due to the brain's default mode network, which is active during REM sleep and helps create these immersive experiences.\",\n  \"personalGuidance\": \"To better understand your sleep patterns and brain activity, consider keeping a sleep diary to track your sleep schedule and any factors that might influence your dreams. Additionally, practicing stress-reducing techniques, such as meditation or deep breathing, can help regulate your emotions and potentially reduce the intensity of your dreams.\",\n  \"reflectiveQuestion\": \"What do you think your brain was trying to process or consolidate during this dream, and how might it relate to your current waking experiences or emotions?\",\n  \"memoryConsolidation\": \"Emotional memory consolidation, particularly the processing of fear and anxiety responses\",\n  \"threatSimulation\": \"Your brain was practicing survival responses, simulating the threat of being chased and working to find an escape, which is a key aspect of the threat simulation theory\",\n  \"emotionalRegulation\": \"The dream highlights your brain's attempt to regulate and process intense emotions, such as fear and panic, which were likely influenced by the deactivation of serotonin and norepinephrine during REM sleep\",\n  \"problemSolving\": \"While not overtly apparent, the dream may suggest that your brain was working to find creative solutions to emotional challenges, as evidenced by the attempt to navigate the endless maze\",\n  \"circadianFactors\": \"The timing of this dream, likely during a late REM period, may have been influenced by your circadian rhythm, which regulates the sleep-wake cycle and the release of neurotransmitters\",\n  \"sleepHealthNote\": \"The intensity of this dream may indicate that you're experiencing a high level of stress or anxiety, which can impact sleep quality. Consider practicing relaxation techniques before bedtime to promote better sleep hygiene.\"\n}",
+  "testMode": true,
+  "testDuration": 6232
+}
+
+
+TEST SUMMARY
+=============
+Total tests run: 21
+Successful responses: 21
+Success rate: 100%

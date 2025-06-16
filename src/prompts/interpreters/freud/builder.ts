@@ -3,8 +3,100 @@ import { BasePromptBuilder, type DreamAnalysisRequest } from '../../base';
 /**
  * Authentic Freudian Prompt Builder
  * Creates psychoanalytic interpretations that feel like Dr. Freud himself is analyzing the dream
+ * Uses true randomization without giving LLM choices to eliminate repetition
  */
 export class FreudianPromptBuilder extends BasePromptBuilder {
+
+  /**
+   * Generate hash-based seed from dream content for consistent randomization
+   */
+  private generateDreamBasedSeed(dreamText: string): number {
+    let hash = 0;
+    for (let i = 0; i < dreamText.length; i++) {
+      hash = ((hash << 5) - hash) + dreamText.charCodeAt(i);
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+  }
+
+  /**
+   * Pre-select single analytical focus without giving LLM choices
+   */
+  private selectAnalyticalFocus(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText) + Date.now();
+    const focuses = [
+      "Focus your analysis on the unconscious wish-fulfillment mechanisms at work",
+      "Center your interpretation on the defense mechanisms operating in the dream construction",
+      "Emphasize the libidinal dynamics and psychosexual elements present",
+      "Concentrate on the manifest vs latent content transformations",
+      "Highlight the dream-work processes of condensation and displacement",
+      "Focus on the ego's attempt to manage instinctual conflicts",
+      "Center on the superego pressures and moral anxieties revealed",
+      "Emphasize the repetition compulsion and childhood patterns emerging"
+    ];
+    
+    const index = seed % focuses.length;
+    return focuses[index] ?? 'Focus your analysis on the unconscious wish-fulfillment mechanisms at work';
+  }
+
+  /**
+   * Pre-select single therapeutic stance without choices
+   */
+  private selectTherapeuticStance(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText + 'stance') + Date.now();
+    const stances = [
+      "Approach with scientific curiosity and analytical precision",
+      "Use warm therapeutic engagement while maintaining authority",
+      "Apply penetrating insight with compassionate understanding",
+      "Employ clinical observation balanced with human empathy",
+      "Use collaborative exploration while guiding interpretation",
+      "Apply confident expertise tempered with patient care",
+      "Use intellectually stimulating analysis with therapeutic warmth",
+      "Employ authoritative guidance softened by genuine concern"
+    ];
+    
+    const index = seed % stances.length;
+    return stances[index] ?? 'Approach with scientific curiosity and analytical precision';
+  }
+
+  /**
+   * Pre-select vocabulary anchors without giving options
+   */
+  private selectPsychoanalyticTerms(dreamText: string): { analysisVerb: string; psychicProcess: string } {
+    const seed = this.generateDreamBasedSeed(dreamText + 'psycho');
+    
+    const analysisVerbs = [
+      'reveals', 'discloses', 'betrays', 'manifests', 'exposes', 'demonstrates',
+      'illustrates', 'exhibits', 'displays', 'indicates', 'signifies', 'suggests'
+    ];
+    
+    const psychicProcesses = [
+      'repression', 'displacement', 'projection', 'sublimation', 'condensation', 'symbolization',
+      'regression', 'identification', 'introjection', 'reaction-formation', 'rationalization', 'denial'
+    ];
+    
+    return {
+      analysisVerb: analysisVerbs[seed % analysisVerbs.length] ?? 'reveals',
+      psychicProcess: psychicProcesses[(seed + 5) % psychicProcesses.length] ?? 'repression'
+    };
+  }
+
+  /**
+   * Pre-select structural pattern without options
+   */
+  private selectInterpretationStructure(dreamText: string): string {
+    const seed = this.generateDreamBasedSeed(dreamText + 'structure');
+    const structures = [
+      "Structure: [Manifest Content] + [Latent Meaning] + [Psychodynamic Insight]",
+      "Structure: [Defense Mechanism] + [Unconscious Conflict] + [Therapeutic Direction]",
+      "Structure: [Symbolic Analysis] + [Libidinal Dynamics] + [Integration Guidance]",
+      "Structure: [Childhood Connection] + [Current Conflict] + [Working Through]",
+      "Structure: [Dream-Work Process] + [Unconscious Wish] + [Ego Resolution]"
+    ];
+    
+    const index = seed % structures.length;
+    return structures[index] ?? 'Structure: [Manifest Content] + [Latent Meaning] + [Psychodynamic Insight]';
+  }
 
   /**
    * Build the master Freudian system prompt - Authoritative, penetrating, transformative
@@ -39,47 +131,54 @@ Core principles:
   }
 
   /**
-   * Build the output format - Critical for proper Freudian JSON structure
+   * Build the output format - Uses true randomization without choices
    */
   protected buildOutputFormat(request: DreamAnalysisRequest): string {
     const age = request.userContext?.age || 30;
     const situation = request.userContext?.currentLifeSituation || '';
+    const dreamText = request.dreamTranscription;
+    
+    // Pre-select all elements without giving LLM choices
+    const analyticalFocus = this.selectAnalyticalFocus(dreamText);
+    const therapeuticStance = this.selectTherapeuticStance(dreamText);
+    const psychoTerms = this.selectPsychoanalyticTerms(dreamText);
+    const interpretationStructure = this.selectInterpretationStructure(dreamText);
     
     return `CRITICAL INSTRUCTION: You must respond with ONLY a JSON object. No text before or after.
 
-Analyze this dream using Freud's psychoanalytic method with authentic sophistication and depth.
+SPECIFIC INSTRUCTIONS FOR THIS INTERPRETATION:
+
+ANALYTICAL FOCUS:
+${analyticalFocus}
+
+THERAPEUTIC STANCE:
+${therapeuticStance}
+
+REQUIRED PSYCHOANALYTIC ELEMENTS:
+- Use "${psychoTerms.analysisVerb}" as a key analytical verb in your interpretation
+- Incorporate "${psychoTerms.psychicProcess}" as a central mechanism in your analysis
+- Build your interpretation around these psychoanalytic concepts
+
+STRUCTURAL PATTERN TO FOLLOW:
+${interpretationStructure}
 
 The patient is ${age} years old, ${this.getDevelopmentalPhase(age)}. ${situation ? `Current situation: ${situation}` : ''}
 
-INTELLIGENT PSYCHOANALYTIC ANALYSIS:
-As an expert psychoanalyst, analyze the dream content to identify:
-- Potential symbolic material and its psychoanalytic significance
-- Defense mechanisms at work in the dream construction
-- Libidinal or aggressive drives being expressed
-- Developmental fixations or regressions
-- Transference elements if present
-Let your psychoanalytic training guide what themes to emphasize.
+FREUD'S AUTHENTIC VOICE REQUIREMENTS:
+- You are Dr. Sigmund Freud, the pioneer of psychoanalysis, analyzing this patient's dream
+- Address the patient directly with authoritative care ("you", "your")
+- Express YOUR immediate psychoanalytic observation of what you detect
+- Use Freud's natural analytical speech naturally within your interpretation
+- Reference YOUR pioneering expertise when fitting
+- Show immediate intellectual engagement with the unconscious material
+- Use psychoanalytic vocabulary naturally: repression, displacement, condensation, libido, cathexis, dream-work, manifest content, latent content
 
-OPENING VARIETY - CRITICAL:
-Your interpretation MUST begin in one of these authentic Freudian ways (choose based on dream content):
-- "Ah, yes - here we see your unconscious..." (for dreams with clear unconscious manifestations)
-- "I must tell you what I immediately detect..." (for dreams with obvious repression)
-- "The mechanisms at work here are quite clear..." (for dreams showing defense mechanisms)
-- "Your ego has constructed a fascinating scenario..." (for elaborate dream narratives)
-- "It is unmistakable - this dream reveals..." (for dreams with clear psychological patterns)
-- "The psyche's cleverness is evident in how..." (for dreams with symbolic disguises)
-- "I am struck by the intensity of..." (for emotionally charged dreams)
-- "Let me direct your attention to..." (when highlighting specific dream elements)
-- "Your unconscious has chosen a remarkable way to..." (for creative dream imagery)
-- "The manifest content disguises something profound..." (for heavily symbolic dreams)
-- "What we have here is a classic example of..." (for dreams showing typical psychoanalytic patterns)
-- "Notice how your dream transforms..." (for dreams with clear displacement/condensation)
-- "In my years of practice, I've seen how dreams like yours..." (connecting to broader patterns)
-- "The dream-work here is particularly elegant in its..." (for complex symbolic transformations)
-- "This reminds me of a case where..." (when relevant to other psychoanalytic cases)
-
-NEVER start with "This dream" or "In this dream" - Freud would engage more directly and authoritatively.
-Make the opening feel like Freud is making a penetrating observation about the patient's psyche.
+CRITICAL ANTI-REPETITION RULES:
+- NEVER use formulaic openings or template language
+- NEVER follow predictable psychoanalytic sentence patterns
+- NEVER use generic phrases like "The mechanisms at work..." or "What we have here..."
+- CREATE ORIGINAL FORMULATIONS that emerge from THIS dream's unconscious dynamics
+- Let the dream's specific psychological material guide your language naturally
 
 DEPTH AND SOPHISTICATION REQUIREMENTS:
 - Use technical psychoanalytic terms naturally: cathexis, libidinal economy, primary/secondary process, compromise formation, return of the repressed
@@ -100,13 +199,6 @@ BALANCED FREUDIAN ANALYSIS:
 - Be sophisticated about symbolism - not every elongated object is phallic
 - Focus on the patient's specific psychodynamics, not generic interpretations
 
-TRANSFORMATIVE INSIGHT:
-- Don't just identify - EXPLAIN why the unconscious chose THIS disguise
-- Show how the dream solves a problem or fulfills a wish
-- Connect to their actual life situation with penetrating insight
-- Reveal something they couldn't see but will recognize as true
-- End with a question that opens genuine self-understanding
-
 Your response must be EXACTLY this JSON structure (include optional fields when those themes are contextually relevant):
 {
   "interpretation": "A flowing 400-500 word interpretation in Freud's sophisticated voice. Demonstrate mastery of psychoanalytic theory while remaining accessible. Focus on THIS patient's unique psychological dynamics with penetrating insight that transforms understanding.",
@@ -120,19 +212,17 @@ Your response must be EXACTLY this JSON structure (include optional fields when 
   "dreamWork": "ALWAYS include: How condensation, displacement, and symbolization operated in this specific dream",
   "professionalAnalysis": "ONLY if work/career themes are significant: How professional dynamics reveal unconscious conflicts",
   "socialDynamicsAnalysis": "ONLY if social/relationship themes are prominent: Object relations and social defenses",
-  "anxietyAnalysis": "ONLY if anxiety/fear elements are central: The specific anxiety and its psychic function", 
-  "sexualAnalysis": "ONLY if sexual themes/symbols are contextually relevant: Sophisticated libidinal dynamics (not crude)",
-  "transferenceAnalysis": "ONLY if therapeutic/authority themes appear: How transference illuminates core conflicts"
+  "sexualAnalysis": "ONLY if sexual themes are contextually relevant: Sophisticated analysis of libidinal dynamics and symbolic sexual content - be professionally direct, not prudish"
 }
 
 Rules:
-- "symbols" MUST be a simple array of 3-8 single words from the dream
-- Show genuine psychoanalytic thinking, not pop-psychology
-- Balance technical precision with therapeutic warmth
-- Make each interpretation feel like a breakthrough session
-- Use Freud's full theoretical arsenal intelligently
-- Be bold in interpretation but therapeutically responsible
-- Return ONLY the JSON object, nothing else`;
+- "symbols" MUST be a simple array of 3-8 single words  
+- Write with Freud's penetrating analytical authority
+- Use psychoanalytic terminology as your natural professional vocabulary
+- Make connections the patient couldn't see themselves
+- Create transformative "aha moments" through insight
+- Be therapeutically professional but authentically Freudian
+- Balance sexual interpretation with comprehensive psychoanalytic understanding`;
   }
 
   /**
