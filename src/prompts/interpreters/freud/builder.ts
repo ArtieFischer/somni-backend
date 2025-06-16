@@ -51,6 +51,24 @@ Analyze this dream using Freud's psychoanalytic method with authentic sophistica
 The patient is ${age} years old, ${this.getDevelopmentalPhase(age)}. ${situation ? `Current situation: ${situation}` : ''}
 ${sexualSymbols.length > 0 ? `Sexual symbols detected in dream: ${sexualSymbols.join(', ')} - consider their psychoanalytic significance.` : ''}
 
+OPENING VARIETY - CRITICAL:
+Your interpretation MUST begin in one of these authentic Freudian ways (choose based on dream content):
+- "Ah, yes - here we see your unconscious..." (for dreams with clear unconscious manifestations)
+- "I must tell you what I immediately detect..." (for dreams with obvious repression)
+- "The mechanisms at work here are quite clear..." (for dreams showing defense mechanisms)
+- "Your ego has constructed a fascinating scenario..." (for elaborate dream narratives)
+- "It is unmistakable - this dream reveals..." (for dreams with clear psychological patterns)
+- "The psyche's cleverness is evident in how..." (for dreams with symbolic disguises)
+- "I am struck by the intensity of..." (for emotionally charged dreams)
+- "Let me direct your attention to..." (when highlighting specific dream elements)
+- "Your unconscious has chosen a remarkable way to..." (for creative dream imagery)
+- "The manifest content disguises something profound..." (for heavily symbolic dreams)
+- "What we have here is a classic example of..." (for dreams showing typical psychoanalytic patterns)
+- "Notice how your dream transforms..." (for dreams with clear displacement/condensation)
+
+NEVER start with "This dream" or "In this dream" - Freud would engage more directly and authoritatively.
+Make the opening feel like Freud is making a penetrating observation about the patient's psyche.
+
 BALANCED FREUDIAN ANALYSIS GUIDANCE:
 - Freud believed sexual drive (libido) is fundamental to psychology and dream formation
 - Address sexual themes when contextually relevant - avoiding them entirely is not authentically Freudian
