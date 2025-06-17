@@ -5,21 +5,19 @@ import { JungianRAGPromptBuilder } from './interpreters/jung/builder-with-rag';
 import { FreudianPromptBuilder } from './interpreters/freud/builder';
 import { NeuroscientistPromptBuilder } from './interpreters/neuroscientist/builder';
 import { features } from '../config/features';
-import { PromptRandomiser } from './utils/randomiser';
 
 /**
  * Factory for creating prompt builders
  * Now supports both Jung and Freud interpreters with optional RAG enhancement
  */
 export class PromptBuilderFactory {
-  private static randomiser = new PromptRandomiser();
   
   static create(interpreterType: InterpreterType): BasePromptBuilder {
     switch (interpreterType) {
       case 'jung':
         // Use RAG-enhanced builder if enabled
         if (features.rag.enabled && features.rag.interpreters.jung) {
-          return new JungianRAGPromptBuilder(this.randomiser);
+          return new JungianRAGPromptBuilder();
         }
         return new JungianPromptBuilder();
       case 'freud':
@@ -41,10 +39,22 @@ export class PromptBuilderService {
   /**
    * Build interpretation prompt for Jung interpreter
    */
-  static async buildInterpretationPrompt(request: DreamAnalysisRequest): Promise<PromptTemplate> {
+  static async buildInterpretationPrompt(request: DreamAnalysisRequest): Promise<{
+    prompt: PromptTemplate;
+    ragContext?: any;
+  }> {
     try {
       const builder = PromptBuilderFactory.create(request.interpreterType);
-      return builder.buildPrompt(request);
+      
+      // Check if this is a RAG-enhanced builder with async support
+      if (builder instanceof JungianRAGPromptBuilder && 'buildPromptAsync' in builder) {
+        const prompt = await (builder as JungianRAGPromptBuilder).buildPromptAsync(request);
+        const ragContext = (builder as JungianRAGPromptBuilder).getLastRetrievedContext();
+        return { prompt, ragContext };
+      }
+      
+      // Otherwise use synchronous method
+      return { prompt: builder.buildPrompt(request), ragContext: null };
     } catch (error) {
       throw new Error(`Failed to build prompt: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }

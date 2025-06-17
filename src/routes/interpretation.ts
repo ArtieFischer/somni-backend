@@ -11,7 +11,7 @@ import {
 import { authenticateRequest, verifyApiSecret } from '../middleware/auth';
 import { transcriptionRateLimit } from '../middleware/rateLimit';
 import { logger } from '../utils/logger';
-import type { InterpretationRequest } from '../types';
+import type { InterpretationRequest, InterpreterType } from '../types';
 
 const router = express.Router();
 
@@ -231,35 +231,42 @@ router.post('/switch-model', async (req, res) => {
 
     // Quick switch shortcuts - use the imported service directly
     
-    switch (model.toLowerCase()) {
-      case 'llama4':
-        modelConfigService.switchToLlama4();
-        break;
-      case 'gpt4o-mini':
-      case 'gpt-4o-mini':
-        modelConfigService.switchToGPT4oMini();
-        break;
-      case 'claude':
-        modelConfigService.switchToClaude();
-        break;
-      case 'llama3':
-        modelConfigService.switchToLlama3();
-        break;
-      default:
-        // Try setting the model directly
-        modelConfigService.setDefaultModel(model);
+    // Get interpreter type from body, or switch all if not specified
+    const { interpreterType } = req.body;
+    
+    if (interpreterType) {
+      // Switch model for specific interpreter
+      modelConfigService.setDefaultModel(interpreterType as InterpreterType, model);
+      const currentModel = modelConfigService.getCurrentModelInfo(interpreterType as InterpreterType);
+      
+      return res.json({
+        success: true,
+        message: `Model for ${interpreterType} switched successfully`,
+        currentModel: {
+          interpreter: interpreterType,
+          id: currentModel.id,
+          name: currentModel.name,
+          temperature: currentModel.temperature,
+          maxTokens: currentModel.maxTokens,
+          costPerKToken: currentModel.cost
+        }
+      });
     }
-
-    const currentModel = modelConfigService.getCurrentModelInfo();
+    
+    // Switch all interpreters to the model
+    modelConfigService.switchAllToModel(model);
+    
+    // Get info for all interpreters
+    const interpreterModels = (['jung', 'freud', 'neuroscientist', 'astrologist'] as InterpreterType[])
+      .map(type => ({
+        interpreter: type,
+        ...modelConfigService.getCurrentModelInfo(type)
+      }));
     
     return res.json({
       success: true,
-      message: `Model switched successfully`,
-      currentModel: {
-        id: currentModel.id,
-        name: currentModel.name,
-        costPerKToken: currentModel.cost
-      }
+      message: `All interpreters switched to ${model}`,
+      interpreterModels
     });
 
   } catch (error) {
@@ -272,16 +279,33 @@ router.post('/switch-model', async (req, res) => {
 });
 
 // Get current model info
-router.get('/current-model', async (_req, res) => {
+router.get('/current-model', async (req, res) => {
   try {
-    const currentModel = modelConfigService.getCurrentModelInfo();
+    const { interpreterType } = req.query;
+    
+    if (interpreterType) {
+      const currentModel = modelConfigService.getCurrentModelInfo(interpreterType as InterpreterType);
+      return res.json({
+        interpreter: interpreterType,
+        currentModel: {
+          id: currentModel.id,
+          name: currentModel.name,
+          temperature: currentModel.temperature,
+          maxTokens: currentModel.maxTokens,
+          costPerKToken: currentModel.cost
+        }
+      });
+    }
+    
+    // Return info for all interpreters
+    const interpreterModels = (['jung', 'freud', 'neuroscientist', 'astrologist'] as InterpreterType[])
+      .map(type => ({
+        interpreter: type,
+        ...modelConfigService.getCurrentModelInfo(type)
+      }));
     
     return res.json({
-      currentModel: {
-        id: currentModel.id,
-        name: currentModel.name,
-        costPerKToken: currentModel.cost
-      }
+      interpreterModels
     });
   } catch (error) {
     logger.error('Failed to get current model:', error);

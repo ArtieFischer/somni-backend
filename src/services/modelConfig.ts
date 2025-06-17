@@ -14,6 +14,14 @@ export interface ModelConfig {
   interpreterTypes: InterpreterType[];
 }
 
+// Per-interpreter configuration
+export interface InterpreterModelConfig {
+  defaultModel: string;
+  fallbackModel: string;
+  temperature: number;
+  maxTokens: number;
+}
+
 // Cost tracking interface
 export interface CostEntry {
   timestamp: string;
@@ -38,14 +46,33 @@ export class ModelConfigService {
   private costLog: CostEntry[] = [];
   private totalCost = 0;
   
-  // Single source of truth for model configuration
-  private currentDefaultModel: string = QUICK_MODELS.LLAMA_4; // <-- Change this for easy model switching
-  
-  private readonly fallbackChain = [
-    'meta-llama/llama-4-scout:free',     // Primary model - free Llama 4
-    'meta-llama/llama-3.1-8b-instruct:free',  // Second fallback
-    'google/gemma-2-9b-it:free'          // Last resort
-  ];
+  // Single source of truth for interpreter-specific configuration
+  private readonly interpreterConfigs: Record<InterpreterType, InterpreterModelConfig> = {
+    jung: {
+      defaultModel: QUICK_MODELS.LLAMA_4,
+      fallbackModel: QUICK_MODELS.LLAMA_3_1,
+      temperature: 0.9,  // Higher for more creative Jungian analysis
+      maxTokens: 2000
+    },
+    freud: {
+      defaultModel: QUICK_MODELS.LLAMA_4,
+      fallbackModel: QUICK_MODELS.GPT_4O_MINI,
+      temperature: 0.7,  // Moderate for Freudian analysis
+      maxTokens: 1500
+    },
+    neuroscientist: {
+      defaultModel: QUICK_MODELS.LLAMA_4,
+      fallbackModel: QUICK_MODELS.GEMMA_2,
+      temperature: 0.5,  // Lower for more factual scientific analysis
+      maxTokens: 1500
+    },
+    astrologist: {
+      defaultModel: QUICK_MODELS.LLAMA_4,
+      fallbackModel: QUICK_MODELS.LLAMA_3_1,
+      temperature: 0.8,  // Higher for mystical interpretations
+      maxTokens: 1500
+    }
+  };
 
   constructor() {
     // Initialize with Llama 4 models first
@@ -104,61 +131,83 @@ export class ModelConfigService {
     ];
 
     logger.info('Model configuration initialized', {
-      currentDefaultModel: this.currentDefaultModel,
-      primaryModel: this.availableModels.find(m => m.id === this.currentDefaultModel)?.name || 'Model not found'
+      interpreterConfigs: Object.entries(this.interpreterConfigs).map(([type, config]) => ({
+        interpreter: type,
+        defaultModel: config.defaultModel,
+        temperature: config.temperature
+      }))
     });
   }
 
   /**
-   * Easy model switching - Change the default model at runtime
+   * Easy model switching - Change the default model for an interpreter
+   * @param interpreterType - The interpreter to update
    * @param modelId - New model ID from QUICK_MODELS or any valid model ID
    */
-  setDefaultModel(modelId: string): void {
+  setDefaultModel(interpreterType: InterpreterType, modelId: string): void {
     const modelConfig = this.getModelConfig(modelId);
     if (!modelConfig) {
-      logger.warn(`Model ${modelId} not found in available models. Keeping current default.`);
+      logger.warn(`Model ${modelId} not found in available models.`);
       return;
     }
     
-    this.currentDefaultModel = modelId;
-    logger.info(`Default model changed to: ${modelConfig.name} (${modelId})`);
+    this.interpreterConfigs[interpreterType].defaultModel = modelId;
+    logger.info(`Default model for ${interpreterType} changed to: ${modelConfig.name} (${modelId})`);
   }
 
   /**
-   * Get the best model for Jung interpreter - prioritize current default
+   * Get the best model for an interpreter type
    */
   getBestModelForInterpreter(interpreterType: InterpreterType): string {
-    if (interpreterType === 'jung') {
-      // Always prefer current default for Jung
-      return this.currentDefaultModel;
-    }
-    
-    // Original logic for other interpreters
-    const compatibleModels = this.availableModels.filter(model =>
-      model.interpreterTypes.includes(interpreterType)
-    );
-
-    return compatibleModels[0]?.id || this.currentDefaultModel;
+    return this.interpreterConfigs[interpreterType].defaultModel;
   }
 
   /**
-   * Get model chain ensuring current default is first
+   * Get interpreter-specific configuration
    */
-  getModelChain(preferredModel?: string): string[] {
-    // If specifically requesting current default, ensure it's first
-    if (preferredModel?.includes('llama-4')) {
-      return [preferredModel, ...this.fallbackChain.filter(m => m !== preferredModel)];
-    }
-    
-    // Otherwise use current default first, then fallback chain
-    return [this.currentDefaultModel, ...this.fallbackChain.filter(m => m !== this.currentDefaultModel)];
+  getInterpreterConfig(interpreterType: InterpreterType): InterpreterModelConfig {
+    return this.interpreterConfigs[interpreterType];
   }
 
   /**
-   * Get default model - SSOT
+   * Update interpreter configuration
    */
-  getDefaultModel(): string {
-    return this.currentDefaultModel;
+  updateInterpreterConfig(
+    interpreterType: InterpreterType, 
+    config: Partial<InterpreterModelConfig>
+  ): void {
+    this.interpreterConfigs[interpreterType] = {
+      ...this.interpreterConfigs[interpreterType],
+      ...config
+    };
+    logger.info(`Updated ${interpreterType} configuration`, config);
+  }
+
+  /**
+   * Get model chain for interpreter with fallback
+   */
+  getModelChain(preferredModel?: string, interpreterType?: InterpreterType): string[] {
+    if (interpreterType) {
+      const config = this.interpreterConfigs[interpreterType];
+      return [config.defaultModel, config.fallbackModel];
+    }
+    
+    // Generic fallback chain if no interpreter specified
+    return [
+      preferredModel || QUICK_MODELS.LLAMA_4,
+      QUICK_MODELS.LLAMA_3_1,
+      QUICK_MODELS.GEMMA_2
+    ];
+  }
+
+  /**
+   * Get default model for interpreter or global default
+   */
+  getDefaultModel(interpreterType?: InterpreterType): string {
+    if (interpreterType) {
+      return this.interpreterConfigs[interpreterType].defaultModel;
+    }
+    return QUICK_MODELS.LLAMA_4; // Global default
   }
 
   /**
@@ -200,22 +249,28 @@ export class ModelConfigService {
   }
 
   /**
-   * Get model parameters for API call
+   * Get model parameters for API call with interpreter-specific defaults
    */
-  getModelParameters(modelId: string, overrides: {
-    maxTokens?: number;
-    temperature?: number;
-  } = {}): {
+  getModelParameters(
+    modelId: string, 
+    interpreterType?: InterpreterType,
+    overrides: {
+      maxTokens?: number;
+      temperature?: number;
+    } = {}
+  ): {
     model: string;
     maxTokens: number;
     temperature: number;
   } {
+    // Get interpreter-specific defaults if available
+    const interpreterConfig = interpreterType ? this.interpreterConfigs[interpreterType] : null;
     const modelConfig = this.getModelConfig(modelId);
     
     return {
       model: modelId,
-      maxTokens: overrides.maxTokens ?? modelConfig?.maxTokens ?? models.maxTokens,
-      temperature: overrides.temperature ?? modelConfig?.temperature ?? models.temperature,
+      maxTokens: overrides.maxTokens ?? interpreterConfig?.maxTokens ?? modelConfig?.maxTokens ?? models.maxTokens,
+      temperature: overrides.temperature ?? interpreterConfig?.temperature ?? modelConfig?.temperature ?? models.temperature,
     };
   }
 
@@ -329,42 +384,49 @@ export class ModelConfigService {
    */
   
   /**
-   * Switch to GPT-4o Mini for comparison
+   * Quick model switching helpers for specific interpreters
    */
-  switchToGPT4oMini(): void {
-    this.setDefaultModel(QUICK_MODELS.GPT_4O_MINI);
+  
+  /**
+   * Switch Jung to GPT-4o Mini for comparison
+   */
+  switchJungToGPT4oMini(): void {
+    this.setDefaultModel('jung', QUICK_MODELS.GPT_4O_MINI);
   }
 
   /**
-   * Switch to Claude Haiku for comparison  
+   * Switch Jung to Claude Haiku for comparison  
    */
-  switchToClaude(): void {
-    this.setDefaultModel(QUICK_MODELS.CLAUDE_HAIKU);
+  switchJungToClaude(): void {
+    this.setDefaultModel('jung', QUICK_MODELS.CLAUDE_HAIKU);
   }
 
   /**
-   * Switch back to Llama 4 (default)
+   * Switch all interpreters to a specific model
    */
-  switchToLlama4(): void {
-    this.setDefaultModel(QUICK_MODELS.LLAMA_4);
+  switchAllToModel(modelId: string): void {
+    const types: InterpreterType[] = ['jung', 'freud', 'neuroscientist', 'astrologist'];
+    types.forEach(type => this.setDefaultModel(type, modelId));
   }
 
   /**
-   * Switch to Llama 3.1 for comparison
+   * Get current model info for an interpreter
    */
-  switchToLlama3(): void {
-    this.setDefaultModel(QUICK_MODELS.LLAMA_3_1);
-  }
-
-  /**
-   * Get current model info
-   */
-  getCurrentModelInfo(): { id: string; name: string; cost: number } {
-    const config = this.getModelConfig(this.currentDefaultModel);
+  getCurrentModelInfo(interpreterType: InterpreterType): { 
+    id: string; 
+    name: string; 
+    cost: number;
+    temperature: number;
+    maxTokens: number;
+  } {
+    const interpreterConfig = this.interpreterConfigs[interpreterType];
+    const modelConfig = this.getModelConfig(interpreterConfig.defaultModel);
     return {
-      id: this.currentDefaultModel,
-      name: config?.name || 'Unknown Model',
-      cost: config?.costPerKToken || 0
+      id: interpreterConfig.defaultModel,
+      name: modelConfig?.name || 'Unknown Model',
+      cost: modelConfig?.costPerKToken || 0,
+      temperature: interpreterConfig.temperature,
+      maxTokens: interpreterConfig.maxTokens
     };
   }
 }

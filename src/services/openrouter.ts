@@ -22,7 +22,7 @@ export class OpenRouterService {
 
     logger.info('OpenRouter service initialized', {
       baseURL: 'https://openrouter.ai/api/v1',
-      defaultModel: modelConfigService.getDefaultModel(),
+      globalDefaultModel: modelConfigService.getDefaultModel(),
       hasSiteUrl: !!openRouter.siteUrl,
       hasSiteName: !!openRouter.siteName,
     });
@@ -49,7 +49,7 @@ export class OpenRouterService {
     const startTime = Date.now();
     
     // Get model chain with fallbacks
-    const modelChain = modelConfigService.getModelChain(options.model);
+    const modelChain = modelConfigService.getModelChain(options.model, options.interpreterType);
     
     for (let i = 0; i < modelChain.length; i++) {
       const currentModel = modelChain[i];
@@ -118,17 +118,22 @@ export class OpenRouterService {
     model: string;
   }> {
     try {
+      // Get model parameters from configuration
+      const modelParams = modelConfigService.getModelParameters(
+        model, 
+        options.interpreterType,
+        {
+          ...(options.maxTokens !== undefined && { maxTokens: options.maxTokens }),
+          ...(options.temperature !== undefined && { temperature: options.temperature }),
+        }
+      );
+
       logger.info('Generating OpenRouter completion', {
         model,
         messageCount: messages.length,
-        temperature: options.temperature,
-        maxTokens: options.maxTokens,
-      });
-
-      // Get model parameters from configuration
-      const modelParams = modelConfigService.getModelParameters(model, {
-        ...(options.maxTokens !== undefined && { maxTokens: options.maxTokens }),
-        ...(options.temperature !== undefined && { temperature: options.temperature }),
+        temperature: modelParams.temperature,
+        maxTokens: modelParams.maxTokens,
+        interpreterType: options.interpreterType,
       });
 
       const completion = await this.client.chat.completions.create({

@@ -1,6 +1,7 @@
 import { logger } from '../utils/logger';
 import { PromptBuilderService } from './factory';
 import { InterpretationParser } from './interpretation';
+import { ResponseStandardizer } from './utils/response-standardizer';
 import { openRouterService } from '../services/openrouter';
 import { modelConfigService } from '../services/modelConfig';
 import type { 
@@ -9,6 +10,7 @@ import type {
   InterpreterType,
   TokenUsage
 } from '../types';
+import type { PromptTemplate } from './base';
 
 /**
  * Consolidated Dream Interpretation Service
@@ -59,7 +61,7 @@ export class DreamInterpretationService {
       });
 
       // Step 1: Build contextual prompt using our modular system
-      const promptTemplate = await this.buildContextualPrompt(request);
+      const { promptTemplate, ragContext } = await this.buildContextualPrompt(request);
       
       // Step 2: Generate AI interpretation with timeout
       const aiResponse = await this.generateInterpretationWithTimeout(request, promptTemplate);
@@ -71,7 +73,7 @@ export class DreamInterpretationService {
       );
       
       // Step 4: Build final response with metadata
-      const response = this.buildFinalResponse(request, aiResponse, fullAnalysis, startTime);
+      const response = this.buildFinalResponse(request, aiResponse, fullAnalysis, startTime, ragContext);
 
       logger.info('✨ Dream interpretation completed successfully', {
         dreamId: request.dreamId,
@@ -94,7 +96,10 @@ export class DreamInterpretationService {
   /**
    * Build contextual prompt with all available information
    */
-  private async buildContextualPrompt(request: InterpretationRequest) {
+  private async buildContextualPrompt(request: InterpretationRequest): Promise<{
+    promptTemplate: PromptTemplate;
+    ragContext?: any;
+  }> {
     try {
       // Convert to internal format and build prompt
       const dreamAnalysisRequest = {
@@ -107,16 +112,19 @@ export class DreamInterpretationService {
         ...(request.testMode && { testMode: request.testMode })
       };
 
-      const promptTemplate = await PromptBuilderService.buildInterpretationPrompt(dreamAnalysisRequest);
+      const result = await PromptBuilderService.buildInterpretationPrompt(dreamAnalysisRequest);
+      const promptTemplate = result.prompt;
+      const ragContext = result.ragContext;
       
       logger.info('📝 Prompt built successfully', {
         interpreterType: request.interpreterType,
         promptLength: promptTemplate.systemPrompt.length,
         hasUserContext: !!request.userContext,
-        analysisDepth: request.analysisDepth
+        analysisDepth: request.analysisDepth,
+        hasRagContext: !!ragContext
       });
 
-      return promptTemplate;
+      return { promptTemplate, ragContext };
       
     } catch (error) {
       logger.error('❌ Failed to build prompt', {
@@ -184,8 +192,7 @@ Remember: Respond with ONLY the JSON object as specified.`
       // Generate with specific model
       const result = await openRouterService.generateCompletion(messages, {
         model: modelToUse,
-        temperature: 0.7,
-        maxTokens: 1500, // Reduced for more concise responses
+        // Temperature and maxTokens will be taken from interpreter-specific config
         interpreterType: request.interpreterType,
         dreamId: request.dreamId
       });
@@ -212,15 +219,22 @@ Remember: Respond with ONLY the JSON object as specified.`
     request: InterpretationRequest,
     aiResponse: { content: string; usage: TokenUsage; model: string },
     fullAnalysis: any,
-    startTime: number
+    startTime: number,
+    ragContext?: any
   ): InterpretationResponse {
     const duration = Date.now() - startTime;
+    
+    // Extract the interpretation (handling both old and new formats)
+    const interpretation = fullAnalysis.dreamAnalysis || fullAnalysis;
+    
+    // Standardize the response to ensure consistent structure
+    const standardizedResponse = ResponseStandardizer.standardizeResponse(interpretation);
     
     // Prepare response with debate process if available
     const responseData: any = {
       success: true,
       dreamId: request.dreamId,
-      interpretation: fullAnalysis.dreamAnalysis || fullAnalysis, // Support both new and old format
+      interpretation: standardizedResponse,
       aiResponse: aiResponse.content, // Raw AI response for debugging
       metadata: {
         interpreterType: request.interpreterType,
@@ -228,14 +242,44 @@ Remember: Respond with ONLY the JSON object as specified.`
         processedAt: new Date().toISOString(),
         analysisDepth: request.analysisDepth || 'initial',
         duration,
-        tokenUsage: aiResponse.usage,
-        costSummary: InterpretationParser.transformCostSummary(openRouterService.getCostSummary())
+        tokenUsage: {
+          ...aiResponse.usage,
+          cost: this.calculateCost(aiResponse.model, aiResponse.usage)
+        }
       }
     };
 
     // Add debate process only in test mode for debugging/development
     if (request.testMode && fullAnalysis.debateProcess) {
       responseData.debateProcess = fullAnalysis.debateProcess;
+    }
+    
+    // Add RAG process only in test mode for debugging/development
+    if (request.testMode && ragContext) {
+      logger.info('Adding RAG process to test response', {
+        hasRagContext: !!ragContext,
+        passagesCount: ragContext.passages?.length || 0,
+        hasRawPassages: !!ragContext.rawPassages
+      });
+      
+      responseData.ragProcess = {
+        passagesFound: ragContext.passages?.length || 0,
+        passages: ragContext.rawPassages?.map((p: any) => ({
+          content: p.content,
+          source: p.source,
+          chapter: p.chapter,
+          contentType: p.contentType,
+          similarity: p.similarity
+        })) || [],
+        symbolsExtracted: ragContext.rawSymbols || [],
+        themes: ragContext.themes || []
+      };
+    } else {
+      logger.info('Not adding RAG process', {
+        testMode: request.testMode,
+        hasRagContext: !!ragContext,
+        interpreterType: request.interpreterType
+      });
     }
     
     return responseData;
@@ -384,13 +428,25 @@ Remember: Respond with ONLY the JSON object as specified.`
   }
 
   /**
-   * Helper to get symbols count from either Jung or Freud interpretations
+   * Calculate cost for a specific model and token usage
+   */
+  private calculateCost(modelId: string, tokenUsage: TokenUsage): number {
+    const modelConfig = modelConfigService.getModelConfig(modelId);
+    if (!modelConfig || !modelConfig.costPerKToken) return 0;
+    return (tokenUsage.totalTokens / 1000) * modelConfig.costPerKToken;
+  }
+
+  /**
+   * Helper to get symbols count from interpretations
    */
   private getSymbolsCount(interpretation: any): number {
-    if (interpretation.type === 'jungian') {
-      return interpretation.symbols?.length || 0;
-    } else if (interpretation.type === 'freudian') {
-      return interpretation.symbols?.length || 0; // Now both use symbols array
+    // After standardization, all interpretations have symbols array
+    if (interpretation && Array.isArray(interpretation.symbols)) {
+      return interpretation.symbols.length;
+    }
+    // Check if it's wrapped in dreamAnalysis
+    if (interpretation?.dreamAnalysis && Array.isArray(interpretation.dreamAnalysis.symbols)) {
+      return interpretation.dreamAnalysis.symbols.length;
     }
     return 0;
   }

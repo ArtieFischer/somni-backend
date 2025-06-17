@@ -7,6 +7,14 @@ import { PromptRandomiser } from '../../utils/randomiser';
  * Uses centralized PromptRandomiser with history tracking to eliminate repetition
  */
 export class FreudianPromptBuilder extends BasePromptBuilder {
+  
+  /**
+   * Build interpreter-specific system prompt
+   */
+  protected buildSystemPrompt(_request: DreamAnalysisRequest): string {
+    // Freud's system prompt is built as part of buildOutputFormat
+    return '';
+  }
 
   private static FORBIDDEN: string[] = [
     'Oedipus complex', 'Wolf Man', 'Rat Man', // classic over-used
@@ -112,7 +120,7 @@ Core principles:
   /**
    * Build the analysis structure - Simplified for clarity
    */
-  protected buildAnalysisStructure(_request: DreamAnalysisRequest): string {
+  protected override buildAnalysisStructure(_request: DreamAnalysisRequest): string {
     // Keep this empty - all instructions go in buildOutputFormat
     return '';
   }
@@ -120,7 +128,7 @@ Core principles:
   /**
    * Build the output format - Uses true randomization without choices
    */
-  protected buildOutputFormat(request: DreamAnalysisRequest): string {
+  protected override buildOutputFormat(request: DreamAnalysisRequest): string {
     const age = request.userContext?.age || 30;
     const situation = request.userContext?.currentLifeSituation || '';
     const dreamText = request.dreamTranscription;

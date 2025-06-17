@@ -158,24 +158,60 @@ export class JungianInterpreter {
    * Parse new JungianInsights format
    */
   private static parseJungianInsights(parsed: any, fullResponse: string): JungianInsights {
+    // First, check if the parsed object contains nested interpretation JSON
+    let interpretationData = parsed;
+    
+    // If interpretation field contains JSON string, parse it
+    if (parsed.interpretation && typeof parsed.interpretation === 'string') {
+      try {
+        const nestedParsed = JSON.parse(parsed.interpretation);
+        // Merge nested data with top-level data, preferring nested data
+        interpretationData = { ...parsed, ...nestedParsed };
+      } catch {
+        // Not valid JSON, continue with original parsed data
+      }
+    }
+    
     // Extract symbols from the response
-    const symbols = this.extractSymbols(parsed, fullResponse);
+    const symbols = this.extractSymbols(interpretationData, fullResponse);
+    
+    // Extract core message from various possible fields
+    const coreMessage = interpretationData.coreMessage || 
+                       interpretationData.individuationMessage || 
+                       interpretationData.individuationInsight ||
+                       'Your dream reveals profound insights about your individuation journey.';
+    
+    // Extract reflective questions
+    let reflectiveQuestions = interpretationData.reflectiveQuestions || [];
+    if (!Array.isArray(reflectiveQuestions) || reflectiveQuestions.length === 0) {
+      reflectiveQuestions = [interpretationData.selfReflection || 'What aspect of your Self is seeking recognition?'];
+    }
     
     return {
       type: 'jungian',
       interpretation: fullResponse,
-      coreMessage: parsed.coreMessage || parsed.individuationMessage || 'Your dream reveals profound insights about your individuation journey.',
-      phenomenologicalOpening: parsed.phenomenologicalOpening || parsed.opening || parsed.personalInsight || 'I notice immediate resonance with this dream\'s symbolic landscape.',
+      coreMessage,
+      phenomenologicalOpening: interpretationData.phenomenologicalOpening || 
+                              interpretationData.opening || 
+                              interpretationData.personalInsight || 
+                              'I notice immediate resonance with this dream\'s symbolic landscape.',
       symbols,
-      shadowAspects: parsed.shadowAspects || this.extractShadowAspects(parsed),
-      compensatoryFunction: parsed.compensatoryFunction || parsed.compensatoryMessage || parsed.compensatory_message || 'This dream compensates for conscious attitudes.',
-      individuationGuidance: parsed.individuationGuidance || parsed.guidance || parsed.individuationPath || 'Continue exploring these symbols in your inner work.',
-      activeImaginationExercise: parsed.activeImaginationExercise,
-      reflectiveQuestions: parsed.reflectiveQuestions || [parsed.selfReflection || 'What aspect of your Self is seeking recognition?'],
-      isBigDream: parsed.isBigDream || false,
-      lifePhaseGuidance: parsed.lifePhaseGuidance,
-      animaAnimusContent: parsed.animaAnimusContent,
-      synchronicityConnection: parsed.synchronicityConnection
+      shadowAspects: interpretationData.shadowAspects || this.extractShadowAspects(interpretationData),
+      compensatoryFunction: interpretationData.compensatoryFunction || 
+                           interpretationData.compensatoryMessage || 
+                           interpretationData.compensatory_message || 
+                           'This dream compensates for conscious attitudes.',
+      individuationGuidance: interpretationData.individuationGuidance || 
+                            interpretationData.guidance || 
+                            interpretationData.individuationPath || 
+                            interpretationData.individuationInsight ||
+                            'Continue exploring these symbols in your inner work.',
+      activeImaginationExercise: interpretationData.activeImaginationExercise,
+      reflectiveQuestions,
+      isBigDream: interpretationData.isBigDream || false,
+      lifePhaseGuidance: interpretationData.lifePhaseGuidance,
+      animaAnimusContent: interpretationData.animaAnimusContent,
+      synchronicityConnection: interpretationData.synchronicityConnection
     };
   }
 
@@ -202,12 +238,47 @@ export class JungianInterpreter {
    * Extract symbols from various response formats
    */
   private static extractSymbols(parsed: any, fullResponse: string): string[] {
-    // If symbols array exists, use it
+    // First priority: If symbols array exists at root level, use it
     if (Array.isArray(parsed.symbols) && parsed.symbols.length > 0) {
       return parsed.symbols;
     }
 
-    // Try to extract from complex exploration or other fields
+    // Second priority: Check if symbols exist in nested interpretation object
+    if (parsed.interpretation && typeof parsed.interpretation === 'string') {
+      try {
+        const nestedParsed = JSON.parse(parsed.interpretation);
+        if (Array.isArray(nestedParsed.symbols) && nestedParsed.symbols.length > 0) {
+          return nestedParsed.symbols;
+        }
+      } catch {
+        // Not JSON, continue with other extraction methods
+      }
+    }
+
+    // Third priority: Look for symbols in archetypalConnections
+    const archetypalSymbols: Set<string> = new Set();
+    if (parsed.archetypalConnections && Array.isArray(parsed.archetypalConnections)) {
+      for (const connection of parsed.archetypalConnections) {
+        if (connection.symbol && typeof connection.symbol === 'string') {
+          // Extract simple words from complex descriptions
+          const words = connection.symbol.toLowerCase().split(/\s+/);
+          for (const word of words) {
+            // Clean up the word and add if it's a valid symbol
+            const cleaned = word.replace(/[^a-z]/g, '');
+            if (cleaned.length > 2 && cleaned.length < 15) {
+              archetypalSymbols.add(cleaned);
+            }
+          }
+        }
+      }
+    }
+
+    // If we found symbols from archetypalConnections, use those
+    if (archetypalSymbols.size > 0) {
+      return Array.from(archetypalSymbols).slice(0, 8);
+    }
+
+    // Last resort: Extract from text using predefined symbols
     const symbolWords: Set<string> = new Set();
     
     // Common Jungian symbols to look for
@@ -215,7 +286,8 @@ export class JungianInterpreter {
       'shadow', 'anima', 'animus', 'self', 'mandala', 'serpent', 'water', 
       'fire', 'tree', 'house', 'animal', 'child', 'mother', 'father',
       'library', 'books', 'light', 'darkness', 'transformation', 'journey',
-      'labyrinth', 'guide', 'symbols', 'door', 'key', 'mirror', 'ocean'
+      'labyrinth', 'guide', 'symbols', 'door', 'key', 'mirror', 'ocean',
+      'party', 'bedroom', 'boyfriend', 'friend', 'guilt', 'thrill', 'desire'
     ];
 
     // Search in various fields
@@ -224,6 +296,8 @@ export class JungianInterpreter {
       parsed.archetypalConnection, 
       parsed.interpretation,
       parsed.phenomenologicalOpening,
+      parsed.individuationMessage,
+      parsed.personalAssociations ? JSON.stringify(parsed.personalAssociations) : null,
       fullResponse
     ];
 
@@ -236,6 +310,12 @@ export class JungianInterpreter {
           }
         }
       }
+    }
+
+    // If still no symbols, create generic ones based on content
+    if (symbolWords.size === 0) {
+      logger.warn('No symbols found, generating generic symbols');
+      return ['unconscious', 'dream', 'symbol'];
     }
 
     // Return up to 8 symbols

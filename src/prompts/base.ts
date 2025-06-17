@@ -1,13 +1,8 @@
-import type { 
-  UserContext, 
-  DreamHistory, 
-  InterpreterType
-} from '../types';
-import { logger } from '../utils/logger';
+import type { InterpreterType, UserContext, DreamHistory } from '../types';
 import { DebateModule } from './utils/debate';
 
 /**
- * Dream analysis request structure
+ * Base interface for dream analysis requests
  */
 export interface DreamAnalysisRequest {
   dreamTranscription: string;
@@ -20,7 +15,7 @@ export interface DreamAnalysisRequest {
     isNightmare?: boolean;
     customContext?: string;
   };
-  testMode?: boolean; // Flag to enable debug features like debate process visibility
+  testMode?: boolean;
 }
 
 /**
@@ -30,97 +25,93 @@ export interface PromptTemplate {
   systemPrompt: string;
   analysisStructure: string;
   outputFormat: string;
-  variables: Record<string, any>;
+  variables: {
+    dreamContent: string;
+    interpreterType: InterpreterType;
+    userContext?: UserContext;
+    previousDreams?: DreamHistory[];
+    analysisDepth: string;
+    specialPrompts?: any;
+    hasRAGContext?: boolean;
+  };
 }
 
 /**
- * Abstract base class for all interpreter prompt builders
- * Simplified to focus on what we actually use
+ * Base class for all prompt builders
+ * Provides common functionality and enforces consistent structure
  */
 export abstract class BasePromptBuilder {
-
+  
   /**
-   * Unified JSON schema for all interpreters
-   * Structured for optimal user experience with 7 clear sections
+   * Build the complete prompt for dream interpretation
    */
-  protected getBaseSchema(interpreterType: InterpreterType, includeDebugFields: boolean = false): string {
+  buildPrompt(request: DreamAnalysisRequest): PromptTemplate {
+    const systemPrompt = this.buildSystemPrompt(request);
+    const analysisStructure = this.buildAnalysisStructure(request);
+    const outputFormat = this.buildOutputFormat(request);
     
-    const debugFields = includeDebugFields ? `,
-  "_debug_hypothesis_a": "[MUST BE EXACTLY 70-80 WORDS: First detailed interpretation focusing on specific dream elements like the exact type of water, where it appears, how it affects movement, and what this reveals about the dreamer's current emotional state and relationships. Be specific to THIS dream, not generic concepts.]",
-  "_debug_hypothesis_b": "[MUST BE EXACTLY 70-80 WORDS: Second interpretation taking completely different angle on same dream elements. If A focused on emotional blockages, focus on transformation themes. Use same specific symbols but different psychological lens.]",
-  "_debug_hypothesis_c": "[MUST BE EXACTLY 70-80 WORDS: Third interpretation with different focus entirely. Perhaps archetypal vs personal, or past vs future potential. Make distinctly different from A and B while addressing SAME specific dream elements.]",
-  "_debug_evaluation": "[Detailed explanation of which hypothesis you chose and why - consider uniqueness, personal relevance, insight depth]",
-  "_debug_selected": "[A, B, or C]"` : '';
-
-    return `
-Your entire reply MUST be valid JSON with this exact structure:
-{
-  "dreamTopic": "[5-9 word hook capturing core tension - creative title for dream list display]",
-  "symbols": ["symbol1", "symbol2", "symbol3"],
-  "quickTake": "[One or two sentences (~40 words) summarizing the central psychological question posed by the dream]",
-  "dreamWork": "[3-4 sentences mentioning up to 3 core ideas from ${interpreterType} psychology. Explain each idea's relevance in context; no textbook detours]",
-  "interpretation": "[Longer, comprehensive interpretation of events and symbols in context of this dream. 100-450 words depending on dream length. Nicely formatted with empty lines between paragraphs]",
-  "selfReflection": "[One question (≤25 words) starting with When/Where/What/How]"${debugFields}
-}
-
-All fields are required. Keep sections concise and impactful.
-    `.trim();
+    return {
+      systemPrompt,
+      analysisStructure,
+      outputFormat,
+      variables: {
+        dreamContent: request.dreamTranscription,
+        interpreterType: request.interpreterType,
+        ...(request.userContext !== undefined && { userContext: request.userContext }),
+        ...(request.previousDreams !== undefined && { previousDreams: request.previousDreams }),
+        analysisDepth: request.analysisDepth as string,
+        ...(request.specialPrompts !== undefined && { specialPrompts: request.specialPrompts }),
+        hasRAGContext: false
+      }
+    };
   }
-
+  
   /**
-   * Generate debate instructions for quality improvement
-   * Available to all interpreters for optional integration
+   * Build interpreter-specific system prompt
    */
-  protected generateDebateSection(
-    interpreterType: InterpreterType, 
-    interpreterPersonality: string
-  ): string {
+  protected abstract buildSystemPrompt(request: DreamAnalysisRequest): string;
+  
+  /**
+   * Build analysis structure (usually empty, instructions go in output format)
+   */
+  protected buildAnalysisStructure(_request: DreamAnalysisRequest): string {
+    // Most interpreters keep this empty
+    return '';
+  }
+  
+  /**
+   * Build output format instructions
+   */
+  protected abstract buildOutputFormat(request: DreamAnalysisRequest): string;
+  
+  /**
+   * Generate debate section for quality enhancement
+   */
+  protected generateDebateSection(interpreterType: string, interpreterPersonality: string): string {
     return DebateModule.generateCompleteDebateSection(interpreterType, interpreterPersonality);
   }
-
+  
   /**
-   * Main entry point - builds complete prompt for interpretation
+   * Get base JSON schema for all interpreters
    */
-  public async buildPrompt(request: DreamAnalysisRequest): Promise<PromptTemplate> {
-    try {
-      // Build interpreter-specific system prompt
-      const systemPrompt = this.buildInterpreterSpecificSystemPrompt(request);
-      
-      // Create analysis structure (mostly empty for Jung)
-      const analysisStructure = this.buildAnalysisStructure(request);
-      
-      // Define output format (critical for JSON structure)
-      const outputFormat = this.buildOutputFormat(request);
-      
-      // Prepare template variables
-      const variables = this.prepareTemplateVariables(request);
+  protected getBaseSchema(_interpreterType: string, includeDebugFields: boolean = false): string {
+    const baseSchema = `
+OUTPUT FORMAT - You MUST respond with ONLY a JSON object containing these EXACT fields:
 
-      logger.info('Prompt built successfully', {
-        interpreterType: request.interpreterType,
-        analysisDepth: request.analysisDepth,
-        hasUserContext: !!request.userContext,
-        systemPromptLength: systemPrompt.length
-      });
-
-      return {
-        systemPrompt,
-        analysisStructure,
-        outputFormat,
-        variables
-      };
-
-    } catch (error) {
-      logger.error('Prompt building failed', {
-        error: error instanceof Error ? error.message : 'Unknown error',
-        interpreterType: request.interpreterType
-      });
-      throw new Error(`Failed to build ${request.interpreterType} prompt: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
+{
+  "dreamTopic": "5-9 word dream topic that captures the essence",
+  "symbols": ["symbol1", "symbol2", "symbol3"],
+  "quickTake": "~40 word summary of the dream's meaning",
+  "dreamWork": "3-4 sentences explaining the dream mechanisms at play",
+  "interpretation": "Comprehensive interpretation (100-450 words)",
+  "selfReflection": "One reflective question for the dreamer"${includeDebugFields ? `,
+  "_debug_hypothesis_a": "First detailed interpretation hypothesis (~75 words)",
+  "_debug_hypothesis_b": "Second detailed interpretation hypothesis (~75 words)",
+  "_debug_hypothesis_c": "Third detailed interpretation hypothesis (~75 words)",
+  "_debug_evaluation": "Explanation of which hypothesis was selected and why",
+  "_debug_selected": "A, B, or C"` : ''}
+}`;
+    
+    return baseSchema;
   }
-
-  // Abstract methods that must be implemented by specific interpreters
-  protected abstract buildInterpreterSpecificSystemPrompt(request: DreamAnalysisRequest): string;
-  protected abstract buildAnalysisStructure(request: DreamAnalysisRequest): string;
-  protected abstract buildOutputFormat(request: DreamAnalysisRequest): string;
-  protected abstract prepareTemplateVariables(request: DreamAnalysisRequest): Record<string, any>;
-} 
+}
