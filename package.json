@@ -13,8 +13,11 @@
     "ingest-jung": "tsx src/scripts/ingest-jung-texts.ts",
     "ingest-jung-optimized": "node --expose-gc -r tsx/cjs src/scripts/ingest-jung-texts-optimized.ts",
     "ingest-jung-stream": "node --expose-gc --max-old-space-size=2048 -r tsx/cjs src/scripts/ingest-jung-stream.ts",
+    "ingest-freud": "node --expose-gc -r tsx/cjs src/scripts/ingest-freud-texts.ts",
+    "ingest-freud-single": "node --expose-gc -r tsx/cjs src/scripts/ingest-single-freud-text.ts",
     "test:rag-api": "tsx src/scripts/test-rag-api.ts",
-    "test:rag-debug": "tsx src/scripts/test-rag-debug.ts"
+    "test:rag-debug": "tsx src/scripts/test-rag-debug.ts",
+    "test:freud-rag": "tsx src/scripts/test-freud-rag.ts"
   },
   "keywords": [
     "somni",

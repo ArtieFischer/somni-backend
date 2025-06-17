@@ -8,6 +8,8 @@ export interface RetrievedKnowledge {
   chapter?: string;
   contentType: string;
   similarity: number;
+  metadata?: Record<string, any>;
+  id?: string | number;
 }
 
 export interface RAGContext {
@@ -19,23 +21,29 @@ export interface RAGContext {
   themes: string[];
 }
 
+export interface RAGOptions {
+  maxResults?: number;
+  similarityThreshold?: number;
+  includeSymbols?: boolean;
+  where?: Record<string, any>;
+  boost?: Record<string, string[]>;
+}
+
 export class RAGService {
   constructor(private supabase: SupabaseClient) {}
 
   async getRelevantContext(
     dreamContent: string,
     interpreterType: string = 'jung',
-    options?: {
-      maxResults?: number;
-      similarityThreshold?: number;
-      includeSymbols?: boolean;
-    }
+    options?: RAGOptions
   ): Promise<RAGContext> {
     try {
       const { 
         maxResults = 5, 
         similarityThreshold = 0.7,
-        includeSymbols = true 
+        includeSymbols = true,
+        where,
+        boost
       } = options || {};
 
       logger.info('RAG: Starting context retrieval', {
@@ -43,18 +51,24 @@ export class RAGService {
         dreamLength: dreamContent.length,
         maxResults,
         similarityThreshold,
-        includeSymbols
+        includeSymbols,
+        hasMetadataFilter: !!where,
+        hasBoostConfig: !!boost
       });
 
       // Generate embedding for the dream
       const dreamEmbedding = await embeddingsService.generateEmbedding(dreamContent);
 
-      // Search for relevant passages
+      // For now, use client-side filtering until we fix the enhanced search function
+      // Get more results than needed and filter client-side
+      const searchLimit = where ? maxResults * 3 : maxResults;
+      
+      // Use basic search
       const { data: passages, error } = await this.supabase.rpc('search_knowledge', {
         query_embedding: dreamEmbedding,
         target_interpreter: interpreterType,
         similarity_threshold: similarityThreshold,
-        max_results: maxResults
+        max_results: searchLimit
       });
 
       if (error) {
@@ -62,15 +76,60 @@ export class RAGService {
         throw error;
       }
       
-      logger.info(`RAG: Found ${passages?.length || 0} passages above ${similarityThreshold} threshold`);
+      // Apply client-side filtering if metadata filter is provided
+      let filteredPassages: RetrievedKnowledge[] = passages || [];
+      
+      if (where && filteredPassages.length > 0) {
+        filteredPassages = filteredPassages.filter((p: RetrievedKnowledge) => {
+          if (!p.metadata) return false;
+          
+          // Check if metadata matches the where clause
+          for (const [key, value] of Object.entries(where)) {
+            if (key === 'topic' && typeof value === 'string') {
+              if (p.metadata[key] !== value) return false;
+            } else if (key === 'topic' && value && typeof value === 'object' && '$in' in value) {
+              // Handle $in operator for topic
+              const allowedTopics = value.$in as string[];
+              if (!allowedTopics.includes(p.metadata[key])) return false;
+            }
+          }
+          return true;
+        });
+        
+        logger.info(`RAG: Filtered from ${passages?.length || 0} to ${filteredPassages.length} passages using metadata filter`);
+      }
+      
+      // Apply boosting if specified
+      if (boost && filteredPassages.length > 0) {
+        filteredPassages = filteredPassages.map((p: RetrievedKnowledge) => {
+          let boostedSimilarity = p.similarity;
+          
+          // Check subtopic boost
+          if (boost['subtopic'] && p.metadata?.['subtopic'] && Array.isArray(p.metadata['subtopic'])) {
+            const hasBoostSubtopic = boost['subtopic'].some((st: string) => 
+              (p.metadata?.['subtopic'] as string[]).includes(st)
+            );
+            if (hasBoostSubtopic) {
+              boostedSimilarity += 0.08;
+            }
+          }
+          
+          return { ...p, similarity: boostedSimilarity };
+        }).sort((a: RetrievedKnowledge, b: RetrievedKnowledge) => b.similarity - a.similarity);
+      }
+      
+      // Limit to requested number of results
+      filteredPassages = filteredPassages.slice(0, maxResults);
+      
+      logger.info(`RAG: Found ${filteredPassages.length} passages above ${similarityThreshold} threshold after filtering`);
 
       // Extract symbols and themes if requested
       let symbols: Array<{symbol: string; interpretations: string[]}> = [];
       let themes: string[] = [];
 
-      if (includeSymbols && passages && passages.length > 0) {
+      if (includeSymbols && filteredPassages && filteredPassages.length > 0) {
         logger.info('RAG: Extracting symbols and themes from passages');
-        const symbolData = await this.extractSymbolsAndThemes(dreamContent, passages);
+        const symbolData = await this.extractSymbolsAndThemes(dreamContent, filteredPassages);
         symbols = symbolData.symbols;
         themes = symbolData.themes;
         
@@ -78,12 +137,12 @@ export class RAGService {
           logger.info(`RAG: Extracted ${symbols.length} symbols with interpretations`);
         }
         if (themes.length > 0) {
-          logger.info(`RAG: Identified ${themes.length} Jungian themes:`, themes);
+          logger.info(`RAG: Identified ${themes.length} themes:`, themes);
         }
       }
 
       return {
-        relevantPassages: passages || [],
+        relevantPassages: filteredPassages || [],
         symbols,
         themes
       };

@@ -12,7 +12,9 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(curl:*)",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run type-check:*)"
     ],
     "deny": []
   },

@@ -3,6 +3,7 @@ import { BasePromptBuilder, type DreamAnalysisRequest, type PromptTemplate } fro
 import { JungianPromptBuilder } from './interpreters/jung/builder';
 import { JungianRAGPromptBuilder } from './interpreters/jung/builder-with-rag';
 import { FreudianPromptBuilder } from './interpreters/freud/builder';
+import { FreudianRAGPromptBuilder } from './interpreters/freud/builder-with-rag';
 import { NeuroscientistPromptBuilder } from './interpreters/neuroscientist/builder';
 import { features } from '../config/features';
 
@@ -21,6 +22,10 @@ export class PromptBuilderFactory {
         }
         return new JungianPromptBuilder();
       case 'freud':
+        // Use RAG-enhanced builder if enabled
+        if (features.rag.enabled && features.rag.interpreters.freud) {
+          return new FreudianRAGPromptBuilder();
+        }
         return new FreudianPromptBuilder();
       case 'neuroscientist':
         return new NeuroscientistPromptBuilder();
@@ -47,9 +52,9 @@ export class PromptBuilderService {
       const builder = PromptBuilderFactory.create(request.interpreterType);
       
       // Check if this is a RAG-enhanced builder with async support
-      if (builder instanceof JungianRAGPromptBuilder && 'buildPromptAsync' in builder) {
-        const prompt = await (builder as JungianRAGPromptBuilder).buildPromptAsync(request);
-        const ragContext = (builder as JungianRAGPromptBuilder).getLastRetrievedContext();
+      if ((builder instanceof JungianRAGPromptBuilder || builder instanceof FreudianRAGPromptBuilder) && 'buildPromptAsync' in builder) {
+        const prompt = await builder.buildPromptAsync(request);
+        const ragContext = builder.getLastRetrievedContext();
         return { prompt, ragContext };
       }
       
