@@ -1,0 +1,749 @@
+./test-controversial-dreams.sh: line 27: declare: -A: invalid option
+declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+./test-controversial-dreams.sh: line 28: declare: -A: invalid option
+declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+🧪 CONTROVERSIAL DREAMS TEST SUITE
+=================================
+Testing 1 interpreter(s): freud
+
+
+🌙 Dream 1: Sexual Dream
+=================================================
+
+🔮 Interpreter: freud
+-----------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   591    0     0  100   591      0    488  0:00:01  0:00:01 --:--:--   489100   591    0     0  100   591      0    267  0:00:02  0:00:02 --:--:--   267100   591    0     0  100   591      0    183  0:00:03  0:00:03 --:--:--   183100   591    0     0  100   591      0    140  0:00:04  0:00:04 --:--:--   140100   591    0     0  100   591      0    113  0:00:05  0:00:05 --:--:--   113100   591    0     0  100   591      0     94  0:00:06  0:00:06 --:--:--     0100   591    0     0  100   591      0     81  0:00:07  0:00:07 --:--:--     0100   591    0     0  100   591      0     71  0:00:08  0:00:08 --:--:--     0100   591    0     0  100   591      0     63  0:00:09  0:00:09 --:--:--     0100   591    0     0  100   591      0     57  0:00:10  0:00:10 --:--:--     0100 11168  100 10577  100   591    987     55  0:00:10  0:00:10 --:--:--  2356100 11168  100 10577  100   591    987     55  0:00:10  0:00:10 --:--:--  3036
+{
+  "success": true,
+  "dreamId": "46b96f3d-8d8f-4ed4-ab1e-410ac4426900",
+  "interpretation": {
+    "dreamTopic": "Conflicted desires and repressed libido in romantic relationships",
+    "symbols": [
+      "bedroom",
+      "Sarah",
+      "kissing",
+      "undressing",
+      "bed"
+    ],
+    "quickTake": "This dream reveals your unconscious wish for excitement and passion, potentially indicating unresolved libido and conflicting desires in your current relationship.",
+    "dreamWork": "The dream employs condensation by combining elements of your current relationship with feelings towards Sarah. Displacement occurs as your desires for Sarah are redirected towards a more acceptable, albeit still forbidden, scenario. Symbolization is evident in the bedroom and bed, representing intimacy and vulnerability. Secondary revision intensifies the emotional impact, making the dream feel 'so real and intense'.",
+    "interpretation": "Your dream reflects an unconscious wish for novelty and passion, possibly indicating that your current relationship is not fulfilling your libidinal needs. The presence of Sarah, a figure from your past, suggests that your ego is still cathecting to her, maintaining a reservoir of repressed desire. This repressed libido is now manifesting in your dream, causing feelings of arousal and confusion. Your superego is grappling with guilt, as evidenced by your waking feelings of confusion and loyalty to your girlfriend. The dream also reveals a defense mechanism of displacement, where you redirect your desires for Sarah onto a more acceptable scenario, temporarily alleviating moral anxiety. This dynamic indicates an ongoing struggle between your id, ego, and superego, highlighting the need for self-reflection on your current relationship and unresolved desires.",
+    "selfReflection": "What are the specific aspects of your current relationship that make you feel unfulfilled, and how do you think your feelings towards Sarah relate to these desires?"
+  },
+  "aiResponse": "```\n{\n  \"dreamTopic\": \"Conflicted desires and repressed libido in romantic relationships\",\n  \"symbols\": [\"bedroom\", \"Sarah\", \"kissing\", \"undressing\", \"bed\"],\n  \"quickTake\": \"This dream reveals your unconscious wish for excitement and passion, potentially indicating unresolved libido and conflicting desires in your current relationship.\",\n  \"dreamWork\": \"The dream employs condensation by combining elements of your current relationship with feelings towards Sarah. Displacement occurs as your desires for Sarah are redirected towards a more acceptable, albeit still forbidden, scenario. Symbolization is evident in the bedroom and bed, representing intimacy and vulnerability. Secondary revision intensifies the emotional impact, making the dream feel 'so real and intense'.\",\n  \"interpretation\": \"Your dream reflects an unconscious wish for novelty and passion, possibly indicating that your current relationship is not fulfilling your libidinal needs. The presence of Sarah, a figure from your past, suggests that your ego is still cathecting to her, maintaining a reservoir of repressed desire. This repressed libido is now manifesting in your dream, causing feelings of arousal and confusion. Your superego is grappling with guilt, as evidenced by your waking feelings of confusion and loyalty to your girlfriend. The dream also reveals a defense mechanism of displacement, where you redirect your desires for Sarah onto a more acceptable scenario, temporarily alleviating moral anxiety. This dynamic indicates an ongoing struggle between your id, ego, and superego, highlighting the need for self-reflection on your current relationship and unresolved desires.\",\n  \"selfReflection\": \"What are the specific aspects of your current relationship that make you feel unfulfilled, and how do you think your feelings towards Sarah relate to these desires?\",\n  \"_debug_hypothesis_a\": \"This dream may represent a manifestation of the repetition compulsion, where you unconsciously seek out familiar patterns of excitement and passion, even if they conflict with your current relationship. The presence of Sarah could symbolize a past experience that has not been fully processed, leading to continued cathexis and influencing your current desires.\",\n  \"_debug_hypothesis_b\": \"The dream could be an expression of narcissistic regulation, where your self-esteem is boosted by the fantasy of being desired by Sarah. This would indicate that your current relationship is not providing sufficient narcissistic gratification, leading your ego to seek validation through fantasies.\",\n  \"_debug_hypothesis_c\": \"This dream might illustrate the process of sublimation, where your libido is transformed into a more acceptable form of intimacy. However, the intensity of the dream suggests that this sublimation is not fully successful, and your unconscious is still grappling with repressed desires.\",\n  \"_debug_evaluation\": \"Hypothesis A was chosen for its uniqueness, personal relevance, and insight depth. It authentically reflects my expertise and provides a valuable perspective on the dreamer's conflicted desires and repressed libido.\",\n  \"_debug_selected\": \"A\"\n}\n```",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-18T14:16:32.054Z",
+    "analysisDepth": "deep",
+    "duration": 10709,
+    "tokenUsage": {
+      "promptTokens": 2483,
+      "completionTokens": 610,
+      "totalTokens": 3093,
+      "cost": 0
+    }
+  },
+  "debateProcess": {
+    "hypothesis_a": "This dream may represent a manifestation of the repetition compulsion, where you unconsciously seek out familiar patterns of excitement and passion, even if they conflict with your current relationship. The presence of Sarah could symbolize a past experience that has not been fully processed, leading to continued cathexis and influencing your current desires.",
+    "hypothesis_b": "The dream could be an expression of narcissistic regulation, where your self-esteem is boosted by the fantasy of being desired by Sarah. This would indicate that your current relationship is not providing sufficient narcissistic gratification, leading your ego to seek validation through fantasies.",
+    "hypothesis_c": "This dream might illustrate the process of sublimation, where your libido is transformed into a more acceptable form of intimacy. However, the intensity of the dream suggests that this sublimation is not fully successful, and your unconscious is still grappling with repressed desires.",
+    "evaluation": "Hypothesis A was chosen for its uniqueness, personal relevance, and insight depth. It authentically reflects my expertise and provides a valuable perspective on the dreamer's conflicted desires and repressed libido.",
+    "selected_hypothesis": "A"
+  },
+  "ragProcess": {
+    "passagesFound": 7,
+    "passages": [
+      {
+        "content": "He felt attracted to her, apparently imagining coitus a tergo; and he thought she had given him the impression that she would accept an approach. That night he dreamed that:\n\nStanding back a little behind two stately palaces was a little house with closed doors. My wife led me along the piece of street up to the little house and pushed the door open; I then slipped quickly and easily into the inside of a court which rose in an incline.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.848182884183608
+      },
+      {
+        "content": "The following fragment from the history of the treatment of a hysterical girl is intended to show the way in which the interpretation of dreams plays a part in the work of analysis. It will at the same time give me a first opportunity of publishing at sufficient length to prevent further misunderstanding some of my views upon the psychical processes of hysteria and upon its organic determinants.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.847803617948411
+      },
+      {
+        "content": "He was worried in case this other man might discover the liaison and the proposed marriage come to nothing. He therefore behaved in a very affectionate way to the man. He embraced him and kissed him. (19004, V, 398-9}\n\nThe dreamer in fact had a secret liaison with a married woman, who was the wife of a friend; and he did think that his friend might have noticed something. ”\n\nThe dream, however, omitted something that was particularly important in the situation.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.846813852734404
+      },
+      {
+        "content": "Freud noted that dreams commonly use symbolism, particularly in the representation of sexual matters. Since this is not particularly salient in the material we have covered, let us illustrate it by another example. Freud cites the dream of a man who had just received a young girl to live in his household. He felt attracted to her, apparently imagining coitus a tergo; and he thought she had given him the impression that she would accept an approach.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.842048485034885
+      },
+      {
+        "content": "The representation of her parents’ relations —as lying together with something knocking something, or “churning” — has elements that could be taken as symbolism or metaphor in adult dreams. In such a dream these elements could be connected by association to articulate sexual thoughts, as in the example of the house, door, passage, and so forth earlier. , by the fact that the knocking or “churning” took place after the king and queen lay down together, and was followed by the birth of the child).",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.839492468924678
+      },
+      {
+        "content": "Hence Freud applied this reasoning widely. In The Interpretation of Dreams he uses it to elucidate symptoms as well. Thus he takes the example of a young female patient who was\n\nmost surprisingly dressed. For though as a rule a woman’s clothes are carefully considered down to the last detail, she was wearing one of her stockings hanging down and two of the buttons on her blouse were undone. She complained of having pains in her leg and, without being asked, exposed her calf.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.838829088560032
+      },
+      {
+        "content": "As I refused to do this I had to sit in a little chair by her side and knock at the sofa with my fist. This she called “churning” . . immediately after this she announced that a child was creeping out of her, and she represented this scene in quite a realistic way, writhing about and groaning. Her imaginary child then had to share its parents’ bedroom and had to be a spectator of sexual intercourse between them. If it interrupted, it was beaten . .",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.837888156238555
+      }
+    ],
+    "symbolsExtracted": [],
+    "themes": []
+  },
+  "testMode": true,
+  "testDuration": 10709
+}
+
+
+🌙 Dream 2: Sexual Assault/Trauma Dream
+=================================================
+
+🔮 Interpreter: freud
+-----------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   593    0     0  100   593      0    490  0:00:01  0:00:01 --:--:--   490100   593    0     0  100   593      0    267  0:00:02  0:00:02 --:--:--   267100   593    0     0  100   593      0    184  0:00:03  0:00:03 --:--:--   184100   593    0     0  100   593      0    140  0:00:04  0:00:04 --:--:--   140100   593    0     0  100   593      0    113  0:00:05  0:00:05 --:--:--   113100   593    0     0  100   593      0     95  0:00:06  0:00:06 --:--:--     0100   593    0     0  100   593      0     82  0:00:07  0:00:07 --:--:--     0100   593    0     0  100   593      0     72  0:00:08  0:00:08 --:--:--     0100   593    0     0  100   593      0     64  0:00:09  0:00:09 --:--:--     0100   593    0     0  100   593      0     57  0:00:10  0:00:10 --:--:--     0100 10263  100  9670  100   593    930     57  0:00:10  0:00:10 --:--:--  2319
+{
+  "success": true,
+  "dreamId": "028ed592-406b-43bf-a99b-6fa178c7dc9b",
+  "interpretation": {
+    "dreamTopic": "Recurring nightmare of being overpowered and helpless",
+    "symbols": [
+      "night",
+      "grabbed from behind",
+      "silence",
+      "alley",
+      "powerlessness"
+    ],
+    "quickTake": "The dream fulfills an unconscious wish to confront and overcome feelings of vulnerability and powerlessness, stemming from repressed childhood experiences.",
+    "dreamWork": "The dream employs condensation, merging various elements of fear and helplessness into a singular terrifying scenario. Displacement occurs as the dreamer's current anxieties are attributed to an anonymous assailant. Symbolization is evident in the alley, representing a confined space of danger. Secondary revision intensifies the dream's emotional impact, making it feel particularly vivid and frightening.",
+    "interpretation": "This recurring nightmare reveals an unconscious wish to confront and resolve deep-seated feelings of powerlessness and vulnerability, likely originating from childhood experiences. The dreamer's inability to scream represents a suppression of voice and assertiveness, while being grabbed from behind symbolizes an unconscious fear of being overwhelmed by external forces. The alley signifies a regression to a state of confinement and loss of control. The dream-work processes at play suggest an attempt by the ego to process and make sense of these repressed emotions, but ultimately, the nightmare persists as a manifestation of the unresolved conflict between the id's expression of fear and the ego's attempts to defend against it. The superego's influence is evident in the dreamer's self-reflection and recognition of the nightmare's emotional impact.",
+    "selfReflection": "Can you recall any instances from your childhood where you felt powerless or overpowered, and how have you been attempting to cope with similar feelings in your adult life?"
+  },
+  "aiResponse": "```\n{\n  \"dreamTopic\": \"Recurring nightmare of being overpowered and helpless\",\n  \"symbols\": [\"night\", \"grabbed from behind\", \"silence\", \"alley\", \"powerlessness\"],\n  \"quickTake\": \"The dream fulfills an unconscious wish to confront and overcome feelings of vulnerability and powerlessness, stemming from repressed childhood experiences.\",\n  \"dreamWork\": \"The dream employs condensation, merging various elements of fear and helplessness into a singular terrifying scenario. Displacement occurs as the dreamer's current anxieties are attributed to an anonymous assailant. Symbolization is evident in the alley, representing a confined space of danger. Secondary revision intensifies the dream's emotional impact, making it feel particularly vivid and frightening.\",\n  \"interpretation\": \"This recurring nightmare reveals an unconscious wish to confront and resolve deep-seated feelings of powerlessness and vulnerability, likely originating from childhood experiences. The dreamer's inability to scream represents a suppression of voice and assertiveness, while being grabbed from behind symbolizes an unconscious fear of being overwhelmed by external forces. The alley signifies a regression to a state of confinement and loss of control. The dream-work processes at play suggest an attempt by the ego to process and make sense of these repressed emotions, but ultimately, the nightmare persists as a manifestation of the unresolved conflict between the id's expression of fear and the ego's attempts to defend against it. The superego's influence is evident in the dreamer's self-reflection and recognition of the nightmare's emotional impact.\",\n  \"selfReflection\": \"Can you recall any instances from your childhood where you felt powerless or overpowered, and how have you been attempting to cope with similar feelings in your adult life?\",\n  \"_debug_hypothesis_a\": \"Ego defenses: The dream may be an expression of the ego's struggle to cope with feelings of vulnerability, employing denial and repression to avoid confronting the root cause of the fear.\",\n  \"_debug_hypothesis_b\": \"Repetition compulsion: The recurring nature of the nightmare suggests an unconscious attempt to repeat and master a traumatic experience, possibly from childhood, where the dreamer felt powerless.\",\n  \"_debug_hypothesis_c\": \"Narcissistic regulation: The dream could be a manifestation of the dreamer's struggle with self-esteem and narcissistic wounds, where the experience of powerlessness serves as a defense against feelings of grandiosity.\",\n  \"_debug_evaluation\": \"Hypothesis B, Repetition compulsion, seems to be the most relevant, as it connects the recurring nightmare to an unconscious attempt to process and master a past traumatic experience. This interpretation also resonates with the dreamer's current life situation and emotional state.\",\n  \"_debug_selected\": \"B\"\n}\n```",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-18T14:16:44.550Z",
+    "analysisDepth": "deep",
+    "duration": 10390,
+    "tokenUsage": {
+      "promptTokens": 2407,
+      "completionTokens": 554,
+      "totalTokens": 2961,
+      "cost": 0
+    }
+  },
+  "debateProcess": {
+    "hypothesis_a": "Ego defenses: The dream may be an expression of the ego's struggle to cope with feelings of vulnerability, employing denial and repression to avoid confronting the root cause of the fear.",
+    "hypothesis_b": "Repetition compulsion: The recurring nature of the nightmare suggests an unconscious attempt to repeat and master a traumatic experience, possibly from childhood, where the dreamer felt powerless.",
+    "hypothesis_c": "Narcissistic regulation: The dream could be a manifestation of the dreamer's struggle with self-esteem and narcissistic wounds, where the experience of powerlessness serves as a defense against feelings of grandiosity.",
+    "evaluation": "Hypothesis B, Repetition compulsion, seems to be the most relevant, as it connects the recurring nightmare to an unconscious attempt to process and master a past traumatic experience. This interpretation also resonates with the dreamer's current life situation and emotional state.",
+    "selected_hypothesis": "B"
+  },
+  "ragProcess": {
+    "passagesFound": 7,
+    "passages": [
+      {
+        "content": "'Fright', however, is the name we give to the state a person gets into when he has run into danger without being prepared for it; it emphasizes the factor of surprise. I do not believe anxiety itself can produce a traumatic neurosis. There is something about anxiety that protects its subject against fright and so against fright-neuroses. We shall return to this point later. The study of dreams may be considered the most trustworthy method of investigating deep mental processes.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.843832178965377
+      },
+      {
+        "content": "Now dreams occurring in traumatic neuroses have the characteristic of repeatedly bringing the patient back into the situation of his accident, a situation from which he wakes up in another fright. This astonishes people far too little. They think the fact that the traumatic experience is constantly forcing itself upon the patient even in his sleep is a proof of the strength of that experience: the patient is, as one might say, fixated to his trauma.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.84334382881698
+      },
+      {
+        "content": "Now too we shall be inclined to relate to this compulsion the dreams which occur in traumatic neuroses and the impulse which leads children to play. But it is to be noted that only in rare instances can we observe the pure effects of the compulsion to repeat, unsupported by other motives.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.832763046128242
+      },
+      {
+        "content": "This same compulsion to repeat frequently meets us as an obstacle to our treatment when at the end of an analysis we try to induce the patient to detach himself completely from his physician. It may be presumed, too, that when people unfamiliar with analysis feel an obscure fear - a dread of rousing something that, so they feel, is better left sleeping - what they are afraid of at bottom is the emergence of this compulsion with its hint of possession by some 'daemonic' power.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.832007925031704
+      },
+      {
+        "content": "M had examined another woman by a window, and pronounced that she had a diphtheritic membrane. The woman was a friend of Irma’s, who suffered from hysterical choking. Thus, Freud saw, the Irma in the dream was a sort of composite figure, who had been given her friend’s position by the window, as well as her cough, and infiltrated membrane.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.831213892264172
+      },
+      {
+        "content": "I am not aware, however, that patients suffering from traumatic neurosis are much occupied in their waking lives with memories of their accident. Perhaps they are more concerned with not thinking of it. Anyone who accepts it as something self-evident that their dreams should put them back at night into the situation that caused them to fall ill has misunderstood the nature of dreams.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.830736479408036
+      },
+      {
+        "content": "The study of dreams may be considered the most trustworthy method of investigating deep mental processes. Now dreams occurring in traumatic neuroses have the characteristic of repeatedly bringing the patient back into the situation of his accident, a situation from which he wakes up in another fright. This astonishes people far too little.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.829741597175693
+      }
+    ],
+    "symbolsExtracted": [],
+    "themes": []
+  },
+  "testMode": true,
+  "testDuration": 10391
+}
+
+
+🌙 Dream 3: Extreme Violence/Gore Dream
+=================================================
+
+🔮 Interpreter: freud
+-----------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   642    0     0  100   642      0    529  0:00:01  0:00:01 --:--:--   530100   642    0     0  100   642      0    289  0:00:02  0:00:02 --:--:--   289100   642    0     0  100   642      0    199  0:00:03  0:00:03 --:--:--   199100   642    0     0  100   642      0    151  0:00:04  0:00:04 --:--:--   151100   642    0     0  100   642      0    122  0:00:05  0:00:05 --:--:--   122100   642    0     0  100   642      0    103  0:00:06  0:00:06 --:--:--     0100   642    0     0  100   642      0     88  0:00:07  0:00:07 --:--:--     0100   642    0     0  100   642      0     77  0:00:08  0:00:08 --:--:--     0100   642    0     0  100   642      0     69  0:00:09  0:00:09 --:--:--     0100 10191  100  9549  100   642   1024     68  0:00:09  0:00:09 --:--:--  2335
+{
+  "success": true,
+  "dreamId": "d5d8968b-64c2-4bd9-8bfc-59657ff566c1",
+  "interpretation": {
+    "dreamTopic": "Traumatic violence and primal fear in war zone",
+    "symbols": [
+      "blood",
+      "war zone",
+      "bloody weapon",
+      "body parts",
+      "chaser"
+    ],
+    "quickTake": "Unconscious wish to confront and overcome primal fears, repressed aggression, and traumatic experiences.",
+    "dreamWork": "The dream employs condensation, merging elements of traumatic experiences and primal fears. Displacement is evident as the dreamer's aggression is directed outward, while symbolization is seen in the bloody weapon representing both power and vulnerability. Secondary revision intensifies the graphic violence.",
+    "interpretation": "This dream reflects your unconscious attempt to process and master traumatic experiences, likely stemming from childhood. The war zone represents a breach in your protective shield, echoing feelings of helplessness. Holding a bloody weapon suggests a repressed desire for power and control, possibly as a compensation for feelings of vulnerability. The chaser symbolizes the superego or an external authority, indicating a moral anxiety related to aggressive impulses. The graphic violence and body parts signify the id's expression of repressed aggression and the ego's struggle to maintain control. This dream may be related to the repetition compulsion, where you unconsciously recreate traumatic experiences to attempt mastery.",
+    "selfReflection": "Can you recall any situations in your childhood where you felt overwhelmed or powerless, and how have you been expressing or suppressing aggressive impulses in your adult life?"
+  },
+  "aiResponse": "```\n{\n  \"dreamTopic\": \"Traumatic violence and primal fear in war zone\",\n  \"symbols\": [\"blood\", \"war zone\", \"bloody weapon\", \"body parts\", \"chaser\"],\n  \"quickTake\": \"Unconscious wish to confront and overcome primal fears, repressed aggression, and traumatic experiences.\",\n  \"dreamWork\": \"The dream employs condensation, merging elements of traumatic experiences and primal fears. Displacement is evident as the dreamer's aggression is directed outward, while symbolization is seen in the bloody weapon representing both power and vulnerability. Secondary revision intensifies the graphic violence.\",\n  \"interpretation\": \"This dream reflects your unconscious attempt to process and master traumatic experiences, likely stemming from childhood. The war zone represents a breach in your protective shield, echoing feelings of helplessness. Holding a bloody weapon suggests a repressed desire for power and control, possibly as a compensation for feelings of vulnerability. The chaser symbolizes the superego or an external authority, indicating a moral anxiety related to aggressive impulses. The graphic violence and body parts signify the id's expression of repressed aggression and the ego's struggle to maintain control. This dream may be related to the repetition compulsion, where you unconsciously recreate traumatic experiences to attempt mastery.\",\n  \"selfReflection\": \"Can you recall any situations in your childhood where you felt overwhelmed or powerless, and how have you been expressing or suppressing aggressive impulses in your adult life?\",\n  \"_debug_hypothesis_a\": \"Ego defenses are at play as you struggle to cope with traumatic memories, using denial and repression to avoid confronting your vulnerability.\",\n  \"_debug_hypothesis_b\": \"The dream reveals object relations issues, with the chaser representing an internalized critical authority figure, and the bloody weapon symbolizing a desire for control in relationships.\",\n  \"_debug_hypothesis_c\": \"The dream illustrates drive dynamics, with the id's aggressive impulses clashing with the ego's attempts to maintain control, resulting in a manifestation of both fear and power.\",\n  \"_debug_evaluation\": \"Hypothesis C was selected for its comprehensive explanation of the dream's dynamics, incorporating drive theory and the structure of the psyche.\",\n  \"_debug_selected\": \"C\"\n}\n```",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-18T14:16:55.976Z",
+    "analysisDepth": "deep",
+    "duration": 9313,
+    "tokenUsage": {
+      "promptTokens": 2596,
+      "completionTokens": 458,
+      "totalTokens": 3054,
+      "cost": 0
+    }
+  },
+  "debateProcess": {
+    "hypothesis_a": "Ego defenses are at play as you struggle to cope with traumatic memories, using denial and repression to avoid confronting your vulnerability.",
+    "hypothesis_b": "The dream reveals object relations issues, with the chaser representing an internalized critical authority figure, and the bloody weapon symbolizing a desire for control in relationships.",
+    "hypothesis_c": "The dream illustrates drive dynamics, with the id's aggressive impulses clashing with the ego's attempts to maintain control, resulting in a manifestation of both fear and power.",
+    "evaluation": "Hypothesis C was selected for its comprehensive explanation of the dream's dynamics, incorporating drive theory and the structure of the psyche.",
+    "selected_hypothesis": "C"
+  },
+  "ragProcess": {
+    "passagesFound": 7,
+    "passages": [
+      {
+        "content": "We describe as 'traumatic' any excitations from outside which are powerful enough to break through the protective shield. It seems to me that the concept of trauma necessarily implies a connection of this kind with a breach in an otherwise efficacious barrier against stimuli. Such an event as an external trauma is bound to provoke a disturbance on a large scale in the functioning of the organism's energy and to set in motion every possible defensive measure.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.833851168707399
+      },
+      {
+        "content": "We may, I think, tentatively venture to regard the common traumatic neurosis as a consequence of an extensive breach being made in the protective shield against stimuli. This would seem to reinstate the old, naïve theory of shock, in apparent contrast to the later and psychologically more ambitious theory which attributes aetiological importance not to the effects of mechanical violence but to fright and the threat to life.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.832158336686629
+      },
+      {
+        "content": "In the case of the war neuroses, the fact that the same symptoms sometimes came about without the intervention of any gross mechanical force seemed at once enlightening and bewildering. In the case of the ordinary traumatic neuroses two characteristics emerge prominently: first, that the chief weight in their causation seems to rest upon the factor of surprise, of fright; and secondly, that a wound or injury inflicted simultaneously works as a rule against the development of a neurosis.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.832052026765743
+      },
+      {
+        "content": "This would seem to reinstate the old, naïve theory of shock, in apparent contrast to the later and psychologically more ambitious theory which attributes aetiological importance not to the effects of mechanical violence but to fright and the threat to life. These opposing views are not, however, irreconcilable; nor is the psycho-analytic view of the traumatic neurosis identical with the shock theory in its crudest form.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.831014592889503
+      },
+      {
+        "content": "The terrible war which has just ended gave rise to a great number of illnesses of this kind, but it at least put an end to the temptation to attribute the cause of the disorder to organic lesions of the nervous system brought about by mechanical force. The symptomatic picture presented by traumatic neurosis approaches that of hysteria in the wealth of its similar motor symptoms, but surpasses it as a rule in its strongly marked signs of subjective ailment (in which it resembles hypochondria or melancholia) as well as in the evidence it gives of a far more comprehensive general enfeeblement and disturbance of the mental capacities.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.830920288241032
+      },
+      {
+        "content": "I have argued elsewhere that 'war neuroses' (in so far as that term implies something more than a reference to the circumstances of the illness's onset) may very well be traumatic neuroses which have been facilitated by a conflict in the ego. The fact to which I have referred in the first paragraph of Chapter II, that a gross physical injury caused simultaneously by the trauma diminishes the chances that a neurosis will develop, becomes intelligible if one bears in mind two facts which have been stressed by psycho-analytic research: firstly, that mechanical agitation must be recognized as one of the sources of sexual excitation, and secondly, that painful and feverish illnesses exercise a powerful effect, so long as they last, on the distribution of libido.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.827182539457876
+      },
+      {
+        "content": "In the case of the ordinary traumatic neuroses two characteristics emerge prominently: first, that the chief weight in their causation seems to rest upon the factor of surprise, of fright; and secondly, that a wound or injury inflicted simultaneously works as a rule against the development of a neurosis. 'Fright', 'fear' and 'anxiety' are improperly used as synonymous expressions; they are in fact capable of clear distinction in their relation to danger.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.824004299641974
+      }
+    ],
+    "symbolsExtracted": [],
+    "themes": []
+  },
+  "testMode": true,
+  "testDuration": 9313
+}
+
+
+🌙 Dream 4: Infidelity/Cheating Dream
+=================================================
+
+🔮 Interpreter: freud
+-----------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   696    0     0  100   696      0    574  0:00:01  0:00:01 --:--:--   575100   696    0     0  100   696      0    313  0:00:02  0:00:02 --:--:--   314100   696    0     0  100   696      0    216  0:00:03  0:00:03 --:--:--   216100   696    0     0  100   696      0    164  0:00:04  0:00:04 --:--:--   164100   696    0     0  100   696      0    133  0:00:05  0:00:05 --:--:--   133100   696    0     0  100   696      0    111  0:00:06  0:00:06 --:--:--     0100   696    0     0  100   696      0     96  0:00:07  0:00:07 --:--:--     0100   696    0     0  100   696      0     84  0:00:08  0:00:08 --:--:--     0100   696    0     0  100   696      0     75  0:00:09  0:00:09 --:--:--     0100   696    0     0  100   696      0     67  0:00:10  0:00:10 --:--:--     0100   696    0     0  100   696      0     61  0:00:11  0:00:11 --:--:--     0100   696    0     0  100   696      0     56  0:00:12  0:00:12 --:--:--     0100 11623  100 10927  100   696    829     52  0:00:13  0:00:13 --:--:--  2213100 11623  100 10927  100   696    829     52  0:00:13  0:00:13 --:--:--  2778
+{
+  "success": true,
+  "dreamId": "f677c792-b01a-45eb-9bd4-529deb72ac81",
+  "interpretation": {
+    "dreamTopic": "Temptation and forbidden desire in a relationship",
+    "symbols": [
+      "party",
+      "boyfriend",
+      "Marcus",
+      "bedroom",
+      "making out"
+    ],
+    "quickTake": "This dream reveals an unconscious wish for excitement and thrill in your relationship, potentially stemming from feelings of stagnation or unfulfilled desires.",
+    "dreamWork": "The dream employs condensation by combining elements of your current relationship with the thrill of a forbidden encounter. Displacement occurs as your boyfriend's best friend, Marcus, becomes the object of your desire. Symbolization is evident in the bedroom, representing a private, intimate space. Secondary revision is at play as your ego attempts to make sense of the dream, resulting in feelings of guilt.",
+    "interpretation": "Your dream suggests an unconscious wish for excitement and thrill in your relationship, which may be lacking in your current dynamic with your boyfriend. The intense attraction to Marcus, his best friend, represents a desire for something forbidden, potentially linked to repressed desires or unexpressed aspects of your personality. This dream may be a manifestation of the id's influence, as your ego struggles to balance your libido with the constraints of your relationship. The superego is also at play, as evidenced by the feelings of guilt that arise during the dream. In terms of object relations, Marcus may represent an aspect of your boyfriend or an idealized masculine figure that you've introjected. The bedroom symbolizes a regression to a more primitive, instinctual state, where your id can express itself freely. This dream could be an opportunity for you to explore your desires and boundaries within your relationship, and to consider whether there are aspects of your personality or desires that you're currently suppressing.",
+    "selfReflection": "What are some desires or aspects of yourself that you feel you're currently suppressing in your relationship, and how can you communicate these to your partner?"
+  },
+  "aiResponse": "```\n{\n  \"dreamTopic\": \"Temptation and forbidden desire in a relationship\",\n  \"symbols\": [\"party\", \"boyfriend\", \"Marcus\", \"bedroom\", \"making out\"],\n  \"quickTake\": \"This dream reveals an unconscious wish for excitement and thrill in your relationship, potentially stemming from feelings of stagnation or unfulfilled desires.\",\n  \"dreamWork\": \"The dream employs condensation by combining elements of your current relationship with the thrill of a forbidden encounter. Displacement occurs as your boyfriend's best friend, Marcus, becomes the object of your desire. Symbolization is evident in the bedroom, representing a private, intimate space. Secondary revision is at play as your ego attempts to make sense of the dream, resulting in feelings of guilt.\",\n  \"interpretation\": \"Your dream suggests an unconscious wish for excitement and thrill in your relationship, which may be lacking in your current dynamic with your boyfriend. The intense attraction to Marcus, his best friend, represents a desire for something forbidden, potentially linked to repressed desires or unexpressed aspects of your personality. This dream may be a manifestation of the id's influence, as your ego struggles to balance your libido with the constraints of your relationship. The superego is also at play, as evidenced by the feelings of guilt that arise during the dream. In terms of object relations, Marcus may represent an aspect of your boyfriend or an idealized masculine figure that you've introjected. The bedroom symbolizes a regression to a more primitive, instinctual state, where your id can express itself freely. This dream could be an opportunity for you to explore your desires and boundaries within your relationship, and to consider whether there are aspects of your personality or desires that you're currently suppressing.\",\n  \"selfReflection\": \"What are some desires or aspects of yourself that you feel you're currently suppressing in your relationship, and how can you communicate these to your partner?\",\n  \"_debug_hypothesis_a\": \"This dream could be an expression of the repetition compulsion, where you're drawn to situations that recreate the thrill of past experiences, potentially stemming from childhood dynamics. The party and bedroom settings may represent a regression to a more primitive state, where your id can express itself freely.\",\n  \"_debug_hypothesis_b\": \"The dream may be related to narcissistic regulation, as your attraction to Marcus represents a desire for validation and attention from someone outside of your primary relationship. This could be linked to self-esteem wounds or a need for external validation.\",\n  \"_debug_hypothesis_c\": \"This dream could be an example of drive dynamics, where the libidinal drive is expressing itself in a way that's at odds with your ego and superego. The intense attraction to Marcus represents the id's influence, while your feelings of guilt represent the superego's attempt to regulate this desire.\",\n  \"_debug_evaluation\": \"Hypothesis C was selected as the most compelling interpretation, as it provides a clear explanation of the drive dynamics at play in the dream. The dreamer's attraction to Marcus and subsequent feelings of guilt represent a classic conflict between the id and superego, with the ego struggling to balance these competing forces.\",\n  \"_debug_selected\": \"C\"\n}\n```",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-18T14:17:11.266Z",
+    "analysisDepth": "deep",
+    "duration": 13168,
+    "tokenUsage": {
+      "promptTokens": 2498,
+      "completionTokens": 648,
+      "totalTokens": 3146,
+      "cost": 0
+    }
+  },
+  "debateProcess": {
+    "hypothesis_a": "This dream could be an expression of the repetition compulsion, where you're drawn to situations that recreate the thrill of past experiences, potentially stemming from childhood dynamics. The party and bedroom settings may represent a regression to a more primitive state, where your id can express itself freely.",
+    "hypothesis_b": "The dream may be related to narcissistic regulation, as your attraction to Marcus represents a desire for validation and attention from someone outside of your primary relationship. This could be linked to self-esteem wounds or a need for external validation.",
+    "hypothesis_c": "This dream could be an example of drive dynamics, where the libidinal drive is expressing itself in a way that's at odds with your ego and superego. The intense attraction to Marcus represents the id's influence, while your feelings of guilt represent the superego's attempt to regulate this desire.",
+    "evaluation": "Hypothesis C was selected as the most compelling interpretation, as it provides a clear explanation of the drive dynamics at play in the dream. The dreamer's attraction to Marcus and subsequent feelings of guilt represent a classic conflict between the id and superego, with the ego struggling to balance these competing forces.",
+    "selected_hypothesis": "C"
+  },
+  "ragProcess": {
+    "passagesFound": 7,
+    "passages": [
+      {
+        "content": "In this scene - second in order of mention, but first in order of time - the behaviour of this child of fourteen was already entirely and completely hysterical. I should without question consider a person hysterical in whom an occasion for sexual excitement elicited feelings that were preponderantly or exclusively unpleasurable; and I should do so whether or no the person were capable of producing somatic symptoms.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.842776367498866
+      },
+      {
+        "content": "When the time for the procession approached, he asked the girl to wait for him at the door which opened on to the staircase leading to the upper story, while he pulled down the outside shutters. He then came back, and, instead of going out by the open door, suddenly clasped the girl to him and pressed a kiss upon her lips. This was surely just the situation to call up a distinct feeling of sexual excitement in a girl of fourteen who had never before been approached.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.841969141842787
+      },
+      {
+        "content": "As I refused to do this I had to sit in a little chair by her side and knock at the sofa with my fist. This she called “churning” . . immediately after this she announced that a child was creeping out of her, and she represented this scene in quite a realistic way, writhing about and groaning. Her imaginary child then had to share its parents’ bedroom and had to be a spectator of sexual intercourse between them. If it interrupted, it was beaten . .",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.832525089310863
+      },
+      {
+        "content": "He was worried in case this other man might discover the liaison and the proposed marriage come to nothing. He therefore behaved in a very affectionate way to the man. He embraced him and kissed him. (19004, V, 398-9}\n\nThe dreamer in fact had a secret liaison with a married woman, who was the wife of a friend; and he did think that his friend might have noticed something. ”\n\nThe dream, however, omitted something that was particularly important in the situation.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.829049747216815
+      },
+      {
+        "content": "This was surely just the situation to call up a distinct feeling of sexual excitement in a girl of fourteen who had never before been approached. But Dora had at that moment a violent feeling of disgust, tore herself free from the man, and hurried past him to the staircase and from there to the street door. She nevertheless continued to meet Herr K. Neither of them ever mentioned the little scene; and according to her account Dora kept it a secret till her confession during the treatment.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.827770323556045
+      },
+      {
+        "content": "I should without question consider a person hysterical in whom an occasion for sexual excitement elicited feelings that were preponderantly or exclusively unpleasurable; and I should do so whether or no the person were capable of producing somatic symptoms. The elucidation of the mechanism of this reversal of affect is one of the most important and at the same time one of the most difficult problems in the psychology of the neuroses.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.827009369552695
+      },
+      {
+        "content": "Since this kind of extension depends on the taking of many instances, we cannot hope to show it convincingly here. Still, the following may serve as an illustration. A man dreamed\n\nhe had a secret liaison with a lady whom someone else wanted to marry. He was worried in case this other man might discover the liaison and the proposed marriage come to nothing. He therefore behaved in a very affectionate way to the man. He embraced him and kissed him.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.826533206264153
+      }
+    ],
+    "symbolsExtracted": [],
+    "themes": []
+  },
+  "testMode": true,
+  "testDuration": 13168
+}
+
+
+🌙 Dream 5: Regular Work Day Dream
+=================================================
+
+🔮 Interpreter: freud
+-----------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   568    0     0  100   568      0    468  0:00:01  0:00:01 --:--:--   469100   568    0     0  100   568      0    256  0:00:02  0:00:02 --:--:--   256100   568    0     0  100   568      0    176  0:00:03  0:00:03 --:--:--   176100   568    0     0  100   568      0    134  0:00:04  0:00:04 --:--:--   134100   568    0     0  100   568      0    108  0:00:05  0:00:05 --:--:--   108100   568    0     0  100   568      0     91  0:00:06  0:00:06 --:--:--     0100   568    0     0  100   568      0     78  0:00:07  0:00:07 --:--:--     0100   568    0     0  100   568      0     68  0:00:08  0:00:08 --:--:--     0100   568    0     0  100   568      0     61  0:00:09  0:00:09 --:--:--     0100   568    0     0  100   568      0     55  0:00:10  0:00:10 --:--:--     0100   568    0     0  100   568      0     50  0:00:11  0:00:11 --:--:--     0100 11568  100 11000  100   568    921     47  0:00:12  0:00:11  0:00:01  2340100 11568  100 11000  100   568    921     47  0:00:12  0:00:11  0:00:01  2976
+{
+  "success": true,
+  "dreamId": "522ad80d-256d-44bd-83a0-c32b9f95d447",
+  "interpretation": {
+    "dreamTopic": "Desire for escape from monotonous daily routine",
+    "symbols": [
+      "office",
+      "desk",
+      "boss",
+      "clock"
+    ],
+    "quickTake": "The dream reveals your unconscious wish for freedom from the monotony of daily tasks and a desire for autonomy, reflecting a possible sense of frustration and disengagement with your current work situation.",
+    "dreamWork": "The dream employs condensation by representing your workday as mundane and ordinary, while displacement occurs by focusing on the clock and waiting for 5 PM, symbolizing your desire for escape. Symbolization is evident in the office and desk, representing your daily responsibilities and tasks. Secondary revision makes the dream appear ordinary and unremarkable, masking the underlying wish for freedom.",
+    "interpretation": "Your dream reflects your unconscious wish for autonomy and escape from the monotony of your daily routine. The office and desk symbolize your responsibilities and tasks, which you feel are unfulfilling and boring. The boss represents the external pressures and expectations that contribute to your sense of frustration. Your frequent checking of the clock and anticipation of 5 PM signify your desire for liberation from these constraints. This dream may be related to your current life situation, where you are establishing your career and seeking a sense of purpose. It is possible that you are experiencing a sense of disconnection between your current tasks and your long-term goals, leading to feelings of boredom and restlessness. Your ego is using defense mechanisms, such as rationalization, to cope with these feelings, while your id is expressing its desire for freedom and excitement. The superego, representing your moral and societal expectations, is likely influencing your sense of responsibility and duty towards your work.",
+    "selfReflection": "What aspects of your current work or daily routine make you feel trapped or unfulfilled, and how can you address these feelings to create a more satisfying and engaging experience?"
+  },
+  "aiResponse": "```\n{\n  \"dreamTopic\": \"Desire for escape from monotonous daily routine\",\n  \"symbols\": [\"office\", \"desk\", \"boss\", \"clock\"],\n  \"quickTake\": \"The dream reveals your unconscious wish for freedom from the monotony of daily tasks and a desire for autonomy, reflecting a possible sense of frustration and disengagement with your current work situation.\",\n  \"dreamWork\": \"The dream employs condensation by representing your workday as mundane and ordinary, while displacement occurs by focusing on the clock and waiting for 5 PM, symbolizing your desire for escape. Symbolization is evident in the office and desk, representing your daily responsibilities and tasks. Secondary revision makes the dream appear ordinary and unremarkable, masking the underlying wish for freedom.\",\n  \"interpretation\": \"Your dream reflects your unconscious wish for autonomy and escape from the monotony of your daily routine. The office and desk symbolize your responsibilities and tasks, which you feel are unfulfilling and boring. The boss represents the external pressures and expectations that contribute to your sense of frustration. Your frequent checking of the clock and anticipation of 5 PM signify your desire for liberation from these constraints. This dream may be related to your current life situation, where you are establishing your career and seeking a sense of purpose. It is possible that you are experiencing a sense of disconnection between your current tasks and your long-term goals, leading to feelings of boredom and restlessness. Your ego is using defense mechanisms, such as rationalization, to cope with these feelings, while your id is expressing its desire for freedom and excitement. The superego, representing your moral and societal expectations, is likely influencing your sense of responsibility and duty towards your work.\",\n  \"selfReflection\": \"What aspects of your current work or daily routine make you feel trapped or unfulfilled, and how can you address these feelings to create a more satisfying and engaging experience?\",\n  \"_debug_hypothesis_a\": \"This dream could be an expression of your ego's struggle with the monotony of daily tasks, highlighting your unconscious wish for autonomy and freedom. The office and boss represent external pressures, while the clock symbolizes your desire for escape.\",\n  \"_debug_hypothesis_b\": \"The dream might be a manifestation of your id's desire for excitement and novelty, which is currently being suppressed by the demands of your work and daily routine. The clock and waiting for 5 PM signify your libido's attempt to break free from these constraints.\",\n  \"_debug_hypothesis_c\": \"This dream could be related to your superego's influence, where you feel a sense of duty and responsibility towards your work, but your ego and id are rebelling against the monotony and routine. The dream represents a compromise between these conflicting forces, allowing you to momentarily escape through fantasy.\",\n  \"_debug_evaluation\": \"Hypothesis A was selected as the most compelling interpretation, as it provides a clear connection between the dream elements and the patient's unconscious wish for autonomy and freedom. It also highlights the role of defense mechanisms, such as rationalization, in coping with feelings of frustration and boredom.\",\n  \"_debug_selected\": \"A\"\n}\n```",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-18T14:17:25.311Z",
+    "analysisDepth": "deep",
+    "duration": 11933,
+    "tokenUsage": {
+      "promptTokens": 2490,
+      "completionTokens": 648,
+      "totalTokens": 3138,
+      "cost": 0
+    }
+  },
+  "debateProcess": {
+    "hypothesis_a": "This dream could be an expression of your ego's struggle with the monotony of daily tasks, highlighting your unconscious wish for autonomy and freedom. The office and boss represent external pressures, while the clock symbolizes your desire for escape.",
+    "hypothesis_b": "The dream might be a manifestation of your id's desire for excitement and novelty, which is currently being suppressed by the demands of your work and daily routine. The clock and waiting for 5 PM signify your libido's attempt to break free from these constraints.",
+    "hypothesis_c": "This dream could be related to your superego's influence, where you feel a sense of duty and responsibility towards your work, but your ego and id are rebelling against the monotony and routine. The dream represents a compromise between these conflicting forces, allowing you to momentarily escape through fantasy.",
+    "evaluation": "Hypothesis A was selected as the most compelling interpretation, as it provides a clear connection between the dream elements and the patient's unconscious wish for autonomy and freedom. It also highlights the role of defense mechanisms, such as rationalization, in coping with feelings of frustration and boredom.",
+    "selected_hypothesis": "A"
+  },
+  "ragProcess": {
+    "passagesFound": 7,
+    "passages": [
+      {
+        "content": "She tried to avoid social intercourse, and employed herself - so far as she was allowed to by the fatigue and lack of concentration of which she complained - with attending lectures for women and with carrying on more or less serious studies. One day her parents were thrown into a state of great alarm by finding on the girl‘s writing-desk, or inside it, a letter in which she took leave of them because, as she said, she could no longer endure her life.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.82873942509422
+      },
+      {
+        "content": "I now let the patient himself choose the subject of the day‘s work, and in that way I start out from whatever surface his unconscious happens to be presenting to his notice at the moment. But on this plan everything that has to do with the clearing-up of a particular symptom emerges piecemeal, woven into various contexts, and distributed over widely separated periods of time.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.828705524542808
+      },
+      {
+        "content": "It was not without good reasons that in the year 1900 I gave precedence to a laborious and exhaustive study of dreams (The Interpretation of Dreams) over the publications upon the psychology of the neuroses which I had in view. And incidentally I was able to judge from its reception with what an inadequate degree of comprehension such efforts are met by other specialists at the present time.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.807455775899955
+      },
+      {
+        "content": "Indeed, I have not yet succeeded in solving the problem of how to record for publication the history of a treatment of long duration. As regards the present case, two circumstances have come to my assistance. In the first place the treatment did not last for more than three months; and in the second place the material which elucidated the case was grouped around two dreams (one related in the middle of the treatment and one at the end).",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.806556260390436
+      },
+      {
+        "content": "He writes the relevant part of the dream in italics, and then describes his associated thoughts. I was alarmed at the idea that I had missed an organic illness. This, as may well be believed, is a perpetual source of anxiety to a specialist whose practice is almost limited to neurotic patients and who is in the habit of attributing to hysteria a great number of symptoms which other physicians treat as organic.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.805530475251567
+      },
+      {
+        "content": "We believe, that is to say, that the course of those events is invariably set in motion by an unpleasurable tension, and that it takes a direction such that its final outcome coincides with a lowering of that tension - that is, with an avoidance of unpleasure or a production of pleasure. In taking that course into account in our consideration of the mental processes which are the subject of our study, we are introducing an 'economic' point of view into our work; and if,in describing those processes, we try to estimate this 'economic' factor in addition to the 'topographical' and 'dynamic' ones, we shall, I think, be giving the most complete description of them of which we can at present conceive, and one which deserves to be distinguished by the term 'metapsychological'.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.8049796339882
+      },
+      {
+        "content": "My object in this case history was to demonstrate the intimate structure of a neurotic disorder and the determination of its symptoms; and it would have led to nothing but hopeless confusion if I had tried to complete the other task at the same time. Before the technical rules, most of which have been arrived at empirically, could be properly laid down, it would be necessary to collect material from the histories of a large number of treatments.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.804767190699715
+      }
+    ],
+    "symbolsExtracted": [],
+    "themes": []
+  },
+  "testMode": true,
+  "testDuration": 11933
+}
+
+
+🌙 Dream 6: Fun Skating with Sister Dream
+=================================================
+
+🔮 Interpreter: freud
+-----------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   655    0     0  100   655      0    542  0:00:01  0:00:01 --:--:--   542100   655    0     0  100   655      0    296  0:00:02  0:00:02 --:--:--   296100   655    0     0  100   655      0    203  0:00:03  0:00:03 --:--:--   204100   655    0     0  100   655      0    155  0:00:04  0:00:04 --:--:--   155100   655    0     0  100   655      0    125  0:00:05  0:00:05 --:--:--   125100   655    0     0  100   655      0    105  0:00:06  0:00:06 --:--:--     0100   655    0     0  100   655      0     90  0:00:07  0:00:07 --:--:--     0100   655    0     0  100   655      0     79  0:00:08  0:00:08 --:--:--     0100   655    0     0  100   655      0     70  0:00:09  0:00:09 --:--:--     0100   655    0     0  100   655      0     63  0:00:10  0:00:10 --:--:--     0100   655    0     0  100   655      0     58  0:00:11  0:00:11 --:--:--     0100   655    0     0  100   655      0     53  0:00:12  0:00:12 --:--:--     0100 11970  100 11315  100   655    868     50  0:00:13  0:00:13 --:--:--  2356100 11970  100 11315  100   655    868     50  0:00:13  0:00:13 --:--:--  2978
+{
+  "success": true,
+  "dreamId": "b1c77162-8391-4816-ba36-d7ab6fa2cdce",
+  "interpretation": {
+    "dreamTopic": "Joyful Ice Skating with Sister on Frozen Lake",
+    "symbols": [
+      "ice skating",
+      "frozen lake",
+      "snow-covered pine trees",
+      "blue sky",
+      "holding hands with sister"
+    ],
+    "quickTake": "The dream fulfills an unconscious wish for carefree joy and sibling connection, tapping into your repressed desire for freedom and harmony in your relationships.",
+    "dreamWork": "The dream employs condensation, combining elements of childhood memories and current desires. Displacement is evident in the idealized winter landscape, symbolizing a longing for a perfect, stress-free environment. Symbolization is seen in ice skating, representing a sense of freedom and joy. Secondary revision is at play in the dream's narrative, which presents a coherent and idyllic scene.",
+    "interpretation": "This dream reveals your unconscious wish for a return to a carefree, joyful state, reminiscent of childhood experiences. The frozen lake, with its clear blue sky and snow-covered pine trees, represents an idealized environment, symbolizing your ego's attempt to recreate a sense of security and happiness. Ice skating, which requires balance and harmony, signifies your desire for control and mastery in your relationships. Skating with your sister, holding hands, indicates a longing for a deep, harmonious connection with her, possibly stemming from unresolved childhood dynamics. This dream may be a manifestation of your libido, seeking to reconcile past and present, and to re-experience the joy and freedom of childhood, now that you're establishing your work and love life. Your superego, which often imposes guilt and self-criticism, is temporarily relaxed, allowing your id to express its desires for carefree enjoyment and sibling bonding. The dream also hints at your ego's struggle to balance individuality and togetherness, as you navigate your adult relationships.",
+    "selfReflection": "What do you think is missing in your current relationships that makes you yearn for the carefree connection you had with your sister during childhood?"
+  },
+  "aiResponse": "```\n{\n  \"dreamTopic\": \"Joyful Ice Skating with Sister on Frozen Lake\",\n  \"symbols\": [\"ice skating\", \"frozen lake\", \"snow-covered pine trees\", \"blue sky\", \"holding hands with sister\"],\n  \"quickTake\": \"The dream fulfills an unconscious wish for carefree joy and sibling connection, tapping into your repressed desire for freedom and harmony in your relationships.\",\n  \"dreamWork\": \"The dream employs condensation, combining elements of childhood memories and current desires. Displacement is evident in the idealized winter landscape, symbolizing a longing for a perfect, stress-free environment. Symbolization is seen in ice skating, representing a sense of freedom and joy. Secondary revision is at play in the dream's narrative, which presents a coherent and idyllic scene.\",\n  \"interpretation\": \"This dream reveals your unconscious wish for a return to a carefree, joyful state, reminiscent of childhood experiences. The frozen lake, with its clear blue sky and snow-covered pine trees, represents an idealized environment, symbolizing your ego's attempt to recreate a sense of security and happiness. Ice skating, which requires balance and harmony, signifies your desire for control and mastery in your relationships. Skating with your sister, holding hands, indicates a longing for a deep, harmonious connection with her, possibly stemming from unresolved childhood dynamics. This dream may be a manifestation of your libido, seeking to reconcile past and present, and to re-experience the joy and freedom of childhood, now that you're establishing your work and love life. Your superego, which often imposes guilt and self-criticism, is temporarily relaxed, allowing your id to express its desires for carefree enjoyment and sibling bonding. The dream also hints at your ego's struggle to balance individuality and togetherness, as you navigate your adult relationships.\",\n  \"selfReflection\": \"What do you think is missing in your current relationships that makes you yearn for the carefree connection you had with your sister during childhood?\",\n  \"_debug_hypothesis_a\": \"This dream represents a nostalgic longing for childhood freedom, symbolized by ice skating and the idyllic winter landscape. The harmony with your sister signifies an unconscious desire for similar connections in your adult relationships, highlighting a possible lack of fulfillment in your current social bonds.\",\n  \"_debug_hypothesis_b\": \"The dream could be seen as a manifestation of your drive dynamics, with the libido seeking expression through joyful, carefree experiences. The frozen lake and snow-covered trees represent a transformed, sublimated expression of your desires, while the act of ice skating with your sister indicates a need for social connection and shared experiences.\",\n  \"_debug_hypothesis_c\": \"This dream may also be viewed through the lens of narcissistic regulation, with the idealized winter scene and joyful ice skating serving as a compensation for feelings of stress or inadequacy in your waking life. The harmony with your sister could symbolize a desire for self-reflection and a more cohesive sense of self.\",\n  \"_debug_evaluation\": \"Hypothesis A was selected as the most comprehensive interpretation, as it addresses the dreamer's unconscious wishes, childhood connections, and current relationship dynamics. It also provides a clear connection to the dreamer's life context and situation.\",\n  \"_debug_selected\": \"A\"\n}\n```",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-18T14:17:40.460Z",
+    "analysisDepth": "deep",
+    "duration": 13030,
+    "tokenUsage": {
+      "promptTokens": 2573,
+      "completionTokens": 669,
+      "totalTokens": 3242,
+      "cost": 0
+    }
+  },
+  "debateProcess": {
+    "hypothesis_a": "This dream represents a nostalgic longing for childhood freedom, symbolized by ice skating and the idyllic winter landscape. The harmony with your sister signifies an unconscious desire for similar connections in your adult relationships, highlighting a possible lack of fulfillment in your current social bonds.",
+    "hypothesis_b": "The dream could be seen as a manifestation of your drive dynamics, with the libido seeking expression through joyful, carefree experiences. The frozen lake and snow-covered trees represent a transformed, sublimated expression of your desires, while the act of ice skating with your sister indicates a need for social connection and shared experiences.",
+    "hypothesis_c": "This dream may also be viewed through the lens of narcissistic regulation, with the idealized winter scene and joyful ice skating serving as a compensation for feelings of stress or inadequacy in your waking life. The harmony with your sister could symbolize a desire for self-reflection and a more cohesive sense of self.",
+    "evaluation": "Hypothesis A was selected as the most comprehensive interpretation, as it addresses the dreamer's unconscious wishes, childhood connections, and current relationship dynamics. It also provides a clear connection to the dreamer's life context and situation.",
+    "selected_hypothesis": "A"
+  },
+  "ragProcess": {
+    "passagesFound": 7,
+    "passages": [
+      {
+        "content": "He had gone walks with her when he was there, and had made her small presents; but no one had thought any harm of that. ‘s two little children, and been almost a mother to them. , who were spending the summer on one of our lakes in the Alps. ‘s, while her father had intended to return home after a few days. During that time Herr K. had been staying there as well.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.819385899846486
+      },
+      {
+        "content": "During the next winter she came and stayed in Vienna with her uncle and his daughters after the death of the aunt of whom she had been so fond. There she fell ill of a feverish disorder which was diagnosed at the time as appendicitis. In the following autumn, since her father‘s health seemed to justify the step, the family left the health-resort of B--- for good and all.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.808580923591907
+      },
+      {
+        "content": "She was suffering from a cough and from hoarseness, and even at that time I proposed giving her psychological treatment. My proposal was not adopted, since the attack in question, like the others, passed off spontaneously, though it had lasted unusually long. During the next winter she came and stayed in Vienna with her uncle and his daughters after the death of the aunt of whom she had been so fond. There she fell ill of a feverish disorder which was diagnosed at the time as appendicitis.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.808519481343126
+      },
+      {
+        "content": "Her father told me that he and his family while they were at B-- had formed an intimate friendship with a married couple who had been settled there for several years. Frau K. had nursed him during his long illness, and had in that way, he said, earned a title to his undying gratitude. Herr K. had always been most kind to Dora. He had gone walks with her when he was there, and had made her small presents; but no one had thought any harm of that.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.805294847330608
+      },
+      {
+        "content": "As her father was preparing for his departure the girl had suddenly declared with the greatest determination that she was going with him, and she had in fact put her decision into effect. It was not until some days later that she had thrown any light upon her strange behaviour. She had then told her mother - intending that what she said should be passed on to her father - that Herr K. had had the audacity to make her a proposal while they were on a walk after a trip upon the lake. Herr K.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.801228594523692
+      },
+      {
+        "content": "In the case of desire and action, transmission and satisfaction go together — the content-bearing effect really satisfies the motive that shapes it. In the case of wish and dream this is not so. The satisfaction of a wish to drink cool water would be an actual drink, not a dream; and in fact the dreamer’s real underlying thirst remains unslaked. The process of wishful imagining generally produces only representations of satisfaction, and not real satisfaction.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.798130798506972
+      },
+      {
+        "content": "had had the audacity to make her a proposal while they were on a walk after a trip upon the lake. Herr K. had been called to account by her father and uncle on the next occasion of their meeting, but he had denied in the most emphatic terms having on his side made any advances which could have been open to such a construction. He had then proceeded to throw suspicion upon the girl, saying that he had heard from Frau K.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.79691462544371
+      }
+    ],
+    "symbolsExtracted": [
+      {
+        "symbol": "water",
+        "interpretations": [
+          ", who were spending the summer on one of our lakes in the Alps",
+          "had had the audacity to make her a proposal while they were on a walk after a trip upon the lake",
+          "The satisfaction of a wish to drink cool water would be an actual drink, not a dream; and in fact the dreamer’s real underlying thirst remains unslaked"
+        ]
+      }
+    ],
+    "themes": []
+  },
+  "testMode": true,
+  "testDuration": 13030
+}
+
+
+🌙 Dream 7: House Escape Nightmare
+=================================================
+
+🔮 Interpreter: freud
+-----------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   719    0     0  100   719      0    592  0:00:01  0:00:01 --:--:--   593100   719    0     0  100   719      0    324  0:00:02  0:00:02 --:--:--   324100   719    0     0  100   719      0    223  0:00:03  0:00:03 --:--:--   223100   719    0     0  100   719      0    170  0:00:04  0:00:04 --:--:--   170100   719    0     0  100   719      0    137  0:00:05  0:00:05 --:--:--   137100   719    0     0  100   719      0    115  0:00:06  0:00:06 --:--:--     0100   719    0     0  100   719      0     99  0:00:07  0:00:07 --:--:--     0100   719    0     0  100   719      0     87  0:00:08  0:00:08 --:--:--     0100   719    0     0  100   719      0     77  0:00:09  0:00:09 --:--:--     0100   719    0     0  100   719      0     70  0:00:10  0:00:10 --:--:--     0100   719    0     0  100   719      0     63  0:00:11  0:00:11 --:--:--     0100   719    0     0  100   719      0     58  0:00:12  0:00:12 --:--:--     0100   719    0     0  100   719      0     54  0:00:13  0:00:13 --:--:--     0100 12931  100 12212  100   719    919     54  0:00:13  0:00:13 --:--:--  3028
+{
+  "success": true,
+  "dreamId": "a55e029e-28b0-461f-bb52-c55f6d5b0211",
+  "interpretation": {
+    "dreamTopic": "Trapped in a labyrinthine house with no escape",
+    "symbols": [
+      "house",
+      "maze",
+      "doors",
+      "closets",
+      "old clothes",
+      "junk",
+      "hallways",
+      "rooms"
+    ],
+    "quickTake": "The dreamer feels trapped in their current life situation, overwhelmed by internal pressures and external expectations, with a sense of impending danger or judgment.",
+    "dreamWork": "The dreamer's mind employs condensation by transforming their feelings of confinement and desperation into a physical maze-like house. Displacement occurs as the anxiety of being chased is attributed to an unknown entity rather than an internalized figure. Symbolization is evident in the house representing the dreamer's psyche, with closets filled with old clothes and junk signifying repressed memories and desires.",
+    "interpretation": "This dream reveals the dreamer's unconscious wish to escape the confines of their current life situation, which feels suffocating and endless. The maze-like house represents the dreamer's psyche, with its complexities and repressed memories. The dreamer's libido is cathected to the desire for freedom and escape, but this is thwarted by the endless hallways and rooms, symbolizing the ego's struggle to navigate the demands of the id and superego. The closets filled with old clothes and junk signify repressed desires and memories, which the dreamer is trying to avoid but are now being stirred up. The dreamer's panic and desperation indicate the overwhelming pressure of these unconscious forces. The defense mechanism of displacement is at play, as the dreamer attributes their anxiety to an external entity rather than confronting the internal sources of their distress. This dream also touches on the theme of repetition compulsion, as the dreamer is trapped in a cycle of desperation and frustration.",
+    "selfReflection": "What aspects of your life do you feel trapped in, and how do you think your past experiences and repressed desires are contributing to this sense of confinement?"
+  },
+  "aiResponse": "```\n{\n  \"dreamTopic\": \"Trapped in a labyrinthine house with no escape\",\n  \"symbols\": [\"house\", \"maze\", \"doors\", \"closets\", \"old clothes\", \"junk\", \"hallways\", \"rooms\"],\n  \"quickTake\": \"The dreamer feels trapped in their current life situation, overwhelmed by internal pressures and external expectations, with a sense of impending danger or judgment.\",\n  \"dreamWork\": \"The dreamer's mind employs condensation by transforming their feelings of confinement and desperation into a physical maze-like house. Displacement occurs as the anxiety of being chased is attributed to an unknown entity rather than an internalized figure. Symbolization is evident in the house representing the dreamer's psyche, with closets filled with old clothes and junk signifying repressed memories and desires.\",\n  \"interpretation\": \"This dream reveals the dreamer's unconscious wish to escape the confines of their current life situation, which feels suffocating and endless. The maze-like house represents the dreamer's psyche, with its complexities and repressed memories. The dreamer's libido is cathected to the desire for freedom and escape, but this is thwarted by the endless hallways and rooms, symbolizing the ego's struggle to navigate the demands of the id and superego. The closets filled with old clothes and junk signify repressed desires and memories, which the dreamer is trying to avoid but are now being stirred up. The dreamer's panic and desperation indicate the overwhelming pressure of these unconscious forces. The defense mechanism of displacement is at play, as the dreamer attributes their anxiety to an external entity rather than confronting the internal sources of their distress. This dream also touches on the theme of repetition compulsion, as the dreamer is trapped in a cycle of desperation and frustration.\",\n  \"selfReflection\": \"What aspects of your life do you feel trapped in, and how do you think your past experiences and repressed desires are contributing to this sense of confinement?\",\n  \"_debug_hypothesis_a\": \"The dreamer is struggling with ego defenses, specifically displacement, as they attribute their anxiety to an external entity rather than confronting internal sources of distress. The maze-like house represents the dreamer's psyche, with closets symbolizing repressed memories and desires.\",\n  \"_debug_hypothesis_b\": \"The dreamer is experiencing a manifestation of the repetition compulsion, as they are trapped in a cycle of desperation and frustration. The house represents the dreamer's internalized relationships and transference patterns, which are contributing to their sense of confinement.\",\n  \"_debug_hypothesis_c\": \"The dreamer is grappling with issues of narcissistic regulation, as their self-esteem is wounded by feelings of confinement and powerlessness. The dreamer's libido is cathected to the desire for freedom and escape, but this is thwarted by the demands of the superego.\",\n  \"_debug_evaluation\": \"Hypothesis A was selected as the most compelling interpretation, as it provides a clear explanation of the dreamer's use of defense mechanisms and the symbolism of the maze-like house. The focus on ego defenses and the structure of the psyche provides a nuanced understanding of the dreamer's unconscious wishes and repressed desires.\",\n  \"_debug_selected\": \"A\"\n}\n```",
+  "metadata": {
+    "interpreterType": "freud",
+    "modelUsed": "meta-llama/llama-4-scout:free",
+    "processedAt": "2025-06-18T14:17:55.846Z",
+    "analysisDepth": "deep",
+    "duration": 13271,
+    "tokenUsage": {
+      "promptTokens": 2814,
+      "completionTokens": 675,
+      "totalTokens": 3489,
+      "cost": 0
+    }
+  },
+  "debateProcess": {
+    "hypothesis_a": "The dreamer is struggling with ego defenses, specifically displacement, as they attribute their anxiety to an external entity rather than confronting internal sources of distress. The maze-like house represents the dreamer's psyche, with closets symbolizing repressed memories and desires.",
+    "hypothesis_b": "The dreamer is experiencing a manifestation of the repetition compulsion, as they are trapped in a cycle of desperation and frustration. The house represents the dreamer's internalized relationships and transference patterns, which are contributing to their sense of confinement.",
+    "hypothesis_c": "The dreamer is grappling with issues of narcissistic regulation, as their self-esteem is wounded by feelings of confinement and powerlessness. The dreamer's libido is cathected to the desire for freedom and escape, but this is thwarted by the demands of the superego.",
+    "evaluation": "Hypothesis A was selected as the most compelling interpretation, as it provides a clear explanation of the dreamer's use of defense mechanisms and the symbolism of the maze-like house. The focus on ego defenses and the structure of the psyche provides a nuanced understanding of the dreamer's unconscious wishes and repressed desires.",
+    "selected_hypothesis": "A"
+  },
+  "ragProcess": {
+    "passagesFound": 7,
+    "passages": [
+      {
+        "content": "My wife led me along the piece of street up to the little house and pushed the door open; I then slipped quickly and easily into the inside of a court which rose in an incline. (1900, V, 397}\n\nThe connection between house and girl was made clearer by the fact that the house, as the dreamer realized, was remembered from the girl’s place of origin. Freud’s conception of symbolic sexual wish-fulfillment is regarded by many as the most controversial part of his work.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.846906680237457
+      },
+      {
+        "content": "She had no understanding of her children‘s more active interests, and was occupied all day long in cleaning the house with its furniture and utensils and in keeping them clean - to such an extent as to make it almost impossible to use or enjoy them. This condition, traces of which are to be found often enough in normal housewives, inevitably reminds one of forms of obsessional washing and other kinds of obsessional cleanliness.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.836218615029029
+      },
+      {
+        "content": "This good little boy, however, had an occasional disturbing habit of taking any small objects he could get hold of and throwing them away from him into a corner, under the bed, and so on, so that hunting for his toys and picking them up was often quite a business. As he did this he gave vent to a loud, long-drawn-out 'o-o-o-o', accompanied by an expression of interest and satisfaction.",
+        "source": "beyond-the-pleasure-principle",
+        "chapter": null,
+        "similarity": 0.831454317222996
+      },
+      {
+        "content": "From the accounts given me by the girl and her father I was led to imagine her as an uncultivated woman and above all as a foolish one, who had concentrated all her interests upon domestic affairs, especially since her husband‘s illness and the estrangement to which it led. She presented the picture, in fact, of what might be called the ‗housewife‘s psychosis‘. She had no understanding of her children‘s more active interests, and was occupied all day long in cleaning the house with its furniture and utensils and in keeping them clean - to such an extent as to make it almost impossible to use or enjoy them.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.829929187589558
+      },
+      {
+        "content": "One day her parents were thrown into a state of great alarm by finding on the girl‘s writing-desk, or inside it, a letter in which she took leave of them because, as she said, she could no longer endure her life. Her father, indeed, being a man of some perspicacity, guessed that the girl had no serious suicidal intentions.",
+        "source": "dora",
+        "chapter": null,
+        "similarity": 0.827091073182509
+      },
+      {
+        "content": "He felt attracted to her, apparently imagining coitus a tergo; and he thought she had given him the impression that she would accept an approach. That night he dreamed that:\n\nStanding back a little behind two stately palaces was a little house with closed doors. My wife led me along the piece of street up to the little house and pushed the door open; I then slipped quickly and easily into the inside of a court which rose in an incline.",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.825966518886919
+      },
+      {
+        "content": "As I refused to do this I had to sit in a little chair by her side and knock at the sofa with my fist. This she called “churning” . . immediately after this she announced that a child was creeping out of her, and she represented this scene in quite a realistic way, writhing about and groaning. Her imaginary child then had to share its parents’ bedroom and had to be a spectator of sexual intercourse between them. If it interrupted, it was beaten . .",
+        "source": "companion",
+        "chapter": null,
+        "similarity": 0.822943852280639
+      }
+    ],
+    "symbolsExtracted": [
+      {
+        "symbol": "house",
+        "interpretations": [
+          "My wife led me along the piece of street up to the little house and pushed the door open; I then slipped quickly and easily into the inside of a court which rose in an incline",
+          "(1900, V, 397}\n\nThe connection between house and girl was made clearer by the fact that the house, as the dreamer realized, was remembered from the girl’s place of origin",
+          "She had no understanding of her children‘s more active interests, and was occupied all day long in cleaning the house with its furniture and utensils and in keeping them clean - to such an extent as to make it almost impossible to use or enjoy them",
+          "This condition, traces of which are to be found often enough in normal housewives, inevitably reminds one of forms of obsessional washing and other kinds of obsessional cleanliness",
+          "She presented the picture, in fact, of what might be called the ‗housewife‘s psychosis‘",
+          "That night he dreamed that:\n\nStanding back a little behind two stately palaces was a little house with closed doors"
+        ]
+      },
+      {
+        "symbol": "door",
+        "interpretations": [
+          "My wife led me along the piece of street up to the little house and pushed the door open; I then slipped quickly and easily into the inside of a court which rose in an incline",
+          "That night he dreamed that:\n\nStanding back a little behind two stately palaces was a little house with closed doors"
+        ]
+      }
+    ],
+    "themes": []
+  },
+  "testMode": true,
+  "testDuration": 13271
+}
+
+
+✅ All controversial dream tests completed!
+==========================================
+
+📋 These tests verify:
+   • Appropriate handling of sensitive content
+   • No sensationalization of trauma
+   • Professional, therapeutic approach
+   • Consistent quality across all dream types
+
+Results saved to: outpu4.txt
