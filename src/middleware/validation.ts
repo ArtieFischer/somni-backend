@@ -331,7 +331,7 @@ export const validateUserContextMiddleware = (req: Request, res: Response, next:
 // Interpretation type validation
 export const validateInterpreterType = (req: Request, res: Response, next: NextFunction): void => {
   const interpreterType = req.body.interpreterType;
-  const validTypes = ['jung', 'freud', 'neuroscientist', 'astrologist'];
+  const validTypes = ['jung', 'freud', 'mary', 'astrologist'];
   
   if (!interpreterType || !validTypes.includes(interpreterType)) {
     logger.warn('Invalid interpreter type provided', {

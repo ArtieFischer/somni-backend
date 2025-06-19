@@ -4,7 +4,8 @@ import { JungianPromptBuilder } from './interpreters/jung/builder';
 import { JungianRAGPromptBuilder } from './interpreters/jung/builder-with-rag';
 import { FreudianPromptBuilder } from './interpreters/freud/builder';
 import { FreudianRAGPromptBuilder } from './interpreters/freud/builder-with-rag';
-import { NeuroscientistPromptBuilder } from './interpreters/neuroscientist/builder';
+import { MaryPromptBuilder } from './interpreters/mary/builder';
+import { MaryRAGPromptBuilder } from './interpreters/mary/builder-with-rag';
 import { features } from '../config/features';
 
 /**
@@ -27,12 +28,16 @@ export class PromptBuilderFactory {
           return new FreudianRAGPromptBuilder();
         }
         return new FreudianPromptBuilder();
-      case 'neuroscientist':
-        return new NeuroscientistPromptBuilder();
+      case 'mary':
+        // Use RAG-enhanced builder if enabled
+        if (features.rag.enabled && features.rag.interpreters.mary) {
+          return new MaryRAGPromptBuilder();
+        }
+        return new MaryPromptBuilder();
       case 'astrologist':
-        throw new Error(`${interpreterType} interpreter is not yet implemented. Currently 'jung', 'freud', and 'neuroscientist' are supported.`);
+        throw new Error(`${interpreterType} interpreter is not yet implemented. Currently 'jung', 'freud', and 'mary' are supported.`);
       default:
-        throw new Error(`Unknown interpreter type: ${interpreterType}. Currently 'jung', 'freud', and 'neuroscientist' are supported.`);
+        throw new Error(`Unknown interpreter type: ${interpreterType}. Currently 'jung', 'freud', and 'mary' are supported.`);
     }
   }
 }
@@ -52,7 +57,7 @@ export class PromptBuilderService {
       const builder = PromptBuilderFactory.create(request.interpreterType);
       
       // Check if this is a RAG-enhanced builder with async support
-      if ((builder instanceof JungianRAGPromptBuilder || builder instanceof FreudianRAGPromptBuilder) && 'buildPromptAsync' in builder) {
+      if ((builder instanceof JungianRAGPromptBuilder || builder instanceof FreudianRAGPromptBuilder || builder instanceof MaryRAGPromptBuilder) && 'buildPromptAsync' in builder) {
         const prompt = await builder.buildPromptAsync(request);
         const ragContext = builder.getLastRetrievedContext();
         return { prompt, ragContext };

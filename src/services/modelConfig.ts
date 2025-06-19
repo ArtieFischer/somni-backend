@@ -57,10 +57,10 @@ export class ModelConfigService {
     freud: {
       defaultModel: QUICK_MODELS.LLAMA_4,
       fallbackModel: QUICK_MODELS.GPT_4O_MINI,
-      temperature: 0.7,  // Moderate for Freudian analysis
-      maxTokens: 1500
+      temperature: 0.9,  // Moderate for Freudian analysis
+      maxTokens: 10000  // Increased to prevent truncation
     },
-    neuroscientist: {
+    mary: {
       defaultModel: QUICK_MODELS.LLAMA_4,
       fallbackModel: QUICK_MODELS.GEMMA_2,
       temperature: 0.5,  // Lower for more factual scientific analysis
@@ -85,7 +85,7 @@ export class ModelConfigService {
         temperature: 0.9,
         costPerKToken: 0,
         recommended: true,
-        interpreterTypes: ['jung', 'freud', 'neuroscientist', 'astrologist'],
+        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
       },
       {
         id: 'meta-llama/llama-3.1-8b-instruct:free',
@@ -95,7 +95,7 @@ export class ModelConfigService {
         temperature: 0.7,
         costPerKToken: 0,
         recommended: true,
-        interpreterTypes: ['jung', 'freud', 'neuroscientist', 'astrologist'],
+        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
       },
       {
         id: 'google/gemma-2-9b-it:free',
@@ -105,7 +105,7 @@ export class ModelConfigService {
         temperature: 0.7,
         costPerKToken: 0,
         recommended: false,
-        interpreterTypes: ['neuroscientist', 'astrologist'],
+        interpreterTypes: ['mary', 'astrologist'],
       },
       // Paid models as additional options
       {
@@ -126,7 +126,7 @@ export class ModelConfigService {
         temperature: 0.7,
         costPerKToken: 0.15,
         recommended: true,
-        interpreterTypes: ['jung', 'freud', 'neuroscientist'],
+        interpreterTypes: ['jung', 'freud', 'mary'],
       },
     ];
 
@@ -231,7 +231,7 @@ export class ModelConfigService {
     const recommendations: Record<InterpreterType, string[]> = {
       jung: [],
       freud: [],
-      neuroscientist: [],
+      mary: [],
       astrologist: [],
     };
 
@@ -342,7 +342,7 @@ export class ModelConfigService {
     const costByInterpreter: Record<InterpreterType, number> = {
       jung: 0,
       freud: 0,
-      neuroscientist: 0,
+      mary: 0,
       astrologist: 0,
     };
     let totalTokens = 0;
@@ -405,7 +405,7 @@ export class ModelConfigService {
    * Switch all interpreters to a specific model
    */
   switchAllToModel(modelId: string): void {
-    const types: InterpreterType[] = ['jung', 'freud', 'neuroscientist', 'astrologist'];
+    const types: InterpreterType[] = ['jung', 'freud', 'mary', 'astrologist'];
     types.forEach(type => this.setDefaultModel(type, modelId));
   }
 

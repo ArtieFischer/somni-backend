@@ -12,7 +12,7 @@ create table if not exists knowledge_base (
 
   -- Ensure valid interpreter types
   constraint valid_interpreter check (
-    interpreter_type in ('jung', 'freud', 'neuroscientist', 'universal')
+    interpreter_type in ('jung', 'freud', 'mary', 'universal')
   )
 );
 

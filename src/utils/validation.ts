@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // Base validation schemas
-export const InterpreterTypeSchema = z.enum(['jung', 'freud', 'neuroscientist', 'astrologist']);
+export const InterpreterTypeSchema = z.enum(['jung', 'freud', 'mary', 'astrologist']);
 
 export const AnalysisDepthSchema = z.enum(['initial', 'deep', 'transformative']).optional();
 
@@ -113,9 +113,9 @@ export const FreudianInsightsSchema = z.object({
   reflectiveQuestions: z.array(z.string().min(5).max(300)).min(1).max(8)
 }).strict();
 
-// NeuroscientistInsights validation schema
-export const NeuroscientistInsightsSchema = z.object({
-  type: z.literal('neuroscientist'),
+// MaryInsights validation schema
+export const MaryInsightsSchema = z.object({
+  type: z.literal('mary'),
   coreMessage: z.string().min(10).max(2000),
   sleepStageAnalysis: z.string().min(10).max(800),
   memoryConsolidation: z.array(z.string().max(400)).max(8),
@@ -140,7 +140,7 @@ export const AstrologistInsightsSchema = z.object({
 export const InterpretationInsightsSchema = z.union([
   JungianInsightsSchema,
   FreudianInsightsSchema,
-  NeuroscientistInsightsSchema,
+  MaryInsightsSchema,
   AstrologistInsightsSchema
 ]);
 
@@ -200,7 +200,7 @@ export const VALIDATION_ERRORS = {
   INVALID_DREAM_ID: 'Dream ID must be a valid UUID',
   DREAM_TOO_SHORT: 'Dream transcription must be at least 10 characters',
   DREAM_TOO_LONG: 'Dream transcription exceeds maximum length (50,000 characters)',
-  INVALID_INTERPRETER: 'Interpreter type must be one of: jung, freud, neuroscientist, astrologist',
+  INVALID_INTERPRETER: 'Interpreter type must be one of: jung, freud, mary, astrologist',
   INVALID_AGE: 'Age must be between 1 and 120',
   TOO_MANY_PREVIOUS_DREAMS: 'Maximum 10 previous dreams allowed',
   CONTEXT_TOO_LONG: 'Context descriptions are too long',

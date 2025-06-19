@@ -87,9 +87,7 @@ describe('Modular Prompt System', () => {
     });
 
     test('should throw error for unimplemented interpreter types', () => {
-      expect(() => PromptBuilderFactory.create('freud')).toThrow('Freudian prompt builder not yet implemented');
-      expect(() => PromptBuilderFactory.create('neuroscientist')).toThrow('Neuroscientist prompt builder not yet implemented');
-      expect(() => PromptBuilderFactory.create('astrologist')).toThrow('Astrologist prompt builder not yet implemented');
+      expect(() => PromptBuilderFactory.create('astrologist')).toThrow('Astrologist interpreter is not yet implemented');
     });
   });
 
@@ -216,15 +214,15 @@ describe('Modular Prompt System', () => {
 
     test('should parse different interpreter types', async () => {
       const freudianResponse = "This dream reveals unconscious desires and childhood connections to authority figures.";
-      const neuroscientistResponse = "This dream likely occurred during REM sleep and involves memory consolidation processes.";
+      const maryResponse = "This dream likely occurred during REM sleep and involves memory consolidation processes.";
       const astrologistResponse = "The cosmic energies of Mercury are influencing your dream consciousness.";
 
       const freudian = await InterpretationParser.parseInterpretationResponse(freudianResponse, 'freud');
-      const neuroscientist = await InterpretationParser.parseInterpretationResponse(neuroscientistResponse, 'neuroscientist');
+      const mary = await InterpretationParser.parseInterpretationResponse(maryResponse, 'mary');
       const astrologist = await InterpretationParser.parseInterpretationResponse(astrologistResponse, 'astrologist');
 
       expect(freudian.type).toBe('freudian');
-      expect(neuroscientist.type).toBe('neuroscientist');
+      expect(mary.type).toBe('mary');
       expect(astrologist.type).toBe('astrologist');
     });
   });

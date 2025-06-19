@@ -39,7 +39,8 @@ src/prompts/
 ### Interpreter-Specific Files
 
 - **`interpreters/jung/builder.ts`**: Jungian-specific prompt building logic
-- Future: `interpreters/freud/`, `interpreters/neuroscientist/`, etc.
+- Current: `interpreters/freud/`, `interpreters/mary/`
+- Future: `interpreters/astrologist/`, etc.
 
 ## Usage Examples
 

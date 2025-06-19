@@ -336,7 +336,7 @@ Remember: Respond with ONLY the JSON object as specified.`
         analysisDepths: ['initial', 'deep', 'transformative'],
         specializations: ['Sexual symbolism', 'Oedipal dynamics', 'Transference analysis', 'Wish fulfillment']
       },
-      neuroscientist: {
+      mary: {
         name: 'Neuroscientific',
         description: 'Science-based analysis exploring neurobiological processes, memory consolidation, and cognitive functions.',
         features: ['Sleep stage analysis', 'Memory consolidation', 'Brain region involvement', 'Cognitive processes'],
@@ -371,7 +371,7 @@ Remember: Respond with ONLY the JSON object as specified.`
       errors.push('dreamTranscription must be less than 5000 characters');
     }
 
-    const validInterpreters = ['jung', 'freud', 'neuroscientist', 'astrologist'];
+    const validInterpreters = ['jung', 'freud', 'mary', 'astrologist'];
     if (request.interpreterType && !validInterpreters.includes(request.interpreterType)) {
       errors.push(`interpreterType must be one of: ${validInterpreters.join(', ')}`);
     }

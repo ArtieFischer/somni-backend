@@ -8,7 +8,7 @@ export const features = {
     interpreters: {
       jung: process.env['ENABLE_RAG_JUNG'] !== 'false', // Default true if RAG is enabled
       freud: process.env['ENABLE_RAG_FREUD'] === 'true',
-      neuroscientist: process.env['ENABLE_RAG_NEUROSCIENTIST'] === 'true'
+      mary: process.env['ENABLE_RAG_MARY'] === 'true'
     }
   },
   

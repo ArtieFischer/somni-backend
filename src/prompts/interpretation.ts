@@ -1,7 +1,7 @@
-import type { DreamAnalysis, InterpreterType, CostSummary, DreamAnalysisWithDebate, JungianInsights, DebateProcess } from '../types';
+import type { DreamAnalysis, InterpreterType, CostSummary, DreamAnalysisWithDebate, JungianInsights, MaryInsights, FreudianInsights, DebateProcess } from '../types';
 import { JungianInterpreter } from './interpreters/jung/interpreter';
 import { FreudianInterpreter } from './interpreters/freud/interpreter';
-import { NeuroscientistInterpreter } from './interpreters/neuroscientist/interpreter';
+import { MaryInterpreter } from './interpreters/mary/interpreter';
 
 /**
  * Generic interpretation response parsing utilities
@@ -16,14 +16,14 @@ export class InterpretationParser {
   static async parseInterpretationResponse(
     aiResponse: string,
     interpreterType: InterpreterType
-  ): Promise<DreamAnalysis | JungianInsights> {
+  ): Promise<DreamAnalysis | JungianInsights | FreudianInsights | MaryInsights> {
     switch (interpreterType) {
       case 'jung':
         return JungianInterpreter.parseResponse(aiResponse);
       case 'freud':
         return FreudianInterpreter.parseResponse(aiResponse);
-      case 'neuroscientist':
-        return NeuroscientistInterpreter.parseResponse(aiResponse);
+      case 'mary':
+        return MaryInterpreter.parseResponse(aiResponse);
       default:
         throw new Error(`${interpreterType} parser not yet implemented`);
     }
@@ -36,14 +36,14 @@ export class InterpretationParser {
   static async parseInterpretationResponseWithDebate(
     aiResponse: string,
     interpreterType: InterpreterType
-  ): Promise<DreamAnalysisWithDebate | { dreamAnalysis: JungianInsights; debateProcess?: DebateProcess }> {
+  ): Promise<DreamAnalysisWithDebate | { dreamAnalysis: JungianInsights | FreudianInsights | MaryInsights; debateProcess?: DebateProcess }> {
     switch (interpreterType) {
       case 'jung':
         return JungianInterpreter.parseResponseWithDebate(aiResponse);
       case 'freud':
         return FreudianInterpreter.parseResponseWithDebate(aiResponse);
-      case 'neuroscientist':
-        return NeuroscientistInterpreter.parseResponseWithDebate(aiResponse);
+      case 'mary':
+        return MaryInterpreter.parseResponseWithDebate(aiResponse);
       default:
         throw new Error(`${interpreterType} parser not yet implemented`);
     }

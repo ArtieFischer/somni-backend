@@ -1,648 +1,0 @@
-./test-dreams.sh: line 27: declare: -A: invalid option
-declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
-./test-dreams.sh: line 28: declare: -A: invalid option
-declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
-🌟 Starting Dream Interpretation Tests...
-=========================================
-Testing 1 interpreter(s): freud
-
-
-🌙 Dream 1: Family House with Animals & Hair Loss
-=================================================
-
-🔮 Interpreter: freud
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   833    0     0  100   833      0    689  0:00:01  0:00:01 --:--:--   690100   833    0     0  100   833      0    376  0:00:02  0:00:02 --:--:--   376100   833    0     0  100   833      0    259  0:00:03  0:00:03 --:--:--   259100   833    0     0  100   833      0    197  0:00:04  0:00:04 --:--:--   197100   833    0     0  100   833      0    159  0:00:05  0:00:05 --:--:--   159100   833    0     0  100   833      0    133  0:00:06  0:00:06 --:--:--     0100   833    0     0  100   833      0    115  0:00:07  0:00:07 --:--:--     0100   833    0     0  100   833      0    101  0:00:08  0:00:08 --:--:--     0100   833    0     0  100   833      0     90  0:00:09  0:00:09 --:--:--     0100   833    0     0  100   833      0     81  0:00:10  0:00:10 --:--:--     0100   833    0     0  100   833      0     74  0:00:11  0:00:11 --:--:--     0100   833    0     0  100   833      0     68  0:00:12  0:00:12 --:--:--     0100 13940  100 13107  100   833   1011     64  0:00:13  0:00:12  0:00:01  2768100 13940  100 13107  100   833   1010     64  0:00:13  0:00:12  0:00:01  3513
-{
-  "success": true,
-  "dreamId": "123e4567-e89b-12d3-a456-426614174001",
-  "interpretation": {
-    "dreamTopic": "Regressive longing for childhood and maternal comfort",
-    "symbols": [
-      "parent's house",
-      "animals",
-      "fat hamster",
-      "hair loss",
-      "mirror",
-      "mother's call"
-    ],
-    "quickTake": "The dream reveals a regressive desire for childhood security and maternal nurturing, with a hint of castration anxiety and unresolved Oedipal conflicts.",
-    "dreamWork": "The dream employs mechanisms of regression, condensation, and displacement to convey the dreamer's unconscious wishes and conflicts. The enlarged parent's house serves as a backdrop for a chaotic, instinctual realm, while the mirror reflects the dreamer's emerging anxieties about virility and identity.",
-    "interpretation": "You, dear patient, are clearly yearning for a return to the comfort and security of childhood, symbolized by the enlarged parent's house. The presence of various animals, particularly the fat hamster that persistently follows you, suggests an unconscious desire for instinctual freedom and a regression to a more primitive, oral stage of development. The hamster, with its rounded, phallic shape, may represent a symbol of masculine potency, which you are struggling to integrate into your psyche. Your nonchalant reaction to hair loss, a classic symbol of castration anxiety, indicates a defensive mechanism to ward off feelings of inadequacy. The lineup of animals behind you, responding to your mother's call, reveals a lingering Oedipal conflict, where you feel pressured to conform to familial expectations and surrender to maternal authority. This dream, much like the case of my patient Dora, highlights the complex interplay between instinctual drives, ego formation, and the struggle for identity.",
-    "selfReflection": "Can you recall a recent situation where you felt overwhelmed by expectations or desires, and how did you respond to the pressure?"
-  },
-  "aiResponse": "```\n{\n  \"dreamTopic\": \"Regressive longing for childhood and maternal comfort\",\n  \"symbols\": [\"parent's house\", \"animals\", \"fat hamster\", \"hair loss\", \"mirror\", \"mother's call\"],\n  \"quickTake\": \"The dream reveals a regressive desire for childhood security and maternal nurturing, with a hint of castration anxiety and unresolved Oedipal conflicts.\",\n  \"dreamWork\": \"The dream employs mechanisms of regression, condensation, and displacement to convey the dreamer's unconscious wishes and conflicts. The enlarged parent's house serves as a backdrop for a chaotic, instinctual realm, while the mirror reflects the dreamer's emerging anxieties about virility and identity.\",\n  \"interpretation\": \"You, dear patient, are clearly yearning for a return to the comfort and security of childhood, symbolized by the enlarged parent's house. The presence of various animals, particularly the fat hamster that persistently follows you, suggests an unconscious desire for instinctual freedom and a regression to a more primitive, oral stage of development. The hamster, with its rounded, phallic shape, may represent a symbol of masculine potency, which you are struggling to integrate into your psyche. Your nonchalant reaction to hair loss, a classic symbol of castration anxiety, indicates a defensive mechanism to ward off feelings of inadequacy. The lineup of animals behind you, responding to your mother's call, reveals a lingering Oedipal conflict, where you feel pressured to conform to familial expectations and surrender to maternal authority. This dream, much like the case of my patient Dora, highlights the complex interplay between instinctual drives, ego formation, and the struggle for identity.\",\n  \"selfReflection\": \"Can you recall a recent situation where you felt overwhelmed by expectations or desires, and how did you respond to the pressure?\",\n  \"_debug_hypothesis_a\": \"This dream represents a manifestation of your unconscious wish for regression to a childhood state, where you can indulge in instinctual pleasures and avoid adult responsibilities. The animals symbolize various aspects of your libido, which you're struggling to control.\",\n  \"_debug_hypothesis_b\": \"The dream is a reflection of your conflicted feelings about masculinity and identity. The hair loss represents a fear of castration, while the fat hamster symbolizes a compensatory desire for masculine potency. The lineup of animals behind you suggests a desire for approval and validation from your mother figure.\",\n  \"_debug_hypothesis_c\": \"This dream is an expression of your repressed desire for oral gratification and comfort. The parent's house serves as a womb-like environment, where you can indulge in fantasies of regression and nurturance. The animals, particularly the hamster, represent a symbol of self-soothing and comfort.\",\n  \"_debug_evaluation\": \"Hypothesis A was selected as the most compelling interpretation, as it provides a comprehensive explanation of the dream's symbolism and unconscious dynamics. It highlights the patient's regressive longing for childhood security and maternal comfort, while also acknowledging the presence of instinctual drives and Oedipal conflicts.\",\n  \"_debug_selected\": \"A\"\n}\n```",
-  "metadata": {
-    "interpreterType": "freud",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-18T10:05:15.510Z",
-    "analysisDepth": "deep",
-    "duration": 12960,
-    "tokenUsage": {
-      "promptTokens": 3060,
-      "completionTokens": 642,
-      "totalTokens": 3702,
-      "cost": 0
-    }
-  },
-  "debateProcess": {
-    "hypothesis_a": "This dream represents a manifestation of your unconscious wish for regression to a childhood state, where you can indulge in instinctual pleasures and avoid adult responsibilities. The animals symbolize various aspects of your libido, which you're struggling to control.",
-    "hypothesis_b": "The dream is a reflection of your conflicted feelings about masculinity and identity. The hair loss represents a fear of castration, while the fat hamster symbolizes a compensatory desire for masculine potency. The lineup of animals behind you suggests a desire for approval and validation from your mother figure.",
-    "hypothesis_c": "This dream is an expression of your repressed desire for oral gratification and comfort. The parent's house serves as a womb-like environment, where you can indulge in fantasies of regression and nurturance. The animals, particularly the hamster, represent a symbol of self-soothing and comfort.",
-    "evaluation": "Hypothesis A was selected as the most compelling interpretation, as it provides a comprehensive explanation of the dream's symbolism and unconscious dynamics. It highlights the patient's regressive longing for childhood security and maternal comfort, while also acknowledging the presence of instinctual drives and Oedipal conflicts.",
-    "selected_hypothesis": "A"
-  },
-  "ragProcess": {
-    "passagesFound": 8,
-    "passages": [
-      {
-        "content": "From the accounts given me by the girl and her father I was led to imagine her as an uncultivated woman and above all as a foolish one, who had concentrated all her interests upon domestic affairs, especially since her husband‘s illness and the estrangement to which it led. She presented the picture, in fact, of what might be called the ‗housewife‘s psychosis‘. She had no understanding of her children‘s more active interests, and was occupied all day long in cleaning the house with its furniture and utensils and in keeping them clean - to such an extent as to make it almost impossible to use or enjoy them.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.828285480388628
-      },
-      {
-        "content": "She was suffering from a cough and from hoarseness, and even at that time I proposed giving her psychological treatment. My proposal was not adopted, since the attack in question, like the others, passed off spontaneously, though it had lasted unusually long. During the next winter she came and stayed in Vienna with her uncle and his daughters after the death of the aunt of whom she had been so fond. There she fell ill of a feverish disorder which was diagnosed at the time as appendicitis.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.823132220578592
-      },
-      {
-        "content": "From the accounts given me by the girl and her father I was led to imagine her as an uncultivated woman and above all as a foolish one, who had concentrated all her interests upon domestic affairs, especially since her husband‘s illness and the estrangement to which it led. She presented the picture, in fact, of what might be called the ‗housewife‘s psychosis‘.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.822261722875539
-      },
-      {
-        "content": "She had no understanding of her children‘s more active interests, and was occupied all day long in cleaning the house with its furniture and utensils and in keeping them clean - to such an extent as to make it almost impossible to use or enjoy them. This condition, traces of which are to be found often enough in normal housewives, inevitably reminds one of forms of obsessional washing and other kinds of obsessional cleanliness.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.81998005748153
-      },
-      {
-        "content": "The disgust which Dora felt on that occasion did not become a permanent symptom, and even at the time of the treatment it was only, as it were, potentially present. She was a poor eater and confessed to some disinclination for food. On the other hand, the scene had left another consequence behind it in the shape of a sensory hallucination which occurred from time to time and even made its appearance while she was telling me her story. ‘s embrace.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.818130371253155
-      },
-      {
-        "content": "At the same time, he was greatly attached to his mother, who had not only fed him herself but had also looked after him without any outside help. This good little boy, however, had an occasional disturbing habit of taking any small objects he could get hold of and throwing them away from him into a corner, under the bed, and so on, so that hunting for his toys and picking them up was often quite a business.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.817908639339019
-      },
-      {
-        "content": "This good little boy, however, had an occasional disturbing habit of taking any small objects he could get hold of and throwing them away from him into a corner, under the bed, and so on, so that hunting for his toys and picking them up was often quite a business. As he did this he gave vent to a loud, long-drawn-out 'o-o-o-o', accompanied by an expression of interest and satisfaction.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.816301221757765
-      },
-      {
-        "content": "But attacks of tussis nervosa, which had no doubt been started by a common catarrh, continued to occur over the whole period. When, at the age of eighteen, she came to me for treatment, she was again coughing in a characteristic manner. The number of these attacks could not be determined; but they lasted from three to five weeks, and on one occasion for several months.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.815581577475606
-      },
-      {
-        "content": "When the girl was about ten years old, her father had to go through a course of treatment in a darkened room on account of a detached retina. As a result of this misfortune his vision was permanently impaired. His gravest illness occurred some two years later. It took the form of a confusional attack, followed by symptoms of paralysis and slight mental disturbances.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.815391584541426
-      },
-      {
-        "content": "For, as so often happens in histories of cases of hysteria, the trauma that we know of as having occurred in the patient‘s past life is insufficient to explain or to determine the particular character of the symptoms; we should understand just as much or just as little of the whole business if the result of the trauma had been symptoms quite other than tussis nervosa, aphonia, depression, and taedium vitae. But there is the further consideration that some of these symptoms (the cough and the loss of voice) had been produced by the patient years before the time of the trauma, and that their earliest appearances belong to her childhood, since they occurred in her eighth year.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.814882872271128
-      }
-    ],
-    "symbolsExtracted": [
-      {
-        "symbol": "house",
-        "interpretations": [
-          "She presented the picture, in fact, of what might be called the ‗housewife‘s psychosis‘",
-          "She had no understanding of her children‘s more active interests, and was occupied all day long in cleaning the house with its furniture and utensils and in keeping them clean - to such an extent as to make it almost impossible to use or enjoy them",
-          "This condition, traces of which are to be found often enough in normal housewives, inevitably reminds one of forms of obsessional washing and other kinds of obsessional cleanliness"
-        ]
-      },
-      {
-        "symbol": "mother",
-        "interpretations": [
-          "At the same time, he was greatly attached to his mother, who had not only fed him herself but had also looked after him without any outside help"
-        ]
-      }
-    ],
-    "themes": [
-      "self-regard",
-      "ego ideal",
-      "narcissistic injury"
-    ]
-  },
-  "testMode": true,
-  "testDuration": 12960
-}
-
-
-🌙 Dream 2: Office Turned Into Jungle Gym
-=================================================
-
-🔮 Interpreter: freud
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   814    0     0  100   814      0    674  0:00:01  0:00:01 --:--:--   675100   814    0     0  100   814      0    367  0:00:02  0:00:02 --:--:--   368100   814    0     0  100   814      0    253  0:00:03  0:00:03 --:--:--   253100   814    0     0  100   814      0    193  0:00:04  0:00:04 --:--:--   193100   814    0     0  100   814      0    155  0:00:05  0:00:05 --:--:--   156100   814    0     0  100   814      0    130  0:00:06  0:00:06 --:--:--     0100   814    0     0  100   814      0    112  0:00:07  0:00:07 --:--:--     0100   814    0     0  100   814      0     98  0:00:08  0:00:08 --:--:--     0100   814    0     0  100   814      0     88  0:00:09  0:00:09 --:--:--     0100   814    0     0  100   814      0     79  0:00:10  0:00:10 --:--:--     0100   814    0     0  100   814      0     72  0:00:11  0:00:11 --:--:--     0100   814    0     0  100   814      0     66  0:00:12  0:00:12 --:--:--     0100 13769  100 12955  100   814   1007     63  0:00:12  0:00:12 --:--:--  2800100 13769  100 12955  100   814   1007     63  0:00:12  0:00:12 --:--:--  3577
-{
-  "success": true,
-  "dreamId": "123e4567-e89b-12d3-a456-426614174002",
-  "interpretation": {
-    "dreamTopic": "Workplace Regression and Libidinal Expression",
-    "symbols": [
-      "playground slides",
-      "pirate boss",
-      "treasure map",
-      "pajamas",
-      "ball pit",
-      "office supplies"
-    ],
-    "quickTake": "The dream reveals a wish to escape work's demands and regress to childhood play, while exploring forbidden sexual expression and aggressive submission.",
-    "dreamWork": "The dream utilizes displacement, condensation, and projection to transform the patient's work anxiety into a playground setting, allowing for the expression of repressed desires and unresolved childhood conflicts.",
-    "interpretation": "YOU, dear patient, are clearly expressing a desire to escape the pressures of your work environment and regress to a state of carefree childhood play, as evidenced by the ubiquitous playground slides. The slides represent a longing for smooth, effortless movement and a return to a pre-genital, oral stage of development. The pirate boss, dressed in a costume that symbolizes rebellion and forbidden pleasure, embodies the patient's ambivalence towards authority figures and their own libidinal impulses. The treasure map, which YOU are tasked with finding, represents the elusive and hidden aspects of YOUR own desires and the unconscious mind. YOUR repeated attempts to reach YOUR computer, only to be redirected by the slides, suggest a sense of disconnection from YOUR adult responsibilities and a struggle to access YOUR rational, genital self. The realization that YOU are wearing pajamas, a symbol of infantile vulnerability and regression, leads to a moment of uncontrollable laughter, indicating a release of repressed energy and a willingness to confront the unconscious. The ball pit, filled with office supplies, represents a fusion of childhood play and adult responsibilities, suggesting a need to integrate these disparate aspects of YOUR personality. This dream, much like the case of my patient Dora, reveals a complex interplay between libidinal drives, aggressive impulses, and the struggle for ego adaptation.",
-    "selfReflection": "What do you think is the treasure that your pirate boss is searching for, and how might it relate to your own desires and sense of fulfillment?"
-  },
-  "aiResponse": "```\n{\n  \"dreamTopic\": \"Workplace Regression and Libidinal Expression\",\n  \"symbols\": [\"playground slides\", \"pirate boss\", \"treasure map\", \"pajamas\", \"ball pit\", \"office supplies\"],\n  \"quickTake\": \"The dream reveals a wish to escape work's demands and regress to childhood play, while exploring forbidden sexual expression and aggressive submission.\",\n  \"dreamWork\": \"The dream utilizes displacement, condensation, and projection to transform the patient's work anxiety into a playground setting, allowing for the expression of repressed desires and unresolved childhood conflicts.\",\n  \"interpretation\": \"YOU, dear patient, are clearly expressing a desire to escape the pressures of your work environment and regress to a state of carefree childhood play, as evidenced by the ubiquitous playground slides. The slides represent a longing for smooth, effortless movement and a return to a pre-genital, oral stage of development. The pirate boss, dressed in a costume that symbolizes rebellion and forbidden pleasure, embodies the patient's ambivalence towards authority figures and their own libidinal impulses. The treasure map, which YOU are tasked with finding, represents the elusive and hidden aspects of YOUR own desires and the unconscious mind. YOUR repeated attempts to reach YOUR computer, only to be redirected by the slides, suggest a sense of disconnection from YOUR adult responsibilities and a struggle to access YOUR rational, genital self. The realization that YOU are wearing pajamas, a symbol of infantile vulnerability and regression, leads to a moment of uncontrollable laughter, indicating a release of repressed energy and a willingness to confront the unconscious. The ball pit, filled with office supplies, represents a fusion of childhood play and adult responsibilities, suggesting a need to integrate these disparate aspects of YOUR personality. This dream, much like the case of my patient Dora, reveals a complex interplay between libidinal drives, aggressive impulses, and the struggle for ego adaptation.\",\n  \"selfReflection\": \"What do you think is the treasure that your pirate boss is searching for, and how might it relate to your own desires and sense of fulfillment?\",\n  \"_debug_hypothesis_a\": \"This dream represents a manifestation of the patient's id, with the playground slides and pirate boss symbolizing the expression of repressed libidinal drives and aggressive impulses. The treasure map serves as a symbol of the elusive and hidden aspects of the patient's own desires.\",\n  \"_debug_hypothesis_b\": \"The dream can be seen as a reflection of the patient's struggles with ego adaptation and reality testing. The slides and ball pit represent a longing for regression and a return to a state of childhood play, while the pirate boss and treasure map embody the patient's ambivalence towards authority figures and their own sense of responsibility.\",\n  \"_debug_hypothesis_c\": \"This dream may be seen as a compensatory fantasy, allowing the patient to temporarily escape the pressures of their work environment and explore repressed desires and childhood conflicts. The dream's use of displacement and condensation serves to obscure the patient's true desires, while also revealing the unconscious mind's ability to creatively express and resolve conflicts.\",\n  \"_debug_evaluation\": \"Hypothesis A was deemed the most compelling, as it provides a clear and concise explanation of the patient's libidinal drives and aggressive impulses. The interpretation of the pirate boss and treasure map as symbols of the patient's own desires and unconscious mind adds depth and complexity to the analysis.\",\n  \"_debug_selected\": \"A\"\n}\n```",
-  "metadata": {
-    "interpreterType": "freud",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-18T10:05:30.426Z",
-    "analysisDepth": "deep",
-    "duration": 12848,
-    "tokenUsage": {
-      "promptTokens": 2926,
-      "completionTokens": 701,
-      "totalTokens": 3627,
-      "cost": 0
-    }
-  },
-  "debateProcess": {
-    "hypothesis_a": "This dream represents a manifestation of the patient's id, with the playground slides and pirate boss symbolizing the expression of repressed libidinal drives and aggressive impulses. The treasure map serves as a symbol of the elusive and hidden aspects of the patient's own desires.",
-    "hypothesis_b": "The dream can be seen as a reflection of the patient's struggles with ego adaptation and reality testing. The slides and ball pit represent a longing for regression and a return to a state of childhood play, while the pirate boss and treasure map embody the patient's ambivalence towards authority figures and their own sense of responsibility.",
-    "hypothesis_c": "This dream may be seen as a compensatory fantasy, allowing the patient to temporarily escape the pressures of their work environment and explore repressed desires and childhood conflicts. The dream's use of displacement and condensation serves to obscure the patient's true desires, while also revealing the unconscious mind's ability to creatively express and resolve conflicts.",
-    "evaluation": "Hypothesis A was deemed the most compelling, as it provides a clear and concise explanation of the patient's libidinal drives and aggressive impulses. The interpretation of the pirate boss and treasure map as symbols of the patient's own desires and unconscious mind adds depth and complexity to the analysis.",
-    "selected_hypothesis": "A"
-  },
-  "ragProcess": {
-    "passagesFound": 8,
-    "passages": [
-      {
-        "content": "This good little boy, however, had an occasional disturbing habit of taking any small objects he could get hold of and throwing them away from him into a corner, under the bed, and so on, so that hunting for his toys and picking them up was often quite a business. As he did this he gave vent to a loud, long-drawn-out 'o-o-o-o', accompanied by an expression of interest and satisfaction.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.830733249739824
-      },
-      {
-        "content": "I eventually realized that it was a game and that the only use he made of any of his toys was to play 'gone' with them. One day I made an observation which confirmed my view. The child had a wooden reel with a piece of string tied round it. It never occurred to him to pull it along the floor behind him, for instance, and play at its being a carriage.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.822804787493323
-      },
-      {
-        "content": "As I refused to do this I had to sit in a little chair by her side and knock at the sofa with my fist. This she called “churning” . . immediately after this she announced that a child was creeping out of her, and she represented this scene in quite a realistic way, writhing about and groaning. Her imaginary child then had to share its parents’ bedroom and had to be a spectator of sexual intercourse between them. If it interrupted, it was beaten . .",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.818776919136368
-      },
-      {
-        "content": "As he did this he gave vent to a loud, long-drawn-out 'o-o-o-o', accompanied by an expression of interest and satisfaction. His mother and the writer of the present account were agreed in thinking that this was not a mere interjection but represented the German word 'fort'. I eventually realized that it was a game and that the only use he made of any of his toys was to play 'gone' with them. One day I made an observation which confirmed my view.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.816393236742599
-      },
-      {
-        "content": "It never occurred to him to pull it along the floor behind him, for instance, and play at its being a carriage. What he did was to hold the reel by the string and very skilfully throw it over the edge of his curtained cot, so that it disappeared into it, at the same time uttering his expressive 'o-o-o-o'. He then pulled the reel out of the cot again by the string and hailed its reappearance with a joyful 'da'. This, then, was the complete game - disappearance and return.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.810644961672421
-      },
-      {
-        "content": "In this scene - second in order of mention, but first in order of time - the behaviour of this child of fourteen was already entirely and completely hysterical. I should without question consider a person hysterical in whom an occasion for sexual excitement elicited feelings that were preponderantly or exclusively unpleasurable; and I should do so whether or no the person were capable of producing somatic symptoms.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.810568761195627
-      },
-      {
-        "content": "This made it possible to analyze disturbed children, and hence to learn more about their mental life. To take an example from a child playing a game of make-believe in which she had the part of a queen: When she as queen, had celebrated her marriage to the king, she lay down on the sofa and wanted me, as the king, to lie down beside her. As I refused to do this I had to sit in a little chair by her side and knock at the sofa with my fist. This she called “churning” . .",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.809040547764383
-      },
-      {
-        "content": "No doubt it was awkward that I was obliged to publish the results of my enquiries without there being any possibility of other workers in the field testing and checking them, particularly as those results were of a surprising and by no means gratifying character. But it will be scarcely less awkward now that I am beginning to bring forward some of the material upon which my conclusions were based and make it accessible to the judgement of the world. I shall not escape blame by this means.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.804750702783288
-      },
-      {
-        "content": "At the moment she was in the country and he told me that she was suffering from phlebitis. I had at once thought it must be an infiltration caused by a dirty syringe. I was proud of the fact that in two years I had not caused a single infiltration; I took constant pains to be sure that the syringe was clean. In short: I was conscientious.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.802914500670806
-      },
-      {
-        "content": "We know of other children who liked to express similar hostile impulses by throwing away objects instead of persons. We are therefore left in doubt as to whether the impulse to work over in the mind some overpowering experience so as to make oneself master of it can find expression as a primary event, and independently of the pleasure principle.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.800295567547747
-      }
-    ],
-    "symbolsExtracted": [],
-    "themes": [
-      "ego adaptation",
-      "work as sublimation",
-      "reality testing"
-    ]
-  },
-  "testMode": true,
-  "testDuration": 12848
-}
-
-
-🌙 Dream 3: Unprepared for Weird Exam
-=================================================
-
-🔮 Interpreter: freud
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   921    0     0  100   921      0    760  0:00:01  0:00:01 --:--:--   761100   921    0     0  100   921      0    415  0:00:02  0:00:02 --:--:--   415100   921    0     0  100   921      0    286  0:00:03  0:00:03 --:--:--   286100   921    0     0  100   921      0    217  0:00:04  0:00:04 --:--:--   218100   921    0     0  100   921      0    176  0:00:05  0:00:05 --:--:--   176100   921    0     0  100   921      0    147  0:00:06  0:00:06 --:--:--     0100   921    0     0  100   921      0    127  0:00:07  0:00:07 --:--:--     0100   921    0     0  100   921      0    111  0:00:08  0:00:08 --:--:--     0100   921    0     0  100   921      0     99  0:00:09  0:00:09 --:--:--     0100   921    0     0  100   921      0     89  0:00:10  0:00:10 --:--:--     0100   921    0     0  100   921      0     81  0:00:11  0:00:11 --:--:--     0100 13788  100 12867  100   921   1067     76  0:00:12  0:00:12 --:--:--  2670100 13788  100 12867  100   921   1067     76  0:00:12  0:00:12 --:--:--  3373
-{
-  "success": true,
-  "dreamId": "123e4567-e89b-12d3-a456-426614174003",
-  "interpretation": {
-    "dreamTopic": "Anxiety over unpreparedness and seeking maternal guidance",
-    "symbols": [
-      "pasta shapes",
-      "exam",
-      "Mrs. Johnson",
-      "phone",
-      "banana",
-      "stapler",
-      "tiny umbrella"
-    ],
-    "quickTake": "Your unconscious reveals anxiety over being unprepared and a regressive desire for maternal support, symbolized by the phone that morphs into various objects, indicating frustration and helplessness.",
-    "dreamWork": "The dream employs mechanisms of regression, condensation, and displacement. The high school setting and exam symbolize a regression to a past stressor, while the pasta shapes represent a condensation of adult anxieties and childhood learning. The phone's transformations demonstrate a displacement of your desire for help onto various objects, highlighting your feelings of frustration.",
-    "interpretation": "You, at 28, find yourself back in high school, confronted with an exam that seems impossible to pass because it requires knowledge of pasta shapes. This CLEARLY represents your unconscious anxiety about being unprepared for the challenges of adulthood. The teacher, resembling Mrs. Johnson from third grade, signifies an internalized maternal figure whose approval you seek. Your attempt to call your mother for help using your phone, which morphs into a banana, stapler, and tiny umbrella, demonstrates your regressive desire for maternal support and guidance in navigating adult responsibilities. The phone's transformations symbolize your frustration and helplessness in seeking assistance. This dream reveals an unconscious wish to return to a state of childhood dependence, where problems could be solved with maternal intervention. Your resistance to this wish is evident in your waking anxiety about being unprepared. Like my patient Dora, who struggled with her own desires for independence and maternal support, you must confront these conflicting desires to move forward.",
-    "selfReflection": "What is one area in your current life where you feel unprepared or uncertain, and how can you take steps to address these feelings rather than seeking regressive solutions?"
-  },
-  "aiResponse": "```\n{\n  \"dreamTopic\": \"Anxiety over unpreparedness and seeking maternal guidance\",\n  \"symbols\": [\"pasta shapes\", \"exam\", \"Mrs. Johnson\", \"phone\", \"banana\", \"stapler\", \"tiny umbrella\"],\n  \"quickTake\": \"Your unconscious reveals anxiety over being unprepared and a regressive desire for maternal support, symbolized by the phone that morphs into various objects, indicating frustration and helplessness.\",\n  \"dreamWork\": \"The dream employs mechanisms of regression, condensation, and displacement. The high school setting and exam symbolize a regression to a past stressor, while the pasta shapes represent a condensation of adult anxieties and childhood learning. The phone's transformations demonstrate a displacement of your desire for help onto various objects, highlighting your feelings of frustration.\",\n  \"interpretation\": \"You, at 28, find yourself back in high school, confronted with an exam that seems impossible to pass because it requires knowledge of pasta shapes. This CLEARLY represents your unconscious anxiety about being unprepared for the challenges of adulthood. The teacher, resembling Mrs. Johnson from third grade, signifies an internalized maternal figure whose approval you seek. Your attempt to call your mother for help using your phone, which morphs into a banana, stapler, and tiny umbrella, demonstrates your regressive desire for maternal support and guidance in navigating adult responsibilities. The phone's transformations symbolize your frustration and helplessness in seeking assistance. This dream reveals an unconscious wish to return to a state of childhood dependence, where problems could be solved with maternal intervention. Your resistance to this wish is evident in your waking anxiety about being unprepared. Like my patient Dora, who struggled with her own desires for independence and maternal support, you must confront these conflicting desires to move forward.\",\n  \"selfReflection\": \"What is one area in your current life where you feel unprepared or uncertain, and how can you take steps to address these feelings rather than seeking regressive solutions?\",\n  \"_debug_hypothesis_a\": \"This dream represents a manifestation of your unconscious anxiety about being unprepared for adult challenges, symbolized by the exam and unfamiliar pasta shapes. The phone's transformations indicate a frustration with seeking help and a regression to childhood desires for maternal support.\",\n  \"_debug_hypothesis_b\": \"The dream could be seen as a reflection of your struggle with feelings of inadequacy and a desire for control. The exam and pasta shapes represent a sense of being overwhelmed by adult responsibilities, while the phone's transformations symbolize a search for a tool or mechanism to cope with these feelings.\",\n  \"_debug_hypothesis_c\": \"This dream may also be exploring themes of regression and the desire for a return to a simpler, more dependent state. The high school setting and maternal figure of Mrs. Johnson represent a longing for a time when problems were solved by others, and the phone's transformations indicate a frustration with the limitations of current coping mechanisms.\",\n  \"_debug_evaluation\": \"Hypothesis A was selected because it most directly addresses the unconscious wish for maternal support and the anxiety over being unprepared for adult challenges. It provides a clear connection to the patient's life context and situation, and offers a unique and insightful perspective on the dream's symbolism.\",\n  \"_debug_selected\": \"A\"\n}\n```",
-  "metadata": {
-    "interpreterType": "freud",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-18T10:05:44.563Z",
-    "analysisDepth": "deep",
-    "duration": 12049,
-    "tokenUsage": {
-      "promptTokens": 2943,
-      "completionTokens": 666,
-      "totalTokens": 3609,
-      "cost": 0
-    }
-  },
-  "debateProcess": {
-    "hypothesis_a": "This dream represents a manifestation of your unconscious anxiety about being unprepared for adult challenges, symbolized by the exam and unfamiliar pasta shapes. The phone's transformations indicate a frustration with seeking help and a regression to childhood desires for maternal support.",
-    "hypothesis_b": "The dream could be seen as a reflection of your struggle with feelings of inadequacy and a desire for control. The exam and pasta shapes represent a sense of being overwhelmed by adult responsibilities, while the phone's transformations symbolize a search for a tool or mechanism to cope with these feelings.",
-    "hypothesis_c": "This dream may also be exploring themes of regression and the desire for a return to a simpler, more dependent state. The high school setting and maternal figure of Mrs. Johnson represent a longing for a time when problems were solved by others, and the phone's transformations indicate a frustration with the limitations of current coping mechanisms.",
-    "evaluation": "Hypothesis A was selected because it most directly addresses the unconscious wish for maternal support and the anxiety over being unprepared for adult challenges. It provides a clear connection to the patient's life context and situation, and offers a unique and insightful perspective on the dream's symbolism.",
-    "selected_hypothesis": "A"
-  },
-  "ragProcess": {
-    "passagesFound": 8,
-    "passages": [
-      {
-        "content": "She tried to avoid social intercourse, and employed herself - so far as she was allowed to by the fatigue and lack of concentration of which she complained - with attending lectures for women and with carrying on more or less serious studies. One day her parents were thrown into a state of great alarm by finding on the girl‘s writing-desk, or inside it, a letter in which she took leave of them because, as she said, she could no longer endure her life.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.832098300000674
-      },
-      {
-        "content": "This made it possible to analyze disturbed children, and hence to learn more about their mental life. To take an example from a child playing a game of make-believe in which she had the part of a queen: When she as queen, had celebrated her marriage to the king, she lay down on the sofa and wanted me, as the king, to lie down beside her. As I refused to do this I had to sit in a little chair by her side and knock at the sofa with my fist. This she called “churning” . .",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.825852710211925
-      },
-      {
-        "content": "One day her parents were thrown into a state of great alarm by finding on the girl‘s writing-desk, or inside it, a letter in which she took leave of them because, as she said, she could no longer endure her life. Her father, indeed, being a man of some perspicacity, guessed that the girl had no serious suicidal intentions.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.825587409874777
-      },
-      {
-        "content": "At the moment she was in the country and he told me that she was suffering from phlebitis. I had at once thought it must be an infiltration caused by a dirty syringe. I was proud of the fact that in two years I had not caused a single infiltration; I took constant pains to be sure that the syringe was clean. In short: I was conscientious.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.82552548063409
-      },
-      {
-        "content": "For he now associated as follows:\n\nI at once called in Dr. , and he repeated the examination. This reminded me of a tragic event in my practice. I had on one occasion produced a severe toxic state in a woman patient by repeatedly prescribing what was at that time regarded as a harmless remedy (sulphanol), and had hurriedly turned for assistance and support to my experienced senior colleague. . My patient — who succumbed to the poison — had the same name as my eldest daughter . . Mathilde.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.818433525924919
-      },
-      {
-        "content": "My object in this case history was to demonstrate the intimate structure of a neurotic disorder and the determination of its symptoms; and it would have led to nothing but hopeless confusion if I had tried to complete the other task at the same time. Before the technical rules, most of which have been arrived at empirically, could be properly laid down, it would be necessary to collect material from the histories of a large number of treatments.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.817105737407047
-      },
-      {
-        "content": "” — Apart from this, this sentence in the dream reminded me once more of my dead friend who had so hastily resorted to cocaine injections. . I noticed too that in accusing Otto of thoughtlessness in handling chemical substances I was once more touching upon the story of the unfortunate Mathilde, which gave grounds for the same accusation against myself... And probably the syringe had not been clean: This was yet another accusation against Otto, but derived from a different source.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.816086606046346
-      },
-      {
-        "content": "She appeared with the features which were hers in real life, and thus, in the first instance, represented herself. But the position in which I examined her by the window was derived from someone else. . In so far as Irma appeared to have a diphtheritic membrane, which recalled my anxiety about my eldest daughter, she stood for that child, and, behind her, through the possession of the same name as my daughter, was hidden the figure of my patient who succumbed to poisoning.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.814615419575812
-      },
-      {
-        "content": "It was more than a mere fleeting observation, for I lived under the same roof as the child and his parents for some weeks, and it was some time before I discovered the meaning of the puzzling activity which he constantly repeated\n\nThe child was not at all precocious in his intellectual development. At the age of one and a half he could say only a few comprehensible words; he could also make use of a number of sounds which expressed a meaning intelligible to those around him.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.814161649320473
-      },
-      {
-        "content": "Apart from the dreams, therefore, the technique of the analytic work has been revealed in only a very few places. My object in this case history was to demonstrate the intimate structure of a neurotic disorder and the determination of its symptoms; and it would have led to nothing but hopeless confusion if I had tried to complete the other task at the same time.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.811945961837892
-      }
-    ],
-    "symbolsExtracted": [
-      {
-        "symbol": "mother",
-        "interpretations": [
-          "At the moment she was in the country and he told me that she was suffering from phlebitis"
-        ]
-      }
-    ],
-    "themes": [
-      "moral anxiety",
-      "guilt dynamics",
-      "parental internalization"
-    ]
-  },
-  "testMode": true,
-  "testDuration": 12050
-}
-
-
-🌙 Dream 4: Car That Keeps Changing
-=================================================
-
-🔮 Interpreter: freud
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   984    0     0  100   984      0    812  0:00:01  0:00:01 --:--:--   813100   984    0     0  100   984      0    443  0:00:02  0:00:02 --:--:--   444100   984    0     0  100   984      0    305  0:00:03  0:00:03 --:--:--   305100   984    0     0  100   984      0    233  0:00:04  0:00:04 --:--:--   233100   984    0     0  100   984      0    188  0:00:05  0:00:05 --:--:--   188100   984    0     0  100   984      0    157  0:00:06  0:00:06 --:--:--     0100   984    0     0  100   984      0    136  0:00:07  0:00:07 --:--:--     0100   984    0     0  100   984      0    119  0:00:08  0:00:08 --:--:--     0100   984    0     0  100   984      0    106  0:00:09  0:00:09 --:--:--     0100   984    0     0  100   984      0     96  0:00:10  0:00:10 --:--:--     0100   984    0     0  100   984      0     87  0:00:11  0:00:11 --:--:--     0100 13510  100 12526  100   984   1035     81  0:00:12  0:00:12 --:--:--  2577100 13510  100 12526  100   984   1035     81  0:00:12  0:00:12 --:--:--  3250
-{
-  "success": true,
-  "dreamId": "123e4567-e89b-12d3-a456-426614174004",
-  "interpretation": {
-    "dreamTopic": "Transforming Vehicle and Diminished Social Interactions",
-    "symbols": [
-      "transforming car",
-      "shopping cart",
-      "swan boat",
-      "miniature friends"
-    ],
-    "quickTake": "Your dream reveals an unconscious wish to regress and escape adult responsibilities, while struggling with feelings of inadequacy in social relationships.",
-    "dreamWork": "This dream employs mechanisms of condensation and displacement, transforming the car into various symbols of regression and frustration. The dreamer's inability to hear friends and their miniature size represent feelings of disconnection and powerlessness.",
-    "interpretation": "YOU, dear patient, are experiencing a clear manifestation of your unconscious mind's struggle with the demands of adult life and social interactions. The transforming car represents YOUR fragile sense of self and ego, which is constantly shifting and adapting to cope with stressors. The regression into a shopping cart and swan boat signifies a desire to return to earlier, more carefree stages of development, likely linked to oral and anal fixations. The highway, a symbol of YOUR life's journey and progression, becomes an arena where YOU feel embarrassed and exposed. The reactions of people waving from their windows suggest a deep-seated need for validation and acceptance from others, possibly rooted in childhood experiences.The miniature friends at the meeting point are a striking representation of YOUR feelings of inadequacy and disempowerment in social relationships. This echoes the Oedipal dynamics, where YOU may feel like you're not being heard or taken seriously, much like the dream's scenario. The yelling and fleeing action figures symbolize YOUR anxiety about being judged and YOUR fear of being overwhelmed by the expectations of others.This dream clearly represents YOUR unconscious wish to escape the pressures of adulthood and regain a sense of control and security. It is obvious that YOUR current life dynamics are triggering these regressive tendencies, and we must explore these feelings further to understand the underlying causes.",
-    "selfReflection": "Can you recall a recent situation where you felt like you were 'shrinking' or losing your voice in a social interaction, and how did you cope with those feelings?"
-  },
-  "aiResponse": "```\n{\n  \"dreamTopic\": \"Transforming Vehicle and Diminished Social Interactions\",\n  \"symbols\": [\"transforming car\", \"shopping cart\", \"swan boat\", \"miniature friends\"],\n  \"quickTake\": \"Your dream reveals an unconscious wish to regress and escape adult responsibilities, while struggling with feelings of inadequacy in social relationships.\",\n  \"dreamWork\": \"This dream employs mechanisms of condensation and displacement, transforming the car into various symbols of regression and frustration. The dreamer's inability to hear friends and their miniature size represent feelings of disconnection and powerlessness.\",\n  \"interpretation\": \"YOU, dear patient, are experiencing a clear manifestation of your unconscious mind's struggle with the demands of adult life and social interactions. The transforming car represents YOUR fragile sense of self and ego, which is constantly shifting and adapting to cope with stressors. The regression into a shopping cart and swan boat signifies a desire to return to earlier, more carefree stages of development, likely linked to oral and anal fixations. \n\nThe highway, a symbol of YOUR life's journey and progression, becomes an arena where YOU feel embarrassed and exposed. The reactions of people waving from their windows suggest a deep-seated need for validation and acceptance from others, possibly rooted in childhood experiences.\n\nThe miniature friends at the meeting point are a striking representation of YOUR feelings of inadequacy and disempowerment in social relationships. This echoes the Oedipal dynamics, where YOU may feel like you're not being heard or taken seriously, much like the dream's scenario. The yelling and fleeing action figures symbolize YOUR anxiety about being judged and YOUR fear of being overwhelmed by the expectations of others.\n\nThis dream clearly represents YOUR unconscious wish to escape the pressures of adulthood and regain a sense of control and security. It is obvious that YOUR current life dynamics are triggering these regressive tendencies, and we must explore these feelings further to understand the underlying causes.\",\n  \"selfReflection\": \"Can you recall a recent situation where you felt like you were 'shrinking' or losing your voice in a social interaction, and how did you cope with those feelings?\",\n  \"_debug_hypothesis_a\": \"This dream may signify a struggle with identity and self-image, as the transforming car represents the fluidity of YOUR ego. The miniature friends could symbolize a fear of being overshadowed or not taken seriously in social situations.\",\n  \"_debug_hypothesis_b\": \"The dream could be an expression of YOUR libidinal and aggressive drives, with the swan boat and shopping cart representing a desire for regression and oral satisfaction. The highway and honking cars may signify the pressure of societal expectations and the anxiety of being judged.\",\n  \"_debug_hypothesis_c\": \"This dream might be a manifestation of YOUR compensatory function, where YOU create a fantasy world to escape the stresses of reality. The transforming car and miniature friends could represent a desire for control and mastery over YOUR environment, as well as a need for validation and attention.\",\n  \"_debug_evaluation\": \"Hypothesis B was selected as it provides the most comprehensive and nuanced interpretation of the dream, incorporating elements of regression, libidinal drives, and societal pressure. It also aligns with YOUR current life stage and psychoanalytic themes.\",\n  \"_debug_selected\": \"B\"\n}\n```",
-  "metadata": {
-    "interpreterType": "freud",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-18T10:05:58.732Z",
-    "analysisDepth": "deep",
-    "duration": 12088,
-    "tokenUsage": {
-      "promptTokens": 2882,
-      "completionTokens": 671,
-      "totalTokens": 3553,
-      "cost": 0
-    }
-  },
-  "debateProcess": {
-    "hypothesis_a": "This dream may signify a struggle with identity and self-image, as the transforming car represents the fluidity of YOUR ego. The miniature friends could symbolize a fear of being overshadowed or not taken seriously in social situations.",
-    "hypothesis_b": "The dream could be an expression of YOUR libidinal and aggressive drives, with the swan boat and shopping cart representing a desire for regression and oral satisfaction. The highway and honking cars may signify the pressure of societal expectations and the anxiety of being judged.",
-    "hypothesis_c": "This dream might be a manifestation of YOUR compensatory function, where YOU create a fantasy world to escape the stresses of reality. The transforming car and miniature friends could represent a desire for control and mastery over YOUR environment, as well as a need for validation and attention.",
-    "evaluation": "Hypothesis B was selected as it provides the most comprehensive and nuanced interpretation of the dream, incorporating elements of regression, libidinal drives, and societal pressure. It also aligns with YOUR current life stage and psychoanalytic themes.",
-    "selected_hypothesis": "B"
-  },
-  "ragProcess": {
-    "passagesFound": 8,
-    "passages": [
-      {
-        "content": "On the other hand, the scene had left another consequence behind it in the shape of a sensory hallucination which occurred from time to time and even made its appearance while she was telling me her story. ‘s embrace. In accordance with certain rules of symptom-formation which I have come to know, and at the same time taking into account certain other of the patient‘s peculiarities, which were otherwise inexplicable, - such as her unwillingness to walk past any man whom she saw engaged in eager or affectionate conversation with a lady, - I have formed in my own mind the following reconstruction of the scene.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.824561989098567
-      },
-      {
-        "content": "As I refused to do this I had to sit in a little chair by her side and knock at the sofa with my fist. This she called “churning” . . immediately after this she announced that a child was creeping out of her, and she represented this scene in quite a realistic way, writhing about and groaning. Her imaginary child then had to share its parents’ bedroom and had to be a spectator of sexual intercourse between them. If it interrupted, it was beaten . .",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.812113003655389
-      },
-      {
-        "content": "I seemed to remember thinking something of the same kind that afternoon when his words and looks had appeared to show that he was siding against me. It had been some such notion as: “How easily his thoughts are influenced! ” — Apart from this, this sentence in the dream reminded me once more of my dead friend who had so hastily resorted to cocaine injections. .",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.806058409538183
-      },
-      {
-        "content": "This good little boy, however, had an occasional disturbing habit of taking any small objects he could get hold of and throwing them away from him into a corner, under the bed, and so on, so that hunting for his toys and picking them up was often quite a business. As he did this he gave vent to a loud, long-drawn-out 'o-o-o-o', accompanied by an expression of interest and satisfaction.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.804499341130191
-      },
-      {
-        "content": "In this scene - second in order of mention, but first in order of time - the behaviour of this child of fourteen was already entirely and completely hysterical. I should without question consider a person hysterical in whom an occasion for sexual excitement elicited feelings that were preponderantly or exclusively unpleasurable; and I should do so whether or no the person were capable of producing somatic symptoms.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.802424860578833
-      },
-      {
-        "content": "It took the form of a confusional attack, followed by symptoms of paralysis and slight mental disturbances. A friend of his (who plays a part in the story with which we shall be concerned later on) persuaded him, while his condition had scarcely improved, to travel to Vienna with his physician and come to me for advice.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.801924945071313
-      },
-      {
-        "content": "M had examined another woman by a window, and pronounced that she had a diphtheritic membrane. The woman was a friend of Irma’s, who suffered from hysterical choking. Thus, Freud saw, the Irma in the dream was a sort of composite figure, who had been given her friend’s position by the window, as well as her cough, and infiltrated membrane.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.801567566768634
-      },
-      {
-        "content": "‘s had just made plans for an expedition which was to last for some days and on which Dora was to have accompanied them. After the scene of the kiss she refused to join the party, without giving any reason. In this scene - second in order of mention, but first in order of time - the behaviour of this child of fourteen was already entirely and completely hysterical.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.800922823447324
-      },
-      {
-        "content": "This was surely just the situation to call up a distinct feeling of sexual excitement in a girl of fourteen who had never before been approached. But Dora had at that moment a violent feeling of disgust, tore herself free from the man, and hurried past him to the staircase and from there to the street door. She nevertheless continued to meet Herr K. Neither of them ever mentioned the little scene; and according to her account Dora kept it a secret till her confession during the treatment.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.80081692943789
-      },
-      {
-        "content": "If 1 know that someone fears that he will wind up in poverty, but believes that if his friends stand by him this will not happen, then I know of further beliefs about his friends and what they will or will not do, that may comfort or alarm him. And the pattern of my thought is naturally poised to extend itself through this network of possibilities along with his, and will do so if he gives me a clue.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.800418090920084
-      }
-    ],
-    "symbolsExtracted": [],
-    "themes": [
-      "self-regard",
-      "ego ideal",
-      "narcissistic injury"
-    ]
-  },
-  "testMode": true,
-  "testDuration": 12088
-}
-
-
-🌙 Dream 5: Celebrity Cooking Disaster
-=================================================
-
-🔮 Interpreter: freud
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1010    0     0  100  1010      0   4878 --:--:-- --:--:-- --:--:--  4902100  1010    0     0  100  1010      0    833  0:00:01  0:00:01 --:--:--   833100  1010    0     0  100  1010      0    456  0:00:02  0:00:02 --:--:--   456100  1010    0     0  100  1010      0    313  0:00:03  0:00:03 --:--:--   313100  1010    0     0  100  1010      0    239  0:00:04  0:00:04 --:--:--   239100  1010    0     0  100  1010      0    193  0:00:05  0:00:05 --:--:--     0100  1010    0     0  100  1010      0    162  0:00:06  0:00:06 --:--:--     0100  1010    0     0  100  1010      0    139  0:00:07  0:00:07 --:--:--     0100  1010    0     0  100  1010      0    122  0:00:08  0:00:08 --:--:--     0100  1010    0     0  100  1010      0    109  0:00:09  0:00:09 --:--:--     0100  1010    0     0  100  1010      0     98  0:00:10  0:00:10 --:--:--     0100  1010    0     0  100  1010      0     89  0:00:11  0:00:11 --:--:--     0100  1010    0     0  100  1010      0     82  0:00:12  0:00:12 --:--:--     0100  1010    0     0  100  1010      0     76  0:00:13  0:00:13 --:--:--     0100 15485  100 14475  100  1010   1018     71  0:00:14  0:00:14 --:--:--  2909100 15485  100 14475  100  1010   1018     71  0:00:14  0:00:14 --:--:--  3646
-{
-  "success": true,
-  "dreamId": "123e4567-e89b-12d3-a456-426614174005",
-  "interpretation": {
-    "dreamTopic": "Childhood regression in a cooking competition stress",
-    "symbols": [
-      "childhood bedroom",
-      "toy pots and pans",
-      "Gordon Ramsay",
-      "stuffed animals",
-      "teddy bear",
-      "crayon soup"
-    ],
-    "quickTake": "Unconscious wish to regress to childhood, escape adult pressures, and rebel against critical authority figures.",
-    "dreamWork": "The dream employs regression, condensation, and displacement to transform the patient's anxieties about adult responsibilities into a childhood scenario. The cooking competition represents the patient's struggles with real-world expectations, while the toy utensils symbolize a desire to return to a simpler, carefree state. The dream also utilizes projection, as the patient's own self-criticism is embodied by Gordon Ramsay.",
-    "interpretation": "You, in your current state, are struggling with the pressures of adulthood, feeling overwhelmed by expectations to perform and achieve. Your unconscious mind is seeking escape through regression, as evidenced by the childhood bedroom setting and toy cooking utensils. This regression allows you to momentarily escape the demands of adulthood and return to a time when responsibilities were minimal. The presence of Gordon Ramsay, a symbol of critical authority, represents the harsh superego that judges your every move. His anger and the stuffed animals he throws signify the patient's own self-criticism and fear of not meeting expectations. The teddy bear's absurd cooking advice, which Gordon Ramsay surprisingly endorses, suggests a desire to rebel against these critical voices and create a more playful, carefree approach to life. However, this rebellion is also a defense mechanism, as it allows you to momentarily avoid confronting the reality of your adult responsibilities. The crayon soup, a clear manifestation of the patient's resistance to growing up, represents a wish to return to a state of childhood innocence. This dream reveals your unconscious conflict between the desire for adult independence and the comfort of childhood security. It is obvious that your psyche is grappling with these opposing forces, and it is essential to explore these feelings further to find a balance between responsibility and playfulness.",
-    "selfReflection": "What aspects of your adult life do you feel are suffocating you, and how do you think you can integrate more playfulness and creativity into your daily responsibilities?"
-  },
-  "aiResponse": "```\n{\n  \"dreamTopic\": \"Childhood regression in a cooking competition stress\",\n  \"symbols\": [\"childhood bedroom\", \"toy pots and pans\", \"Gordon Ramsay\", \"stuffed animals\", \"teddy bear\", \"crayon soup\"],\n  \"quickTake\": \"Unconscious wish to regress to childhood, escape adult pressures, and rebel against critical authority figures.\",\n  \"dreamWork\": \"The dream employs regression, condensation, and displacement to transform the patient's anxieties about adult responsibilities into a childhood scenario. The cooking competition represents the patient's struggles with real-world expectations, while the toy utensils symbolize a desire to return to a simpler, carefree state. The dream also utilizes projection, as the patient's own self-criticism is embodied by Gordon Ramsay.\",\n  \"interpretation\": \"You, in your current state, are struggling with the pressures of adulthood, feeling overwhelmed by expectations to perform and achieve. Your unconscious mind is seeking escape through regression, as evidenced by the childhood bedroom setting and toy cooking utensils. This regression allows you to momentarily escape the demands of adulthood and return to a time when responsibilities were minimal. The presence of Gordon Ramsay, a symbol of critical authority, represents the harsh superego that judges your every move. His anger and the stuffed animals he throws signify the patient's own self-criticism and fear of not meeting expectations. The teddy bear's absurd cooking advice, which Gordon Ramsay surprisingly endorses, suggests a desire to rebel against these critical voices and create a more playful, carefree approach to life. However, this rebellion is also a defense mechanism, as it allows you to momentarily avoid confronting the reality of your adult responsibilities. The crayon soup, a clear manifestation of the patient's resistance to growing up, represents a wish to return to a state of childhood innocence. This dream reveals your unconscious conflict between the desire for adult independence and the comfort of childhood security. It is obvious that your psyche is grappling with these opposing forces, and it is essential to explore these feelings further to find a balance between responsibility and playfulness.\",\n  \"selfReflection\": \"What aspects of your adult life do you feel are suffocating you, and how do you think you can integrate more playfulness and creativity into your daily responsibilities?\",\n  \"_debug_hypothesis_a\": \"This dream represents a manifestation of your Oedipal complex, with Gordon Ramsay symbolizing the critical father figure. Your use of toy pots and pans signifies a fixation at the oral stage, where you are seeking comfort and security through regression. The teddy bear's advice to add glitter and crayons to the soup represents a desire for anal pleasure and a need for control over your environment.\",\n  \"_debug_hypothesis_b\": \"The dream is a reflection of your struggles with libidinal drives, as the cooking competition represents a sublimation of your sexual desires. The stuffed animals thrown by Gordon Ramsay symbolize the patient's repressed aggressive impulses, while the teddy bear's advice represents a desire for oral gratification. The crayon soup signifies a wish for a return to a state of polymorphous perversity, where desires are not yet repressed.\",\n  \"_debug_hypothesis_c\": \"This dream is a compensation for your feelings of inadequacy in your current life situation. The childhood bedroom setting represents a desire for a sense of safety and security, while the toy utensils signify a need for control over your environment. The teddy bear's advice represents a wish for guidance and support, while Gordon Ramsay's approval signifies a desire for validation and recognition.\",\n  \"_debug_evaluation\": \"Hypothesis A was selected as the most compelling interpretation, as it provides a clear connection to the patient's Oedipal complex and fixation at the oral stage. The use of specific symbols, such as the toy pots and pans, and the teddy bear's advice, supports this interpretation. Hypothesis B, while insightful, seemed less directly connected to the patient's specific life situation. Hypothesis C, while providing a clear explanation of the patient's desires, seemed less nuanced in its analysis of the dream symbols.\",\n  \"_debug_selected\": \"A\"\n}\n```",
-  "metadata": {
-    "interpreterType": "freud",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-18T10:06:15.016Z",
-    "analysisDepth": "deep",
-    "duration": 14210,
-    "tokenUsage": {
-      "promptTokens": 2957,
-      "completionTokens": 851,
-      "totalTokens": 3808,
-      "cost": 0
-    }
-  },
-  "debateProcess": {
-    "hypothesis_a": "This dream represents a manifestation of your Oedipal complex, with Gordon Ramsay symbolizing the critical father figure. Your use of toy pots and pans signifies a fixation at the oral stage, where you are seeking comfort and security through regression. The teddy bear's advice to add glitter and crayons to the soup represents a desire for anal pleasure and a need for control over your environment.",
-    "hypothesis_b": "The dream is a reflection of your struggles with libidinal drives, as the cooking competition represents a sublimation of your sexual desires. The stuffed animals thrown by Gordon Ramsay symbolize the patient's repressed aggressive impulses, while the teddy bear's advice represents a desire for oral gratification. The crayon soup signifies a wish for a return to a state of polymorphous perversity, where desires are not yet repressed.",
-    "hypothesis_c": "This dream is a compensation for your feelings of inadequacy in your current life situation. The childhood bedroom setting represents a desire for a sense of safety and security, while the toy utensils signify a need for control over your environment. The teddy bear's advice represents a wish for guidance and support, while Gordon Ramsay's approval signifies a desire for validation and recognition.",
-    "evaluation": "Hypothesis A was selected as the most compelling interpretation, as it provides a clear connection to the patient's Oedipal complex and fixation at the oral stage. The use of specific symbols, such as the toy pots and pans, and the teddy bear's advice, supports this interpretation. Hypothesis B, while insightful, seemed less directly connected to the patient's specific life situation. Hypothesis C, while providing a clear explanation of the patient's desires, seemed less nuanced in its analysis of the dream symbols.",
-    "selected_hypothesis": "A"
-  },
-  "ragProcess": {
-    "passagesFound": 8,
-    "passages": [
-      {
-        "content": "This good little boy, however, had an occasional disturbing habit of taking any small objects he could get hold of and throwing them away from him into a corner, under the bed, and so on, so that hunting for his toys and picking them up was often quite a business. As he did this he gave vent to a loud, long-drawn-out 'o-o-o-o', accompanied by an expression of interest and satisfaction.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.824852557506702
-      },
-      {
-        "content": "Freud noticed that frequently when he had eaten anchovies or other salted food he would dream that he was drinking delicious cool water. Then he would wake up, find himself thirsty, and have to get a drink (1900a, IV, 123). This is a familiar and, it seems, transparent sort of dream. Clearly there is a content—content relation between Freud’s motives and his dream. One of his motives is that he is thirsty, and his dream is that he is slaking his thirst.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.820227622985846
-      },
-      {
-        "content": "This seems also to be the pattern we find in Freud’s examples of the dreams of little Herman and Anna. The exaggeration of motive in Herman’s having eaten all the cherries (none for the old man to whom they were originally given), or in the ampleness of Anna’s menu, again seem instances of what we are calling wish-instigation, which have then been passed on to the dream by wish-fulfillment.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.816117516542199
-      },
-      {
-        "content": "As he did this he gave vent to a loud, long-drawn-out 'o-o-o-o', accompanied by an expression of interest and satisfaction. His mother and the writer of the present account were agreed in thinking that this was not a mere interjection but represented the German word 'fort'. I eventually realized that it was a game and that the only use he made of any of his toys was to play 'gone' with them. One day I made an observation which confirmed my view.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.814265074471425
-      },
-      {
-        "content": "At the same time, he was greatly attached to his mother, who had not only fed him herself but had also looked after him without any outside help. This good little boy, however, had an occasional disturbing habit of taking any small objects he could get hold of and throwing them away from him into a corner, under the bed, and so on, so that hunting for his toys and picking them up was often quite a business.",
-        "source": "beyond-the-pleasure-principle",
-        "chapter": null,
-        "similarity": 0.812850329962315
-      },
-      {
-        "content": "The exaggeration of motive in Herman’s having eaten all the cherries (none for the old man to whom they were originally given), or in the ampleness of Anna’s menu, again seem instances of what we are calling wish-instigation, which have then been passed on to the dream by wish-fulfillment. In these cases, however, the original motives are inferred on different, more circumstantial, grounds, in which the dream itself plays a role.",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.811353424256529
-      },
-      {
-        "content": "The disgust which Dora felt on that occasion did not become a permanent symptom, and even at the time of the treatment it was only, as it were, potentially present. She was a poor eater and confessed to some disinclination for food. On the other hand, the scene had left another consequence behind it in the shape of a sensory hallucination which occurred from time to time and even made its appearance while she was telling me her story. ‘s embrace.",
-        "source": "dora",
-        "chapter": null,
-        "similarity": 0.808878218863067
-      },
-      {
-        "content": "Freud gives other examples concerning motives that are simple and basic and, hence, show themselves in a way we can understand with no difficulty. Thus there are dreams of children, such as his little nephew and daughter. ” Here, it is natural to think, the children’s wishes for forbidden food can be read directly from their dreams (or, rather, probable dream-reports), which represent these wishes as satisfied (1900, IV, 130).",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.805442881259748
-      },
-      {
-        "content": "DREAMS AND MOTIVES\n\nOne of the main claims of the Interpretation is that dreams are wish-fulfillments. It will prove worth seeing what is involved in this as clearly as possible. So let us begin with one of Freud’s simplest examples. Freud noticed that frequently when he had eaten anchovies or other salted food he would dream that he was drinking delicious cool water. Then he would wake up, find himself thirsty, and have to get a drink (1900a, IV, 123).",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.800764882473364
-      },
-      {
-        "content": "” Here, it is natural to think, the children’s wishes for forbidden food can be read directly from their dreams (or, rather, probable dream-reports), which represent these wishes as satisfied (1900, IV, 130). The interpretation of dreams dealing with more complex motives is naturally more complex. To see this, let us turn to a fuller example, that of the specimen dream Freud first analyzed, and with which he begins his exposition of his theory, the dream of Irma’s injection (1900a, IV r06—21).",
-        "source": "companion",
-        "chapter": null,
-        "similarity": 0.800404834771457
-      }
-    ],
-    "symbolsExtracted": [],
-    "themes": [
-      "libidinal dynamics",
-      "object choice",
-      "psychosexual development"
-    ]
-  },
-  "testMode": true,
-  "testDuration": 14211
-}
-
-
-✨ All dream tests completed!
-==============================
-Results saved to: output.txt

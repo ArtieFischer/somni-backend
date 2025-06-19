@@ -30,5 +30,5 @@ psql your_database < 02-enhanced-search-knowledge.sql
 
 ## Notes
 - Vector dimension is 384 (using gte-small model)
-- Supports interpreters: jung, freud, neuroscientist, universal
+- Supports interpreters: jung, freud, mary, universal
 - Metadata is stored as JSONB for flexible filtering

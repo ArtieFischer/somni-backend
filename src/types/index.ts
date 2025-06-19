@@ -125,7 +125,7 @@ export interface DreamAnalysisWithDebate {
 export interface InterpretationResponse {
   success: boolean;
   dreamId: string;
-  interpretation?: DreamAnalysis | JungianInsights | FreudianInsights | NeuroscientistInsights | AstrologistInsights;
+  interpretation?: DreamAnalysis | JungianInsights | FreudianInsights | MaryInsights | AstrologistInsights;
   aiResponse?: string; // Raw AI response for debugging
   metadata?: {
     interpreterType: InterpreterType;
@@ -139,7 +139,7 @@ export interface InterpretationResponse {
   error?: string;
 }
 
-export type InterpreterType = 'jung' | 'freud' | 'neuroscientist' | 'astrologist';
+export type InterpreterType = 'jung' | 'freud' | 'mary' | 'astrologist';
 
 // Enhanced UserContext matching the Jungian specification
 export interface UserContext {
@@ -198,8 +198,8 @@ export interface FreudianInsights {
   transferenceAnalysis?: string;
 }
 
-export interface NeuroscientistInsights {
-  type: 'neuroscientist';
+export interface MaryInsights {
+  type: 'mary';
   interpretation: string;
   coreMessage: string;
   symbols: string[]; // Same as Jung/Freud for consistency

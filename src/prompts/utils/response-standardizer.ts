@@ -1,4 +1,4 @@
-import type { DreamAnalysis, JungianInsights, FreudianInsights, NeuroscientistInsights } from '../../types';
+import type { DreamAnalysis, JungianInsights, FreudianInsights, MaryInsights } from '../../types';
 import { logger } from '../../utils/logger';
 
 /**
@@ -11,7 +11,7 @@ export class ResponseStandardizer {
    * while preserving additional fields in an additionalInfo object
    */
   static standardizeResponse(
-    interpretation: DreamAnalysis | JungianInsights | FreudianInsights | NeuroscientistInsights
+    interpretation: DreamAnalysis | JungianInsights | FreudianInsights | MaryInsights
   ): DreamAnalysis & { additionalInfo?: Record<string, any> } {
     // If it's already in DreamAnalysis format, return as is
     if (this.isDreamAnalysis(interpretation)) {
@@ -28,9 +28,9 @@ export class ResponseStandardizer {
       return this.standardizeFreudianInsights(interpretation as FreudianInsights);
     }
 
-    // Handle NeuroscientistInsights
-    if ('type' in interpretation && interpretation.type === 'neuroscientist') {
-      return this.standardizeNeuroscientistInsights(interpretation as NeuroscientistInsights);
+    // Handle MaryInsights
+    if ('type' in interpretation && interpretation.type === 'mary') {
+      return this.standardizeMaryInsights(interpretation as MaryInsights);
     }
 
     // Fallback - should not reach here
@@ -180,9 +180,9 @@ export class ResponseStandardizer {
   }
 
   /**
-   * Convert NeuroscientistInsights to standardized format
+   * Convert MaryInsights to standardized format
    */
-  private static standardizeNeuroscientistInsights(insights: NeuroscientistInsights): DreamAnalysis & { additionalInfo?: Record<string, any> } {
+  private static standardizeMaryInsights(insights: MaryInsights): DreamAnalysis & { additionalInfo?: Record<string, any> } {
     // Extract core interpretation
     const interpretationText = insights.interpretation || insights.coreMessage;
 

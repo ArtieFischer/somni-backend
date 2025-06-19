@@ -4,7 +4,7 @@
  * Makes the LLM consider multiple interpretations before delivering the final response,
  * ensuring higher quality, more engaging, and more unique dream analyses.
  * 
- * This module is reusable across all interpreters (Jung, Freud, Neuroscientist, future ones).
+ * This module is reusable across all interpreters (Jung, Freud, Mary, future ones).
  */
 export class DebateModule {
   
@@ -23,7 +23,7 @@ export class DebateModule {
 
   /**
    * Generate debate instructions for any interpreter
-   * @param interpreterType - The type of interpreter (jung, freud, neuroscientist)
+   * @param interpreterType - The type of interpreter (jung, freud, mary)
    * @param interpreterPersonality - Brief description of the interpreter's unique approach
    * @returns String containing the debate process instructions
    */
@@ -56,6 +56,10 @@ Choose the hypothesis that scores highest overall. Consider:
 - Which feels most authentic to your ${interpreterType} expertise
 - Which provides the most valuable insights for this specific person
 
+IMPORTANT: Do NOT default to hypothesis A. Genuinely evaluate all three options.
+Sometimes B or C will be superior - select based on quality, not order.
+Your selection MUST be justified by the actual merits of each hypothesis.
+
 STEP 4: GENERATE FINAL RESPONSE
 Use your winning hypothesis to craft the final JSON response. Make it even better by:
 - Adding specific details that make it feel personally crafted for this dreamer
@@ -79,7 +83,7 @@ Include these fields in your standard JSON response along with the required drea
 
   /**
    * Generate interpreter-specific guidance for the debate process
-   * @param interpreterType - jung, freud, or neuroscientist
+   * @param interpreterType - jung, freud, or mary
    * @returns String with specific guidance for that interpreter's debate process
    */
   static generateInterpreterSpecificGuidance(interpreterType: string): string {
@@ -100,7 +104,7 @@ FREUDIAN DEBATE FOCUS:
 - Each hypothesis MUST analyze the SPECIFIC symbols: dark water (what forbidden content?), mother's voice (what superego/id conflict?), syrupy movement (what resistance?)
 - Connect to the dreamer's actual psychodynamic situation, not generic psychoanalytic theory
 `,
-      'neuroscientist': `
+      'mary': `
 NEUROSCIENTIST DEBATE FOCUS:
 - Hypothesis A: Could focus on memory consolidation (how does childhood bedroom/mother voice relate to memory processing?)
 - Hypothesis B: Could explore emotional regulation (what does dark water + movement difficulty reveal about emotional processing?)

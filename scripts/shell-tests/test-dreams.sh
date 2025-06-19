@@ -11,7 +11,7 @@ BASE_URL="http://localhost:3000/api/v1/interpretation/test/interpret"
 # Get parameters
 INTERPRETER=$1
 OUTPUT_FILE=$2
-INTERPRETERS=("jung" "freud" "neuroscientist")
+INTERPRETERS=("jung" "freud" "mary")
 
 if [ ! -z "$INTERPRETER" ]; then
     INTERPRETERS=("$INTERPRETER")

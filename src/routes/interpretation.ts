@@ -257,7 +257,7 @@ router.post('/switch-model', async (req, res) => {
     modelConfigService.switchAllToModel(model);
     
     // Get info for all interpreters
-    const interpreterModels = (['jung', 'freud', 'neuroscientist', 'astrologist'] as InterpreterType[])
+    const interpreterModels = (['jung', 'freud', 'mary', 'astrologist'] as InterpreterType[])
       .map(type => ({
         interpreter: type,
         ...modelConfigService.getCurrentModelInfo(type)
@@ -298,7 +298,7 @@ router.get('/current-model', async (req, res) => {
     }
     
     // Return info for all interpreters
-    const interpreterModels = (['jung', 'freud', 'neuroscientist', 'astrologist'] as InterpreterType[])
+    const interpreterModels = (['jung', 'freud', 'mary', 'astrologist'] as InterpreterType[])
       .map(type => ({
         interpreter: type,
         ...modelConfigService.getCurrentModelInfo(type)

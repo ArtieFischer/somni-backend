@@ -1,5 +1,6 @@
 import { BasePromptBuilder, type DreamAnalysisRequest } from '../../base';
 import { PromptRandomiser } from '../../utils/randomiser';
+import { SimpleFreudianStateManager } from './simple-state-manager';
 
 /**
  * Authentic Freudian Prompt Builder
@@ -7,6 +8,7 @@ import { PromptRandomiser } from '../../utils/randomiser';
  * Uses centralized PromptRandomiser with history tracking to eliminate repetition
  */
 export class FreudianPromptBuilder extends BasePromptBuilder {
+  private stateManager = SimpleFreudianStateManager.getInstance();
   
   /**
    * Build interpreter-specific system prompt
@@ -139,7 +141,29 @@ Core principles:
     const psychoTerms = this.selectPsychoanalyticTerms(dreamText);
     const interpretationStructure = this.selectInterpretationStructure(dreamText);
     
-    const forbiddenPhrases = FreudianPromptBuilder.FORBIDDEN.join(', ');
+    // Generate signature and check if it's been used recently
+    const signature = this.stateManager.generateSignature(
+      analyticalFocus,
+      psychoTerms.psychicProcess,
+      interpretationStructure
+    );
+    
+    // If this combination was used recently, force re-selection
+    if (this.stateManager.isSignatureBlocked(signature)) {
+      // Re-run selections with different seeds to get new combinations
+      return this.buildOutputFormat({
+        ...request,
+        dreamTranscription: dreamText + Math.random() // Add timestamp to change seed
+      });
+    }
+    
+    // Track this interpretation signature
+    this.stateManager.trackInterpretation(signature);
+    
+    const forbiddenPhrases = [
+      ...FreudianPromptBuilder.FORBIDDEN,
+      ...this.stateManager.getForbiddenPatterns()
+    ].join(', ');
     
     return `${this.generateDebateSection('freud', 'Sigmund Freud, pioneering psychoanalyst uncovering the unconscious mechanisms of the human mind')}
 
@@ -176,6 +200,7 @@ FREUD'S AUTHENTIC VOICE REQUIREMENTS:
 
 CRITICAL ANTI-REPETITION RULES:
 - NEVER use formulaic openings or template language
+${this.stateManager.getForbiddenOpenings().map(rule => `- ${rule}`).join('\n')}
 - NEVER follow predictable psychoanalytic sentence patterns
 - NEVER use generic phrases like "The mechanisms at work..." or "What we have here..."
 - CREATE ORIGINAL FORMULATIONS that emerge from THIS dream's unconscious dynamics
