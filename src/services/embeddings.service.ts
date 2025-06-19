@@ -1,14 +1,12 @@
-import { pipeline, env } from '@xenova/transformers';
-
-// Configure environment for better memory management
-env.allowLocalModels = false;
-env.useBrowserCache = false; // Disable browser cache
-env.backends.onnx.wasm.numThreads = 1; // Limit threads to reduce memory usage
+// Dynamic import will be handled in the initialize method
+let pipeline: any;
+let env: any;
 
 export class EmbeddingsService {
   private static instance: EmbeddingsService;
   private embedder: any = null;
   private initPromise: Promise<void> | null = null;
+  private transformersLoaded: boolean = false;
 
   private constructor() {}
 
@@ -31,6 +29,22 @@ export class EmbeddingsService {
 
   private async doInitialize(): Promise<void> {
     try {
+      // Dynamically import @xenova/transformers if not already loaded
+      if (!this.transformersLoaded) {
+        console.log('Loading @xenova/transformers...');
+        const transformers = await import('@xenova/transformers');
+        pipeline = transformers.pipeline;
+        env = transformers.env;
+        
+        // Configure environment for better memory management
+        env.allowLocalModels = false;
+        env.useBrowserCache = false; // Disable browser cache
+        env.backends.onnx.wasm.numThreads = 1; // Limit threads to reduce memory usage
+        
+        this.transformersLoaded = true;
+        console.log('@xenova/transformers loaded successfully');
+      }
+      
       console.log('Initializing embeddings model...');
       this.embedder = await pipeline(
         'feature-extraction',
@@ -86,6 +100,7 @@ export class EmbeddingsService {
       // Clear the model from memory
       this.embedder = null;
       this.initPromise = null;
+      this.transformersLoaded = false;
       
       // Force garbage collection if available
       if (global.gc) {
