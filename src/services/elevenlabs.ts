@@ -32,13 +32,22 @@ class ElevenLabsService {
       // Create Blob from Buffer for ElevenLabs API
       const audioBlob = new Blob([audioBuffer], { type: 'audio/wav' });
 
-      const result = await this.client.speechToText.convert({
+      const requestParams = {
         file: audioBlob,
         modelId: 'scribe_v1',
         ...(options.languageCode ? { languageCode: options.languageCode } : { languageCode: 'eng' }),
         tagAudioEvents: options.tagAudioEvents ?? true,
         diarize: options.diarize ?? false,
+      };
+
+      logger.info('ElevenLabs API request params', {
+        modelId: requestParams.modelId,
+        languageCode: requestParams.languageCode,
+        tagAudioEvents: requestParams.tagAudioEvents,
+        diarize: requestParams.diarize
       });
+
+      const result = await this.client.speechToText.convert(requestParams);
 
       logger.info('Transcription completed', {
         languageCode: result.languageCode,
