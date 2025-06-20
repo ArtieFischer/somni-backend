@@ -302,7 +302,7 @@ export class OpenRouterService {
       model?: string;
     } = {}
   ): Promise<string> {
-    const prompt = `Based on the following dream transcription, create a short, creative, and evocative title (5-10 words maximum). The title should capture the essence or most striking element of the dream. Do not include any interpretation or analysis, just the title itself.
+    const prompt = `Based on the following dream transcription, create a short, creative, and evocative title (4-7 words maximum). The title should capture the essence or most striking element of the dream. Do not include any interpretation or analysis, just the title itself.
 
 Dream transcription:
 "${transcript}"
