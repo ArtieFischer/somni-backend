@@ -29,6 +29,15 @@ router.post(
 
     try {
       logTranscription('started', dreamId, userId, { duration, options });
+      
+      // Log language parameter for debugging
+      logger.info('Transcription language parameter', {
+        dreamId,
+        userId,
+        languageCode: options?.languageCode || 'auto-detect',
+        hasLanguageCode: !!options?.languageCode,
+        allOptions: options
+      });
 
       // Convert base64 to buffer
       let audioBuffer: Buffer;
@@ -79,6 +88,13 @@ router.post(
       // Perform transcription
       let transcription;
       try {
+        logger.info('Calling ElevenLabs with language options', {
+          dreamId,
+          languageCode: options?.languageCode || 'auto-detect',
+          tagAudioEvents: options?.tagAudioEvents ?? true,
+          diarize: options?.diarize ?? false
+        });
+        
         transcription = await elevenLabsService.transcribeAudio(audioBuffer, options);
       } catch (error: any) {
         logger.error('ElevenLabs transcription failed', { 
@@ -154,6 +170,15 @@ router.post(
         textLength: transcription.text.length,
         languageCode: transcription.languageCode,
         duration,
+      });
+      
+      // Log language detection result
+      logger.info('Transcription language result', {
+        dreamId,
+        requestedLanguage: options?.languageCode || 'auto-detect',
+        detectedLanguage: transcription.languageCode,
+        languageProbability: transcription.languageProbability,
+        languageMatch: options?.languageCode === transcription.languageCode
       });
 
       // Return success response
