@@ -18,7 +18,9 @@
     "ingest-mary": "node --expose-gc -r tsx/cjs src/scripts/rag/ingest-mary-texts.ts",
     "test:rag-api": "tsx src/scripts/test-rag-api.ts",
     "test:rag-debug": "tsx src/scripts/test-rag-debug.ts",
-    "test:freud-rag": "tsx src/scripts/test-freud-rag.ts"
+    "test:freud-rag": "tsx src/scripts/test-freud-rag.ts",
+    "setup:image-bucket": "tsx src/scripts/setup-image-bucket.ts",
+    "test:image-generation": "tsx src/scripts/test-image-generation.ts"
   },
   "keywords": [
     "somni",

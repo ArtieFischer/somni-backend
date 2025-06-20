@@ -13,11 +13,15 @@ interface ImageGenerationRequest {
 }
 
 interface ImageGenerationResponse {
-  id: string;
-  created: number;
-  model: string;
-  image_url: string;
-  prompt: string;
+  id?: string;
+  created?: number;
+  model?: string;
+  image_url?: string;
+  url?: string;
+  data?: Array<{
+    url: string;
+  }>;
+  prompt?: string;
 }
 
 export class ImageRouterService {
@@ -66,7 +70,7 @@ export class ImageRouterService {
         });
 
         const response = await axios.post<ImageGenerationResponse>(
-          `${this.baseUrl}/images/generations`,
+          `${this.baseUrl}/openai/images/generations`,
           requestPayload,
           {
             headers: {
@@ -77,14 +81,29 @@ export class ImageRouterService {
           }
         );
 
+        // Extract URL from response (handle different possible formats)
+        let imageUrl: string | undefined;
+        
+        if (response.data.url) {
+          imageUrl = response.data.url;
+        } else if (response.data.image_url) {
+          imageUrl = response.data.image_url;
+        } else if (response.data.data && response.data.data[0]?.url) {
+          imageUrl = response.data.data[0].url;
+        }
+
         logger.info('Dream image generated successfully', {
-          imageId: response.data.id,
-          imageUrl: response.data.image_url,
-          model: response.data.model,
+          imageUrl,
+          model: response.data.model || model,
           usedFallback: model === this.fallbackModel,
+          fullResponse: response.data,
         });
 
-        return response.data.image_url;
+        if (!imageUrl) {
+          throw new Error('No image URL found in response');
+        }
+
+        return imageUrl;
       } catch (error) {
         lastError = error instanceof Error ? error : new Error('Unknown error');
         

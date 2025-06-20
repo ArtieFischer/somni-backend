@@ -21,7 +21,8 @@
       "Bash(node dist/scripts/rag/apply-mary-schema.js:*)",
       "Bash(node dist/scripts/rag/ingest-mary-texts.js:*)",
       "Bash(npm run typecheck:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "WebFetch(domain:api.imagerouter.io)"
     ],
     "deny": []
   },

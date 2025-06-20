@@ -25,6 +25,11 @@ async function testImageGeneration() {
     logger.info('Step 2: Generating image...');
     const imageUrl = await imageRouterService.generateDreamImage(sceneDescription);
     logger.info('Image generated:', { imageUrl });
+    
+    // Check if imageUrl is valid
+    if (!imageUrl || imageUrl === 'undefined') {
+      throw new Error('Invalid image URL returned from ImageRouter');
+    }
 
     // Step 3: Download image
     logger.info('Step 3: Downloading image...');
