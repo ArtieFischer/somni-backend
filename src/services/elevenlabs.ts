@@ -35,7 +35,7 @@ class ElevenLabsService {
       const result = await this.client.speechToText.convert({
         file: audioBlob,
         modelId: 'scribe_v1',
-        ...(options.languageCode && { languageCode: options.languageCode }),
+        languageCode: options.languageCode || 'eng',
         tagAudioEvents: options.tagAudioEvents ?? true,
         diarize: options.diarize ?? false,
       });

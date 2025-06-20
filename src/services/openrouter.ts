@@ -292,6 +292,64 @@ export class OpenRouterService {
   }
 
   /**
+   * Generate a creative title for a dream based on its transcription
+   */
+  async generateDreamTitle(
+    transcript: string,
+    options: {
+      maxTokens?: number;
+      temperature?: number;
+      model?: string;
+    } = {}
+  ): Promise<string> {
+    const prompt = `Based on the following dream transcription, create a short, creative, and evocative title (5-10 words maximum). The title should capture the essence or most striking element of the dream. Do not include any interpretation or analysis, just the title itself.
+
+Dream transcription:
+"${transcript}"
+
+Title:`;
+
+    try {
+      logger.info('Generating dream title', {
+        transcriptLength: transcript.length,
+        model: options.model || 'meta-llama/llama-4-scout:free',
+      });
+
+      const response = await this.generateCompletion(
+        [{ role: 'user', content: prompt }],
+        {
+          model: options.model || 'meta-llama/llama-4-scout:free',
+          temperature: options.temperature ?? 0.7,
+          maxTokens: options.maxTokens ?? 20,
+        }
+      );
+
+      // Clean up the title (remove quotes, extra whitespace, etc.)
+      const title = response.content
+        .trim()
+        .replace(/^["']|["']$/g, '') // Remove surrounding quotes
+        .replace(/\.$/, '') // Remove trailing period
+        .trim();
+
+      logger.info('Dream title generated', {
+        title,
+        tokenUsage: response.usage,
+        model: response.model,
+      });
+
+      return title;
+    } catch (error) {
+      logger.error('Failed to generate dream title', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      
+      // Return a fallback title based on timestamp
+      const date = new Date();
+      return `Dream of ${date.toLocaleDateString()}`;
+    }
+  }
+
+  /**
    * Delay utility for retries
    */
   private delay(ms: number): Promise<void> {

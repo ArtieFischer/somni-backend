@@ -4,7 +4,9 @@ import { transcriptionRateLimit } from '../middleware/rateLimit';
 import { validateTranscribeRequest, validateRequestSize, validateContentType } from '../middleware/validation';
 import { elevenLabsService } from '../services/elevenlabs';
 import { supabaseService } from '../services/supabase';
+import { openRouterService } from '../services/openrouter';
 import { logger, logTranscription } from '../utils/logger';
+import { features } from '../config/features';
 import type { TranscribeRequest, TranscribeResponse } from '../types';
 
 const router = Router();
@@ -124,11 +126,32 @@ router.post(
         } as TranscribeResponse);
       }
 
+      // Generate title if feature is enabled
+      let title: string | undefined;
+      if (features.titleGeneration.enabled) {
+        try {
+          logger.info('Generating dream title', { dreamId, userId });
+          title = await openRouterService.generateDreamTitle(transcription.text, {
+            model: features.titleGeneration.model,
+            maxTokens: features.titleGeneration.maxTokens,
+            temperature: features.titleGeneration.temperature,
+          });
+          logger.info('Dream title generated', { dreamId, title });
+        } catch (error) {
+          // Log error but don't fail the transcription
+          logger.error('Failed to generate dream title', { 
+            dreamId, 
+            error: error instanceof Error ? error.message : 'Unknown error' 
+          });
+        }
+      }
+
       // Update dream with transcription results
       const transcriptionUpdated = await supabaseService.updateDreamTranscription(
         dreamId,
         {
           text: transcription.text,
+          ...(title && { title }),
           languageCode: transcription.languageCode || undefined,
           languageProbability: transcription.languageProbability || undefined,
           metadata: {

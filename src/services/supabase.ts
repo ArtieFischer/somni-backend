@@ -123,6 +123,7 @@ class SupabaseService {
     dreamId: string,
     transcription: {
       text: string;
+      title?: string;
       languageCode?: string | undefined;
       languageProbability?: number | undefined;
       metadata?: Record<string, any>;
@@ -132,6 +133,7 @@ class SupabaseService {
     try {
       const updateData: Partial<DreamRecord> = {
         raw_transcript: transcription.text,
+        ...(transcription.title && { title: transcription.title }),
         transcription_status: 'completed',
         transcription_metadata: {
           language_code: transcription.languageCode,
