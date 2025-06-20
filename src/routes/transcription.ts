@@ -5,6 +5,7 @@ import { validateTranscribeRequest, validateRequestSize, validateContentType } f
 import { elevenLabsService } from '../services/elevenlabs';
 import { supabaseService } from '../services/supabase';
 import { openRouterService } from '../services/openrouter';
+import { imageRouterService } from '../services/imageRouter';
 import { logger, logTranscription } from '../utils/logger';
 import { features } from '../config/features';
 import type { TranscribeRequest, TranscribeResponse } from '../types';
@@ -36,7 +37,7 @@ router.post(
       logger.info('Transcription language parameter', {
         dreamId,
         userId,
-        languageCode: options?.languageCode || 'auto-detect',
+        languageCode: options?.languageCode,
         hasLanguageCode: !!options?.languageCode,
         allOptions: options
       });
@@ -92,7 +93,7 @@ router.post(
       try {
         logger.info('Calling ElevenLabs with language options', {
           dreamId,
-          languageCode: options?.languageCode || 'auto-detect',
+          languageCode: options?.languageCode || 'not specified (will default to eng)',
           tagAudioEvents: options?.tagAudioEvents ?? true,
           diarize: options?.diarize ?? false
         });
@@ -146,6 +147,45 @@ router.post(
         }
       }
 
+      // Generate image if feature is enabled
+      let imageUrl: string | undefined;
+      let imagePrompt: string | undefined;
+      if (features.imageGeneration.enabled) {
+        try {
+          logger.info('Generating dream scene description', { dreamId, userId });
+          
+          // First, generate scene description
+          const sceneDescription = await openRouterService.generateDreamSceneDescription(transcription.text, {
+            model: features.titleGeneration.model, // Using same model as title generation
+            maxTokens: features.imageGeneration.sceneDescriptionMaxTokens,
+            temperature: features.imageGeneration.sceneDescriptionTemperature,
+          });
+          
+          logger.info('Dream scene description generated', { dreamId, sceneDescription });
+          
+          // Generate the image
+          const generatedImageUrl = await imageRouterService.generateDreamImage(sceneDescription);
+          
+          // Download the image
+          const imageBuffer = await imageRouterService.downloadImage(generatedImageUrl);
+          
+          // Upload to Supabase storage
+          const uploadedUrl = await supabaseService.uploadDreamImage(dreamId, imageBuffer);
+          
+          if (uploadedUrl) {
+            imageUrl = uploadedUrl;
+            imagePrompt = sceneDescription;
+            logger.info('Dream image generated and uploaded', { dreamId, imageUrl });
+          }
+        } catch (error) {
+          // Log error but don't fail the transcription
+          logger.error('Failed to generate dream image', { 
+            dreamId, 
+            error: error instanceof Error ? error.message : 'Unknown error' 
+          });
+        }
+      }
+
       // Update dream with transcription results
       const transcriptionUpdated = await supabaseService.updateDreamTranscription(
         dreamId,
@@ -161,6 +201,16 @@ router.post(
         },
         userId
       );
+
+      // Update dream with image if generated
+      if (imageUrl && imagePrompt) {
+        await supabaseService.updateDreamImage(
+          dreamId,
+          imageUrl,
+          imagePrompt,
+          userId
+        );
+      }
 
       if (!transcriptionUpdated) {
         logger.error('Failed to update dream with transcription', { dreamId, userId });
@@ -198,10 +248,10 @@ router.post(
       // Log language detection result
       logger.info('Transcription language result', {
         dreamId,
-        requestedLanguage: options?.languageCode || 'auto-detect',
+        requestedLanguage: options?.languageCode || 'not specified (defaulting to eng)',
         detectedLanguage: transcription.languageCode,
         languageProbability: transcription.languageProbability,
-        languageMatch: options?.languageCode === transcription.languageCode
+        wasLanguageSpecified: !!options?.languageCode
       });
 
       // Return success response

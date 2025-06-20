@@ -350,6 +350,58 @@ Title:`;
   }
 
   /**
+   * Generate a visual scene description for a dream based on its transcription
+   */
+  async generateDreamSceneDescription(
+    transcript: string,
+    options: {
+      maxTokens?: number;
+      temperature?: number;
+      model?: string;
+    } = {}
+  ): Promise<string> {
+    const prompt = `Based on the following dream transcription, create a short (max 30 words) description of a single visual scene that illustrates the dream. Focus only on what can be seen - colors, objects, environment, lighting. No symbolism, no interpretation, just pure visual description.
+
+Dream transcription:
+"${transcript}"
+
+Visual scene description:`;
+
+    try {
+      logger.info('Generating dream scene description', {
+        transcriptLength: transcript.length,
+        model: options.model || 'meta-llama/llama-4-scout:free',
+      });
+
+      const response = await this.generateCompletion(
+        [{ role: 'user', content: prompt }],
+        {
+          model: options.model || 'meta-llama/llama-4-scout:free',
+          temperature: options.temperature ?? 0.8,
+          maxTokens: options.maxTokens ?? 100,
+        }
+      );
+
+      const sceneDescription = response.content.trim();
+
+      logger.info('Dream scene description generated', {
+        descriptionLength: sceneDescription.length,
+        tokenUsage: response.usage,
+        model: response.model,
+      });
+
+      return sceneDescription;
+    } catch (error) {
+      logger.error('Failed to generate dream scene description', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      
+      // Return a generic scene description as fallback
+      return 'A dreamlike scene with soft colors and abstract shapes floating in a misty atmosphere';
+    }
+  }
+
+  /**
    * Delay utility for retries
    */
   private delay(ms: number): Promise<void> {

@@ -11,6 +11,7 @@ import { transcriptionRouter } from './routes/transcription';
 import { testModelsRouter } from './routes/test-models';
 import interpretationRouter from './routes/interpretation';
 import ragDebugRouter from './routes/rag-debug';
+import { sceneDescriptionRouter } from './routes/scene-description';
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use('/api/v1/transcription', transcriptionRouter);
 app.use('/api/v1/interpretation', interpretationRouter);
 app.use('/api/v1/test', testModelsRouter);
 app.use('/api/v1/rag-debug', ragDebugRouter);
+app.use('/api/v1/scene-description', sceneDescriptionRouter);
 
 // Root endpoint
 app.get('/', (_req, res) => {

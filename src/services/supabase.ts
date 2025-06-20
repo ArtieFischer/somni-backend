@@ -280,6 +280,150 @@ class SupabaseService {
       return false;
     }
   }
+
+  /**
+   * Create storage bucket for dream images if it doesn't exist
+   */
+  async ensureDreamImagesBucket(): Promise<boolean> {
+    const bucketName = 'dream-images';
+    
+    try {
+      // Check if bucket exists
+      const { data: buckets, error: listError } = await this.client
+        .storage
+        .listBuckets();
+
+      if (listError) {
+        logger.error('Failed to list storage buckets', { error: listError.message });
+        return false;
+      }
+
+      const bucketExists = buckets?.some(bucket => bucket.name === bucketName);
+
+      if (!bucketExists) {
+        // Create the bucket
+        const { error: createError } = await this.client
+          .storage
+          .createBucket(bucketName, {
+            public: true, // Make images publicly accessible
+            fileSizeLimit: 5242880, // 5MB limit
+            allowedMimeTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+          });
+
+        if (createError) {
+          logger.error('Failed to create dream-images bucket', { error: createError.message });
+          return false;
+        }
+
+        logger.info('Created dream-images storage bucket');
+      }
+
+      return true;
+    } catch (error) {
+      logger.error('Error ensuring dream-images bucket', { error });
+      return false;
+    }
+  }
+
+  /**
+   * Upload dream image to Supabase storage
+   */
+  async uploadDreamImage(
+    dreamId: string,
+    imageBuffer: Buffer,
+    contentType: string = 'image/png'
+  ): Promise<string | null> {
+    try {
+      // Ensure bucket exists
+      await this.ensureDreamImagesBucket();
+
+      const fileName = `${dreamId}.png`;
+      const filePath = fileName; // Could add subfolders like `${userId}/${dreamId}.png` if needed
+
+      // Upload the image
+      const { error: uploadError } = await this.client
+        .storage
+        .from('dream-images')
+        .upload(filePath, imageBuffer, {
+          contentType,
+          upsert: true, // Replace if already exists
+        });
+
+      if (uploadError) {
+        logger.error('Failed to upload dream image', { 
+          dreamId, 
+          error: uploadError.message 
+        });
+        return null;
+      }
+
+      // Get the public URL
+      const { data: { publicUrl } } = this.client
+        .storage
+        .from('dream-images')
+        .getPublicUrl(filePath);
+
+      logger.info('Dream image uploaded successfully', { 
+        dreamId, 
+        publicUrl 
+      });
+
+      return publicUrl;
+    } catch (error) {
+      logger.error('Error uploading dream image', { dreamId, error });
+      return null;
+    }
+  }
+
+  /**
+   * Update dream with image URL and prompt
+   */
+  async updateDreamImage(
+    dreamId: string,
+    imageUrl: string,
+    imagePrompt: string,
+    userId?: string
+  ): Promise<boolean> {
+    try {
+      const updateData: Partial<DreamRecord> = {
+        image_url: imageUrl,
+        image_prompt: imagePrompt,
+        updated_at: new Date().toISOString(),
+      };
+
+      const query = this.client
+        .from('dreams')
+        .update(updateData)
+        .eq('id', dreamId);
+
+      // Add user filter if provided for extra security
+      if (userId) {
+        query.eq('user_id', userId);
+      }
+
+      const { error } = await query;
+
+      if (error) {
+        logger.error('Failed to update dream image', { 
+          dreamId, 
+          userId,
+          error: error.message 
+        });
+        return false;
+      }
+
+      logger.info('Dream image updated', { 
+        dreamId, 
+        userId, 
+        imageUrl 
+      });
+      
+      return true;
+    } catch (error) {
+      logger.error('Error updating dream image', { dreamId, userId, error });
+      return false;
+    }
+  }
 }
 
 export const supabaseService = new SupabaseService(); 

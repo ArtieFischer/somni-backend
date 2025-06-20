@@ -64,6 +64,8 @@ export interface DreamRecord {
   transcription_status?: 'pending' | 'processing' | 'completed' | 'failed';
   transcription_metadata?: Record<string, any>;
   transcription_job_id?: string;
+  image_url?: string;
+  image_prompt?: string;
 }
 
 // API Error types
