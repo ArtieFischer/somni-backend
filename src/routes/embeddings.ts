@@ -1,31 +1,10 @@
 import { Router, Request, Response } from 'express';
 import { supabaseService } from '../services/supabase';
 import { authenticateRequest, verifyApiSecret } from '../middleware/auth';
+import { embeddingsService } from '../services/embeddings.service';
 import logger from '../utils/logger';
 
 const router = Router();
-
-// Singleton pattern for the embedding pipeline
-class EmbeddingPipeline {
-  static task = 'feature-extraction';
-  static model = 'Xenova/all-MiniLM-L6-v2';
-  static instance: any = null;
-
-  static async getInstance(): Promise<any> {
-    if (this.instance === null) {
-      logger.info('Loading MiniLM model...');
-      // Dynamically import the Transformers.js library
-      const { pipeline, env } = await import('@xenova/transformers') as any;
-      
-      // Configure environment
-      env.allowLocalModels = false;
-      
-      this.instance = await pipeline(this.task, this.model);
-      logger.info('Model loaded successfully');
-    }
-    return this.instance;
-  }
-}
 
 /**
  * Generate embedding for a dream
@@ -40,10 +19,8 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
       });
     }
 
-    // Generate embedding
-    const embedder = await EmbeddingPipeline.getInstance();
-    const output = await embedder(transcript, { pooling: 'mean', normalize: true });
-    const embedding = Array.from(output.data);
+    // Generate embedding using existing service
+    const embedding = await embeddingsService.generateEmbedding(transcript);
 
     // Update dream with embedding
     const { error: dreamError } = await supabaseService.getClient()
@@ -121,9 +98,7 @@ router.post('/embed-themes', verifyApiSecret, async (req: Request, res: Response
           ? `${theme.label}. ${theme.description}`
           : theme.label;
         
-        const embedder = await EmbeddingPipeline.getInstance();
-        const output = await embedder(textToEmbed, { pooling: 'mean', normalize: true });
-        const embedding = Array.from(output.data);
+        const embedding = await embeddingsService.generateEmbedding(textToEmbed);
 
         // Upsert theme
         const { error } = await supabaseService.getClient()

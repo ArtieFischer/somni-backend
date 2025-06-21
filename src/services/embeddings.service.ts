@@ -48,7 +48,7 @@ export class EmbeddingsService {
       console.log('Initializing embeddings model...');
       this.embedder = await pipeline(
         'feature-extraction',
-        'Supabase/gte-small'
+        'Xenova/all-MiniLM-L6-v2'
       );
       console.log('Embeddings model initialized successfully');
     } catch (error) {
