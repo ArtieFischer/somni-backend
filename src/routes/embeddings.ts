@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { supabaseService } from '../services/supabase';
-import { authenticateRequest } from '../middleware/auth';
+import { authenticateRequest, verifyApiSecret } from '../middleware/auth';
 import logger from '../utils/logger';
 
 const router = Router();
@@ -87,8 +87,9 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
 
 /**
  * Generate embeddings for themes
+ * This endpoint only requires API secret authentication
  */
-router.post('/embed-themes', authenticateRequest, async (req: Request, res: Response): Promise<Response> => {
+router.post('/embed-themes', verifyApiSecret, async (req: Request, res: Response): Promise<Response> => {
   try {
     const { themes } = req.body;
 
