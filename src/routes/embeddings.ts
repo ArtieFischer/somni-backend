@@ -71,6 +71,64 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
 });
 
 /**
+ * Test single theme embedding with detailed error info
+ */
+router.post('/test-single-theme', verifyApiSecret, async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { theme } = req.body;
+
+    if (!theme || !theme.code || !theme.label) {
+      return res.status(400).json({ 
+        error: 'theme with code and label is required' 
+      });
+    }
+
+    // Generate embedding
+    const textToEmbed = theme.description 
+      ? `${theme.label}. ${theme.description}`
+      : theme.label;
+    
+    const embedding = await embeddingsService.generateEmbedding(textToEmbed);
+
+    // Try direct SQL update
+    const { data, error } = await supabaseService.getClient()
+      .rpc('update_theme_embedding', {
+        theme_code: theme.code,
+        theme_embedding: embedding
+      });
+
+    if (error) {
+      // Fallback to direct update
+      const { error: updateError } = await supabaseService.getClient()
+        .from('themes')
+        .update({ embedding })
+        .eq('code', theme.code)
+        .select();
+
+      return res.json({
+        success: false,
+        method: 'direct_update',
+        error: updateError?.message || 'Unknown error',
+        details: updateError,
+        embedding_generated: true,
+        embedding_size: embedding.length
+      });
+    }
+
+    return res.json({
+      success: true,
+      method: 'rpc_update',
+      data,
+      embedding_size: embedding.length
+    });
+
+  } catch (error: any) {
+    logger.error('Test theme embedding error:', error);
+    return res.status(500).json({ error: error.message, stack: error.stack });
+  }
+});
+
+/**
  * Generate embeddings for themes
  * This endpoint only requires API secret authentication
  */
