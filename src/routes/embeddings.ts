@@ -1,5 +1,4 @@
 import { Router, Request, Response } from 'express';
-import { pipeline } from '@xenova/transformers';
 import { supabaseService } from '../services/supabase';
 import { authenticateRequest } from '../middleware/auth';
 import logger from '../utils/logger';
@@ -12,6 +11,8 @@ let embedder: any = null;
 async function getEmbedder() {
   if (!embedder) {
     logger.info('Loading MiniLM model...');
+    // Dynamic import for ESM module
+    const { pipeline } = await import('@xenova/transformers');
     embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
     logger.info('Model loaded successfully');
   }
