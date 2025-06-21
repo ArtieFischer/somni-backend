@@ -377,6 +377,7 @@ class SupabaseService {
 
   /**
    * Update dream with image URL and prompt
+   * Note: In new schema, this should insert into dream_images table
    */
   async updateDreamImage(
     dreamId: string,
@@ -385,29 +386,47 @@ class SupabaseService {
     userId?: string
   ): Promise<boolean> {
     try {
-      const updateData: Partial<DreamRecord> = {
-        image_url: imageUrl,
+      // First update the dream with the image prompt
+      const updateData = {
         image_prompt: imagePrompt,
         updated_at: new Date().toISOString(),
       };
 
-      const query = this.client
+      const dreamQuery = this.client
         .from('dreams')
         .update(updateData)
         .eq('id', dreamId);
 
       // Add user filter if provided for extra security
       if (userId) {
-        query.eq('user_id', userId);
+        dreamQuery.eq('user_id', userId);
       }
 
-      const { error } = await query;
+      const { error: dreamError } = await dreamQuery;
 
-      if (error) {
-        logger.error('Failed to update dream image', { 
+      if (dreamError) {
+        logger.error('Failed to update dream', { 
           dreamId, 
           userId,
-          error: error.message 
+          error: dreamError.message 
+        });
+        return false;
+      }
+
+      // Then insert the image into dream_images table
+      const { error: imageError } = await this.client
+        .from('dream_images')
+        .insert({
+          dream_id: dreamId,
+          storage_path: imageUrl,
+          is_primary: true, // First image is primary by default
+        });
+
+      if (imageError) {
+        logger.error('Failed to insert dream image', { 
+          dreamId, 
+          userId,
+          error: imageError.message 
         });
         return false;
       }

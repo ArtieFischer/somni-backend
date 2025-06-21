@@ -53,6 +53,7 @@ export interface ElevenLabsTranscriptionResult {
 }
 
 // Database types matching Supabase schema
+// NOTE: Consider migrating to the comprehensive types in supabase/types/database.types.ts
 export interface DreamRecord {
   id: string;
   user_id: string;
@@ -64,8 +65,7 @@ export interface DreamRecord {
   transcription_status?: 'pending' | 'processing' | 'completed' | 'failed';
   transcription_metadata?: Record<string, any>;
   transcription_job_id?: string;
-  image_url?: string;
-  image_prompt?: string;
+  // Note: image_url and image_prompt moved to dream_images table in new schema
 }
 
 // API Error types

@@ -1,0 +1,150 @@
+import { Router, Request, Response } from 'express';
+import { pipeline } from '@xenova/transformers';
+import { supabaseService } from '../services/supabase';
+import { authenticateRequest } from '../middleware/auth';
+import logger from '../utils/logger';
+
+const router = Router();
+
+// Initialize the embedding model
+let embedder: any = null;
+
+async function getEmbedder() {
+  if (!embedder) {
+    logger.info('Loading MiniLM model...');
+    embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+    logger.info('Model loaded successfully');
+  }
+  return embedder;
+}
+
+/**
+ * Generate embedding for a dream
+ */
+router.post('/embed-dream', authenticateRequest, async (req: Request, res: Response) => {
+  try {
+    const { dream_id, transcript } = req.body;
+
+    if (!dream_id || !transcript) {
+      return res.status(400).json({ 
+        error: 'dream_id and transcript are required' 
+      });
+    }
+
+    // Generate embedding
+    const model = await getEmbedder();
+    const output = await model(transcript, { pooling: 'mean', normalize: true });
+    const embedding = Array.from(output.data);
+
+    // Update dream with embedding
+    const { data: dream, error: dreamError } = await supabaseService.client
+      .from('dreams')
+      .update({ embedding })
+      .eq('id', dream_id)
+      .select()
+      .single();
+
+    if (dreamError) {
+      throw new Error(`Failed to update dream: ${dreamError.message}`);
+    }
+
+    // Extract themes
+    const { data: themes, error: themeError } = await supabaseService.client
+      .rpc('search_themes', {
+        query_embedding: embedding,
+        similarity_threshold: 0.15,
+        max_results: 10
+      });
+
+    if (!themeError && themes && themes.length > 0) {
+      // Insert dream-theme associations
+      const dreamThemes = themes.map((theme: any, index: number) => ({
+        dream_id,
+        theme_code: theme.code,
+        rank: index + 1,
+        score: theme.score
+      }));
+
+      await supabaseService.client
+        .from('dream_themes')
+        .upsert(dreamThemes, { onConflict: 'dream_id,theme_code' });
+    }
+
+    res.json({
+      success: true,
+      dream_id,
+      embedding_size: embedding.length,
+      themes_found: themes?.length || 0,
+      themes
+    });
+
+  } catch (error: any) {
+    logger.error('Embedding generation error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * Generate embeddings for themes
+ */
+router.post('/embed-themes', authenticateRequest, async (req: Request, res: Response) => {
+  try {
+    const { themes } = req.body;
+
+    if (!themes || !Array.isArray(themes)) {
+      return res.status(400).json({ 
+        error: 'themes array is required' 
+      });
+    }
+
+    const model = await getEmbedder();
+    const results = [];
+
+    for (const theme of themes) {
+      if (!theme.code || !theme.label) {
+        results.push({ code: theme.code, success: false, error: 'Missing code or label' });
+        continue;
+      }
+
+      try {
+        // Generate embedding
+        const textToEmbed = theme.description 
+          ? `${theme.label}. ${theme.description}`
+          : theme.label;
+        
+        const output = await model(textToEmbed, { pooling: 'mean', normalize: true });
+        const embedding = Array.from(output.data);
+
+        // Upsert theme
+        const { error } = await supabaseService.client
+          .from('themes')
+          .upsert({
+            code: theme.code,
+            label: theme.label,
+            description: theme.description || null,
+            embedding
+          }, { onConflict: 'code' });
+
+        if (error) {
+          results.push({ code: theme.code, success: false, error: error.message });
+        } else {
+          results.push({ code: theme.code, success: true });
+        }
+      } catch (err: any) {
+        results.push({ code: theme.code, success: false, error: err.message });
+      }
+    }
+
+    res.json({
+      success: true,
+      processed: results.length,
+      results
+    });
+
+  } catch (error: any) {
+    logger.error('Theme embedding error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+export default router;

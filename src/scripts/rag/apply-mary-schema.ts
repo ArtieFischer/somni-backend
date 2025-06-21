@@ -52,7 +52,7 @@ async function applyMarySchema() {
       console.log('--- End SQL ---\n');
       
       console.log('Alternatively, you can run the full schema file:');
-      console.log('src/scripts/sql/01-knowledge-base-schema.sql');
+      console.log('supabase/migrations/000_initial_schema.sql (includes knowledge_base table)');
       
       return;
     }

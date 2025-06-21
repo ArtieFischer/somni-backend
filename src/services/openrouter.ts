@@ -4,6 +4,7 @@ import { logger } from '../utils/logger';
 import { modelConfigService } from './modelConfig';
 import type { TokenUsage, InterpreterType } from '../types';
 import type { CostEntry } from './modelConfig';
+import { appendix } from '../utils/appendix';
 
 export class OpenRouterService {
   private client: OpenAI;
@@ -399,6 +400,192 @@ Visual scene description:`;
       // Return a generic scene description as fallback
       return 'A dreamlike scene with soft colors and abstract shapes floating in a misty atmosphere';
     }
+  }
+
+  /**
+   * Generate dream metadata (title, scene, symbols) in a single batched call
+   */
+  async generateDreamMetadata(
+    transcript: string,
+    options: {
+      model?: string;
+      dreamId?: string;
+    } = {}
+  ): Promise<{
+    title: string;
+    scene: string;
+    symbols: string[];
+    validatedSymbols: string[];
+    usage: TokenUsage;
+    model: string;
+  }> {
+    const startTime = Date.now();
+    
+    // Shuffle the appendix to ensure different order each time
+    const shuffledAppendix = this.shuffleArray([...appendix]);
+    // Take only first 80 symbols to avoid token limits and moderation issues
+    const symbolSubset = shuffledAppendix.slice(0, 80).join(', ');
+    
+    const systemPrompt = `You are DREAM-METADATA v1. Work strictly in English.
+Return a single-line minified JSON. No additional keys.`;
+
+    const userPrompt = `### TASKS
+1. "title": 4-7 words, evocative, no punctuation at the end.
+2. "scene": ≤ 30 words, purely visual, present tense, no feelings or symbolism.
+3. "symbols": 3-7 generic nouns from APPENDIX. If nothing matches, invent a *new* generic noun (lowercase).
+
+### RULES
+• Each field is independent – do not let wording of one influence another.  
+• Use only information from the transcript.  
+• Output **exactly** this JSON schema: {"title":"…","scene":"…","symbols":["…","…"]}
+
+### APPENDIX (allowed nouns, lowercase)
+${symbolSubset}
+
+### DREAM TRANSCRIPT
+${transcript}`;
+
+    const messages: Array<{ role: 'system' | 'user'; content: string }> = [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt }
+    ];
+
+    // Use Mistral Nemo as primary based on testing results
+    const modelChain = options.model 
+      ? [options.model]
+      : ['mistralai/mistral-nemo:free', 'cognitivecomputations/dolphin3.0-mistral-24b:free', 'mistralai/mistral-7b-instruct:free'];
+    
+    let lastError: unknown;
+
+    for (const model of modelChain) {
+      try {
+        logger.info('Attempting dream metadata generation', { 
+          model,
+          dreamId: options.dreamId,
+          transcriptLength: transcript.length 
+        });
+
+        const completion = await this.client.chat.completions.create({
+          model,
+          messages,
+          temperature: 0.7,
+          max_tokens: 150,
+          response_format: { type: 'json_object' }
+        });
+
+        const content = completion.choices[0]?.message?.content || '';
+        const usage: TokenUsage = {
+          promptTokens: completion.usage?.prompt_tokens || 0,
+          completionTokens: completion.usage?.completion_tokens || 0,
+          totalTokens: completion.usage?.total_tokens || 0,
+        };
+
+        // Parse and validate the JSON response
+        interface MetadataResponse {
+          title: string;
+          scene: string;
+          symbols: string[];
+        }
+        let metadata: MetadataResponse;
+        try {
+          metadata = JSON.parse(content);
+        } catch (parseError) {
+          logger.error('Failed to parse metadata JSON', { 
+            error: parseError,
+            content,
+            dreamId: options.dreamId 
+          });
+          throw new Error('Invalid JSON response from model');
+        }
+
+        // Validate the response structure
+        if (!metadata.title || !metadata.scene || !Array.isArray(metadata.symbols)) {
+          throw new Error('Invalid metadata structure');
+        }
+
+        // Validate symbols against appendix
+        const validatedSymbols = metadata.symbols.filter(symbol => 
+          appendix.includes(symbol.toLowerCase())
+        );
+
+        const invalidSymbols = metadata.symbols.filter(symbol => 
+          !appendix.includes(symbol.toLowerCase())
+        );
+
+        if (invalidSymbols.length > 0) {
+          logger.warn('Hallucinated symbols detected', {
+            model,
+            dreamId: options.dreamId,
+            invalidSymbols,
+            validCount: validatedSymbols.length,
+            invalidCount: invalidSymbols.length
+          });
+        }
+
+        // Track costs
+        modelConfigService.trackCost(
+          model,
+          usage,
+          'jung' as InterpreterType, // Use a default type for metadata
+          options.dreamId || 'metadata-gen'
+        );
+
+        const responseTime = Date.now() - startTime;
+        logger.info('Dream metadata generated successfully', {
+          model,
+          dreamId: options.dreamId,
+          responseTime,
+          usage,
+          symbolValidation: {
+            total: metadata.symbols.length,
+            valid: validatedSymbols.length,
+            invalid: invalidSymbols.length
+          }
+        });
+
+        return {
+          title: metadata.title,
+          scene: metadata.scene,
+          symbols: metadata.symbols,
+          validatedSymbols,
+          usage,
+          model
+        };
+
+      } catch (error) {
+        lastError = error;
+        logger.error('Dream metadata generation failed', {
+          model,
+          dreamId: options.dreamId,
+          error: error instanceof Error ? error.message : 'Unknown error'
+        });
+
+        if (model === modelChain[modelChain.length - 1]) {
+          // This was the last model in the chain
+          throw this.handleOpenRouterError(lastError);
+        }
+
+        // Wait before trying the next model
+        await this.delay(1000);
+      }
+    }
+
+    // This should never be reached due to the throw above, but TypeScript needs it
+    throw this.handleOpenRouterError(lastError || new Error('All models failed'));
+  }
+
+  /**
+   * Fisher-Yates shuffle algorithm for array randomization
+   */
+  private shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = shuffled[i]!;
+      shuffled[i] = shuffled[j]!;
+      shuffled[j] = temp;
+    }
+    return shuffled;
   }
 
   /**

@@ -22,7 +22,11 @@
       "Bash(node dist/scripts/rag/ingest-mary-texts.js:*)",
       "Bash(npm run typecheck:*)",
       "Bash(chmod:*)",
-      "WebFetch(domain:api.imagerouter.io)"
+      "WebFetch(domain:api.imagerouter.io)",
+      "WebFetch(domain:openrouter.ai)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   },

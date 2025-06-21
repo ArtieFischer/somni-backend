@@ -1,0 +1,393 @@
+Final Model Validation Test Results
+===================================
+Test run at: Sat Jun 21 15:09:07 JST 2025
+Models: Llama 4 Scout (primary), Mistral Nemo 12B (fallback)
+
+Test 1: Sexual Dream
+========================================
+Dream: I was in my bedroom with this girl from college, Sarah. We started kissing passionately and then she began undressing me. I could feel her hands all over my body. We moved to the bed and she was on top of me, moving rhythmically. I woke up feeling aroused and confused because I have a girlfriend. The dream felt so real and intense.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: meta-llama/llama-4-scout-17b-16e-instruct:free requires moderation on Meta. Your input was flagged for "sexual". No credits were charged. (Code: 403)
+Moderation flags: sexual
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Bedroom Encounter
+Scene: Dimly lit bedroom. Queen-sized bed with rumpled, white sheets. A bookshelf filled with textbooks in the background. Tension in the air, faint moonlight casting long shadows.
+Symbols: bed, hands, body, girl, kiss
+Symbol Validation:
+Valid symbols: bed body girl kiss
+Invalid/Hallucinated symbols: hands
+Valid count: 4
+Invalid count: 1
+Response:
+{
+  "title": "Bedroom Encounter",
+  "scene": "Dimly lit bedroom. Queen-sized bed with rumpled, white sheets. A bookshelf filled with textbooks in the background. Tension in the air, faint moonlight casting long shadows.",
+  "symbols": [
+    "bed",
+    "hands",
+    "body",
+    "girl",
+    "kiss"
+  ]
+}
+----------------------------------------
+
+Test 2: Sexual Assault/Trauma Dream
+========================================
+Dream: I was walking home alone at night when someone grabbed me from behind. I tried to scream but no sound came out. They dragged me into an alley and I felt completely powerless and terrified. I couldn't move or fight back. I woke up in a cold sweat, heart pounding. This nightmare has been recurring and it feels so vivid and frightening.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 503)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Alley Predator
+Scene: A dimly lit, grimy alley. Looming brick walls, trash-layered ground. A blurred, menacing figure clutches an unseen me from behind.
+Symbols: shadow, back alley, terror, powerlessness, night, grab
+Symbol Validation:
+Valid symbols: shadow terror night
+Invalid/Hallucinated symbols: back alley powerlessness grab
+Valid count: 3
+Invalid count: 3
+Response:
+{
+  "title": "Alley Predator",
+  "scene": "A dimly lit, grimy alley. Looming brick walls, trash-layered ground. A blurred, menacing figure clutches an unseen me from behind.",
+  "symbols": [
+    "shadow",
+    "back alley",
+    "terror",
+    "powerlessness",
+    "night",
+    "grab"
+  ]
+}
+----------------------------------------
+
+Test 3: Extreme Violence/Gore Dream
+========================================
+Dream: I was in some kind of war zone or horror movie scene. There was blood everywhere - on the walls, pooling on the floor. I saw people being brutally attacked with knives and axes. Body parts were scattered around. I was holding a bloody weapon myself and felt both terrified and strangely powerful. Someone was chasing me through this hellscape. The violence was graphic and disturbing.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: meta-llama/llama-4-scout-17b-16e-instruct:free requires moderation on Meta. Your input was flagged for "violence, violence/graphic". No credits were charged. (Code: 403)
+Moderation flags: violence, violence/graphic
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Bloody Horrorscape Chase
+Scene: Blood-slicked cobblestones under flickering neon lights, knives and axes glinting red, dismembered limbs scattered, a shadowy pursuer gaining ground
+Symbols: blood, weapon, chase, dark, violence
+Symbol Validation:
+Valid symbols: blood weapon chase
+Invalid/Hallucinated symbols: dark violence
+Valid count: 3
+Invalid count: 2
+Response:
+{
+  "title": "Bloody Horrorscape Chase",
+  "scene": "Blood-slicked cobblestones under flickering neon lights, knives and axes glinting red, dismembered limbs scattered, a shadowy pursuer gaining ground",
+  "symbols": [
+    "blood",
+    "weapon",
+    "chase",
+    "dark",
+    "violence"
+  ]
+}
+----------------------------------------
+
+Test 4: Infidelity/Cheating Dream
+========================================
+Dream: I was at a party with my boyfriend when I started flirting heavily with his best friend, Marcus. My boyfriend went to get drinks and Marcus and I snuck into a bedroom. We started making out passionately and I felt this intense attraction and excitement. Even though I love my boyfriend, I couldn't stop myself. We almost had sex but then I heard my boyfriend calling my name. I felt guilty but also thrilled by the forbidden nature of it.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: meta-llama/llama-4-scout-17b-16e-instruct:free requires moderation on Meta. Your input was flagged for "sexual". No credits were charged. (Code: 403)
+Moderation flags: sexual
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Forbidden Passion
+Scene: Dimly lit bedroom, cramped with a queen bed centered, lit by a flickering candle.
+Symbols: bed, candle, boyfriend, friend
+Symbol Validation:
+Valid symbols: bed candle friend
+Invalid/Hallucinated symbols: boyfriend
+Valid count: 3
+Invalid count: 1
+Response:
+{
+  "title": "Forbidden Passion",
+  "scene": "Dimly lit bedroom, cramped with a queen bed centered, lit by a flickering candle.",
+  "symbols": [
+    "bed",
+    "candle",
+    "boyfriend",
+    "friend"
+  ]
+}
+----------------------------------------
+
+Test 5: Regular Work Day Dream
+========================================
+Dream: I was at my office doing my usual tasks. I sat at my desk typing emails and attending meetings. My boss came by to discuss a project deadline. Everything was very mundane and ordinary, just like a typical workday. I remember feeling slightly bored and checking the clock frequently, waiting for 5 PM to arrive.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 503)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Office Doldrums
+Scene: Gray cubicle walls, fluorescent lights humming, desk cluttered with files and papers, boss in suit and tie standing by my desk
+Symbols: plan, door, speech, ground, clock
+Symbol Validation:
+Valid symbols: plan door speech ground clock
+Invalid/Hallucinated symbols: 
+Valid count: 5
+Invalid count: 0
+Response:
+{
+  "title": "Office Doldrums",
+  "scene": "Gray cubicle walls, fluorescent lights humming, desk cluttered with files and papers, boss in suit and tie standing by my desk",
+  "symbols": [
+    "plan",
+    "door",
+    "speech",
+    "ground",
+    "clock"
+  ]
+}
+----------------------------------------
+
+Test 6: Fun Skating with Sister Dream
+========================================
+Dream: I was ice skating on this huge, beautiful frozen lake with my sister. The winter landscape was breathtaking - snow-covered pine trees everywhere and the clearest blue sky. We were laughing and gliding effortlessly across the ice, doing spins and racing each other. The air was crisp and fresh, and I felt so free and joyful. My sister and I were holding hands, skating in perfect harmony together.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 503)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Frozen Harmony
+Scene: Clear blue sky, snow-laden pine trees, vast icy lake reflecting sunlight, two figures ice skating hand in hand
+Symbols: sky, pine, ice, sister, hand, harmony
+Symbol Validation:
+Valid symbols: sky pine ice sister hand
+Invalid/Hallucinated symbols: harmony
+Valid count: 5
+Invalid count: 1
+Response:
+{
+  "title": "Frozen Harmony",
+  "scene": "Clear blue sky, snow-laden pine trees, vast icy lake reflecting sunlight, two figures ice skating hand in hand",
+  "symbols": [
+    "sky",
+    "pine",
+    "ice",
+    "sister",
+    "hand",
+    "harmony"
+  ]
+}
+----------------------------------------
+
+Test 7: House Escape Nightmare
+========================================
+Dream: I was trapped inside this enormous, maze-like house and desperately trying to find a way out. Every time I opened a door hoping to find an exit, it was just another closet filled with old clothes and junk. The house seemed to go on forever with endless hallways and rooms. I was getting more and more panicked as I ran from door to door, but they were all just closets. I could hear something chasing me through the house, getting closer, but I couldn't escape.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 400)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Maze House Panic
+Scene: Dimly lit, dusty hallway stretched out, lined with identical wooden doors. Cobwebs dangled, old clothes piled high in closets as I frantically opened each one.
+Symbols: maze, house, closet, door, hallway
+Symbol Validation:
+Valid symbols: maze house closet door
+Invalid/Hallucinated symbols: hallway
+Valid count: 4
+Invalid count: 1
+Response:
+{
+  "title": "Maze House Panic",
+  "scene": "Dimly lit, dusty hallway stretched out, lined with identical wooden doors. Cobwebs dangled, old clothes piled high in closets as I frantically opened each one.",
+  "symbols": [
+    "maze",
+    "house",
+    "closet",
+    "door",
+    "hallway"
+  ]
+}
+----------------------------------------
+
+Test 8: Family House with Animals
+========================================
+Dream: I was back at my parents house, but it was way bigger than I remember. There were all these random animals just running around everywhere - like squirrels, a couple of cats, and this one really fat hamster that kept following me. I was playing with them, having a great time, when I went to the bathroom and looked in the mirror. Thats when I noticed I was losing my hair, like chunks of it just falling out. But weirdly I wasnt that upset about it, just kind of curious. Then my mom called me for dinner and all the animals lined up behind me like we were going to a parade.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 400)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Parade of Pets in Palace
+Scene: Enormous familiar house teeming with life, sunlight streaming through open windows. Squirrels dart in and out, cats lounging, fat hamster rolling on hardwood floor. In vast bathroom, mirror reflects you, hair visibly thinning, but expression calm. Mom's voice echoes, animals march behind you in orderly fashion
+Symbols: house, animal, bathroom, mirror, hair, mother, parade
+Symbol Validation:
+Valid symbols: house animal mirror hair mother parade
+Invalid/Hallucinated symbols: bathroom
+Valid count: 6
+Invalid count: 1
+Response:
+{
+  "title": "Parade of Pets in Palace",
+  "scene": "Enormous familiar house teeming with life, sunlight streaming through open windows. Squirrels dart in and out, cats lounging, fat hamster rolling on hardwood floor. In vast bathroom, mirror reflects you, hair visibly thinning, but expression calm. Mom's voice echoes, animals march behind you in orderly fashion",
+  "symbols": [
+    "house",
+    "animal",
+    "bathroom",
+    "mirror",
+    "hair",
+    "mother",
+    "parade"
+  ]
+}
+----------------------------------------
+
+Test 9: Office Playground Dream
+========================================
+Dream: I was at work but instead of desks there were these huge playground slides everywhere. My boss was dressed like a pirate and kept asking me to find his treasure map. I kept sliding down these slides trying to get to my computer, but every time I got close, the slide would take me somewhere else. Then I realized I was wearing my pajamas to this pirate office and everyone was staring at me. But instead of being embarrassed, I just started laughing uncontrollably and slid down the biggest slide which led straight into a ball pit full of office supplies.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 400)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Pirate Office Slides
+Scene: Huge colorful playground slides replace desks in a vast, dimly lit room. A man in a pirate costume stands near a cluttered treasure chest, map in hand. The dreamer wears pajamas, sliding down slides that twist and turn like a labyrinth in a sea of office chaos.
+Symbols: pirate, slide, office, map, pajamas, ball pit, office supplies
+Symbol Validation:
+Valid symbols: office map
+Invalid/Hallucinated symbols: pirate slide pajamas ball pit office supplies
+Valid count: 2
+Invalid count: 5
+Response:
+{
+  "title": "Pirate Office Slides",
+  "scene": "Huge colorful playground slides replace desks in a vast, dimly lit room. A man in a pirate costume stands near a cluttered treasure chest, map in hand. The dreamer wears pajamas, sliding down slides that twist and turn like a labyrinth in a sea of office chaos.",
+  "symbols": [
+    "pirate",
+    "slide",
+    "office",
+    "map",
+    "pajamas",
+    "ball pit",
+    "office supplies"
+  ]
+}
+----------------------------------------
+
+Test 10: Pasta Exam Dream
+========================================
+Dream: I was back in high school but I was my current age. There was this huge exam I had to take but instead of questions, I had to identify different types of pasta shapes. Everyone else seemed to know exactly what they were doing, writing furiously, while I just sat there staring at pictures of fusilli and penne. Then the teacher, who looked exactly like my third grade teacher Mrs. Johnson, told me I could use my phone to call my mom for help. But when I tried calling, my phone kept turning into different objects - first a banana, then a stapler, then a tiny umbrella. I woke up right as I was about to ask the person next to me if their phone was also a fruit.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 503)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Pasta Paradox in Schoolyard
+Scene: Cramped classroom filled with wooden desks and alarmingly bright fluorescent lights. Chalkboard scrawled with images of pasta shapes - fusilli spiraling like tiny snails, penne like short, hollow tubes. Students hunched over papers, pens scribbling furiously. Teacher, a stern-faced Mrs. Johnson, at the front, arms crossed. My phone, a gleaming rectangle one moment, warped into a banana the next, its yellow peel glistening under harsh lights.
+Symbols: pen, banana, stapler, umbrella, wisdom
+Symbol Validation:
+Valid symbols: pen umbrella wisdom
+Invalid/Hallucinated symbols: banana stapler
+Valid count: 3
+Invalid count: 2
+Response:
+{
+  "title": "Pasta Paradox in Schoolyard",
+  "scene": "Cramped classroom filled with wooden desks and alarmingly bright fluorescent lights. Chalkboard scrawled with images of pasta shapes - fusilli spiraling like tiny snails, penne like short, hollow tubes. Students hunched over papers, pens scribbling furiously. Teacher, a stern-faced Mrs. Johnson, at the front, arms crossed. My phone, a gleaming rectangle one moment, warped into a banana the next, its yellow peel glistening under harsh lights.",
+  "symbols": [
+    "pen",
+    "banana",
+    "stapler",
+    "umbrella",
+    "wisdom"
+  ]
+}
+----------------------------------------
+
+Test 11: Shape-shifting Car Dream
+========================================
+Dream: I was driving to meet my friends but my car kept changing into different things while I was driving. First it was my normal car, then suddenly it was a shopping cart, so I had to push myself down the highway. Then it turned into one of those swan boats from the park, so I was pedaling it down the road while cars honked at me. People were waving from their windows like this was totally normal. When I finally got to where I was supposed to meet my friends, they were all there but they were miniature versions of themselves, like action figures. They were yelling up at me that I was late, but I couldnt hear them properly because they were so tiny. I kept trying to pick them up to hear better but they would just run away.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 400)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Changing Car Chase
+Scene: A bustling highway, sun streaming through windshield, car transforming from sedan to shopping cart to swan boat, drivers honking and waving, tiny friends on pavement
+Symbols: car, cart, boat, friends, action figures
+Symbol Validation:
+Valid symbols: car boat
+Invalid/Hallucinated symbols: cart friends action figures
+Valid count: 2
+Invalid count: 3
+Response:
+{
+  "title": "Changing Car Chase",
+  "scene": "A bustling highway, sun streaming through windshield, car transforming from sedan to shopping cart to swan boat, drivers honking and waving, tiny friends on pavement",
+  "symbols": [
+    "car",
+    "cart",
+    "boat",
+    "friends",
+    "action figures"
+  ]
+}
+----------------------------------------
+
+Test 12: Gordon Ramsay Cooking Dream
+========================================
+Dream: I was in a cooking competition with Gordon Ramsay, but instead of a kitchen we were in my childhood bedroom. He kept yelling at me about my terrible risotto technique, but I was trying to cook with toy pots and pans from when I was 8. Every time I tried to explain that these werent real cooking utensils, he would just get angrier and start throwing stuffed animals at me. Then my old teddy bear came to life and started giving me cooking advice, but it was all wrong - like telling me to add glitter to the soup and use crayons as seasoning. The weirdest part was that Gordon Ramsay started nodding approvingly at the teddy bears suggestions and said I was finally getting somewhere. I woke up right as I was about to serve him a bowl of crayon soup.
+
+Model: meta-llama/llama-4-scout:free
+Status: ERROR
+Error: Provider returned error (Code: 400)
+Model: mistralai/mistral-nemo:free
+Status: SUCCESS
+Title: Toy Kitchen Showdown
+Scene: A cramped, colorful childhood bedroom filled with stuffed animals. Gordon Ramsay looms, red-faced, beside a tiny wooden stove. You clutch a melting plastic ladle.
+Symbols: toy, bear, soup, chef
+Symbol Validation:
+Valid symbols: toy bear soup
+Invalid/Hallucinated symbols: chef
+Valid count: 3
+Invalid count: 1
+Response:
+{
+  "title": "Toy Kitchen Showdown",
+  "scene": "A cramped, colorful childhood bedroom filled with stuffed animals. Gordon Ramsay looms, red-faced, beside a tiny wooden stove. You clutch a melting plastic ladle.",
+  "symbols": [
+    "toy",
+    "bear",
+    "soup",
+    "chef"
+  ]
+}
+----------------------------------------
+
+
+========================================
+SUMMARY
+========================================
+Test completed at: Sat Jun 21 15:10:38 JST 2025
+Primary Model: Llama 4 Scout
+Fallback Model: Mistral Nemo 12B
+Dreams tested: 12
+Features: Symbol validation against appendix

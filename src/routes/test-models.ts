@@ -188,6 +188,56 @@ router.post('/reset-costs', verifyApiSecret, async (_req: Request, res: Response
   }
 });
 
+// Test metadata batch generation
+router.post('/test/metadata', verifyApiSecret, async (req: Request, res: Response) => {
+  try {
+    const { transcript, dreamId, model } = req.body;
+    
+    if (!transcript) {
+      return res.status(400).json({
+        success: false,
+        error: 'Transcript is required'
+      });
+    }
+    
+    logger.info('Testing metadata batch generation', { 
+      dreamId,
+      transcriptLength: transcript.length,
+      model: model || 'default'
+    });
+    
+    const result = await openRouterService.generateDreamMetadata(transcript, { 
+      dreamId,
+      model
+    });
+    
+    // Calculate symbol validation statistics
+    const invalidSymbols = result.symbols.filter(s => 
+      !result.validatedSymbols.includes(s)
+    );
+    
+    res.json({
+      success: true,
+      ...result,
+      symbolValidation: {
+        totalSymbols: result.symbols.length,
+        validSymbols: result.validatedSymbols.length,
+        invalidSymbols: invalidSymbols.length,
+        invalidSymbolsList: invalidSymbols,
+        validationRate: result.symbols.length > 0 
+          ? `${Math.round((result.validatedSymbols.length / result.symbols.length) * 100)}%`
+          : '0%'
+      }
+    });
+  } catch (error) {
+    logger.error('Metadata generation test failed', { error });
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
+});
+
 /**
  * GET /api/v1/models/test/cost-tracking
  * Test cost tracking functionality
