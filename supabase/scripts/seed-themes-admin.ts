@@ -1,8 +1,18 @@
-// Script to seed dream themes into the database
-// Run this after deploying the embed-themes edge function
+// Script to seed dream themes using service role key
+// This needs to be run with admin privileges
 
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY!;
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = 'https://tqwlnrlvtdsqgqpuryne.supabase.co';
+// IMPORTANT: Replace with your service role key - DO NOT commit this!
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!SUPABASE_SERVICE_ROLE_KEY) {
+  console.error('Please set SUPABASE_SERVICE_ROLE_KEY environment variable');
+  process.exit(1);
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 // Common dream themes based on psychological research
 const dreamThemes = [
@@ -171,13 +181,11 @@ const dreamThemes = [
 ];
 
 async function seedThemes() {
-  console.log(`Seeding ${dreamThemes.length} themes...`);
+  console.log(`Seeding ${dreamThemes.length} themes with service role key...`);
   
-  // First, insert themes without embeddings
-  const { createClient } = require('@supabase/supabase-js');
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let successCount = 0;
+  let errorCount = 0;
   
-  // Insert themes
   for (const theme of dreamThemes) {
     const { error } = await supabase
       .from('themes')
@@ -189,40 +197,21 @@ async function seedThemes() {
     
     if (error) {
       console.error(`Failed to insert theme ${theme.code}:`, error);
+      errorCount++;
     } else {
-      console.log(`Inserted theme: ${theme.code}`);
+      console.log(`✓ Inserted theme: ${theme.code}`);
+      successCount++;
     }
   }
   
-  console.log('\nThemes inserted. Now generate embeddings by calling your backend API:');
-  console.log('POST http://localhost:3000/api/v1/embeddings/embed-themes');
-  console.log('With body:', JSON.stringify({ themes: dreamThemes }, null, 2).substring(0, 200) + '...');
+  console.log(`\nSeeding complete: ${successCount} succeeded, ${errorCount} failed`);
   
-  // Alternative: If backend is running, uncomment this:
-  /*
-  try {
-    const response = await fetch('http://localhost:3000/api/v1/embeddings/embed-themes', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json',
-        'X-API-Secret': 'your-api-secret' // Add your API secret
-      },
-      body: JSON.stringify({ themes: dreamThemes })
-    });
-
-    const result = await response.json();
-    
-    if (result.success) {
-      console.log(`Successfully seeded ${result.processed} themes`);
-      console.log('Results:', result.results);
-    } else {
-      console.error('Failed to seed themes:', result);
-    }
-  } catch (error) {
-    console.error('Error seeding themes:', error);
+  if (successCount > 0) {
+    console.log('\nThemes inserted successfully! Now you can generate embeddings.');
+    console.log('\nTo generate embeddings, make sure your backend is running and call:');
+    console.log('POST https://somni-backend-production.up.railway.app/api/v1/embeddings/embed-themes');
+    console.log('\nWith proper authentication headers.');
   }
-  */
 }
 
 // Run the seeding

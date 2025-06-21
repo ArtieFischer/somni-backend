@@ -17,6 +17,7 @@ curl -X POST https://somni-backend-production.up.railway.app/api/v1/embeddings/e
   -H "Content-Type: application/json" \
   -H "X-API-Secret: $API_SECRET" \
   -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+  -H "X-Supabase-Token: $SUPABASE_ANON_KEY" \
   -d @themes.json \
   -w "\n\nHTTP Status: %{http_code}\n"
 
