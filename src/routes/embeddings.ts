@@ -5,18 +5,26 @@ import logger from '../utils/logger';
 
 const router = Router();
 
-// Initialize the embedding model
-let embedder: any = null;
+// Singleton pattern for the embedding pipeline
+class EmbeddingPipeline {
+  static task = 'feature-extraction';
+  static model = 'Xenova/all-MiniLM-L6-v2';
+  static instance: any = null;
 
-async function getEmbedder() {
-  if (!embedder) {
-    logger.info('Loading MiniLM model...');
-    // Dynamic import for ESM module
-    const { pipeline } = await import('@xenova/transformers');
-    embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
-    logger.info('Model loaded successfully');
+  static async getInstance(): Promise<any> {
+    if (this.instance === null) {
+      logger.info('Loading MiniLM model...');
+      // Dynamically import the Transformers.js library
+      const { pipeline, env } = await import('@xenova/transformers') as any;
+      
+      // Configure environment
+      env.allowLocalModels = false;
+      
+      this.instance = await pipeline(this.task, this.model);
+      logger.info('Model loaded successfully');
+    }
+    return this.instance;
   }
-  return embedder;
 }
 
 /**
@@ -33,8 +41,8 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
     }
 
     // Generate embedding
-    const model = await getEmbedder();
-    const output = await model(transcript, { pooling: 'mean', normalize: true });
+    const embedder = await EmbeddingPipeline.getInstance();
+    const output = await embedder(transcript, { pooling: 'mean', normalize: true });
     const embedding = Array.from(output.data);
 
     // Update dream with embedding
@@ -99,7 +107,6 @@ router.post('/embed-themes', verifyApiSecret, async (req: Request, res: Response
       });
     }
 
-    const model = await getEmbedder();
     const results = [];
 
     for (const theme of themes) {
@@ -114,7 +121,8 @@ router.post('/embed-themes', verifyApiSecret, async (req: Request, res: Response
           ? `${theme.label}. ${theme.description}`
           : theme.label;
         
-        const output = await model(textToEmbed, { pooling: 'mean', normalize: true });
+        const embedder = await EmbeddingPipeline.getInstance();
+        const output = await embedder(textToEmbed, { pooling: 'mean', normalize: true });
         const embedding = Array.from(output.data);
 
         // Upsert theme

@@ -13,6 +13,7 @@ import interpretationRouter from './routes/interpretation';
 import ragDebugRouter from './routes/rag-debug';
 import { sceneDescriptionRouter } from './routes/scene-description';
 import embeddingsRouter from './routes/embeddings';
+import embeddingsSimpleRouter from './routes/embeddings-simple';
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use('/api/v1/test', testModelsRouter);
 app.use('/api/v1/rag-debug', ragDebugRouter);
 app.use('/api/v1/scene-description', sceneDescriptionRouter);
 app.use('/api/v1/embeddings', embeddingsRouter);
+app.use('/api/v1/themes', embeddingsSimpleRouter);
 
 // Root endpoint
 app.get('/', (_req, res) => {
