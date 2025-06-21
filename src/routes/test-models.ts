@@ -189,7 +189,7 @@ router.post('/reset-costs', verifyApiSecret, async (_req: Request, res: Response
 });
 
 // Test metadata batch generation
-router.post('/test/metadata', verifyApiSecret, async (req: Request, res: Response) => {
+router.post('/test/metadata', verifyApiSecret, async (req: Request, res: Response): Promise<Response> => {
   try {
     const { transcript, dreamId, model } = req.body;
     
@@ -216,7 +216,7 @@ router.post('/test/metadata', verifyApiSecret, async (req: Request, res: Respons
       !result.validatedSymbols.includes(s)
     );
     
-    res.json({
+    return res.json({
       success: true,
       ...result,
       symbolValidation: {
@@ -231,7 +231,7 @@ router.post('/test/metadata', verifyApiSecret, async (req: Request, res: Respons
     });
   } catch (error) {
     logger.error('Metadata generation test failed', { error });
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
     });

@@ -21,7 +21,7 @@ async function getEmbedder() {
 /**
  * Generate embedding for a dream
  */
-router.post('/embed-dream', authenticateRequest, async (req: Request, res: Response) => {
+router.post('/embed-dream', authenticateRequest, async (req: Request, res: Response): Promise<Response> => {
   try {
     const { dream_id, transcript } = req.body;
 
@@ -37,7 +37,7 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
     const embedding = Array.from(output.data);
 
     // Update dream with embedding
-    const { data: dream, error: dreamError } = await supabaseService.client
+    const { error: dreamError } = await supabaseService.getClient()
       .from('dreams')
       .update({ embedding })
       .eq('id', dream_id)
@@ -49,7 +49,7 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
     }
 
     // Extract themes
-    const { data: themes, error: themeError } = await supabaseService.client
+    const { data: themes, error: themeError } = await supabaseService.getClient()
       .rpc('search_themes', {
         query_embedding: embedding,
         similarity_threshold: 0.15,
@@ -65,12 +65,12 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
         score: theme.score
       }));
 
-      await supabaseService.client
+      await supabaseService.getClient()
         .from('dream_themes')
         .upsert(dreamThemes, { onConflict: 'dream_id,theme_code' });
     }
 
-    res.json({
+    return res.json({
       success: true,
       dream_id,
       embedding_size: embedding.length,
@@ -80,14 +80,14 @@ router.post('/embed-dream', authenticateRequest, async (req: Request, res: Respo
 
   } catch (error: any) {
     logger.error('Embedding generation error:', error);
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
 /**
  * Generate embeddings for themes
  */
-router.post('/embed-themes', authenticateRequest, async (req: Request, res: Response) => {
+router.post('/embed-themes', authenticateRequest, async (req: Request, res: Response): Promise<Response> => {
   try {
     const { themes } = req.body;
 
@@ -116,7 +116,7 @@ router.post('/embed-themes', authenticateRequest, async (req: Request, res: Resp
         const embedding = Array.from(output.data);
 
         // Upsert theme
-        const { error } = await supabaseService.client
+        const { error } = await supabaseService.getClient()
           .from('themes')
           .upsert({
             code: theme.code,
@@ -135,7 +135,7 @@ router.post('/embed-themes', authenticateRequest, async (req: Request, res: Resp
       }
     }
 
-    res.json({
+    return res.json({
       success: true,
       processed: results.length,
       results
@@ -143,7 +143,7 @@ router.post('/embed-themes', authenticateRequest, async (req: Request, res: Resp
 
   } catch (error: any) {
     logger.error('Theme embedding error:', error);
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 

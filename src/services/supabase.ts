@@ -20,6 +20,13 @@ class SupabaseService {
   }
 
   /**
+   * Get the Supabase client instance
+   */
+  getClient(): SupabaseClient {
+    return this.client;
+  }
+
+  /**
    * Verify JWT token and get user information
    */
   async verifyUserToken(token: string) {
