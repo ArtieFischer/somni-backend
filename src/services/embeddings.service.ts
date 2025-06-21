@@ -32,7 +32,8 @@ export class EmbeddingsService {
       // Dynamically import @xenova/transformers if not already loaded
       if (!this.transformersLoaded) {
         console.log('Loading @xenova/transformers...');
-        const transformers = await import('@xenova/transformers');
+        // Use Function constructor to bypass TypeScript compilation
+        const transformers = await (new Function('return import("@xenova/transformers")')());
         pipeline = transformers.pipeline;
         env = transformers.env;
         
