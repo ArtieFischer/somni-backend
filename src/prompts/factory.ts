@@ -34,7 +34,7 @@ export class PromptBuilderFactory {
           return new MaryRAGPromptBuilder();
         }
         return new MaryPromptBuilder();
-      case 'astrologist':
+      case 'lakshmi':
         throw new Error(`${interpreterType} interpreter is not yet implemented. Currently 'jung', 'freud', and 'mary' are supported.`);
       default:
         throw new Error(`Unknown interpreter type: ${interpreterType}. Currently 'jung', 'freud', and 'mary' are supported.`);

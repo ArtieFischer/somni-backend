@@ -40,7 +40,7 @@ export class RAGService {
     try {
       const { 
         maxResults = 5, 
-        similarityThreshold = 0.7,
+        similarityThreshold = 0.35,  // Lowered from 0.7 based on diagnostic data
         includeSymbols = true,
         where,
         boost

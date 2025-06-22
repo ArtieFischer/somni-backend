@@ -66,7 +66,7 @@ export class ModelConfigService {
       temperature: 0.5,  // Lower for more factual scientific analysis
       maxTokens: 1500
     },
-    astrologist: {
+    lakshmi: {
       defaultModel: QUICK_MODELS.LLAMA_4,
       fallbackModel: QUICK_MODELS.LLAMA_3_1,
       temperature: 0.8,  // Higher for mystical interpretations
@@ -85,7 +85,7 @@ export class ModelConfigService {
         temperature: 0.9,
         costPerKToken: 0,
         recommended: true,
-        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
+        interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
       },
       {
         id: 'meta-llama/llama-3.1-8b-instruct:free',
@@ -95,7 +95,7 @@ export class ModelConfigService {
         temperature: 0.7,
         costPerKToken: 0,
         recommended: true,
-        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
+        interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
       },
       {
         id: 'google/gemma-2-9b-it:free',
@@ -105,7 +105,7 @@ export class ModelConfigService {
         temperature: 0.7,
         costPerKToken: 0,
         recommended: false,
-        interpreterTypes: ['mary', 'astrologist'],
+        interpreterTypes: ['mary', 'lakshmi'],
       },
       {
         id: 'mistralai/mistral-nemo:free',
@@ -115,7 +115,7 @@ export class ModelConfigService {
         temperature: 0.9,
         costPerKToken: 0,
         recommended: true,
-        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
+        interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
       },
       {
         id: 'cognitivecomputations/dolphin3.0-mistral-24b:free',
@@ -125,7 +125,7 @@ export class ModelConfigService {
         temperature: 0.9,
         costPerKToken: 0,
         recommended: true,
-        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
+        interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
       },
       // Paid models as additional options
       {
@@ -252,7 +252,7 @@ export class ModelConfigService {
       jung: [],
       freud: [],
       mary: [],
-      astrologist: [],
+      lakshmi: [],
     };
 
     this.availableModels.forEach(model => {
@@ -363,7 +363,7 @@ export class ModelConfigService {
       jung: 0,
       freud: 0,
       mary: 0,
-      astrologist: 0,
+      lakshmi: 0,
     };
     let totalTokens = 0;
 
@@ -425,7 +425,7 @@ export class ModelConfigService {
    * Switch all interpreters to a specific model
    */
   switchAllToModel(modelId: string): void {
-    const types: InterpreterType[] = ['jung', 'freud', 'mary', 'astrologist'];
+    const types: InterpreterType[] = ['jung', 'freud', 'mary', 'lakshmi'];
     types.forEach(type => this.setDefaultModel(type, modelId));
   }
 

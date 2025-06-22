@@ -3,7 +3,7 @@ import type { InterpreterType } from '../../types';
 type HistoryMap = Record<InterpreterType, string[]>;
 
 export class PromptRandomiser {
-  private static history: HistoryMap = { jung: [], freud: [], mary: [], astrologist: [] };
+  private static history: HistoryMap = { jung: [], freud: [], mary: [], lakshmi: [] };
   private static MAX_HISTORY = 5;        // remember last 5 choices per interpreter
 
   /** deterministic hash-seed */

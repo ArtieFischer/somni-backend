@@ -128,7 +128,7 @@ export interface DreamAnalysisWithDebate {
 export interface InterpretationResponse {
   success: boolean;
   dreamId: string;
-  interpretation?: DreamAnalysis | JungianInsights | FreudianInsights | MaryInsights | AstrologistInsights;
+  interpretation?: DreamAnalysis | JungianInsights | FreudianInsights | MaryInsights | LakshmiInsights;
   aiResponse?: string; // Raw AI response for debugging
   metadata?: {
     interpreterType: InterpreterType;
@@ -142,7 +142,7 @@ export interface InterpretationResponse {
   error?: string;
 }
 
-export type InterpreterType = 'jung' | 'freud' | 'mary' | 'astrologist';
+export type InterpreterType = 'jung' | 'freud' | 'mary' | 'lakshmi';
 
 // Enhanced UserContext matching the Jungian specification
 export interface UserContext {
@@ -219,17 +219,18 @@ export interface MaryInsights {
   circadianFactors?: string;
 }
 
-export interface AstrologistInsights {
-  type: 'astrologist';
+export interface LakshmiInsights {
+  type: 'lakshmi';
   coreMessage: string;
-  planetaryInfluences: Array<{
-    planet: string;
-    influence: string;
-    symbolism: string;
-  }>;
-  zodiacConnections?: string[];
-  cosmicTiming?: string;
-  spiritualInsights: string[];
+  interpretation: string; // Full AI interpretation response
+  symbols: string[]; // Simple array like other interpreters
+  spiritualMeaning: string;
+  karmicPatterns: string[];
+  chakraConnections?: string[];
+  lucidDreamingGuidance?: string;
+  meditationTechniques: string[];
+  yogicPerspective?: string;
+  mantras?: string[];
   reflectiveQuestions: string[];
 }
 

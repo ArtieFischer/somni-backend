@@ -49,7 +49,7 @@ export class EmbeddingsService {
       console.log('Initializing embeddings model...');
       this.embedder = await pipeline(
         'feature-extraction',
-        'Xenova/all-MiniLM-L6-v2'
+        'Xenova/multi-qa-MiniLM-L6-cos-v1'
       );
       console.log('Embeddings model initialized successfully');
     } catch (error) {

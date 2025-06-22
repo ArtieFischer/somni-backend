@@ -43,6 +43,33 @@ WHERE table_schema = 'public';
 -- Should see: profiles, dreams, interpreters, transcription_usage
 ```
 
+### 4. Apply Additional Migrations
+```bash
+# Run any additional migrations in order
+# For example, to fix auth signup issues:
+supabase migration up 005_fix_auth_signup_trigger
+
+# Or manually in SQL editor run the contents of:
+# migrations/005_fix_auth_signup_trigger.sql
+```
+
+## Known Issues and Fixes
+
+### Authentication Signup Issue
+If users encounter errors when creating accounts, the issue is likely related to the auth trigger not having proper permissions. This is fixed in migration `005_fix_auth_signup_trigger.sql` which:
+
+1. Adds `SECURITY DEFINER` to the `handle_new_user()` function so it can bypass RLS
+2. Implements better error handling to prevent signup failures
+3. Ensures unique handle generation with collision detection
+4. Adds explicit service role permissions for profile insertion
+5. Properly configures all necessary grants
+
+To apply this fix:
+```sql
+-- Run the migration file migrations/005_fix_auth_signup_trigger.sql
+-- This will recreate the trigger with proper permissions
+```
+
 ## Database Schema
 
 ### Core Tables
