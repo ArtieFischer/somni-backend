@@ -107,6 +107,26 @@ export class ModelConfigService {
         recommended: false,
         interpreterTypes: ['mary', 'astrologist'],
       },
+      {
+        id: 'mistralai/mistral-nemo:free',
+        name: 'Mistral Nemo 12B (Free)',
+        provider: 'openrouter',
+        maxTokens: 8000,
+        temperature: 0.9,
+        costPerKToken: 0,
+        recommended: true,
+        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
+      },
+      {
+        id: 'cognitivecomputations/dolphin3.0-mistral-24b:free',
+        name: 'Dolphin3.0 Mistral 24B (Free)',
+        provider: 'openrouter',
+        maxTokens: 8000,
+        temperature: 0.9,
+        costPerKToken: 0,
+        recommended: true,
+        interpreterTypes: ['jung', 'freud', 'mary', 'astrologist'],
+      },
       // Paid models as additional options
       {
         id: 'anthropic/claude-3-haiku',

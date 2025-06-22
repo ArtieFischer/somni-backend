@@ -16,10 +16,18 @@ async function testImageGeneration() {
   try {
     logger.info('Starting image generation test...');
 
-    // Step 1: Generate scene description
-    logger.info('Step 1: Generating scene description...');
-    const sceneDescription = await openRouterService.generateDreamSceneDescription(testDreamTranscript);
-    logger.info('Scene description generated:', { sceneDescription });
+    // Step 1: Generate metadata (title + image prompt) in batched call
+    logger.info('Step 1: Generating dream metadata (title + image prompt)...');
+    const metadata = await openRouterService.generateDreamMetadata(testDreamTranscript, {
+      dreamId: 'test-' + Date.now()
+    });
+    const sceneDescription = metadata.imagePrompt;
+    logger.info('Metadata generated:', { 
+      title: metadata.title,
+      imagePrompt: sceneDescription,
+      model: metadata.model,
+      usage: metadata.usage
+    });
 
     // Step 2: Generate image
     logger.info('Step 2: Generating image...');

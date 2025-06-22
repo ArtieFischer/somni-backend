@@ -211,23 +211,9 @@ router.post('/test/metadata', verifyApiSecret, async (req: Request, res: Respons
       model
     });
     
-    // Calculate symbol validation statistics
-    const invalidSymbols = result.symbols.filter(s => 
-      !result.validatedSymbols.includes(s)
-    );
-    
     return res.json({
       success: true,
-      ...result,
-      symbolValidation: {
-        totalSymbols: result.symbols.length,
-        validSymbols: result.validatedSymbols.length,
-        invalidSymbols: invalidSymbols.length,
-        invalidSymbolsList: invalidSymbols,
-        validationRate: result.symbols.length > 0 
-          ? `${Math.round((result.validatedSymbols.length / result.symbols.length) * 100)}%`
-          : '0%'
-      }
+      ...result
     });
   } catch (error) {
     logger.error('Metadata generation test failed', { error });

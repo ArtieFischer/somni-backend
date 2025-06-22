@@ -127,59 +127,58 @@ router.post(
         } as TranscribeResponse);
       }
 
-      // Generate title if feature is enabled
+      // Generate title and image prompt in a single batched call
       let title: string | undefined;
-      if (features.titleGeneration.enabled) {
-        try {
-          logger.info('Generating dream title', { dreamId, userId });
-          title = await openRouterService.generateDreamTitle(transcription.text, {
-            model: features.titleGeneration.model,
-            maxTokens: features.titleGeneration.maxTokens,
-            temperature: features.titleGeneration.temperature,
-          });
-          logger.info('Dream title generated', { dreamId, title });
-        } catch (error) {
-          // Log error but don't fail the transcription
-          logger.error('Failed to generate dream title', { 
-            dreamId, 
-            error: error instanceof Error ? error.message : 'Unknown error' 
-          });
-        }
-      }
-
-      // Generate image if feature is enabled
       let imageUrl: string | undefined;
       let imagePrompt: string | undefined;
-      if (features.imageGeneration.enabled) {
+      
+      if (features.titleGeneration.enabled || features.imageGeneration.enabled) {
         try {
-          logger.info('Generating dream scene description', { dreamId, userId });
+          logger.info('Generating dream metadata (title + image prompt)', { dreamId, userId });
           
-          // First, generate scene description
-          const sceneDescription = await openRouterService.generateDreamSceneDescription(transcription.text, {
-            model: features.titleGeneration.model, // Using same model as title generation
-            maxTokens: features.imageGeneration.sceneDescriptionMaxTokens,
-            temperature: features.imageGeneration.sceneDescriptionTemperature,
+          // Single batched call for both title and image prompt
+          const metadata = await openRouterService.generateDreamMetadata(transcription.text, {
+            model: features.titleGeneration.model,
+            dreamId
           });
           
-          logger.info('Dream scene description generated', { dreamId, sceneDescription });
+          title = metadata.title;
+          imagePrompt = metadata.imagePrompt;
           
-          // Generate the image
-          const generatedImageUrl = await imageRouterService.generateDreamImage(sceneDescription);
+          logger.info('Dream metadata generated', { 
+            dreamId, 
+            title, 
+            imagePrompt,
+            model: metadata.model,
+            usage: metadata.usage
+          });
           
-          // Download the image
-          const imageBuffer = await imageRouterService.downloadImage(generatedImageUrl);
-          
-          // Upload to Supabase storage
-          const uploadedUrl = await supabaseService.uploadDreamImage(dreamId, imageBuffer);
-          
-          if (uploadedUrl) {
-            imageUrl = uploadedUrl;
-            imagePrompt = sceneDescription;
-            logger.info('Dream image generated and uploaded', { dreamId, imageUrl });
+          // Generate and upload image if enabled
+          if (features.imageGeneration.enabled && imagePrompt) {
+            try {
+              // Generate the image
+              const generatedImageUrl = await imageRouterService.generateDreamImage(imagePrompt);
+              
+              // Download the image
+              const imageBuffer = await imageRouterService.downloadImage(generatedImageUrl);
+              
+              // Upload to Supabase storage
+              const uploadedUrl = await supabaseService.uploadDreamImage(dreamId, imageBuffer);
+              
+              if (uploadedUrl) {
+                imageUrl = uploadedUrl;
+                logger.info('Dream image generated and uploaded', { dreamId, imageUrl });
+              }
+            } catch (imageError) {
+              logger.error('Failed to generate/upload dream image', { 
+                dreamId, 
+                error: imageError instanceof Error ? imageError.message : 'Unknown error' 
+              });
+            }
           }
         } catch (error) {
           // Log error but don't fail the transcription
-          logger.error('Failed to generate dream image', { 
+          logger.error('Failed to generate dream metadata', { 
             dreamId, 
             error: error instanceof Error ? error.message : 'Unknown error' 
           });

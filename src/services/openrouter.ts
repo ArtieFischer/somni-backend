@@ -4,7 +4,6 @@ import { logger } from '../utils/logger';
 import { modelConfigService } from './modelConfig';
 import type { TokenUsage, InterpreterType } from '../types';
 import type { CostEntry } from './modelConfig';
-import { appendix } from '../utils/appendix';
 
 export class OpenRouterService {
   private client: OpenAI;
@@ -403,7 +402,7 @@ Visual scene description:`;
   }
 
   /**
-   * Generate dream metadata (title, scene, symbols) in a single batched call
+   * Generate dream metadata (title and image prompt) in a single batched call
    */
   async generateDreamMetadata(
     transcript: string,
@@ -413,34 +412,25 @@ Visual scene description:`;
     } = {}
   ): Promise<{
     title: string;
-    scene: string;
-    symbols: string[];
-    validatedSymbols: string[];
+    imagePrompt: string;
     usage: TokenUsage;
     model: string;
   }> {
     const startTime = Date.now();
     
-    // Shuffle the appendix to ensure different order each time
-    const shuffledAppendix = this.shuffleArray([...appendix]);
-    // Take only first 80 symbols to avoid token limits and moderation issues
-    const symbolSubset = shuffledAppendix.slice(0, 80).join(', ');
-    
     const systemPrompt = `You are DREAM-METADATA v1. Work strictly in English.
-Return a single-line minified JSON. No additional keys.`;
+Return a single-line minified JSON. No additional keys.
+Context: You are analyzing dream descriptions submitted by users seeking psychological help and self-improvement.`;
 
     const userPrompt = `### TASKS
 1. "title": 4-7 words, evocative, no punctuation at the end.
-2. "scene": ≤ 30 words, purely visual, present tense, no feelings or symbolism.
-3. "symbols": 3-7 generic nouns from APPENDIX. If nothing matches, invent a *new* generic noun (lowercase).
+2. "imagePrompt": ≤ 30 words. Create a single visual scene that illustrates the dream. Focus only on what can be seen - colors, objects, environment, lighting. Pure visual description, present tense.
 
 ### RULES
 • Each field is independent – do not let wording of one influence another.  
-• Use only information from the transcript.  
-• Output **exactly** this JSON schema: {"title":"…","scene":"…","symbols":["…","…"]}
-
-### APPENDIX (allowed nouns, lowercase)
-${symbolSubset}
+• Use only information from the FULL transcript below.
+• For imagePrompt: Be specific with visual details - textures, colors, lighting, atmosphere. No feelings or interpretations.
+• Output **exactly** this JSON schema: {"title":"…","imagePrompt":"…"}
 
 ### DREAM TRANSCRIPT
 ${transcript}`;
@@ -450,10 +440,10 @@ ${transcript}`;
       { role: 'user', content: userPrompt }
     ];
 
-    // Use Mistral Nemo as primary based on testing results
+    // Use Llama 4 as primary, with Mistral Nemo as fallback for controversial content
     const modelChain = options.model 
       ? [options.model]
-      : ['mistralai/mistral-nemo:free', 'cognitivecomputations/dolphin3.0-mistral-24b:free', 'mistralai/mistral-7b-instruct:free'];
+      : ['meta-llama/llama-4-scout:free', 'mistralai/mistral-nemo:free', 'cognitivecomputations/dolphin3.0-mistral-24b:free'];
     
     let lastError: unknown;
 
@@ -483,8 +473,7 @@ ${transcript}`;
         // Parse and validate the JSON response
         interface MetadataResponse {
           title: string;
-          scene: string;
-          symbols: string[];
+          imagePrompt: string;
         }
         let metadata: MetadataResponse;
         try {
@@ -499,27 +488,8 @@ ${transcript}`;
         }
 
         // Validate the response structure
-        if (!metadata.title || !metadata.scene || !Array.isArray(metadata.symbols)) {
+        if (!metadata.title || !metadata.imagePrompt) {
           throw new Error('Invalid metadata structure');
-        }
-
-        // Validate symbols against appendix
-        const validatedSymbols = metadata.symbols.filter(symbol => 
-          appendix.includes(symbol.toLowerCase())
-        );
-
-        const invalidSymbols = metadata.symbols.filter(symbol => 
-          !appendix.includes(symbol.toLowerCase())
-        );
-
-        if (invalidSymbols.length > 0) {
-          logger.warn('Hallucinated symbols detected', {
-            model,
-            dreamId: options.dreamId,
-            invalidSymbols,
-            validCount: validatedSymbols.length,
-            invalidCount: invalidSymbols.length
-          });
         }
 
         // Track costs
@@ -535,19 +505,12 @@ ${transcript}`;
           model,
           dreamId: options.dreamId,
           responseTime,
-          usage,
-          symbolValidation: {
-            total: metadata.symbols.length,
-            valid: validatedSymbols.length,
-            invalid: invalidSymbols.length
-          }
+          usage
         });
 
         return {
           title: metadata.title,
-          scene: metadata.scene,
-          symbols: metadata.symbols,
-          validatedSymbols,
+          imagePrompt: metadata.imagePrompt,
           usage,
           model
         };
@@ -574,19 +537,6 @@ ${transcript}`;
     throw this.handleOpenRouterError(lastError || new Error('All models failed'));
   }
 
-  /**
-   * Fisher-Yates shuffle algorithm for array randomization
-   */
-  private shuffleArray<T>(array: T[]): T[] {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = shuffled[i]!;
-      shuffled[i] = shuffled[j]!;
-      shuffled[j] = temp;
-    }
-    return shuffled;
-  }
 
   /**
    * Delay utility for retries

@@ -22,6 +22,9 @@ const sceneDescriptionSchema = z.object({
  * 
  * Generate a visual scene description from a dream transcription
  * This endpoint is for testing and development purposes
+ * 
+ * @deprecated Use the batched generateDreamMetadata() in transcription flow instead
+ * which generates both title and image prompt in a single call
  */
 router.post(
   '/',
