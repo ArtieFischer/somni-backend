@@ -254,10 +254,10 @@ class SupabaseService {
         .insert({
           user_id: userId,
           dream_id: dreamId,
-          character_count: characterCount,
           duration_seconds: duration,
+          character_count: characterCount,
           language_code: languageCode,
-          model_id: 'scribe_v1',
+          provider: 'elevenlabs',
           created_at: new Date().toISOString(),
         });
 
@@ -272,9 +272,10 @@ class SupabaseService {
 
       logger.debug('Transcription usage recorded', { 
         userId, 
-        dreamId, 
-        characterCount, 
-        duration 
+        dreamId,
+        duration,
+        characterCount,
+        languageCode
       });
       
       return true;

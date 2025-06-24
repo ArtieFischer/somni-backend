@@ -56,7 +56,7 @@ export const validateRequest = <T extends ZodSchema>(schema: T) => {
 export const transcribeRequestSchema = z.object({
   dreamId: z.string().uuid('Invalid dream ID format'),
   audioBase64: z.string().min(1, 'Audio data is required'),
-  duration: z.number().positive('Duration must be positive'),
+  duration: z.number().positive('Duration must be positive').optional(),
   options: z.object({
     languageCode: z.string().nullable().optional(),
     tagAudioEvents: z.boolean().optional().default(true),

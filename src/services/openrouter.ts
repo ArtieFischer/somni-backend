@@ -517,10 +517,14 @@ ${transcript}`;
 
       } catch (error) {
         lastError = error;
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        const is503Error = errorMessage.includes('503');
+        
         logger.error('Dream metadata generation failed', {
           model,
           dreamId: options.dreamId,
-          error: error instanceof Error ? error.message : 'Unknown error'
+          error: errorMessage,
+          is503Error
         });
 
         if (model === modelChain[modelChain.length - 1]) {
@@ -528,8 +532,10 @@ ${transcript}`;
           throw this.handleOpenRouterError(lastError);
         }
 
-        // Wait before trying the next model
-        await this.delay(1000);
+        // Wait longer for 503 errors
+        const waitTime = is503Error ? 3000 : 1000;
+        logger.info(`Waiting ${waitTime}ms before trying next model`, { dreamId: options.dreamId });
+        await this.delay(waitTime);
       }
     }
 

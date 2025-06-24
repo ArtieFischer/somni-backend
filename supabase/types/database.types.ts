@@ -700,26 +700,32 @@ export type Database = {
       }
       transcription_usage: {
         Row: {
+          character_count: number | null
           created_at: string
           dream_id: string
           duration_seconds: number
           id: string
+          language_code: string | null
           provider: string | null
           user_id: string
         }
         Insert: {
+          character_count?: number | null
           created_at?: string
           dream_id: string
           duration_seconds: number
           id?: string
+          language_code?: string | null
           provider?: string | null
           user_id: string
         }
         Update: {
+          character_count?: number | null
           created_at?: string
           dream_id?: string
           duration_seconds?: number
           id?: string
+          language_code?: string | null
           provider?: string | null
           user_id?: string
         }

@@ -31,14 +31,16 @@ router.post(
     const userEmail = req.user!.email;
 
     try {
-      logTranscription('started', dreamId, userId, { duration, options });
+      logTranscription('started', dreamId, userId, { options, duration });
       
-      // Log language parameter for debugging
-      logger.info('Transcription language parameter', {
+      // Log language and duration parameters for debugging
+      logger.info('Transcription parameters', {
         dreamId,
         userId,
+        duration,
         languageCode: options?.languageCode,
         hasLanguageCode: !!options?.languageCode,
+        hasDuration: !!duration,
         allOptions: options
       });
 
@@ -112,8 +114,7 @@ router.post(
           error.message,
           { 
             service: 'elevenlabs',
-            bufferSize: audioBuffer.length,
-            duration 
+            bufferSize: audioBuffer.length
           },
           userId
         );
@@ -132,9 +133,36 @@ router.post(
       let imageUrl: string | undefined;
       let imagePrompt: string | undefined;
       
-      if (features.titleGeneration.enabled || features.imageGeneration.enabled) {
+      // Skip metadata generation for very short recordings
+      const MIN_DURATION_SECONDS = 5; // Minimum duration in seconds (matching frontend filter)
+      const MIN_TRANSCRIPT_LENGTH = 30; // Minimum characters needed
+      const MIN_TOKEN_COUNT = 10; // Approximate minimum tokens for meaningful analysis
+      
+      // Estimate token count (rough approximation: ~4 chars per token for English)
+      const estimatedTokenCount = Math.ceil(transcription.text.length / 4);
+      
+      const isSupportedLanguage = !transcription.languageCode || 
+        transcription.languageCode.startsWith('en') || 
+        transcription.languageCode === 'eng';
+      
+      // Check all conditions
+      const isDurationValid = !duration || duration >= MIN_DURATION_SECONDS;
+      const isLengthValid = transcription.text.length >= MIN_TRANSCRIPT_LENGTH;
+      const isTokenCountValid = estimatedTokenCount >= MIN_TOKEN_COUNT;
+      
+      if ((features.titleGeneration.enabled || features.imageGeneration.enabled) && 
+          isDurationValid &&
+          isLengthValid &&
+          isTokenCountValid &&
+          isSupportedLanguage) {
         try {
-          logger.info('Generating dream metadata (title + image prompt)', { dreamId, userId });
+          logger.info('Generating dream metadata (title + image prompt)', { 
+            dreamId, 
+            userId,
+            transcriptLength: transcription.text.length,
+            estimatedTokens: estimatedTokenCount,
+            duration
+          });
           
           // Single batched call for both title and image prompt
           const metadata = await openRouterService.generateDreamMetadata(transcription.text, {
@@ -183,6 +211,29 @@ router.post(
             error: error instanceof Error ? error.message : 'Unknown error' 
           });
         }
+      } else {
+        const skipReasons = [];
+        if (!isDurationValid) {
+          skipReasons.push(`recording too short (${duration}s, min: ${MIN_DURATION_SECONDS}s)`);
+        }
+        if (!isLengthValid) {
+          skipReasons.push(`transcript too short (${transcription.text.length} chars, min: ${MIN_TRANSCRIPT_LENGTH})`);
+        }
+        if (!isTokenCountValid) {
+          skipReasons.push(`token count too low (~${estimatedTokenCount} tokens, min: ${MIN_TOKEN_COUNT})`);
+        }
+        if (!isSupportedLanguage) {
+          skipReasons.push(`unsupported language (${transcription.languageCode})`);
+        }
+        
+        logger.info('Skipping metadata generation', {
+          dreamId,
+          reasons: skipReasons.join(', '),
+          duration,
+          transcriptLength: transcription.text.length,
+          estimatedTokens: estimatedTokenCount,
+          language: transcription.languageCode
+        });
       }
 
       // Update dream with transcription results
@@ -234,14 +285,14 @@ router.post(
         userId,
         dreamId,
         transcription.text.length,
-        duration,
+        duration || 0, // Use provided duration or fallback to 0
         transcription.languageCode
       );
 
       logTranscription('completed', dreamId, userId, {
         textLength: transcription.text.length,
         languageCode: transcription.languageCode,
-        duration,
+        duration
       });
       
       // Log language detection result

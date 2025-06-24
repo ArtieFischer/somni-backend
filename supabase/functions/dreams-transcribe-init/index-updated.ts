@@ -9,8 +9,8 @@ const corsHeaders = {
 interface TranscribeRequest {
   dreamId: string;
   audioBase64: string;
+  duration?: number; // Make optional for backward compatibility
   language?: string;
-  duration?: number; // Audio duration in seconds
 }
 
 serve(async (req) => {
@@ -61,19 +61,51 @@ serve(async (req) => {
 
     // Parse request body
     const body = await req.json();
-    const { dreamId, audioBase64, language, duration }: TranscribeRequest = body;
+    const { dreamId, audioBase64, duration, language }: TranscribeRequest = body;
     
     console.log('Request data:', { 
       dreamId, 
       audioSize: audioBase64?.length || 0,
-      language,
-      duration 
+      duration: duration || 'not provided',
+      language 
     });
 
     // Validate required fields
     if (!dreamId || !audioBase64) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
+        { 
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    // Check minimum duration (5 seconds) if provided
+    if (duration && duration < 5) {
+      console.log('Recording too short:', { dreamId, duration });
+      
+      // Update dream status to 'failed' with specific error message
+      await supabase
+        .from('dreams')
+        .update({ 
+          transcription_status: 'failed',
+          transcription_metadata: {
+            error: 'Recording too short',
+            message: 'Recordings must be at least 5 seconds long',
+            duration: duration,
+            failed_at: new Date().toISOString()
+          },
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', dreamId)
+        .eq('user_id', user.id)
+      
+      return new Response(
+        JSON.stringify({ 
+          error: 'Recording too short', 
+          message: 'Please record for at least 5 seconds to capture your dream' 
+        }),
         { 
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -111,7 +143,7 @@ serve(async (req) => {
       const backendPayload = {
         dreamId,
         audioBase64,
-        duration,
+        ...(duration && { duration }), // Include duration if provided
         options: {
           languageCode: language || null,
           tagAudioEvents: true,
@@ -122,6 +154,7 @@ serve(async (req) => {
       console.log('📤 Calling Somni Backend for transcription:', {
         url: backendUrl,
         dreamId,
+        duration: duration || 'not provided',
         language: language || 'auto-detect',
         audioSize: audioBase64.length,
         hasApiSecret: !!Deno.env.get('SOMNI_BACKEND_API_SECRET'),
@@ -204,7 +237,6 @@ serve(async (req) => {
         textLength: transcriptionResult.transcription?.text?.length,
         wordCount: transcriptionResult.transcription?.wordCount,
         language: transcriptionResult.transcription?.languageCode,
-        duration: duration || 'not provided',
       });
 
       // Save transcription to database
@@ -247,6 +279,23 @@ serve(async (req) => {
         dreamId,
         status: 'completed'
       });
+
+      // Record transcription usage
+      if (duration) {
+        console.log('📊 Recording transcription usage...', { dreamId, duration, userId: user.id });
+        const { error: usageError } = await supabase
+          .from('transcription_usage')
+          .insert({
+            user_id: user.id,
+            dream_id: dreamId,
+            duration_seconds: duration,
+            provider: 'elevenlabs'
+          })
+        
+        if (usageError) {
+          console.warn('Failed to record transcription usage:', usageError);
+        }
+      }
 
       return new Response(
         JSON.stringify({ 

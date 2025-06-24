@@ -13,7 +13,7 @@ declare global {
 export interface TranscribeRequest {
   dreamId: string;
   audioBase64: string;
-  duration: number;
+  duration?: number; // Audio duration in seconds
   options?: {
     languageCode?: string | null;
     tagAudioEvents?: boolean;
@@ -32,7 +32,7 @@ export interface TranscribeResponse {
     characterCount: number;
   };
   metadata?: {
-    duration: number;
+    duration?: number;
     processedAt: string;
     modelId: string;
   };
@@ -61,7 +61,6 @@ export interface DreamRecord {
   updated_at?: string;
   raw_transcript?: string;
   title?: string;
-  duration?: number;
   transcription_status?: 'pending' | 'processing' | 'completed' | 'failed';
   transcription_metadata?: Record<string, any>;
   transcription_job_id?: string;
