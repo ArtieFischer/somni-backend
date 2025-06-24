@@ -18,21 +18,29 @@
     "// === KNOWLEDGE INGESTION ===": "",
     "ingest:jung": "node --expose-gc --max-old-space-size=3072 -r tsx/cjs src/scripts/rag/ingest-jung-stream-bge.ts",
     "ingest:lakshmi": "node --expose-gc --max-old-space-size=2048 -r tsx/cjs src/scripts/rag/ingest-lakshmi-knowledge.ts",
+    "ingest:mary": "node --expose-gc --max-old-space-size=2048 -r tsx/cjs src/scripts/rag/ingest-mary-knowledge.ts",
+    "ingest:freud": "node --expose-gc --max-old-space-size=2048 -r tsx/cjs src/scripts/rag/ingest-freud-knowledge.ts",
     
     "// === TAGGING ===": "",
     "tag:all-fragments": "tsx src/scripts/rag/tag-all-fragments.ts",
     "tag:lakshmi": "tsx src/scripts/rag/tag-lakshmi-fragments.ts",
     "tag:lakshmi-simple": "tsx src/scripts/rag/tag-lakshmi-fragments-simple.ts",
+    "tag:mary": "tsx src/scripts/rag/tag-mary-fragments.ts",
+    "tag:mary-simple": "tsx src/scripts/rag/tag-mary-fragments-simple.ts",
+    "tag:freud": "tsx src/scripts/rag/tag-freud-fragments.ts",
+    "tag:freud-simple": "tsx src/scripts/rag/tag-freud-fragments-simple.ts",
     
     "// === TESTING ===": "",
     "test:rag-complete": "tsx src/scripts/rag/test-complete-rag-system.ts",
     "test:lakshmi-rag": "tsx src/scripts/rag/test-lakshmi-rag-system.ts",
+    "test:mary-rag": "tsx src/scripts/rag/test-mary-rag-system.ts",
     "test:bge-quality": "tsx src/scripts/rag/test-bge-quality-comprehensive.ts",
     
     "// === UTILITIES ===": "",
     "check:kb": "tsx src/scripts/rag/check-knowledge-base.ts",
     "setup:image-bucket": "tsx src/scripts/setup-image-bucket.ts",
-    "test:image-generation": "tsx src/scripts/test-image-generation.ts"
+    "test:image-generation": "tsx src/scripts/test-image-generation.ts",
+    "cleanup:freud-duplicates": "tsx src/scripts/rag/cleanup-freud-duplicates.ts"
   },
   "keywords": [
     "somni",

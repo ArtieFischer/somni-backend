@@ -1,0 +1,81 @@
+{
+  "timestamp": "2025-06-23T10:51:03.071Z",
+  "interpreter": "mary",
+  "summary": {
+    "totalFragmentsRetrieved": 40,
+    "averageFragmentsPerDream": 5,
+    "uniqueSources": [
+      "The-Committee-of-Sleep",
+      "when-brain-dreams",
+      "This-Is-Why-You-Dream",
+      "neuroscience-of-sleep-and-dream",
+      "twenty-four-hour-mind"
+    ]
+  },
+  "dreamResults": [
+    {
+      "dream": "Memory Consolidation Dream",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "39.4%",
+      "topTheme": "Unknown Theme",
+      "topSource": "The-Committee-of-Sleep"
+    },
+    {
+      "dream": "REM Sleep Paralysis",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "38.0%",
+      "topTheme": "Unknown Theme",
+      "topSource": "when-brain-dreams"
+    },
+    {
+      "dream": "Problem-Solving Dream",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "37.4%",
+      "topTheme": "Unknown Theme",
+      "topSource": "twenty-four-hour-mind"
+    },
+    {
+      "dream": "Emotional Processing Dream",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "29.6%",
+      "topTheme": "Unknown Theme",
+      "topSource": "neuroscience-of-sleep-and-dream"
+    },
+    {
+      "dream": "Sleep Deprivation Dream",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "39.2%",
+      "topTheme": "Unknown Theme",
+      "topSource": "when-brain-dreams"
+    },
+    {
+      "dream": "Lucid Dream Experience",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "39.4%",
+      "topTheme": "Unknown Theme",
+      "topSource": "This-Is-Why-You-Dream"
+    },
+    {
+      "dream": "Memory and Learning",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "32.4%",
+      "topTheme": "Unknown Theme",
+      "topSource": "when-brain-dreams"
+    },
+    {
+      "dream": "Circadian Rhythm Dream",
+      "themesMatched": 5,
+      "fragmentsRetrieved": 5,
+      "averageRelevance": "38.3%",
+      "topTheme": "Unknown Theme",
+      "topSource": "This-Is-Why-You-Dream"
+    }
+  ]
+}

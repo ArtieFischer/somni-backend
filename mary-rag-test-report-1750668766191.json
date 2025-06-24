@@ -1,0 +1,264 @@
+{
+  "timestamp": "2025-06-23T08:52:46.186Z",
+  "interpreter": "mary",
+  "totalDreams": 8,
+  "results": [
+    {
+      "dream": "Memory Consolidation Dream",
+      "topThemes": [
+        {
+          "code": "book",
+          "similarity": 0.634404255176492
+        },
+        {
+          "code": "school",
+          "similarity": 0.61904921985847
+        },
+        {
+          "code": "library",
+          "similarity": 0.610111731592216
+        },
+        {
+          "code": "glass",
+          "similarity": 0.568700737852258
+        },
+        {
+          "code": "grandmother",
+          "similarity": 0.568210745409995
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "The-Committee-of-Sleep",
+        "when-brain-dreams",
+        "This-Is-Why-You-Dream",
+        "neuroscience-of-sleep-and-dream"
+      ],
+      "averageRelevance": 0.3935125390580939
+    },
+    {
+      "dream": "REM Sleep Paralysis",
+      "topThemes": [
+        {
+          "code": "nakedness",
+          "similarity": 0.601337742167664
+        },
+        {
+          "code": "stranger",
+          "similarity": 0.601098501616807
+        },
+        {
+          "code": "darkness",
+          "similarity": 0.595070181807956
+        },
+        {
+          "code": "room",
+          "similarity": 0.575990711211606
+        },
+        {
+          "code": "arm",
+          "similarity": 0.574700372657191
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "when-brain-dreams",
+        "neuroscience-of-sleep-and-dream",
+        "The-Committee-of-Sleep",
+        "This-Is-Why-You-Dream"
+      ],
+      "averageRelevance": 0.37991328906849137
+    },
+    {
+      "dream": "Problem-Solving Dream",
+      "topThemes": [
+        {
+          "code": "rope",
+          "similarity": 0.619576850344345
+        },
+        {
+          "code": "maze",
+          "similarity": 0.592864705626989
+        },
+        {
+          "code": "wall",
+          "similarity": 0.587793858678096
+        },
+        {
+          "code": "building",
+          "similarity": 0.585042995660228
+        },
+        {
+          "code": "accident",
+          "similarity": 0.572217259970746
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "twenty-four-hour-mind",
+        "when-brain-dreams",
+        "The-Committee-of-Sleep",
+        "This-Is-Why-You-Dream"
+      ],
+      "averageRelevance": 0.37432011864123194
+    },
+    {
+      "dream": "Emotional Processing Dream",
+      "topThemes": [
+        {
+          "code": "funeral",
+          "similarity": 0.496256575099939
+        },
+        {
+          "code": "cemetery",
+          "similarity": 0.476948999449381
+        },
+        {
+          "code": "stranger",
+          "similarity": 0.461645699445183
+        },
+        {
+          "code": "wedding",
+          "similarity": 0.460733448179552
+        },
+        {
+          "code": "photograph",
+          "similarity": 0.460245994344135
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "neuroscience-of-sleep-and-dream",
+        "when-brain-dreams",
+        "twenty-four-hour-mind"
+      ],
+      "averageRelevance": 0.29615343927689897
+    },
+    {
+      "dream": "Sleep Deprivation Dream",
+      "topThemes": [
+        {
+          "code": "maze",
+          "similarity": 0.627023079586579
+        },
+        {
+          "code": "accident",
+          "similarity": 0.624985665086367
+        },
+        {
+          "code": "hotel",
+          "similarity": 0.618310729970085
+        },
+        {
+          "code": "highway",
+          "similarity": 0.615391634977364
+        },
+        {
+          "code": "road",
+          "similarity": 0.612214638258776
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "when-brain-dreams",
+        "The-Committee-of-Sleep",
+        "This-Is-Why-You-Dream"
+      ],
+      "averageRelevance": 0.39201044365154
+    },
+    {
+      "dream": "Lucid Dream Experience",
+      "topThemes": [
+        {
+          "code": "wind",
+          "similarity": 0.649072009214403
+        },
+        {
+          "code": "butterfly",
+          "similarity": 0.631436059306882
+        },
+        {
+          "code": "painting",
+          "similarity": 0.62141780364222
+        },
+        {
+          "code": "wave",
+          "similarity": 0.614241906548736
+        },
+        {
+          "code": "rain",
+          "similarity": 0.612527765697158
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "This-Is-Why-You-Dream",
+        "The-Committee-of-Sleep"
+      ],
+      "averageRelevance": 0.3944841382068104
+    },
+    {
+      "dream": "Memory and Learning",
+      "topThemes": [
+        {
+          "code": "school",
+          "similarity": 0.526452158573976
+        },
+        {
+          "code": "light",
+          "similarity": 0.504928557596113
+        },
+        {
+          "code": "book",
+          "similarity": 0.501984565622137
+        },
+        {
+          "code": "medicine",
+          "similarity": 0.494291172962847
+        },
+        {
+          "code": "pill",
+          "similarity": 0.492315535815313
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "when-brain-dreams",
+        "neuroscience-of-sleep-and-dream",
+        "This-Is-Why-You-Dream",
+        "The-Committee-of-Sleep"
+      ],
+      "averageRelevance": 0.3237562665131578
+    },
+    {
+      "dream": "Circadian Rhythm Dream",
+      "topThemes": [
+        {
+          "code": "wind",
+          "similarity": 0.646344228851532
+        },
+        {
+          "code": "moon",
+          "similarity": 0.628559928281372
+        },
+        {
+          "code": "clock",
+          "similarity": 0.6280096207849
+        },
+        {
+          "code": "sun",
+          "similarity": 0.627109832684455
+        },
+        {
+          "code": "wave",
+          "similarity": 0.621968674591895
+        }
+      ],
+      "fragmentsFound": 5,
+      "topSources": [
+        "This-Is-Why-You-Dream"
+      ],
+      "averageRelevance": 0.38345900338450656
+    }
+  ]
+}

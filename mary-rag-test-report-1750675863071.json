@@ -1,0 +1,1323 @@
+{
+  "timestamp": "2025-06-23T10:51:03.071Z",
+  "interpreter": "mary",
+  "totalDreams": 8,
+  "summary": {
+    "totalFragmentsRetrieved": 40,
+    "averageFragmentsPerDream": 5,
+    "uniqueSources": [
+      "The-Committee-of-Sleep",
+      "when-brain-dreams",
+      "This-Is-Why-You-Dream",
+      "neuroscience-of-sleep-and-dream",
+      "twenty-four-hour-mind"
+    ]
+  },
+  "dreamAnalyses": [
+    {
+      "dreamId": "dream_1",
+      "dreamTitle": "Memory Consolidation Dream",
+      "dreamContent": "I was in a library where books kept rearranging themselves on the shelves. I was trying to study for an important exam, but every time I read a page, the words would change. I kept seeing formulas and facts from my physics class mixed with childhood memories. My grandmother appeared and started teaching me the material, even though she never studied physics. The information finally started making sense when I began teaching it to other students in the dream.",
+      "matchedThemes": [
+        {
+          "code": "book",
+          "name": "Unknown Theme",
+          "similarity": 0.634404255176492,
+          "description": "Dreams about reading materials, knowledge, or written stories"
+        },
+        {
+          "code": "school",
+          "name": "Unknown Theme",
+          "similarity": 0.61904921985847,
+          "description": "Dreams about learning places, educational buildings, or student environments"
+        },
+        {
+          "code": "library",
+          "name": "Unknown Theme",
+          "similarity": 0.610111731592216,
+          "description": "Dreams about book repositories, study places, or knowledge centers"
+        },
+        {
+          "code": "glass",
+          "name": "Unknown Theme",
+          "similarity": 0.568700737852258,
+          "description": "Dreams about transparent material, windows, or breakable surfaces"
+        },
+        {
+          "code": "grandmother",
+          "name": "Unknown Theme",
+          "similarity": 0.568210745409995,
+          "description": "Dreams about female grandparents, elderly matriarchs, or ancestral figures"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "8799e374-4631-4758-bc64-7c051ab6c5e5",
+          "source": "The-Committee-of-Sleep",
+          "themeCode": "book",
+          "themeName": "book",
+          "themeSimilarity": 0.634404255176492,
+          "fragmentSimilarity": 0.634237,
+          "combinedRelevance": 0.4023626515903728,
+          "fullText": "\nWhen I’m working I never know what the end is going to be or how things are going to come out. I’ve got an idea what direction I want the story to go in or hope it will go in, but mostly I feel like the tail on a kite . . . And if I know when I sit down what’s happening or what’s going to happen, that day and the next day and the day after, I’m happy. But with IT , I got to a point where I couldn’t see ahead any more. And every day I got closer to the place where this young girl . . . they were going to find her.\n\nI didn’t know what was going to happen to her. That made me extremely nervous. Because that’s the way books don’t get done. All at once you just get to a point where there is no more. It’s like pulling a little string out of a hole and all at once it’s broken and you don’t get whatever prize there was on the end of it.\n\nSo I had seven, eight hundred pages and I just couldn’t stand it. I remember going to bed one night saying, ‘I’ve got to have an idea. I’ve to have an idea!’ I fell asleep and dreamed that I was in a junkyard, which was where this part of he story was set.\n\nApparently, I was the girl. There was no girl in the dream. There was just me. And there were all these discarded refrigerators in this dump. I opened one of them and there were these things inside, hanging from the various rusty shelves. They looked like macaroni shells and they were all just sort of trembling in a breeze. Then one of them opened up these wings, flew out and landed on the back of my hand. There was a sensation of warmth, almost like when you get a shot of Novocain or something, and this thing started to turn from white to red. I realized it had anesthetized my hand and it was sucking my blood out. Then they all started to fly out of this refrigerator and to land on me. They were these leeches that looked like macaroni shells. And they were swelling up.\n\nI woke up and I was very frightened. But I was also very happy. Because then I knew what was going to happen. I just took the dream as it was and put it in the book. Dropped it in. I didn’t change anything . . . . I really think what happened with this dream was that I went to sleep and the subconscious went right on working and finally sent up this dream the way that you would send somebody an interoffice message in a pneumatic tube.\n\nKing also describes these unconscious messages with the most time honored metaphor--that of the ocean and its depths.\n\nI think that our minds are the same nutrient bath all the way down to the bottom and different things live at different levels. Some of them are a little bit harder to see because we don’t get down that deep. But whatever’s going on in our daily lives, our daily thoughts, the things that the surface of our minds are concerned with eddy down--trickle down--and then they have some sort of an influence down there. And these messages that we get a lot of times are nothing more than symbolic reworkings of the things that we’re concerned with.\n\nKing also emphasizes that it is in the shallowest sleep that logical ideas arrive. He continues the metaphor by observing that fish near the surface are what we are used to seeing. The deeper ones are more exotic--translucent, florescent, trailing strange frills. These are wondrous in their own habitat, he says, but usually turn into “exploded fish, a total mess” if one attempts to bring them up to the waking world.14\n\nAmerica’s other leading name in horror, Anne Rice also told Epel she uses dreams--both fortuitous ones and those more intentionally provided for her books.",
+          "metadata": {
+            "title": "The Committee Of Sleep",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 25,
+            "ingested_at": "2025-06-23T06:25:26.505Z",
+            "interpreter": "mary",
+            "source_file": "The-Committee-of-Sleep",
+            "total_chunks": 93
+          }
+        },
+        {
+          "fragmentId": "f84c30ca-0253-4cae-93f5-565a9fcc6e75",
+          "source": "when-brain-dreams",
+          "themeCode": "school",
+          "themeName": "school",
+          "themeSimilarity": 0.61904921985847,
+          "fragmentSimilarity": 0.639828,
+          "combinedRelevance": 0.3960850242436051,
+          "fullText": "\nTable 10.1\n\nPREVALENCE OF TOP 15 TYPICAL DREAM THEMES\n\nRank Typical Dream Have you ever dreamed of . . . Total Prevalence Percent of Women Percent of Men\n\n1 being chased or pursued, but not physically injured 85 86 82\n\n2 sexual experiences 78 75 85\n\n3 school, teachers, studying 77 80 68\n\n4 falling 76 77 75\n\n5 arriving too late (e.g., missing a train) 65 67 59\n\n6 a person now alive as dead 61 65 49\n\n7 being on the verge of falling 59 61 55\n\n8 flying or soaring through the air 56 54 62\n\n9 failing an examination 54 58 46\n\n10 trying again and again to do something 52 51 56\n\n11 being frozen with fright 49 52 43\n\n12 being physically attacked (e.g., beaten, stabbed, raped) 47 48 46\n\n13 a person now dead as alive 44 46 39\n\n14 vividly sensing, but not necessarily seeing or hearing, a presence in the room 43 44 42\n\n15 being a child again 41 42 40\n\nFinally, although many typical dreams are negatively toned, several of them are positive dreams, including dreams of flying (56 percent), discovering a new room in the house (34 percent), having magical powers other than flying (31 percent), and having superior knowledge or mental ability (31 percent). Some of these typical dreams are, on occasion, negatively toned—a fear of falling while flying or of monsters leaping out of a newly discovered room—but on the whole, they are accompanied by positive emotions.\n\nThese numbers, however, reflect lifetime prevalence, the percentage of people who have had such dreams at least once in their lives. They don’t tell us how often people have the dreams. Tony evaluated the thematic content of 3,000 randomly selected home dreams from 450 individuals and found that only five of the fifty-five typical dreams—falling, flying, a person now dead being alive, being inappropriately dressed, and being unable to find or use a toilet—occurred in more than 3 percent of the dream reports. Many other themes, like finding money, losing teeth, and failing an examination, occurred in less than a half percent of reports. Other researchers have found similar numbers, including in laboratory-based REM dream reports.5 Still, when you add up the frequencies of all fifty-five categories of typical dreams, there’s a better than fifty-fifty chance that one of these themes will pop up in your dreams tonight.\n\nRECURRENT DREAMS\n\nIn the early 1970s, the British neuroscientist Bernard Katz gave a series of lectures at Harvard Medical School, where Bob was working. Katz had won the Nobel Prize in medicine in 1970, and the school amphitheater was packed. At the start of his final lecture, Katz looked out over the audience and said, “I had that exam dream again last night.” A collective moan of recognition rose from the audience. Apparently, those dreams never end.\n\nExam dreams, dreams of going to school in your pajamas (or less), of teeth falling out, of forgotten plane tickets or passports—who needs these repetitive dreams? This might seem like a rhetorical question, but it’s not. Certainly, Katz didn’t have to worry about not having read the textbook or having forgotten to go to class—two common forms of exam dreams—and your risk of forgetting to get dressed before going to work is, hopefully, vanishingly small. So why do some people continue to experience these dreams? As we’ll see later in this chapter, their occurrence may not be all that surprising when viewed through the lens of NEXTUP.\n\nRecurrent dreams not only have the same theme from one time to the next, but they also have the same content. Studies show that about 70 percent of adults report having had at least one recurrent dream during their life, sometimes dating back to childhood. Predictably, recurrent dreams tend to elicit feelings of fascination and puzzlement in those who experience them.",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 100,
+            "ingested_at": "2025-06-23T06:49:39.571Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "7b1f6155-b81d-4ddd-a10e-a10d7e48df20",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "book",
+          "themeName": "book",
+          "themeSimilarity": 0.634404255176492,
+          "fragmentSimilarity": 0.621781,
+          "combinedRelevance": 0.3944605121878944,
+          "fullText": "\nDreaming should by no means be dismissed just because it occurs while you’re asleep or lacks the logic that guides you during waking hours. Dreams are a different form of thinking. It’s their very wildness that gives them the potential to be transformative. Great leaps in art, design, and fashion are built on the type of divergent thinking that comes naturally in dreaming, and it is culture, language, and creativity that has allowed humans to flourish far beyond our physical evolution. Dreaming is at the heart of all this.\n\nToday the word “dream” means many things: ambition, an ideal, a fantasy, and the vivid narratives generated during sleep. Neuroscience is showing that the boundaries between sleep and waking are not so clean after all. Dreams can help you solve a problem; learn a musical instrument, a language, or a dance move; practice a sport; give you clues about your health; and make predictions about the future. Dreams can be spiritually enriching. Forgotten dreams can still shape your mind and influence your day. You can learn to remember dreams, prime their content and even control them during something called lucid dreaming. Most importantly, dreams can offer the greatest gift—that of self-knowledge. By interpreting your dreams, you can make sense of your experience and explore your emotional life in new and profound ways.\n\nDreams are an elusive form of cognition. Because we experience them alone, closed off from the world, a subjective experience for an audience of one, much about dreams is likely beyond the realm of experimental testing or scientific proof. In this book, I’ve done my best to capture the current state and breadth of knowledge about dreams and dreaming while noting uncertainties in the research and disagreements among researchers. The book also includes theories I’ve developed based on the latest research and my own knowledge of the brain. Ultimately, this book is my synthesis of information from disparate disciplines. It is the product of intense effort and even greater humility.\n\nBefore we begin, consider for a moment the magic of dreaming. When we dream, we transcend our physical selves. We’re no longer aware that we’re lying in bed or even lying down at all. Our eyes are closed, but we can see. Our body is still, but we can walk, run, drive a car, fly. We are silent, but we can hold conversations with people we know and love, alive or dead, and people we’ve never met. We exist in the present, but we can travel back in time, or forward into the future. We are in a single spot but can transport ourselves to places we haven’t been to in years, or places that exist only in our imaginations. We are in a world completely of our own making. And it has the potential to be transcendent. Dreams are our nightly dose of wonder.\n\n1.\n\nWe Have Evolved to Dream\n\nIn the operating theater during a procedure called awake brain surgery, I use a pen-like device to apply tiny amounts of electricity directly onto a patient’s brain. Exposed, the undulating surface of the brain is shimmering and opalescent, punctuated with arteries and veins. The patient is conscious and alert yet feels no pain because the brain has no pain receptors. But the electricity has an effect. Every brain is unique and some spots I touch come alive. Touch one spot, and the patient reports a childhood memory. Touch another, and the patient smells lemon. Touch a third, and the patient feels sadness, embarrassment, or even desire.\n\nThe purpose of awake brain surgery is to find the precise locations where the flicker of electricity produces nothing. These are the spots where it is safe to cut through the surface tissue to reach the tumor below. When a micro-jolt of electricity produces no response, I know dissecting will not result in any functional damage.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 1,
+            "ingested_at": "2025-06-23T06:27:42.969Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "29b0c8c4-d796-4458-84f4-dc038445322a",
+          "source": "when-brain-dreams",
+          "themeCode": "book",
+          "themeName": "book",
+          "themeSimilarity": 0.634404255176492,
+          "fragmentSimilarity": 0.617223,
+          "combinedRelevance": 0.3915688975927999,
+          "fullText": "\nBefore closing this chapter, let’s return to one of the core aspects of dreaming that young children often struggle with. After figuring out that some things in life are real and others unreal, and distinguishing things that exist in the physical world from those whose nature is immaterial, children need to grasp that while they can observe their dreams, the images they see cannot be witnessed by anyone else. The private nature of dreaming has vital implications for anyone interested in other people’s dreams. It doesn’t matter if you’re a neuroscientist, clinician, pastor, or concerned parent, you can never study someone else’s dream experiences directly. All you have access to is the description of the experience the other person provides, whether it is shared verbally, in writing, through a drawing, or in a piece of performance art. Thus, the concept of dreams refers not only to “the series of thoughts, perceptions, or emotions that are experienced during sleep” but also to what people remember of these experiences and the spoken or written reports the dreamer eventually provides based on her (often short-lived) memory of the dream.\n\nThe upshot of all this is that both as a concept and an actual experience, dreams are much trickier than most people imagine. And, to make things worse, there is no consensus among researchers as to what even counts as a dream. Interdisciplinary groups from the International Association for the Study of Dreams and the American Academy of Sleep Medicine concluded that “a single definition for dreaming is most likely impossible given the wide spectrum of fields engaged in the study of dreaming, and the diversity in currently applied definitions.”5 Thus, depending on one’s perspective, dreaming can be synonymous with the term sleep mentation, which refers to the experience of any mental activity (perceptions, bodily feelings, isolated thoughts) during sleep, or it can be restricted to more elaborate, vivid, and story-like experiences recalled upon awakening.\n\nIn this book, we’ll adopt a broad view of dreaming that encompasses everything from fleeting, fragmented, and thought-like forms of sleep mentation all the way to dramatic, seemingly epical nocturnal adventures. In general, however, our focus will be on the more complex and involving forms of dreaming—those rich, immersive experiences that have given dreams their sense of mystique and have intrigued and perplexed humans from time immemorial.\n\nChapter 2\n\nGRASPING AT DREAMS\n\nEARLY EXPLORERS OF THE DREAM WORLD\n\nWHEN WE ASK STUDENTS, FRIENDS, OR AUDIENCES AT our public lectures what marked the birth of the scientific study of dreams, most of them answer that it was Freud. (In rare cases, people answer that it was the discovery of REM sleep.) Indeed, Freud’s influence on our beliefs about dreaming cannot be overemphasized. Consider this quote:\n\nThe perception or imagination of a thing may rouse a momentary desire which we repress as foolish or wrong. The next night these half-formed psychical tendencies, relieved of all their restraint, work themselves out. . . . We may assume, perhaps, that in each case the dream was the expansion and complete development of a vague fugitive wish of the waking mind . . . the dream becomes a revelation. It strips the ego of its artificial wrappings and exposes it in its native nudity. It brings up from the dim depths of our subconscious life the primal, instinctive impulses. . . . Like some letter in cipher, the dream inscription when scrutinized closely loses its first look of balderdash and takes on the aspect of a serious, intelligible message.",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 8,
+            "ingested_at": "2025-06-23T06:45:50.981Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "94b8293b-61fc-40fb-a654-05f8e056e41f",
+          "source": "neuroscience-of-sleep-and-dream",
+          "themeCode": "school",
+          "themeName": "school",
+          "themeSimilarity": 0.61904921985847,
+          "fragmentSimilarity": 0.618829,
+          "combinedRelevance": 0.3830856096757971,
+          "fullText": "\nChildren’s dreams, whether collected in the lab or at home, contain a lot of negative emotions and are often described as scary for the children. Children are more likely to experience nightmares than adults. Up to 50 percent of children between three and six years of age, and 20 percent between six and twelve years, experience “‘frequent” nightmares. Persistence of nightmares during the preschool and school years (two and a half to nine years of age) is associated prospectively with psychotic experiences at twelve years of age. This association holds regardless of family adversity, emotional or behavioral problems, IQ, and potential neurological problems. Questionnaire–based nightmare and bad dream studies typically show that nightmare frequency is highest between the ages of five to ten and is related to other sleep disorders, trait anxiety, emotional problems, and behavior problems.\n\n8.5 Adulthood: Male versus Female Dreams\nThe dream of adults are also intensely social in terms of their content. Adult men and women dream about their family members and close friends. They engage in a huge variety of social interactions with these close familiars. When strangers (unknown characters) appear in the dreams of children or adults, they typically indicate threat to either the dreamer or one of his close family members. Threat and aggression levels vary according to gender, with males evidencing greater levels of aggression and females evidencing greater feelings of threat (coming from strangers) in their dreams. Cross-sectional studies have documented gender differences in adult dream content. In the 1960s, Hall and Van de Castle studied the content of five dreams of each of 100 male and 100 female college students (N = 1,000), which had been collected between 1948 and 1952 (reviewed in Domhoff, 1996). They found (Table 8.3) that unfamiliar, outdoor settings were present more often in men’s than women’s dreams, and that there was a higher proportion of male dream characters, unknown characters, more physical aggression, weapons, and sexuality in men’s dreams. These basic cross-sectional content differences between the dreams of men and women have largely been confirmed in more recent studies.",
+          "metadata": {
+            "title": "Neuroscience Of Sleep And Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 144,
+            "ingested_at": "2025-06-23T06:38:25.419Z",
+            "interpreter": "mary",
+            "source_file": "neuroscience-of-sleep-and-dream",
+            "total_chunks": 202
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.3935125390580939,
+        "topSources": [
+          "The-Committee-of-Sleep",
+          "when-brain-dreams",
+          "This-Is-Why-You-Dream",
+          "neuroscience-of-sleep-and-dream"
+        ]
+      }
+    },
+    {
+      "dreamId": "dream_2",
+      "dreamTitle": "REM Sleep Paralysis",
+      "dreamContent": "I woke up in my bed but couldn't move my body at all. I could see my room clearly but felt a heavy pressure on my chest. There was a dark figure standing in the corner of my room watching me. I tried to scream but no sound came out. My heart was racing and I was breathing rapidly. After what felt like hours but was probably minutes, I suddenly could move again and the figure vanished.",
+      "matchedThemes": [
+        {
+          "code": "nakedness",
+          "name": "Unknown Theme",
+          "similarity": 0.601337742167664,
+          "description": "Dreams about being unclothed, exposed bodies, or lack of covering"
+        },
+        {
+          "code": "stranger",
+          "name": "Unknown Theme",
+          "similarity": 0.601098501616807,
+          "description": "Dreams about unknown persons, unfamiliar faces, or mysterious individuals"
+        },
+        {
+          "code": "darkness",
+          "name": "Unknown Theme",
+          "similarity": 0.595070181807956,
+          "description": "Dreams featuring absence of light, blackness, or obscured vision"
+        },
+        {
+          "code": "room",
+          "name": "Unknown Theme",
+          "similarity": 0.575990711211606,
+          "description": "Dreams about enclosed spaces, chambers, or interior divisions"
+        },
+        {
+          "code": "arm",
+          "name": "Unknown Theme",
+          "similarity": 0.574700372657191,
+          "description": "Dreams about limbs, reaching, or physical strength"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "e4053749-9823-427e-8e20-e19a58a93a45",
+          "source": "when-brain-dreams",
+          "themeCode": "stranger",
+          "themeName": "stranger",
+          "themeSimilarity": 0.601098501616807,
+          "fragmentSimilarity": 0.645081,
+          "combinedRelevance": 0.3877572225214715,
+          "fullText": "\nSleep paralysis, described briefly in Chapter 4, is among the strangest sleep-related parasomnias. As a reminder, it’s characterized by the muscle paralysis in REM sleep continuing after you wake up, often with REM-like hallucinations that occur while you’re awake with eyes open. The hallucinations typically include seeing a person—or some creature—in your bedroom, or even just feeling an evil presence nearby. About a quarter of adults have experienced sleep paralysis, so it probably doesn’t qualify as extremely unusual; for some adults it’s associated with narcolepsy, and for others it can be a recurring feature of their sleep.\n\nNot surprisingly, the presence of hallucinated intruders in one’s bedroom is confusing and often terrifying. You feel like you’re dreaming, but you know you’re awake. For hundreds of years, cultures have struggled to come up with their own understandings of these events. Sometimes the hallucinated creatures were thought to be demons, such as the one perched on the chest of a sleeping woman in Henry Fuseli’s famous 1781 painting The Nightmare. At other times, they were thought to be angels. Even today, different cultures variably ascribe sleep paralysis to ghosts, witches, evil spirits, or attacks by dead bodies or unbaptized babies.9\n\nEven in Western cultures, people who don’t know about sleep paralysis struggle to come to terms with it. Bob had a laboratory assistant from Ireland who had initially gotten interested in studying sleep because of her own terrifying experiences with sleep paralysis when she was in college and going through a period when she wasn’t getting enough sleep. At one point she brought her concerns to the attention of her priest; he even came to her house with his bible and holy water and performed an exorcism, in an attempt to get the evil spirit to leave. And, in a sign of the times, he also opined that it might be safer if she had her boyfriend sleep in bed with her. “I think my old college roommates and landlord still think I lost my mind,” she told Bob.\n\nBased on the history of this parasomnia, it’s perhaps understandable that today many Americans experiencing sleep paralysis believe they have been abducted by space aliens. Richard McNally and Susan Clancy at Harvard have suggested that reports of alien abductions simply reflect one way our contemporary culture interprets the experience of sleep paralysis.10 Consider their description of one woman’s experience:\n\n[She] was lying on her back when she woke up from a sound sleep. Her body was completely paralyzed, and she experienced the sensation of levitating above her bed. Her heart was pounding, her breathing was shallow, and she felt tense all over. She was terrified. She was able to open her eyes, and when she did so, she saw three beings standing at the foot of her bed in the glowing light.11\n\nIt sounds like a typical experience of sleep paralysis; in an earlier time, she might have concluded that the three beings were angels or demons. Indeed, her first thought was that they were angels. But she was subsequently convinced by a friend that they must have been aliens.",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 133,
+            "ingested_at": "2025-06-23T06:50:39.757Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "610e1c42-2b6d-4a8a-8a85-42d5e2c3d9b4",
+          "source": "neuroscience-of-sleep-and-dream",
+          "themeCode": "nakedness",
+          "themeName": "nakedness",
+          "themeSimilarity": 0.601337742167664,
+          "fragmentSimilarity": 0.638885,
+          "combinedRelevance": 0.38418566340478805,
+          "fullText": "10.17 False Awakenings and Sleep Paralysis Dreams\nA false awakening is a type of dream that involves the subjective experience of waking up while remaining in the dream state. The dreamer feels as if he has woken up and he then goes about his daily routine, such as getting dressed or brushing his teeth. While performing these routine tasks, the dreamer then really wakes up! Other false awakenings contain fantastic or unrealistic elements not associated with the dreamer’s waking circumstances. The dreamer may wake up in the same dreamed environment as that experienced within the dream that occurred prior to the false awakening. As in the movie Inception, the dreamer may have to undergo several false awakenings before he is really able to wake up. Occasionally, the dreamer may awaken into a dream containing aspects of the dreamer’s past. For example, a false awakening may entail waking up in the dreamer’s childhood bedroom.\n\nIn the early twentieth century, the French zoologist Yves Deluge described a dream where he was awakened by a friend knocking at his door, asking for his help. Alarmed, he got dressed and began to wash his face when he realized he was dreaming. But then he would find himself asleep again and hearing the knock on the door, hurriedly getting dressed to help his friend, and once again realizing he was dreaming. This cycle occurred several times before he finally really woke up.\n\nSometimes false awakenings are accompanied by an inability to move one’s body. This type of experience is likely a variant of the dreams associated with isolated sleep paralysis (discussed in a previous chapter and in the next section). False awakenings and sleep paralysis both occur during transitional periods between waking and sleeping and combine characteristics of both states in unusual ways. There are also significant overlaps between descriptions of false awakenings and reports of out-of-body experiences, apparition sightings, and alien abductions.\n\n10.18 Sleep Paralysis Dreams\nIsolated sleep paralysis (ISP) is a relatively common experience, typically characterized by an inability to move or speak after waking up as well by the eerie sense that someone or something is in the room with you or is somehow evil or malignant and threatening you (Cheyne & Girard, 2007). It is legitimately categorized as a dream because the individual often experiences both auditory and visual hallucinations as well as the muscle atonia or paralysis that normally accompanies REM. The author Louis Proud (2009) provides this example:\n\nI wake up but not completely. I can feel something touching my forehead; it is this that has drawn me kicking and screaming into a semi-conscious state. But in truth I cannot kick or scream; in fact, I can’t move a single muscle in my body, even though my mind is awake. For gods sake I can’t even open my eyes. All I can do is lie there while this thing attends to my forehead with delicate loving strokes. Whatever it is I can smell the stench of its presence. I can taste its mind just as it can taste mine. But its love, its child like affection is sickening me and all I want is for it to leave me in peace. I continue to lie there, engulfed by the darkness as the shadow strokes my forehead. It then moves away to the left of my body and proceeds to lie down beside me. It writhes around annoyingly until it finds a comfortable position. Then once its finished messing around it puts it arms around me. Its grip is so tight that my chest is aching. I want to scream out in fear and disgust but there is nothing I can do” (Proud, 2009, pp. 26–27)",
+          "metadata": {
+            "title": "Neuroscience Of Sleep And Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 181,
+            "ingested_at": "2025-06-23T06:39:30.756Z",
+            "interpreter": "mary",
+            "source_file": "neuroscience-of-sleep-and-dream",
+            "total_chunks": 202
+          }
+        },
+        {
+          "fragmentId": "a3c54d40-95c1-4f86-89d6-bc2df4583a69",
+          "source": "neuroscience-of-sleep-and-dream",
+          "themeCode": "stranger",
+          "themeName": "stranger",
+          "themeSimilarity": 0.601098501616807,
+          "fragmentSimilarity": 0.633169,
+          "combinedRelevance": 0.38059693717021204,
+          "fullText": "10.14 Nightmares\nThe DSM-5 defines Nightmare Disorder (DSM-5 307.47 (F51.5)) as a parasomnia involving repeated awakenings from extremely frightening dreams that do not occur in the context of some other mental disorder. Upon awakening, the individual is oriented and alert and has clear recall of the content of the dream, which, in turn, is associated with clinically significant distress and impairment in daytime functioning. Epidemiological studies indicate that 2–6 percent (about 6.4–15 million people) of the adult American population experience nightmares at least once a week. Between one half and two thirds of children experience recurrent nightmares. Nightmares are distinguished from scary or disturbing dreams by the presence of monstrous gents in the dreams. These supernatural agents evoke within the dreamer dread, terror, awe ,and uncanny fear.\n\n10.15 Meeting One’s Double in a Dream/Nightmare\nThe experience of meeting one’s own double (the doppelganger) in a dream has been reported throughout recorded history and has most often been described by the people who experience it and in literature as a profound and dangerous encounter with one’s own soul. Although doppelganger dreams are rare, they are memorable, and most people, if pressed, will report at least one such dream in their lifetime. In most doppelganger dreams, the dreamer sees him or herself in the dream – though the double usually does not perform many actions. It is as if looking at oneself in a mirror. When the doppelganger appears in a dream the dreamer almost always describes it as frightening and of special spiritual significance. One cognitive explanation of the doppelganger is that it represents a memory of seeing oneself in a mirror or even a kind of doubling of autobiographical memory.\n\n10.16 Visitation Dreams\nIn visitation dreams, a loved one or an acquaintance who has died appears in a dream and looks alive and healthy and generally carries a message for the dreamer. Common themes in visitation dreams involve the deceased appearing in the dream as they did in life rather than as they did when they fell ill. In fact, the deceased often appears much younger or more healthy than when they died. The deceased might convey reassurance to the dreamer: “I am OK and still with you.” This message tends to be conveyed telepathically or mentally rather than via spoken word. The dream structure is NOT disorganized or bizarre. Instead they are typically clear, vivid, intense, and are experienced as real visits when the dreamer awakens. The dreamer is always changed by the experience. There is resolution of the grieving process and a wider spiritual perspective. Often these visitation dreams can be quite emotional. See some examples of visitation dreams posted by people at my Psychology Today Dreamcatcher blog: www.psychologytoday.com/blog/dream-catcher.\n\n10.17 False Awakenings and Sleep Paralysis Dreams\nA false awakening is a type of dream that involves the subjective experience of waking up while remaining in the dream state. The dreamer feels as if he has woken up and he then goes about his daily routine, such as getting dressed or brushing his teeth. While performing these routine tasks, the dreamer then really wakes up! Other false awakenings contain fantastic or unrealistic elements not associated with the dreamer’s waking circumstances. The dreamer may wake up in the same dreamed environment as that experienced within the dream that occurred prior to the false awakening. As in the movie Inception, the dreamer may have to undergo several false awakenings before he is really able to wake up. Occasionally, the dreamer may awaken into a dream containing aspects of the dreamer’s past. For example, a false awakening may entail waking up in the dreamer’s childhood bedroom.",
+          "metadata": {
+            "title": "Neuroscience Of Sleep And Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 180,
+            "ingested_at": "2025-06-23T06:39:29.051Z",
+            "interpreter": "mary",
+            "source_file": "neuroscience-of-sleep-and-dream",
+            "total_chunks": 202
+          }
+        },
+        {
+          "fragmentId": "2d8eda83-71fa-4695-b65e-db5988112ccf",
+          "source": "The-Committee-of-Sleep",
+          "themeCode": "nakedness",
+          "themeName": "nakedness",
+          "themeSimilarity": 0.601337742167664,
+          "fragmentSimilarity": 0.626625,
+          "combinedRelevance": 0.37681326268581244,
+          "fullText": "\nWhich brings us to one final issue—just how unique is this process to dreams? As Jaynes points out, there is a tradition to waking visions. And it’s more common among the creative. Several visual artists I interviewed were inspired by waking dreamlike imagery. Painter Jim Ann Howard told me of the nighttime dream that led to her “Reunion.” She then recounted the origin of “Trout Dreams” as walking through a cave and “dreaming” of fish. Confused, I asked if she was dreaming or awake. She said, “Awake, but I can dream in either state so I really don’t make much distinction.”\n\nAn architect friend suggested I contact Morgan Wheelock, the leading Boston landscape architect who has designed many of the lushest city parks and private gardens in the northeast. My friend remembered that his designs came from dreams. However, when I talked to Wheelock, he said “Well you could call them waking dreams . . . When I’m looking at a property I’m going to landscape, I cock my head to the side, breathe a certain way and the landscape disappears--instead I see it as it could be.” It’s no wonder my friend remembered this as a dream—that’s the only state in which most of us would have such a vivid perception.\n\nA few novelists also have this ability. Stephen King says, “Part of my function as a writer is to dream awake.” He describes being completely caught up in a fictional world as he types and unaware of real objects and events around him.5 Author James Hall agrees, “I don’t see that the dream state that we have at night is that much different from the dream state that writers learn to put themselves into as they’re writing.”6\n\nSo why not do this type of creating awake? Well, if you can, you should. But I didn’t hear these descriptions from creators in most fields—or even from that many painters and writers. Most of us have imagery more tethered to our waking reason. About 5% of the population has the ability to block out the real world and daydream with a hallucinatory vividness. The origin seems to be partially genetic—twins are very similar. It’s also partially learned--parents who encourage imaginative play make it likelier. But the trait is fixed early. A few people learn to harness the latent ability by hypnosis or similar means but they don’t develop it anew as adults. For most of us, dreams remain the only area where imagination runs fully unleashed.\n\nIt’s common to observe that we spend a third of our lives asleep—and a third of that dreaming. In our dream-neglecting culture, two Nobel prizes resulted from dreams. What is the potential if we paid as much attention as the cultures we saw in Chapter Eight? Dreaming is above all, a time when the unheard parts of ourselves get to speak—we would do well to listen.",
+          "metadata": {
+            "title": "The Committee Of Sleep",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 92,
+            "ingested_at": "2025-06-23T06:27:38.966Z",
+            "interpreter": "mary",
+            "source_file": "The-Committee-of-Sleep",
+            "total_chunks": 93
+          }
+        },
+        {
+          "fragmentId": "1e8ed984-8644-4599-ba03-20b580292fe6",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "arm",
+          "themeName": "arm",
+          "themeSimilarity": 0.574700372657191,
+          "fragmentSimilarity": 0.644185,
+          "combinedRelevance": 0.3702133595601726,
+          "fullText": "\nIn various studies, amputees report dreams that would be impossible in the waking world. A man with an amputated arm dreamed of smashing a mosquito with both hands. Another, of shifting gears as he drove a Ferrari Testarossa and, later, of pouring a drink for a friend, holding a champagne bottle in his right hand and a glass in his left hand. A woman with most of one leg amputated dreamed she ran from a plane after it flew too low overhead.\n\nWhen dreams make us whole, what occurs in the dreamscape is nothing short of magic. Two women confined to wheelchairs as the result of chronic spinal cord injuries independently reported something astonishing. They each told of having dreams that included their wheelchairs. However, they were rarely seated in them. In their dreams, they preferred pushing the empty wheelchair.\n\nFor patients with Parkinson’s and dream enactment behavior, dreams enable them to overcome the limitations of their waking bodies. In defiance of all scientific logic, they exhibit something called paradoxical kinesis. By day, their limbs may be rigid and tight, their movements slow, almost ossified. This isn’t for lack of will. The signaling from the brain to the body is breaking down. When these Parkinson’s patients dream, and they act out their dreams as a result of dream enactment behavior, their movements are not slow or jerky, as you might expect. They can move quickly and fluidly. The tremors, weakness, and rigidity they experience during the day are gone. Their voices, too, are transformed. Quiet and tremulous by day, they are now loud and clear as they shout in their sleep. How this paradoxical kinesis is possible remains an enigma.\n\n* * *\n\n• • •\n\nAs we learn more about the neuroscience of dreaming, we are also learning about the potential inside our bodies and minds that only dreams reveal and release. It’s not just our imagination, narratives, and relationships that are boundless in our dreamscape. The dreaming brain holds other powers.\n\nSince meeting that patient nearly twenty-five years ago, I have immersed my life and study into care and investigation of the human brain—the human person—from a breadth of scientific perspectives. The more I have learned, the more I stand in awe and wonder at the mystery of our minds.\n\nOne such capacity, the ability to awaken inside our dreams, and control the direction of dream events, feels more like magic than science. Despite its description for millennia, only in this decade are we able to scientifically investigate and prove that our brains can indeed be dreaming—and also partially awake.\n\n6.\n\nLucid Dreams: A Hybrid of the Waking and Dreaming Minds\n\nIn 1975, an experiment rocked the field of neuroscience.[1] The goal was nothing less than to revolutionize our understanding of waking, sleeping, and dreaming: to show that dreamers could become self-aware while they were still dreaming, and to prove it by communicating with the outside world. In other words, to prove that lucid dreaming was real.\n\nA participant named Alan Worsley had fallen asleep in a sleep lab in England with very specific instructions.[2] He was asked to move his eyes back and forth when he became aware he was dreaming—while still inside the dream. To show his eye movements weren’t random, he was instructed to move his eyes smoothly left-right-left-right in a way that he had rehearsed while awake. These deliberate eye movements would be impossible to confuse for the erratic eye movements of REM sleep.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 66,
+            "ingested_at": "2025-06-23T06:29:43.071Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.37991328906849137,
+        "topSources": [
+          "when-brain-dreams",
+          "neuroscience-of-sleep-and-dream",
+          "The-Committee-of-Sleep",
+          "This-Is-Why-You-Dream"
+        ]
+      }
+    },
+    {
+      "dreamId": "dream_3",
+      "dreamTitle": "Problem-Solving Dream",
+      "dreamContent": "I was working on a complex coding problem that I couldn't solve during the day. In the dream, the code appeared as colorful blocks that I could physically move around. I discovered that two functions were interfering with each other when I saw them as tangled ropes. By untangling them and reorganizing the structure, the solution became obvious. When I woke up, I immediately knew how to fix the bug.",
+      "matchedThemes": [
+        {
+          "code": "rope",
+          "name": "Unknown Theme",
+          "similarity": 0.619576850344345,
+          "description": "Dreams featuring binding cords, twisted fibers, or tying materials"
+        },
+        {
+          "code": "maze",
+          "name": "Unknown Theme",
+          "similarity": 0.592864705626989,
+          "description": "Dreams about confusing paths, labyrinthine structures, or puzzle routes"
+        },
+        {
+          "code": "wall",
+          "name": "Unknown Theme",
+          "similarity": 0.587793858678096,
+          "description": "Dreams about vertical barriers, room dividers, or protective structures"
+        },
+        {
+          "code": "building",
+          "name": "Unknown Theme",
+          "similarity": 0.585042995660228,
+          "description": "Dreams about structures, constructions, or architectural forms"
+        },
+        {
+          "code": "accident",
+          "name": "Unknown Theme",
+          "similarity": 0.572217259970746,
+          "description": "Dreams about crashes, mishaps, or unexpected harmful events"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "7af1cb9b-e6c6-4ebb-b407-1b503ffaad41",
+          "source": "twenty-four-hour-mind",
+          "themeCode": "wall",
+          "themeName": "wall",
+          "themeSimilarity": 0.587793858678096,
+          "fragmentSimilarity": 0.666595,
+          "combinedRelevance": 0.3918204472255254,
+          "fullText": "\nDespite my unofficial title, Queen of Dreams, I am not a consistent dream diary keeper. Like most people who work, I jump quickly out of sleep, shutting off the alarm and opening my eyes to check the clock. Is it really 6:30 a.m. already? Both of these behaviors, the muscle activity of abrupt movement and orienting of vision to outside stimuli, are REM stoppers, and therefore make dreams difficult to recall. However, sometimes a dream is so emotion-filled it imposes itself on our waking memory. I have chosen an example of one of these from my childhood because Freud holds these are the inaccessible roots of personality—a premise challenged by contemporary therapists.\n\nMy best guess is that I first had this dream at age 6 or 7. This is the way I remember it:\n\n> Someone knocked at our front door, a big, heavy, wooden one with no window to see who was on the other side. I had to reach up to turn the handle, and then found a stranger, a tall man dressed as a harlequin in a suit of many colors, wearing a black mask. I knew from this that he was a robber, a bad man trying by his colorful costume to fool me into thinking that he was good. I was frightened and ran upstairs to hide in the bathroom, the only room that locked. My two older sisters were coming down the stairs as I dashed by. They laughed at me, saying, “Never show you are frightened of bad men. What you must do is charm them.” I felt ashamed that they were better able to handle the situation than I. They went on down the stairs to greet the visitor, but I stayed locked in the bathroom, alone and frightened.\n\nMy method of parsing a dream for its meaning is to look for the descriptive terms and their opposites—the dream dimensions (I described these in my work with a nightmare patient). These are the categories we use to describe and evaluate ourselves and others. These organizing structures, which operate mainly on automatic pilot without our awareness, are developed early in life. In my experience, they can be seen most clearly in dreams. Now, what are the dimensions of this early dream of mine? I look first for the descriptors of the dream self. In this dream I was: small, young, female, perceptive, frightened, withdrawing, ashamed, isolated.\n\nNext, I look for the opposites of these qualities in the other dream characters: big, older, male, deceptive, calm, approaching, self-confident, sociable. Two other general dimensions relate to the physical–psychological setting: open/closed, and inside/outside.\n\nNow we can see the structure of this dream. Its structure is made up of a few paired concepts. I am small; the man and the door are big. I am young; my sisters and the man older. I and my sisters are female; the stranger is male. I am perceptive; the man and my sisters are deceptive. I am frightened; the others are calm. I withdraw; my sisters approach. I am ashamed; they are self-confident. I am isolated; the others are sociable.",
+          "metadata": {
+            "title": "Twenty Four Hour Mind",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 167,
+            "ingested_at": "2025-06-23T06:44:54.038Z",
+            "interpreter": "mary",
+            "source_file": "twenty-four-hour-mind",
+            "total_chunks": 180
+          }
+        },
+        {
+          "fragmentId": "927ddede-e396-4bea-aa58-892fa056d7d3",
+          "source": "when-brain-dreams",
+          "themeCode": "rope",
+          "themeName": "rope",
+          "themeSimilarity": 0.619576850344345,
+          "fragmentSimilarity": 0.605557,
+          "combinedRelevance": 0.3751890987639705,
+          "fullText": "\nNotice that when one object suddenly changes into another, the new object is always similar to the old one. This is important. When NEXTUP explores associative networks, it could select a new object because it’s similar to the original object or because it’s related to the original one. But in every case in Bob’s study, NEXTUP chose a new object based on its physical similarity to the old one. None of the objects turned into something that we’ve learned is related to it. The city bus, for example, didn’t turn into a bus driver. If you’re aware of the bizarre transformations in your own dreams, you’ll intuitively know that changes like this never occur. It would appear that such transformations—which the dreaming brain could easily produce—aren’t useful for understanding possibilities in our lives, and so they are rejected by NEXTUP as it constructs our dreams.\n\nBut it’s also possible that the associations underlying some of these transformations are not as weak as they look to outside judges. Some may, in fact, seem perfectly reasonable to the dreamer. Consider one of Tony’s dreams:\n\nI’m back in the house where I grew up. As I enter my bedroom, I see my cherished teddy bear lying on the bed. As I move to pick it up, I hear someone enter my room. It’s my uncle Romeo, whom I haven’t seen in years. I give him a hug and then, as I pull away, am puzzled to find myself standing in the middle of a vineyard.\n\nThis sudden shift in location fits with the ones we talked about earlier in Bob’s spliced dreams study. Obviously, such a sudden shift could never happen while Tony was awake. But are the two locations as unrelated as Bob’s study would suggest? Maybe not, once you learn that Tony’s beloved teddy bear was a gift from his uncle Romeo, who came from Italy for a visit when Tony was a child, and that Romeo used to tease Tony’s mother about North American wines, telling her that even the cheapest vino made from the grapes growing near his home in Italy was of better quality. And even if Tony hadn’t remembered some of these details, his dreaming brain certainly did.\n\nThere are several conclusions we can draw from this discussion of dream bizarreness. First, most dreams are not what the movies and mass media make them out to be: they’re not Felliniesque creations in which your mother zips by overhead on a trapeze as you skateboard uphill on water beneath her, while your brother—who is really a cat—watches from atop a glowing birdhouse. In fact, to experienced dream researchers, these kinds of accounts (often presented at the start of popular media articles on dreams) sound exactly like what they are: over-the-top stories made up to match people’s wildest conception of dreams. Research on thousands of laboratory and at-home dream reports tells us that most dreams, especially REM dreams, are captivatingly strange, but not as outlandish as the media might lead you to think. In reality, dreams usually present us with convincing settings and characters, and it’s often a conversation, situation, or unfolding of the plot we find ourselves in that is most strikingly odd. The same can also be said for many plays, novels, and movies.\n\nFurthermore, when brains dream, they don’t create a chaotic jumble of scenes. This is true even of people’s strangest dreams, and even when the dream’s associative processes and memory sources aren’t readily apparent to the dreamer. (You’ll find some amusing examples of this phenomenon in the next several chapters.)\n\nBut most important, all these findings make sense from the perspective of NEXTUP. Strange and unusual juxtapositions of content coming from different memory sources are just what we’re looking for. They give your brain a chance to explore unexpected and weak associations within a convincing dream world, designed by your brain to elicit a range of reactions from you within the dream.\n\nEmotions",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 95,
+            "ingested_at": "2025-06-23T06:49:29.770Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "e85bf4cf-0687-4356-a2b4-2936c446087e",
+          "source": "when-brain-dreams",
+          "themeCode": "accident",
+          "themeName": "accident",
+          "themeSimilarity": 0.572217259970746,
+          "fragmentSimilarity": 0.648028,
+          "combinedRelevance": 0.37081280654432264,
+          "fullText": "\nFailure or helplessness Difficulty of the dreamer in attaining a goal, including being late, lost, unable to talk, losing or forgetting something, and making mistakes\n\nHealth-related concerns and death Presence of physical illness, disease, health-related concerns, or death of a character or of the dreamer\n\nApprehension or worry Dreamer feeling afraid or worried about someone or something, without an objective threat being present\n\nBeing chased Dreamer is chased by another character but not physically attacked\n\nEvil presence Seeing or feeling the presence of an evil force, including monsters, aliens, vampires, spirits, creatures, ghosts, etc.\n\nAccidents The dreamer or another character being involved in an accident, including vehicular crashes, drowning, slipping, falling, etc.\n\nDisaster and calamity Plausible events ranging from relatively small-scale anomalies such as a fire or flood in one’s house or neighborhood to larger-scale disasters such as earthquakes, war, the end of the world, etc.\n\nInsects and vermin Infestation, bites or stings from insects, snakes, etc.\n\nEnvironmental abnormality Bizarre or implausible events appearing in the dream’s environment\n\nOthers Idiosyncratic or infrequent themes such as being naked, being in an insalubrious environment, and being unable to find or being embarrassed to use a toilet\n\nTony and Geneviève identified a dozen thematic categories for nightmares and bad dreams and then came up with precise definitions that allowed judges to reliably score the dreams. Table 10.2 describes these categories, and their observed frequencies are given in Table 10.3. (The careful reader might note that these combined frequencies add up to 146 percent, not 100 percent. This is because many dreams included more than one of these themes.)\n\nAs Table 10.3 indicates, themes involving physical aggression and interpersonal conflicts were the most frequently reported, followed by failure or helplessness, health-related concerns or death, and apprehension or worry. Nightmares were significantly more likely than bad dreams to contain themes of physical aggression, being chased, evil forces, and accidents, whereas themes of interpersonal conflicts were significantly more frequent in bad dreams. Of note, several themes commonly reported in questionnaire studies of nightmares, such as feelings of paralysis or suffocation, were entirely absent from the sample of 10,000 dreams; themes of falling occurred so infrequently (1.5 percent of all nightmares and bad dreams) that they were reclassified under accidents. This finding confirmed our suspicion that such themes are probably attributable to parasomnias such as hypnagogic jerks, sleep paralysis on awakening, or sleep apnea, a sleep-related breathing disorder.\n\nTable 10.3\n\nFREQUENCY OF THEMES IN NIGHTMARES AND BAD DREAMS\n\nTheme Nightmares (%) Bad dreams (%) Combined (%)\n\nPhysical aggression 49 21 32\n\nInterpersonal conflicts 21 35 30\n\nFailure or helplessness 16 18 17\n\nHealth-related concerns and death 9 14 12\n\nApprehension or worry 9 13 11\n\nBeing chased 11 6 8\n\nEvil presence 11 5 7\n\nAccidents 9 5 6\n\nDisaster and calamity 5 6 5\n\nInsects and vermin 7 4 5\n\nEnvironmental abnormality 5 4 4\n\nOthers 7 10 9\n\nTony and Geneviève also found that men’s nightmares were more likely than women’s to contain insects or disasters like floods, earthquakes, and wars, while interpersonal conflicts were twice as common in women’s nightmares. Finally, the most frequently reported causes for awakening from a nightmare were the presence of an immediate threat (42 percent), the intensity of the emotions experienced (25 percent), and intentionally waking up to escape the nightmare (14 percent).",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 104,
+            "ingested_at": "2025-06-23T06:49:46.477Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "4054ab85-08c8-466c-b839-11833695a929",
+          "source": "The-Committee-of-Sleep",
+          "themeCode": "accident",
+          "themeName": "accident",
+          "themeSimilarity": 0.572217259970746,
+          "fragmentSimilarity": 0.64379,
+          "combinedRelevance": 0.3683877497965666,
+          "fullText": "\nI just knew that was his intuition sensing that Cyrus would be alright.\n\nCyrus Parsifal is currently a healthy, bright college junior. “I was such a shy meek person back then,” Parsifal recalls. “It took something as dramatic as that dream to make me disagree with a male authority figure.\n\nSome would say this type of dream represents a simple coincidence. Parsifal’s first physician is not entirely wrong in suggesting that pregnant women often have anxiety dreams about their unborn children. Any of us may worry about cancer or symbolize other concerns as that dramatic ailment. If then nightmare doesn’t come true, few of us recall and retell the anecdote. So how do we know that a dreamed correspondence is not just metaphoric anxiety combined with coincidence?\n\nWe don’t know for sure and some fraction probably are in fact exactly that. But it is a fact that our bodies can sense more than reaches consciousness. Dreams can convey subliminal perceptions so at least some of these may be real warnings from our sleeping minds. In waking life, we know that a sensation may mean nothing. When we have such a waking perception--or intuition of illness--we do well to check it out, though some of these instances will be false alarms. The same is true of body dreams--many will turn out to be groundless, but why miss the ones that are important?\n\nResearch Studies\n\nMost of the stories of dreams warning of illness are anecdotal. But there is some research on the topic. This explores whether these dreams are more common in illness and what signs are most likely to occur during physical illness rather than with metaphoric concerns.\n\nThe largest study so far was done across the world. Russian researcher Vasali Kasatkin amassed a collection of 1,642 dreams from 247 patients and tracked their medical condition. He found that repeated dreams of wounds were the strongest predictor of impending illness. These dreams were longer and more intense than ones reflecting ordinary stresses. They often persisted through the night and recurred on subsequent nights.\n\nThe area of dream injury was usually the same as the developing illness. An ulcer patient dreamed he was eating pizza and his stomach “broke open”. Another dreamed about a rat gnawing at the lower right part of his abdomen where his ulcer was later found. Yet another patient dreamed of dogs tearing at his stomach before being diagnosed with stomach cancer. A woman whose father had suffered from epilepsy dreamed that he took a tight vise off his own head and placed it on hers just hours before she had the first seizure of her life.\n\nDreams of chest wounds among Katsakin’s patients preceded heart attacks. Dreams of lower abdominal injury happened in the early liver or kidney disease.13",
+          "metadata": {
+            "title": "The Committee Of Sleep",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 67,
+            "ingested_at": "2025-06-23T06:26:51.186Z",
+            "interpreter": "mary",
+            "source_file": "The-Committee-of-Sleep",
+            "total_chunks": 93
+          }
+        },
+        {
+          "fragmentId": "18ee983e-5493-485a-834c-1cddbe62b9c6",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "rope",
+          "themeName": "rope",
+          "themeSimilarity": 0.619576850344345,
+          "fragmentSimilarity": 0.589742,
+          "combinedRelevance": 0.3653904908757747,
+          "fullText": "\nThinking about the prowess of early humans to thrive among creatures that were stronger and faster, it’s probable that their dreams gave them ideas crucial for survival. It seems reasonable that dreams fostered creativity in movement, the procedural knowledge we accumulate in our lives—and ultimately a creative well we as a species have relied upon.\n\nRobert A. Mason and Marcel Adam Just at Carnegie Mellon University’s Center for Cognitive Imaging decided to study what was happening in the brain when people were tying knots.[4] Procedural knowledge such as tying a knot is different from knowing about a thing because it unfolds over time: Tying a knot is a series of movements in sequence. Intriguingly, such procedural memory, like tying laces, tends not to fade even in dementia.\n\nAs a surgeon in training, one of the first things you learn when you get into the operating theater is the surgeon’s knot, a variation of a square knot used to firmly stitch wounds together. Before the use of electricity to singe blood vessels, for example, we used knots to tie them off so we could safely cut them. Sometimes hundreds of knots were needed. If even a single knot came unraveled, it could be disastrous. Tying knots, the movement of fingers and hands, becomes balletic when done right, as if hands have a mind of their own.\n\nIn their study of knot tying, Mason and Just used a functional MRI (fMRI) to show brain activity of test subjects in real time. The researchers found the first step of knot tying was thinking about the process before manipulating the rope. When they asked test subjects to simply imagine tying the knot, the researchers discovered something fascinating: The neural signature was exactly the same as planning to actually tie a knot. In other words, when we dream, our neurons fire as though we are performing the act we’re dreaming about. This allows for dreams to enhance our procedural knowledge, which can be useful in many areas of our lives, including dance, art, and sport. The golfer Jack Nicklaus, for instance, once credited a dream with improving his golf game by giving him a new way to grip his club.\n\nAs a brain surgeon, I try to take advantage of the creative power of my dreams. The night before a particularly challenging operation, I review images of the patient’s brain and brain tumor. While falling asleep, I imagine rotating the tumor, paying particular attention to the surrounding brain tissue I must either avoid or traverse. As I’m waking up, I take a few minutes to revisit the shapes and contours of the planned surgery. This practice has served well to give me the spatial awareness of the anatomy I need to either dissect through or around. Since dreams are visual-spatial experiences, I have no doubt that this mental exercise has been replayed in some way in my dreams, further strengthening my understanding of the operation ahead, even if I don’t always remember my dream in the morning.\n\nMany experiments have shown sleep and dreams help us learn. In one experiment, participants ran around a virtual reality maze. Afterward, half of the subjects napped while the other half stayed awake. When they went back to the VR maze later, those who slept performed better than those who stayed awake. Those who not only slept but dreamed did best of all. For those who didn’t sleep, daydreams about the maze didn’t help.\n\nDid those who slept and dreamed do better because they were dreaming about how to get through the maze? This would be a natural assumption, but it wasn’t the case. Two of the participants dreamed about music. The other had a dream of a bat cave that was like a maze but not the maze itself. Even though the participants were not dreaming of the maze, just the act of dreaming somehow helped them consolidate memories of it. They knew the maze better because they dreamed. The correlation is clear, though how this works is not yet fully understood.\n\nNightmares and Creativity",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 46,
+            "ingested_at": "2025-06-23T06:29:06.705Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.37432011864123194,
+        "topSources": [
+          "twenty-four-hour-mind",
+          "when-brain-dreams",
+          "The-Committee-of-Sleep",
+          "This-Is-Why-You-Dream"
+        ]
+      }
+    },
+    {
+      "dreamId": "dream_4",
+      "dreamTitle": "Emotional Processing Dream",
+      "dreamContent": "I was at my father's funeral again, even though he passed away five years ago. But this time, instead of being sad, we were having a celebration of his life. He was there too, laughing and telling stories. I got to tell him all the things I never said while he was alive. We hugged and he told me he was proud of me. I woke up feeling peaceful instead of the usual grief.",
+      "matchedThemes": [
+        {
+          "code": "funeral",
+          "name": "Unknown Theme",
+          "similarity": 0.496256575099939,
+          "description": "Dreams featuring death ceremonies, burials, or farewell gatherings"
+        },
+        {
+          "code": "cemetery",
+          "name": "Unknown Theme",
+          "similarity": 0.476948999449381,
+          "description": "Dreams featuring burial grounds, tombstones, or resting places"
+        },
+        {
+          "code": "stranger",
+          "name": "Unknown Theme",
+          "similarity": 0.461645699445183,
+          "description": "Dreams about unknown persons, unfamiliar faces, or mysterious individuals"
+        },
+        {
+          "code": "wedding",
+          "name": "Unknown Theme",
+          "similarity": 0.460733448179552,
+          "description": "Dreams about marriage ceremonies, nuptial events, or union celebrations"
+        },
+        {
+          "code": "photograph",
+          "name": "Unknown Theme",
+          "similarity": 0.460245994344135,
+          "description": "Dreams featuring captured images, pictures, or visual memories"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "0bbcf949-75f3-4a52-8170-ec628b1e3089",
+          "source": "neuroscience-of-sleep-and-dream",
+          "themeCode": "cemetery",
+          "themeName": "cemetery",
+          "themeSimilarity": 0.476948999449381,
+          "fragmentSimilarity": 0.658645,
+          "combinedRelevance": 0.3141400737423376,
+          "fullText": "8.8 Death and Dreams\nDreams have been collected from individuals who are about to die. Early studies found that the themes of dreams of the dying contained greater numbers of supernatural agents, otherworldly settings, and images that seemed to “announce” the approach of death such as uncanny tunnels, wilting plants, and natural disasters. Some dreams seemed to ease the transition from this world into whatever awaits us after we die. Dreams of pregnancies, babies, and children appear frequently in those who are aware that they are dying. Scenes of trees bearing fruit; doors opening onto a light-filled path, and meetings with angelic and benevolent beings have been reported in the dreams of the dying. Dreams of reunions with a loved one who has died are common in all parts of the world.\n\n8.9 Conclusions\nMost dreams are filled with social interactions between the dreamer and familiar people in the dreamer’s life. Dream content changes significantly according to the stage of life of the dreamer, but social interactions remain a constant in dream content across the lifespan. Much of the social interactions that occur in dreams can be characterized as attachment interactions, that is, interactions that reflect and help shape daytime attachment orientations (romantic attachments or familial attachments, etc.) of the dreamer. In old age and in death, dreams continue to simulate social interactions but new unfamiliar characters enter the dreams of the old and dying. These are supernatural beings but also include images of loved ones who have previously passed away. And so dreams that carry the child into the social world of his caretakers during early life gently escort the dreamer into the arms of his loved ones when the dreamer’s time to leave this life arrives. Dreams accompany us and our loved ones, literally from the cradle to the grave.\n\nCHAPTER NINE\nCharacteristics of REM and NREM Dreams\n\nLearning Objectives\n• Describe typical content of dreams associated with awakenings from NREM\n• Describe typical content of dreams associated with awakenings from REM\n• Describe interaction of REM–NREM dreams across a single night of sleep\n• Describe role of dream content in emotional regulation",
+          "metadata": {
+            "title": "Neuroscience Of Sleep And Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 150,
+            "ingested_at": "2025-06-23T06:38:35.461Z",
+            "interpreter": "mary",
+            "source_file": "neuroscience-of-sleep-and-dream",
+            "total_chunks": 202
+          }
+        },
+        {
+          "fragmentId": "e4053749-9823-427e-8e20-e19a58a93a45",
+          "source": "when-brain-dreams",
+          "themeCode": "stranger",
+          "themeName": "stranger",
+          "themeSimilarity": 0.461645699445183,
+          "fragmentSimilarity": 0.645081,
+          "combinedRelevance": 0.29779886944379813,
+          "fullText": "\nSleep paralysis, described briefly in Chapter 4, is among the strangest sleep-related parasomnias. As a reminder, it’s characterized by the muscle paralysis in REM sleep continuing after you wake up, often with REM-like hallucinations that occur while you’re awake with eyes open. The hallucinations typically include seeing a person—or some creature—in your bedroom, or even just feeling an evil presence nearby. About a quarter of adults have experienced sleep paralysis, so it probably doesn’t qualify as extremely unusual; for some adults it’s associated with narcolepsy, and for others it can be a recurring feature of their sleep.\n\nNot surprisingly, the presence of hallucinated intruders in one’s bedroom is confusing and often terrifying. You feel like you’re dreaming, but you know you’re awake. For hundreds of years, cultures have struggled to come up with their own understandings of these events. Sometimes the hallucinated creatures were thought to be demons, such as the one perched on the chest of a sleeping woman in Henry Fuseli’s famous 1781 painting The Nightmare. At other times, they were thought to be angels. Even today, different cultures variably ascribe sleep paralysis to ghosts, witches, evil spirits, or attacks by dead bodies or unbaptized babies.9\n\nEven in Western cultures, people who don’t know about sleep paralysis struggle to come to terms with it. Bob had a laboratory assistant from Ireland who had initially gotten interested in studying sleep because of her own terrifying experiences with sleep paralysis when she was in college and going through a period when she wasn’t getting enough sleep. At one point she brought her concerns to the attention of her priest; he even came to her house with his bible and holy water and performed an exorcism, in an attempt to get the evil spirit to leave. And, in a sign of the times, he also opined that it might be safer if she had her boyfriend sleep in bed with her. “I think my old college roommates and landlord still think I lost my mind,” she told Bob.\n\nBased on the history of this parasomnia, it’s perhaps understandable that today many Americans experiencing sleep paralysis believe they have been abducted by space aliens. Richard McNally and Susan Clancy at Harvard have suggested that reports of alien abductions simply reflect one way our contemporary culture interprets the experience of sleep paralysis.10 Consider their description of one woman’s experience:\n\n[She] was lying on her back when she woke up from a sound sleep. Her body was completely paralyzed, and she experienced the sensation of levitating above her bed. Her heart was pounding, her breathing was shallow, and she felt tense all over. She was terrified. She was able to open her eyes, and when she did so, she saw three beings standing at the foot of her bed in the glowing light.11\n\nIt sounds like a typical experience of sleep paralysis; in an earlier time, she might have concluded that the three beings were angels or demons. Indeed, her first thought was that they were angels. But she was subsequently convinced by a friend that they must have been aliens.",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 133,
+            "ingested_at": "2025-06-23T06:50:39.757Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "7af1cb9b-e6c6-4ebb-b407-1b503ffaad41",
+          "source": "twenty-four-hour-mind",
+          "themeCode": "stranger",
+          "themeName": "stranger",
+          "themeSimilarity": 0.461645699445183,
+          "fragmentSimilarity": 0.633945,
+          "combinedRelevance": 0.2926579829347765,
+          "fullText": "\nDespite my unofficial title, Queen of Dreams, I am not a consistent dream diary keeper. Like most people who work, I jump quickly out of sleep, shutting off the alarm and opening my eyes to check the clock. Is it really 6:30 a.m. already? Both of these behaviors, the muscle activity of abrupt movement and orienting of vision to outside stimuli, are REM stoppers, and therefore make dreams difficult to recall. However, sometimes a dream is so emotion-filled it imposes itself on our waking memory. I have chosen an example of one of these from my childhood because Freud holds these are the inaccessible roots of personality—a premise challenged by contemporary therapists.\n\nMy best guess is that I first had this dream at age 6 or 7. This is the way I remember it:\n\n> Someone knocked at our front door, a big, heavy, wooden one with no window to see who was on the other side. I had to reach up to turn the handle, and then found a stranger, a tall man dressed as a harlequin in a suit of many colors, wearing a black mask. I knew from this that he was a robber, a bad man trying by his colorful costume to fool me into thinking that he was good. I was frightened and ran upstairs to hide in the bathroom, the only room that locked. My two older sisters were coming down the stairs as I dashed by. They laughed at me, saying, “Never show you are frightened of bad men. What you must do is charm them.” I felt ashamed that they were better able to handle the situation than I. They went on down the stairs to greet the visitor, but I stayed locked in the bathroom, alone and frightened.\n\nMy method of parsing a dream for its meaning is to look for the descriptive terms and their opposites—the dream dimensions (I described these in my work with a nightmare patient). These are the categories we use to describe and evaluate ourselves and others. These organizing structures, which operate mainly on automatic pilot without our awareness, are developed early in life. In my experience, they can be seen most clearly in dreams. Now, what are the dimensions of this early dream of mine? I look first for the descriptors of the dream self. In this dream I was: small, young, female, perceptive, frightened, withdrawing, ashamed, isolated.\n\nNext, I look for the opposites of these qualities in the other dream characters: big, older, male, deceptive, calm, approaching, self-confident, sociable. Two other general dimensions relate to the physical–psychological setting: open/closed, and inside/outside.\n\nNow we can see the structure of this dream. Its structure is made up of a few paired concepts. I am small; the man and the door are big. I am young; my sisters and the man older. I and my sisters are female; the stranger is male. I am perceptive; the man and my sisters are deceptive. I am frightened; the others are calm. I withdraw; my sisters approach. I am ashamed; they are self-confident. I am isolated; the others are sociable.",
+          "metadata": {
+            "title": "Twenty Four Hour Mind",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 167,
+            "ingested_at": "2025-06-23T06:44:54.038Z",
+            "interpreter": "mary",
+            "source_file": "twenty-four-hour-mind",
+            "total_chunks": 180
+          }
+        },
+        {
+          "fragmentId": "a3c54d40-95c1-4f86-89d6-bc2df4583a69",
+          "source": "neuroscience-of-sleep-and-dream",
+          "themeCode": "stranger",
+          "themeName": "stranger",
+          "themeSimilarity": 0.461645699445183,
+          "fragmentSimilarity": 0.633169,
+          "combinedRelevance": 0.2922997458720071,
+          "fullText": "10.14 Nightmares\nThe DSM-5 defines Nightmare Disorder (DSM-5 307.47 (F51.5)) as a parasomnia involving repeated awakenings from extremely frightening dreams that do not occur in the context of some other mental disorder. Upon awakening, the individual is oriented and alert and has clear recall of the content of the dream, which, in turn, is associated with clinically significant distress and impairment in daytime functioning. Epidemiological studies indicate that 2–6 percent (about 6.4–15 million people) of the adult American population experience nightmares at least once a week. Between one half and two thirds of children experience recurrent nightmares. Nightmares are distinguished from scary or disturbing dreams by the presence of monstrous gents in the dreams. These supernatural agents evoke within the dreamer dread, terror, awe ,and uncanny fear.\n\n10.15 Meeting One’s Double in a Dream/Nightmare\nThe experience of meeting one’s own double (the doppelganger) in a dream has been reported throughout recorded history and has most often been described by the people who experience it and in literature as a profound and dangerous encounter with one’s own soul. Although doppelganger dreams are rare, they are memorable, and most people, if pressed, will report at least one such dream in their lifetime. In most doppelganger dreams, the dreamer sees him or herself in the dream – though the double usually does not perform many actions. It is as if looking at oneself in a mirror. When the doppelganger appears in a dream the dreamer almost always describes it as frightening and of special spiritual significance. One cognitive explanation of the doppelganger is that it represents a memory of seeing oneself in a mirror or even a kind of doubling of autobiographical memory.\n\n10.16 Visitation Dreams\nIn visitation dreams, a loved one or an acquaintance who has died appears in a dream and looks alive and healthy and generally carries a message for the dreamer. Common themes in visitation dreams involve the deceased appearing in the dream as they did in life rather than as they did when they fell ill. In fact, the deceased often appears much younger or more healthy than when they died. The deceased might convey reassurance to the dreamer: “I am OK and still with you.” This message tends to be conveyed telepathically or mentally rather than via spoken word. The dream structure is NOT disorganized or bizarre. Instead they are typically clear, vivid, intense, and are experienced as real visits when the dreamer awakens. The dreamer is always changed by the experience. There is resolution of the grieving process and a wider spiritual perspective. Often these visitation dreams can be quite emotional. See some examples of visitation dreams posted by people at my Psychology Today Dreamcatcher blog: www.psychologytoday.com/blog/dream-catcher.\n\n10.17 False Awakenings and Sleep Paralysis Dreams\nA false awakening is a type of dream that involves the subjective experience of waking up while remaining in the dream state. The dreamer feels as if he has woken up and he then goes about his daily routine, such as getting dressed or brushing his teeth. While performing these routine tasks, the dreamer then really wakes up! Other false awakenings contain fantastic or unrealistic elements not associated with the dreamer’s waking circumstances. The dreamer may wake up in the same dreamed environment as that experienced within the dream that occurred prior to the false awakening. As in the movie Inception, the dreamer may have to undergo several false awakenings before he is really able to wake up. Occasionally, the dreamer may awaken into a dream containing aspects of the dreamer’s past. For example, a false awakening may entail waking up in the dreamer’s childhood bedroom.",
+          "metadata": {
+            "title": "Neuroscience Of Sleep And Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 180,
+            "ingested_at": "2025-06-23T06:39:29.051Z",
+            "interpreter": "mary",
+            "source_file": "neuroscience-of-sleep-and-dream",
+            "total_chunks": 202
+          }
+        },
+        {
+          "fragmentId": "b2b951a1-2d5a-4d82-8966-8f14bc63ee63",
+          "source": "neuroscience-of-sleep-and-dream",
+          "themeCode": "photograph",
+          "themeName": "photograph",
+          "themeSimilarity": 0.460245994344135,
+          "fragmentSimilarity": 0.61678,
+          "combinedRelevance": 0.28387052439157556,
+          "fullText": "7.3 Hypermnesia within the Dream and Amnesia for the Dream\nHobson (1988) pointed out that when we dream, we sometimes have access to memories that our waking mind does not have access to – yet we are often amnestic for dream content when we wake up. Foulkes (1962) reported that non-contemporaneous images (images dating back to the person’s more distant past) were more likely to occur in REM than in NREM dreams. Offenkrantz and Rechtschaffen (1963) and Verdone (1965) reported a relation between the date of memory images in dreams and time spent in sleep such that as the night progressed the dreamer was more likely to report older personal memories. So, although the dreaming mind/brain is digging through older memories as the night progresses, upon awakening the waking brain/mind often forgets that the dreaming mind/brain was doing all that memory rummaging during the night.\n\n7.4 The Visual Sense Predominates in Dreams\nDreams are composed mostly of vivid visual images. Within a dream, the dreamer feels as if he or she is seeing a scene or a life-world. Touching, smelling, and tasting things in the dream-world do not occur as often as they do in waking life. Auditory experiences occur fairly frequently in dreams, but the visual sense predominates. Waking perception includes full color and three-dimensional views of a relatively stable world. In waking life, visual clarity varies with attentional focus of the individual and this is true also of dreams. Dreams exhibit greater clarity in the foreground of the dreamer’s attention, while background details are vaguely represented. Unlike the full-color world of waking consciousness, up to 20–30 percent of dreams are achromatic. Dreams also contain a greater number of visual distortions and transformations than waking vision. For example, we may see an individual dream character’s facial features change several times while we focus on those features in the dream.\n\n7.5 Automaticity\nDreams come to us or happen whether we want them to or not. We cannot stop them and we cannot bid them to come anytime we like. They happen to us independently of our will. We can increase the chances of having a dream via certain ritual practices such as dream incubation (discussed shortly), but in general, dreams happen to us regardless of our wishes. We have dreams whether we want to or not. Dreams can therefore be construed as involuntary cognitive and symbolic events that occur during sleep and utilize perceptual and memory fragments to construct new narratives that more or less successfully simulate features of the dreamer’s life-world.\n\n7.6 Perceptual Disengagement\nVirtually every scientist and scholar who has studied dreams has claimed that the key distinguishing mark of the dream is its lack of access to current perceptual information about the external world. That is why the philosopher Jennifer Windt and the neuroscientists Nir and Tononi believe that dreams are basically hallucinations and that the self in dreams is unreflective, minimal, and impaired. The self cannot check or correct its perceptions via use of incoming sensory information, and so it naively accepts what it sees as reality. In short, the common view is that the dreaming brain is totally cut off from the environment.",
+          "metadata": {
+            "title": "Neuroscience Of Sleep And Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 132,
+            "ingested_at": "2025-06-23T06:38:04.682Z",
+            "interpreter": "mary",
+            "source_file": "neuroscience-of-sleep-and-dream",
+            "total_chunks": 202
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.29615343927689897,
+        "topSources": [
+          "neuroscience-of-sleep-and-dream",
+          "when-brain-dreams",
+          "twenty-four-hour-mind"
+        ]
+      }
+    },
+    {
+      "dreamId": "dream_5",
+      "dreamTitle": "Sleep Deprivation Dream",
+      "dreamContent": "Everything in the dream was fragmented and chaotic. I kept microsleeping while driving and suddenly finding myself in different locations. One moment I was at work, the next in my childhood home. People's faces kept morphing into other people. I was extremely tired in the dream and kept trying to find a place to sleep but every bed disappeared when I approached it. Time moved in strange jumps and loops.",
+      "matchedThemes": [
+        {
+          "code": "maze",
+          "name": "Unknown Theme",
+          "similarity": 0.627023079586579,
+          "description": "Dreams about confusing paths, labyrinthine structures, or puzzle routes"
+        },
+        {
+          "code": "accident",
+          "name": "Unknown Theme",
+          "similarity": 0.624985665086367,
+          "description": "Dreams about crashes, mishaps, or unexpected harmful events"
+        },
+        {
+          "code": "hotel",
+          "name": "Unknown Theme",
+          "similarity": 0.618310729970085,
+          "description": "Dreams about temporary lodging, guest accommodations, or travel stays"
+        },
+        {
+          "code": "highway",
+          "name": "Unknown Theme",
+          "similarity": 0.615391634977364,
+          "description": "Dreams about major roads, fast travel routes, or multi-lane paths"
+        },
+        {
+          "code": "road",
+          "name": "Unknown Theme",
+          "similarity": 0.612214638258776,
+          "description": "Dreams about travel surfaces, paved ways, or vehicle paths"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "e85bf4cf-0687-4356-a2b4-2936c446087e",
+          "source": "when-brain-dreams",
+          "themeCode": "accident",
+          "themeName": "accident",
+          "themeSimilarity": 0.624985665086367,
+          "fragmentSimilarity": 0.648028,
+          "combinedRelevance": 0.40500821057458825,
+          "fullText": "\nFailure or helplessness Difficulty of the dreamer in attaining a goal, including being late, lost, unable to talk, losing or forgetting something, and making mistakes\n\nHealth-related concerns and death Presence of physical illness, disease, health-related concerns, or death of a character or of the dreamer\n\nApprehension or worry Dreamer feeling afraid or worried about someone or something, without an objective threat being present\n\nBeing chased Dreamer is chased by another character but not physically attacked\n\nEvil presence Seeing or feeling the presence of an evil force, including monsters, aliens, vampires, spirits, creatures, ghosts, etc.\n\nAccidents The dreamer or another character being involved in an accident, including vehicular crashes, drowning, slipping, falling, etc.\n\nDisaster and calamity Plausible events ranging from relatively small-scale anomalies such as a fire or flood in one’s house or neighborhood to larger-scale disasters such as earthquakes, war, the end of the world, etc.\n\nInsects and vermin Infestation, bites or stings from insects, snakes, etc.\n\nEnvironmental abnormality Bizarre or implausible events appearing in the dream’s environment\n\nOthers Idiosyncratic or infrequent themes such as being naked, being in an insalubrious environment, and being unable to find or being embarrassed to use a toilet\n\nTony and Geneviève identified a dozen thematic categories for nightmares and bad dreams and then came up with precise definitions that allowed judges to reliably score the dreams. Table 10.2 describes these categories, and their observed frequencies are given in Table 10.3. (The careful reader might note that these combined frequencies add up to 146 percent, not 100 percent. This is because many dreams included more than one of these themes.)\n\nAs Table 10.3 indicates, themes involving physical aggression and interpersonal conflicts were the most frequently reported, followed by failure or helplessness, health-related concerns or death, and apprehension or worry. Nightmares were significantly more likely than bad dreams to contain themes of physical aggression, being chased, evil forces, and accidents, whereas themes of interpersonal conflicts were significantly more frequent in bad dreams. Of note, several themes commonly reported in questionnaire studies of nightmares, such as feelings of paralysis or suffocation, were entirely absent from the sample of 10,000 dreams; themes of falling occurred so infrequently (1.5 percent of all nightmares and bad dreams) that they were reclassified under accidents. This finding confirmed our suspicion that such themes are probably attributable to parasomnias such as hypnagogic jerks, sleep paralysis on awakening, or sleep apnea, a sleep-related breathing disorder.\n\nTable 10.3\n\nFREQUENCY OF THEMES IN NIGHTMARES AND BAD DREAMS\n\nTheme Nightmares (%) Bad dreams (%) Combined (%)\n\nPhysical aggression 49 21 32\n\nInterpersonal conflicts 21 35 30\n\nFailure or helplessness 16 18 17\n\nHealth-related concerns and death 9 14 12\n\nApprehension or worry 9 13 11\n\nBeing chased 11 6 8\n\nEvil presence 11 5 7\n\nAccidents 9 5 6\n\nDisaster and calamity 5 6 5\n\nInsects and vermin 7 4 5\n\nEnvironmental abnormality 5 4 4\n\nOthers 7 10 9\n\nTony and Geneviève also found that men’s nightmares were more likely than women’s to contain insects or disasters like floods, earthquakes, and wars, while interpersonal conflicts were twice as common in women’s nightmares. Finally, the most frequently reported causes for awakening from a nightmare were the presence of an immediate threat (42 percent), the intensity of the emotions experienced (25 percent), and intentionally waking up to escape the nightmare (14 percent).",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 104,
+            "ingested_at": "2025-06-23T06:49:46.477Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "4054ab85-08c8-466c-b839-11833695a929",
+          "source": "The-Committee-of-Sleep",
+          "themeCode": "accident",
+          "themeName": "accident",
+          "themeSimilarity": 0.624985665086367,
+          "fragmentSimilarity": 0.64379,
+          "combinedRelevance": 0.4023595213259522,
+          "fullText": "\nI just knew that was his intuition sensing that Cyrus would be alright.\n\nCyrus Parsifal is currently a healthy, bright college junior. “I was such a shy meek person back then,” Parsifal recalls. “It took something as dramatic as that dream to make me disagree with a male authority figure.\n\nSome would say this type of dream represents a simple coincidence. Parsifal’s first physician is not entirely wrong in suggesting that pregnant women often have anxiety dreams about their unborn children. Any of us may worry about cancer or symbolize other concerns as that dramatic ailment. If then nightmare doesn’t come true, few of us recall and retell the anecdote. So how do we know that a dreamed correspondence is not just metaphoric anxiety combined with coincidence?\n\nWe don’t know for sure and some fraction probably are in fact exactly that. But it is a fact that our bodies can sense more than reaches consciousness. Dreams can convey subliminal perceptions so at least some of these may be real warnings from our sleeping minds. In waking life, we know that a sensation may mean nothing. When we have such a waking perception--or intuition of illness--we do well to check it out, though some of these instances will be false alarms. The same is true of body dreams--many will turn out to be groundless, but why miss the ones that are important?\n\nResearch Studies\n\nMost of the stories of dreams warning of illness are anecdotal. But there is some research on the topic. This explores whether these dreams are more common in illness and what signs are most likely to occur during physical illness rather than with metaphoric concerns.\n\nThe largest study so far was done across the world. Russian researcher Vasali Kasatkin amassed a collection of 1,642 dreams from 247 patients and tracked their medical condition. He found that repeated dreams of wounds were the strongest predictor of impending illness. These dreams were longer and more intense than ones reflecting ordinary stresses. They often persisted through the night and recurred on subsequent nights.\n\nThe area of dream injury was usually the same as the developing illness. An ulcer patient dreamed he was eating pizza and his stomach “broke open”. Another dreamed about a rat gnawing at the lower right part of his abdomen where his ulcer was later found. Yet another patient dreamed of dogs tearing at his stomach before being diagnosed with stomach cancer. A woman whose father had suffered from epilepsy dreamed that he took a tight vise off his own head and placed it on hers just hours before she had the first seizure of her life.\n\nDreams of chest wounds among Katsakin’s patients preceded heart attacks. Dreams of lower abdominal injury happened in the early liver or kidney disease.13",
+          "metadata": {
+            "title": "The Committee Of Sleep",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 67,
+            "ingested_at": "2025-06-23T06:26:51.186Z",
+            "interpreter": "mary",
+            "source_file": "The-Committee-of-Sleep",
+            "total_chunks": 93
+          }
+        },
+        {
+          "fragmentId": "f7895f97-e010-4643-bf13-0c540dfb2eeb",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "accident",
+          "themeName": "accident",
+          "themeSimilarity": 0.624985665086367,
+          "fragmentSimilarity": 0.637793,
+          "combinedRelevance": 0.3986114822924293,
+          "fullText": "\nWe Need Nightmares\n\nJulia was living a tranquil life by day. She taught yoga and spent time gardening and hiking. Yet for years, she had horrific and violent dreams that seemed to come from nowhere, like seeing her parents beheaded, or stabbing someone with a knife. As she recounted in the podcast Science Vs, she’d wake up shaking, the disturbing details difficult to forget.[1] When the day began and some of the emotions of her grisly dreams faded, she couldn’t help but reflect on the macabre scenes her brain could conjure at night. Increasingly, the nightmare residue lingered into the following day.\n\nJulia was living a perplexing double life. Her days were filled with positive emotions built around habits of wellbeing, but her nights were filled with imagined violence. She was deeply troubled that such violent thoughts lurked within her. She couldn’t understand why she was having these nightmares—or what she could do to stop them.\n\nHow could Julia’s dream life be so different from her waking life, and how could it turn so macabre? Where did these violent nightmares come from?\n\nIndigenous cultures attributed nightmares to external forces: evil spirits, demons, or other malevolent beings. Some cultures don’t even have a term for nightmares and instead consider them windows to the edges of consciousness. The truth is that nightmares, like dreaming, are the product of neurobiology. Ultimately, nightmares’ dark visions are our own.\n\nTo many of us, nightmares seem like an unwanted side effect of sleep. After all, they fill us with heart-pounding terror and wake us up. You may dread them. They may haunt you. Yet, they are necessary—beneficial even—in ways you may never have imagined.\n\nTo understand nightmares, it’s helpful to think of them based on the age of a person when they occur, their origin, and the role they may play. Of course, no feature of the mind can be neatly divided, but these distinctions are helpful to begin our exploration. The type of nightmares this chapter focuses on are those that occur for all of us in childhood and persist for some into adulthood. Their universal appearance may serve a purpose in children to cultivate their identity and sense of self. They are filled with terror but rarely disrupt the child’s life.\n\nAnother type of nightmare, usually experienced by adults, not only terrorizes our dreams but affects waking life and serves as a psychological thermometer of sorts. They can be brought on by stress or anxiety and trauma itself. If they are severe enough or chronic enough, they can qualify as something called nightmare disorder. We will take a look at trauma-induced nightmares in Chapter 5, Dreaming and Health.\n\nBut first, what distinguishes a nightmare from other dreams?\n\nMore than a Bad Dream\n\nNightmares shouldn’t be confused with a bad or unpleasant dream. A bad dream is merely one we would rate as emotionally negative: You miss the bus, or have to interact with an unpleasant colleague. Nightmares, on the other hand, are characterized by long, vivid, frightening dreams that always wake us up.\n\nThe nightmare plot usually involves a threat to our survival, physical integrity, security, or self-esteem, and their emotional atmosphere is one of dread. They can also produce intense feelings of fear, anger, sadness, confusion, and even disgust. By definition, nightmares force us not only to wake but to vividly recall the frightening events.\n\nThe content of nightmares differs greatly from that of the other main categories of dreams, the pleasurable dream and the dream in pursuit of a goal. These dreams tend to be more metaphorical than literal, while nightmares are often more literal than metaphorical. In a nightmare, we are typically menaced in some real way. Our dream self comes under attack.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 18,
+            "ingested_at": "2025-06-23T06:28:13.177Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "ec628df8-9572-4e11-b3ee-ddc28917e3e0",
+          "source": "when-brain-dreams",
+          "themeCode": "maze",
+          "themeName": "maze",
+          "themeSimilarity": 0.627023079586579,
+          "fragmentSimilarity": 0.60161,
+          "combinedRelevance": 0.3772233549100818,
+          "fullText": "\nShould we file these new memories under “ways to make a quick fifty bucks”? How about under “computer games I’ve played” or “the time I got separated from Mom in Costco and thought I was lost”? Or, as these dream reports would suggest, should we file them under “looking for lost items” or “exploring bat caves” or “I really hate techno rap music”? This is not a trivial question. Our brains store immense amounts of information in an unbelievably complex collection of interlocking neural networks where related memories are physically connected to one another so that activation of any memory in the network will tend to activate others in that network. How the brain decides to file new information—into exactly which preexisting networks to link a new memory—determines how and when this new information will be available during subsequent wakefulness. For instance, will the maze come to mind when you need to make some quick money or when you’re playing a new video game or exploring a cave?\n\nOn the other hand, how your brain files these new memories also determines what will come to mind when you try to navigate the maze again, after your nap—whether you will recall the caves or getting separated from your mother. More important, it allows the brain to discover and strengthen creative links between these memories. Perhaps some strategy you learned while exploring a cave will help you in the maze task, or conversely, maybe something you learned from the maze task will help you next time you’re down in a cave. Your brain suddenly realizes, hey, exploring mazes and caves is really the same thing. And, of course, that’s exactly what Erin’s participant dreamed: “that led me to think about when I went on this trip a few years ago and we went to see these bat caves, and they’re kind of like, maze-like.” It’s a perfect example of the function of dreaming we suggested earlier—the extraction of new knowledge from existing information through the discovery of unexpected associations.\n\nWHY DO WE HAVE TO EXPERIENCE OUR DREAMS?\n\nMust we actually dream to get these admittedly profound benefits of sleep-dependent memory processing? In their maze learning paper,20 Erin and Bob concluded that dreaming was a reflection of brain processes underlying sleep-dependent memory processing. But they didn’t argue that dreaming per se—the actual conscious experiencing of the dream—had anything to do with this memory processing. Dreaming, they seemed to imply, was nothing more than a spandrel, an inconsequential side effect of important memory processing being carried out by the sleeping brain. This brings us back to the idea that dreams are epiphenomenal, with no real function. Or, as William Domhoff had argued almost twenty years earlier, maybe “Dreams were not conserved by natural selection to be problem resolvers, or anything else for that matter, but they nonetheless can be used to understand our unfinished emotional business because they happen to express our conceptions of our preoccupations.”21\n\nToday, both of us reject this idea. As we’ll detail in the next chapter, we believe that dreaming, like waking consciousness, offers two advantages beyond what can be accomplished by nonconscious brain processing. Dreaming creates narratives that unfold in our minds across time and allows us to experience the thoughts, sensations, and emotions engendered by those narratives. Dreaming, like waking consciousness, allows us to imagine sequences of events, to plan, to plot, to explore. Even when a problem doesn’t inherently require the development of a narrative—for example, figuring out whether adding two odd numbers always produces an even number—we nonetheless create narratives to help us solve them. We “think out loud” about it, “run it through our mind,” and sometimes go through a series of “steps” as we solve it.",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 66,
+            "ingested_at": "2025-06-23T06:48:37.770Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "01fd56a2-5135-41bc-aee6-00dbd453941c",
+          "source": "when-brain-dreams",
+          "themeCode": "maze",
+          "themeName": "maze",
+          "themeSimilarity": 0.627023079586579,
+          "fragmentSimilarity": 0.601014,
+          "combinedRelevance": 0.3768496491546482,
+          "fullText": "\nFinally, and perhaps most important, lucid dreaming is not for everyone. There’s usually no harm in having lucid dreams or wanting to learn how to have them, but some people—including lucid dreamers—may experience terrifying lucid dreams that they cannot control and that they struggle to awaken from.15 Besides intense feelings of fear and helplessness, these dreams—also known as lucid nightmares—typically contain acts of violence directed at the dreamer. In many cases, these acts are committed by ghoulish or demonic creatures. References to these uniquely terrifying dreams have existed for centuries and were even detailed by Frederik van Eeden, the Dutch psychiatrist who, in 1913, coined the term lucid dreaming. Even so, we still know very little about who is likely to experience lucid dreams and why. In addition, although certainly much less worrisome, the experience of false awakenings, which often accompany lucid dreams, is deeply unsettling to some people.\n\nDespite these drawbacks, lucid dreams are largely quite stimulating, exciting, and often eye-opening experiences. They have already yielded an array of fascinating laboratory-based results, and they are being investigated by a growing number of researchers using a range of innovative tools. Progress is also being made, though more slowly, in understanding and testing the possible clinical and everyday applications of lucid dreaming. Ultimately, lucid dreaming offers a unique window into self-exploration, often taking place through interactions with other dream figures. But don’t expect much help with your math homework.\n\nChapter 15\n\nTELEPATHIC AND PRECOGNITIVE DREAMS\n\nOR WHY YOU MAY ALREADY HAVE DREAMT OF THIS CHAPTER\n\nDREAMS OF MIND READING. DREAMS OF EVENTS unfolding far away. Dreams that foretell the future. It seems like everyone either has had one of these dreams or knows someone who has. Other than being of interest since time immemorial and well ingrained in our cultural ethos, telepathic and precognitive dreams are the experiences that raise the most questions—and passionate debates—about the stranger, seemingly inexplicable side of dreaming.\n\nThis is probably why a great deal of the emails we receive from people who have questions about dreaming involve paranormal dream phenomena. People particularly like to detail how their dreams have predicted future events, from plane crashes to bombings to natural disasters. Many of these people go out of their way to make clear how often they have these dreams and how they know that they will come true, and they then provide examples of things they dreamt that later happened. And, not infrequently, they will end their email with something along the lines of “How do you explain that?”\n\nAs you’ll see in this chapter, numerous difficulties are involved in addressing these kinds of dreams scientifically, and although many paranormal dreams can be explained, others simply can’t. If you’ve ever had one of these precognitive (seeing the future) dreams, or one involving telepathy (communicating with someone directly from mind to mind) or clairvoyance (observing events not actually perceivable), you know how hard it is to shake the feeling that something particularly mysterious—beyond the bounds of normal science—has happened. And you’re not alone.",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 151,
+            "ingested_at": "2025-06-23T06:51:12.210Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.39201044365154,
+        "topSources": [
+          "when-brain-dreams",
+          "The-Committee-of-Sleep",
+          "This-Is-Why-You-Dream"
+        ]
+      }
+    },
+    {
+      "dreamId": "dream_6",
+      "dreamTitle": "Lucid Dream Experience",
+      "dreamContent": "I was walking through my neighborhood when I noticed the street signs were all gibberish. That's when I realized I was dreaming. I decided to test my dream control by making myself fly. At first I could only jump high, but then I focused and lifted off the ground. I flew to the clouds and changed the weather from sunny to snowy with just a thought. I practiced creating objects out of thin air and even changed the color of the sky to purple.",
+      "matchedThemes": [
+        {
+          "code": "wind",
+          "name": "Unknown Theme",
+          "similarity": 0.649072009214403,
+          "description": "Dreams about moving air, breezes, or atmospheric currents"
+        },
+        {
+          "code": "butterfly",
+          "name": "Unknown Theme",
+          "similarity": 0.631436059306882,
+          "description": "Dreams about transforming insects, colorful wings, or metamorphosis"
+        },
+        {
+          "code": "painting",
+          "name": "Unknown Theme",
+          "similarity": 0.62141780364222,
+          "description": "Dreams about artistic images, colored canvases, or visual creations"
+        },
+        {
+          "code": "wave",
+          "name": "Unknown Theme",
+          "similarity": 0.614241906548736,
+          "description": "Dreams about water movements, ocean swells, or rolling motions"
+        },
+        {
+          "code": "rain",
+          "name": "Unknown Theme",
+          "similarity": 0.612527765697158,
+          "description": "Dreams about falling water, precipitation, or weather drops"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "0eea7171-a5b2-4d3a-84c1-ae7d09051a5f",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "wind",
+          "themeName": "wind",
+          "themeSimilarity": 0.649072009214403,
+          "fragmentSimilarity": 0.618031,
+          "combinedRelevance": 0.4011466229267867,
+          "fullText": "Introduction\n\nA Nightly Dose of Wonder\n\nI’ve spent my life immersed in the brain. As a dual-trained MD, PhD neurosurgeon and neuroscientist, I perform surgery on patients with cancers and other illnesses. I also run a research laboratory. It is impossible to spend so much time treating and studying the brain without being in awe of it. The more I learn, the more I’m captivated, infatuated even.\n\nWith billions of neurons and trillions of connections between them, the brain is infinitely complex. But in my own ongoing journey of discovery, one feature of the mind captures my attention like no other: dreaming. For many years, I have searched for answers to the essential questions: Why do we dream? How do we dream? And perhaps, most importantly, what do dreams mean? In that, I have abundant company.\n\nDreams have always been a source of mystery. They have captured the attention of humanity’s thinkers, from the ancient Egyptians and Aristotle to Charles Dickens and Maya Angelou, from director Christopher Nolan and activist Nelson Mandela to the slain Brooklyn rapper Notorious B.I.G. They inspire invention and art, medicine and psychology, religion and philosophy. They’ve been seen as omens, messages from the gods and from our subconscious, from the soul and self, from angels and demons. They have changed the course of individual lives and the course of the world, spurring marriage proposals and business deals, inspiring song lyrics and scientific breakthroughs, triggering military invasions and mental breakdowns.\n\nDreams captivate, scare, arouse and inspire us because they are both so real and so surreal. We are simultaneously creators of our dreams and helpless participants in our strange creations. Dreams emerge from us but seem somehow apart from us, home movies we have conjured that do not follow the laws of time or nature, both intimate and out of our control.\n\nAs the British poet Lord Byron wrote:\n\n[…] Sleep hath its own world,\n\nAnd a wide realm of wild reality,\n\nAnd dreams in their development have breath,\n\nAnd tears, and tortures, and the touch of Joy;\n\nThey leave a weight upon our waking thoughts,\n\nThey take a weight off our waking toils.[1]\n\nGiven the often disjointed and illogical nature of dreams, it may be hard to grasp how the imagined tears, tortures and joys of your dreams reveal much about you. Over time, however, they paint a vivid picture of how we see ourselves and the world. They illuminate our nature, our interests, and our deepest concerns. In this way, we are uniquely our dreams, and our dreams are uniquely us.\n\nAlthough the creation of dreams may seem mysterious, their source is anything but. The brain reverberates with electricity, waves of current moving across the brain every moment we’re alive. Dreams are a product of normal brain electrophysiology, and an extraordinary transformation that occurs in the brain each night when we sleep, following the circadian rhythms—the day-night cycles—that biologically govern all life.\n\nDreaming should by no means be dismissed just because it occurs while you’re asleep or lacks the logic that guides you during waking hours. Dreams are a different form of thinking. It’s their very wildness that gives them the potential to be transformative. Great leaps in art, design, and fashion are built on the type of divergent thinking that comes naturally in dreaming, and it is culture, language, and creativity that has allowed humans to flourish far beyond our physical evolution. Dreaming is at the heart of all this.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 0,
+            "ingested_at": "2025-06-23T06:27:41.145Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "e4c925ff-e67a-43b0-9ded-2d5007279942",
+          "source": "The-Committee-of-Sleep",
+          "themeCode": "painting",
+          "themeName": "painting",
+          "themeSimilarity": 0.62141780364222,
+          "fragmentSimilarity": 0.64138,
+          "combinedRelevance": 0.398564950900047,
+          "fullText": "\nChapter 1) In the Gallery of the Night\n\nBorn in South Carolina during the Depression, Jasper Johns’ artistic aspirations led him to New York where he painted for several years without finding a unique voice. In 1954, he resolved to “stop becoming and be an artist.” His inspiration was a dream in which he saw himself painting a large flag, and the next day he began exactly that project. This became “Flag” and a lengthy series of flag pictures followed which established Johns as a major artist. His work continued with other simple, bold paintings that highlighted the design artistry of commonplace objects. He disavowed the paintings that preceded “Flag”--destroying those still in his possession and purchasing and shredding any that came to his attention later. “Since he has never shown anything drawn before this,” wrote one biographer, “the extraordinary initial impact of the image and the authority with which it is painted give the impression of a finished artist suddenly sprung from nowhere.”1 Johns later told an interviewer, “I have not dreamed of any other painting. I must be grateful for such a dream!” He laughed. “The unconscious thought was accepted by the conscious gratefully.”2\n\nDreams have played a role in visual art since man began to represent the world. The astonishing images of the night have always inspired artists. A bird-staff and other fantastic elements appear on the cave walls of Lascaux, France. This earliest known human art, produced between 40,000 to 10,000 BC, caused Pablo Picasso to exclaim, \"We have invented nothing!” The Lascaux paintings are believed to represent prehistoric dreams.\n\nScholars know more about the strikingly similar cave art of California’s Ojai Valley, or “Valley of the Moon.” The earliest date to 1000 AD, but legends associated with them survived when missionaries arrived in the late 1700's. These rock paintings were done by the 'atiswinic --a type of shaman, literally meaning “dreamer” or “having a dream.” The 'atiswinic drew fantastic animals and horned anthropomorphs set against geometric grids. We have no texts for most of the paintings and can’t know exactly which ones are dreams. But a few were told to the missionaries as dream accounts. One of these depicts the nose of a Coyote growing after he chased girls around begging for a kiss. A second shows a man capturing the retreating sun with a stick. In yet another, a swordfish tosses a whale around.3\n\nOther tribes around the world routinely used dreams as a basis for visual arts. These include the Chippewa of North America whose dream images determined the patterns of their banners and beadwork, and the Saroa of India who painted their dreams on the walls of houses. Australian aborigines have long depicted their “dreamtime” with distinctive dot paintings on bark.\n\nIn Europe, there was no mandate for dream art, but artists nevertheless often portrayed nighttime visions. When religious art was favored--and the Church the main patron--painters commonly depicted the great dreams of the Bible. The scriptures dictated the content--the dreams of Jacob, Mary, and Pharaoh were favorites. But artists conveyed the state of dreaming according to their own nocturnal world. Figures faded into mist for one, hung suspended in midair for another.\n\nSome painted their own dreams directly. German artist Albrecht Durer’s 1525 watercolor of a savage storm bears the following inscription:\n\nI saw this image in my sleep, how many great waters poured from heaven . . . drowning the whole land . . . The deluge fell with such frightening swiftness, wind, and roaring that when I awoke, my whole body trembled; for a long while I could not come to myself. So when I arose in the morning, I painted what I had seen.4",
+          "metadata": {
+            "title": "The Committee Of Sleep",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 1,
+            "ingested_at": "2025-06-23T06:24:31.841Z",
+            "interpreter": "mary",
+            "source_file": "The-Committee-of-Sleep",
+            "total_chunks": 93
+          }
+        },
+        {
+          "fragmentId": "2d8eda83-71fa-4695-b65e-db5988112ccf",
+          "source": "The-Committee-of-Sleep",
+          "themeCode": "painting",
+          "themeName": "painting",
+          "themeSimilarity": 0.62141780364222,
+          "fragmentSimilarity": 0.632724,
+          "combinedRelevance": 0.39318595839172,
+          "fullText": "\nWhich brings us to one final issue—just how unique is this process to dreams? As Jaynes points out, there is a tradition to waking visions. And it’s more common among the creative. Several visual artists I interviewed were inspired by waking dreamlike imagery. Painter Jim Ann Howard told me of the nighttime dream that led to her “Reunion.” She then recounted the origin of “Trout Dreams” as walking through a cave and “dreaming” of fish. Confused, I asked if she was dreaming or awake. She said, “Awake, but I can dream in either state so I really don’t make much distinction.”\n\nAn architect friend suggested I contact Morgan Wheelock, the leading Boston landscape architect who has designed many of the lushest city parks and private gardens in the northeast. My friend remembered that his designs came from dreams. However, when I talked to Wheelock, he said “Well you could call them waking dreams . . . When I’m looking at a property I’m going to landscape, I cock my head to the side, breathe a certain way and the landscape disappears--instead I see it as it could be.” It’s no wonder my friend remembered this as a dream—that’s the only state in which most of us would have such a vivid perception.\n\nA few novelists also have this ability. Stephen King says, “Part of my function as a writer is to dream awake.” He describes being completely caught up in a fictional world as he types and unaware of real objects and events around him.5 Author James Hall agrees, “I don’t see that the dream state that we have at night is that much different from the dream state that writers learn to put themselves into as they’re writing.”6\n\nSo why not do this type of creating awake? Well, if you can, you should. But I didn’t hear these descriptions from creators in most fields—or even from that many painters and writers. Most of us have imagery more tethered to our waking reason. About 5% of the population has the ability to block out the real world and daydream with a hallucinatory vividness. The origin seems to be partially genetic—twins are very similar. It’s also partially learned--parents who encourage imaginative play make it likelier. But the trait is fixed early. A few people learn to harness the latent ability by hypnosis or similar means but they don’t develop it anew as adults. For most of us, dreams remain the only area where imagination runs fully unleashed.\n\nIt’s common to observe that we spend a third of our lives asleep—and a third of that dreaming. In our dream-neglecting culture, two Nobel prizes resulted from dreams. What is the potential if we paid as much attention as the cultures we saw in Chapter Eight? Dreaming is above all, a time when the unheard parts of ourselves get to speak—we would do well to listen.",
+          "metadata": {
+            "title": "The Committee Of Sleep",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 92,
+            "ingested_at": "2025-06-23T06:27:38.966Z",
+            "interpreter": "mary",
+            "source_file": "The-Committee-of-Sleep",
+            "total_chunks": 93
+          }
+        },
+        {
+          "fragmentId": "ca14fbeb-bc6b-4631-8b17-4e51d2bc426a",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "painting",
+          "themeName": "painting",
+          "themeSimilarity": 0.62141780364222,
+          "fragmentSimilarity": 0.628741,
+          "combinedRelevance": 0.39071085127981303,
+          "fullText": "\nBecause dreams are so visual, visualizing the person, idea, place, or problem as you drift off increases the odds your dream incubation will be successful. As we learned in the chapter on nightmares, you can recast a recurring nightmare with Imagery Rehearsal Therapy, rewriting the dream plot to make it benign or even give it a better ending. Though that approach may sound overly simplistic, you’ll recall the research shows it often works to rid people of their nightmares. Incubating your dreams, too, sounds like wishful thinking, but serious studies have backed up this approach as a way to nudge your dreams in a certain direction.\n\nResearchers at MIT’s Media Lab have been working on technology to engineer sleep and dreams in a way that maximizes your creativity (see this page). Devices sense the sleep-entry and give you a verbal cue asking what you were thinking and record your response. As we’ll see in Chapter 8, there are other ways to engineer the content of dreams, using the senses.\n\nAs we saw when we were looking at how to alleviate nightmares (see this page), you can also write down your intention on a piece of paper and put it by your bedside, or put a picture or object related to what you’re hoping to dream about next to your bed. This is more than some totemic ritual. These are all real ways people report they are able to prime their dreams. It’s as though we’re putting the raw materials into a pot and waiting for our dreams to mix them in new and unexpected ways.\n\nDream incubation is most successful when the solution can be thought of visually. That’s because the visual cortex is highly active during REM dreams. Before you go to sleep, review the problem or topic you’d like to dream about. Imagine yourself dreaming about the problem, waking up, and writing down your dream on the paper you have by your bed.\n\nBarrett’s students chose issues that were academic, medical, and personal, and noted which dreams offered potential solutions to their problems. In one, a student who had moved to a smaller apartment and couldn’t find a way to arrange the furniture in a way that didn’t seem cluttered dreamed of moving the chest of drawers to the living room. The student tried it for real, and it worked. In another, a student trying to decide between an academic program in Massachusetts or elsewhere is in a plane that needs to make an emergency landing. The pilot says it’s too dangerous to land in Massachusetts. Thinking about the dream, the dreamer sees the wisdom in enrolling in a program elsewhere.\n\nEven when you don’t remember your dreams, they can influence your waking thoughts. You may have a flash of insight, an idea that pops into your head, a solution to a problem that seems to come from nowhere. The source of this spark may well be a dream, even if you don’t remember it. We dream every night, and every night our dreams are putting in creative work for us.\n\nTapping into Our Dreams’ Creative Potential\n\nMany people do not think they are creative by nature. You might be one of them. But let’s not forget dreaming itself is a creative act we all participate in. Even blind people dream, making up for their lack of visual content by experiencing more sound, touch, taste and smell than sighted people. Thankfully, the power to dream creatively is something we can all cultivate.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 48,
+            "ingested_at": "2025-06-23T06:29:10.547Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "1e8ed984-8644-4599-ba03-20b580292fe6",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "wind",
+          "themeName": "wind",
+          "themeSimilarity": 0.649072009214403,
+          "fragmentSimilarity": 0.599028,
+          "combinedRelevance": 0.3888123075356854,
+          "fullText": "\nIn various studies, amputees report dreams that would be impossible in the waking world. A man with an amputated arm dreamed of smashing a mosquito with both hands. Another, of shifting gears as he drove a Ferrari Testarossa and, later, of pouring a drink for a friend, holding a champagne bottle in his right hand and a glass in his left hand. A woman with most of one leg amputated dreamed she ran from a plane after it flew too low overhead.\n\nWhen dreams make us whole, what occurs in the dreamscape is nothing short of magic. Two women confined to wheelchairs as the result of chronic spinal cord injuries independently reported something astonishing. They each told of having dreams that included their wheelchairs. However, they were rarely seated in them. In their dreams, they preferred pushing the empty wheelchair.\n\nFor patients with Parkinson’s and dream enactment behavior, dreams enable them to overcome the limitations of their waking bodies. In defiance of all scientific logic, they exhibit something called paradoxical kinesis. By day, their limbs may be rigid and tight, their movements slow, almost ossified. This isn’t for lack of will. The signaling from the brain to the body is breaking down. When these Parkinson’s patients dream, and they act out their dreams as a result of dream enactment behavior, their movements are not slow or jerky, as you might expect. They can move quickly and fluidly. The tremors, weakness, and rigidity they experience during the day are gone. Their voices, too, are transformed. Quiet and tremulous by day, they are now loud and clear as they shout in their sleep. How this paradoxical kinesis is possible remains an enigma.\n\n* * *\n\n• • •\n\nAs we learn more about the neuroscience of dreaming, we are also learning about the potential inside our bodies and minds that only dreams reveal and release. It’s not just our imagination, narratives, and relationships that are boundless in our dreamscape. The dreaming brain holds other powers.\n\nSince meeting that patient nearly twenty-five years ago, I have immersed my life and study into care and investigation of the human brain—the human person—from a breadth of scientific perspectives. The more I have learned, the more I stand in awe and wonder at the mystery of our minds.\n\nOne such capacity, the ability to awaken inside our dreams, and control the direction of dream events, feels more like magic than science. Despite its description for millennia, only in this decade are we able to scientifically investigate and prove that our brains can indeed be dreaming—and also partially awake.\n\n6.\n\nLucid Dreams: A Hybrid of the Waking and Dreaming Minds\n\nIn 1975, an experiment rocked the field of neuroscience.[1] The goal was nothing less than to revolutionize our understanding of waking, sleeping, and dreaming: to show that dreamers could become self-aware while they were still dreaming, and to prove it by communicating with the outside world. In other words, to prove that lucid dreaming was real.\n\nA participant named Alan Worsley had fallen asleep in a sleep lab in England with very specific instructions.[2] He was asked to move his eyes back and forth when he became aware he was dreaming—while still inside the dream. To show his eye movements weren’t random, he was instructed to move his eyes smoothly left-right-left-right in a way that he had rehearsed while awake. These deliberate eye movements would be impossible to confuse for the erratic eye movements of REM sleep.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 66,
+            "ingested_at": "2025-06-23T06:29:43.071Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.3944841382068104,
+        "topSources": [
+          "This-Is-Why-You-Dream",
+          "The-Committee-of-Sleep"
+        ]
+      }
+    },
+    {
+      "dreamId": "dream_7",
+      "dreamTitle": "Memory and Learning",
+      "dreamContent": "I was back in medical school but all my knowledge from years of practice was intact. During a lecture, I could see the neural pathways lighting up in a 3D brain model as the professor explained concepts. Information was literally flowing into my brain like streams of light. I understood complex topics instantly that took me weeks to learn originally. Other students started asking me questions and I was teaching them using vivid mental models.",
+      "matchedThemes": [
+        {
+          "code": "school",
+          "name": "Unknown Theme",
+          "similarity": 0.526452158573976,
+          "description": "Dreams about learning places, educational buildings, or student environments"
+        },
+        {
+          "code": "light",
+          "name": "Unknown Theme",
+          "similarity": 0.504928557596113,
+          "description": "Dreams featuring illumination, brightness, or visible energy"
+        },
+        {
+          "code": "book",
+          "name": "Unknown Theme",
+          "similarity": 0.501984565622137,
+          "description": "Dreams about reading materials, knowledge, or written stories"
+        },
+        {
+          "code": "medicine",
+          "name": "Unknown Theme",
+          "similarity": 0.494291172962847,
+          "description": "Dreams about healing substances, pharmaceuticals, or curative treatments"
+        },
+        {
+          "code": "pill",
+          "name": "Unknown Theme",
+          "similarity": 0.492315535815313,
+          "description": "Dreams about medicine forms, tablets, or swallowable drugs"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "f84c30ca-0253-4cae-93f5-565a9fcc6e75",
+          "source": "when-brain-dreams",
+          "themeCode": "school",
+          "themeName": "school",
+          "themeSimilarity": 0.526452158573976,
+          "fragmentSimilarity": 0.639828,
+          "combinedRelevance": 0.3368388317160699,
+          "fullText": "\nTable 10.1\n\nPREVALENCE OF TOP 15 TYPICAL DREAM THEMES\n\nRank Typical Dream Have you ever dreamed of . . . Total Prevalence Percent of Women Percent of Men\n\n1 being chased or pursued, but not physically injured 85 86 82\n\n2 sexual experiences 78 75 85\n\n3 school, teachers, studying 77 80 68\n\n4 falling 76 77 75\n\n5 arriving too late (e.g., missing a train) 65 67 59\n\n6 a person now alive as dead 61 65 49\n\n7 being on the verge of falling 59 61 55\n\n8 flying or soaring through the air 56 54 62\n\n9 failing an examination 54 58 46\n\n10 trying again and again to do something 52 51 56\n\n11 being frozen with fright 49 52 43\n\n12 being physically attacked (e.g., beaten, stabbed, raped) 47 48 46\n\n13 a person now dead as alive 44 46 39\n\n14 vividly sensing, but not necessarily seeing or hearing, a presence in the room 43 44 42\n\n15 being a child again 41 42 40\n\nFinally, although many typical dreams are negatively toned, several of them are positive dreams, including dreams of flying (56 percent), discovering a new room in the house (34 percent), having magical powers other than flying (31 percent), and having superior knowledge or mental ability (31 percent). Some of these typical dreams are, on occasion, negatively toned—a fear of falling while flying or of monsters leaping out of a newly discovered room—but on the whole, they are accompanied by positive emotions.\n\nThese numbers, however, reflect lifetime prevalence, the percentage of people who have had such dreams at least once in their lives. They don’t tell us how often people have the dreams. Tony evaluated the thematic content of 3,000 randomly selected home dreams from 450 individuals and found that only five of the fifty-five typical dreams—falling, flying, a person now dead being alive, being inappropriately dressed, and being unable to find or use a toilet—occurred in more than 3 percent of the dream reports. Many other themes, like finding money, losing teeth, and failing an examination, occurred in less than a half percent of reports. Other researchers have found similar numbers, including in laboratory-based REM dream reports.5 Still, when you add up the frequencies of all fifty-five categories of typical dreams, there’s a better than fifty-fifty chance that one of these themes will pop up in your dreams tonight.\n\nRECURRENT DREAMS\n\nIn the early 1970s, the British neuroscientist Bernard Katz gave a series of lectures at Harvard Medical School, where Bob was working. Katz had won the Nobel Prize in medicine in 1970, and the school amphitheater was packed. At the start of his final lecture, Katz looked out over the audience and said, “I had that exam dream again last night.” A collective moan of recognition rose from the audience. Apparently, those dreams never end.\n\nExam dreams, dreams of going to school in your pajamas (or less), of teeth falling out, of forgotten plane tickets or passports—who needs these repetitive dreams? This might seem like a rhetorical question, but it’s not. Certainly, Katz didn’t have to worry about not having read the textbook or having forgotten to go to class—two common forms of exam dreams—and your risk of forgetting to get dressed before going to work is, hopefully, vanishingly small. So why do some people continue to experience these dreams? As we’ll see later in this chapter, their occurrence may not be all that surprising when viewed through the lens of NEXTUP.\n\nRecurrent dreams not only have the same theme from one time to the next, but they also have the same content. Studies show that about 70 percent of adults report having had at least one recurrent dream during their life, sometimes dating back to childhood. Predictably, recurrent dreams tend to elicit feelings of fascination and puzzlement in those who experience them.",
+          "metadata": {
+            "title": "When Brain Dreams",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 100,
+            "ingested_at": "2025-06-23T06:49:39.571Z",
+            "interpreter": "mary",
+            "source_file": "when-brain-dreams",
+            "total_chunks": 169
+          }
+        },
+        {
+          "fragmentId": "94b8293b-61fc-40fb-a654-05f8e056e41f",
+          "source": "neuroscience-of-sleep-and-dream",
+          "themeCode": "school",
+          "themeName": "school",
+          "themeSimilarity": 0.526452158573976,
+          "fragmentSimilarity": 0.618829,
+          "combinedRelevance": 0.32578386283817495,
+          "fullText": "\nChildren’s dreams, whether collected in the lab or at home, contain a lot of negative emotions and are often described as scary for the children. Children are more likely to experience nightmares than adults. Up to 50 percent of children between three and six years of age, and 20 percent between six and twelve years, experience “‘frequent” nightmares. Persistence of nightmares during the preschool and school years (two and a half to nine years of age) is associated prospectively with psychotic experiences at twelve years of age. This association holds regardless of family adversity, emotional or behavioral problems, IQ, and potential neurological problems. Questionnaire–based nightmare and bad dream studies typically show that nightmare frequency is highest between the ages of five to ten and is related to other sleep disorders, trait anxiety, emotional problems, and behavior problems.\n\n8.5 Adulthood: Male versus Female Dreams\nThe dream of adults are also intensely social in terms of their content. Adult men and women dream about their family members and close friends. They engage in a huge variety of social interactions with these close familiars. When strangers (unknown characters) appear in the dreams of children or adults, they typically indicate threat to either the dreamer or one of his close family members. Threat and aggression levels vary according to gender, with males evidencing greater levels of aggression and females evidencing greater feelings of threat (coming from strangers) in their dreams. Cross-sectional studies have documented gender differences in adult dream content. In the 1960s, Hall and Van de Castle studied the content of five dreams of each of 100 male and 100 female college students (N = 1,000), which had been collected between 1948 and 1952 (reviewed in Domhoff, 1996). They found (Table 8.3) that unfamiliar, outdoor settings were present more often in men’s than women’s dreams, and that there was a higher proportion of male dream characters, unknown characters, more physical aggression, weapons, and sexuality in men’s dreams. These basic cross-sectional content differences between the dreams of men and women have largely been confirmed in more recent studies.",
+          "metadata": {
+            "title": "Neuroscience Of Sleep And Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 144,
+            "ingested_at": "2025-06-23T06:38:25.419Z",
+            "interpreter": "mary",
+            "source_file": "neuroscience-of-sleep-and-dream",
+            "total_chunks": 202
+          }
+        },
+        {
+          "fragmentId": "67a6fdc0-4d36-49e9-8001-db9cb9e3489f",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "school",
+          "themeName": "school",
+          "themeSimilarity": 0.526452158573976,
+          "fragmentSimilarity": 0.618588,
+          "combinedRelevance": 0.32565698786795866,
+          "fullText": "\nOther major life events can also produce strong emotions and corresponding contextualized images. Dreams recorded after the September 11 terrorist attacks were not about planes or the World Trade Center, but narratives of being threatened in other ways. The COVID-19 lockdowns were less likely to produce dreams about viruses or pandemics and more likely to have dream narratives where the dreamer is trapped, in one example, in a supermarket that turned into a labyrinth.\n\nThe scientific literature recounts the dream reports of two women a week after their mother’s death.[4] One dreamed of an empty house, without furniture, the doors and windows open and wind blowing through. The second woman dreamed of a large tree that fell in front of the house. Both the empty house and the fallen tree were symbols of the loss those two women experienced. Look online for interpretations of an empty house or a fallen tree in dreams and there are any number of explanations. But given the context, is there any doubt that these women were processing grief and sense of loss in their dreams?\n\nThe South African political prisoner turned president Nelson Mandela had a similar dream after his mother and eldest son died while he was imprisoned on Robben Island. There, he had a recurring dream that he was released from a prison in Johannesburg and walked through the city, which was deserted, arriving at his home in Soweto hours later only to find “a ghost house, with all the doors and windows open, but no one at all there.”[5]\n\nRevisiting the common dream related to a final exam in school: Maybe you overslept and missed it, or arrived late, or arrived at the wrong classroom, or studied the wrong material. Maybe you showed up for the test nude, or it’s written in a language you don’t understand. If you have this dream the night before an actual exam, it is clearly a simple product of your anxiety about the test. But this dream persists for many people well into middle age. Why do we have this dream long after we’ve left school—and how could dreams like these be not only unsettling but relevant?\n\nLet’s return to the two fundamental elements of the dream. The first is the emotion of the dream and the intensity of the emotion; this dream typically provokes intense feelings of anxiety or fear. The second is the central image: an exam in school. Here, it’s important to think metaphorically. Unless you are still a student, it’s unlikely the dream is about school or tests. Just as the veterans returned to war dreams when they faced marital troubles, anxiety is prompting you to latch onto another time in your life when you were anxious about something.\n\nHarvard psychologist Deirdre Barrett says an exam is a time when someone in a position of authority is evaluating our performance, deciding whether we pass the test—or fail. The image of an exam may be a proxy for something going on in our lives where we are feeling tested or judged. If you have this dream, it makes sense to ask yourself if you’re worried you’re not meeting someone’s expectations.\n\nAccording to Barrett, school may also be the place where we first experienced other deep feelings, such as embarrassment, stress, and inadequacy. No wonder school and tests serve as a metaphor no matter how old we are. One of the functions of dreams is processing memories and gauging how new experiences fit with old. Dreams about a final exam are likely a way to measure the current anxiety against a past fear that provoked a significant depth of anxiety.\n\nTaking the time to consider the meaning of your dreams requires introspection and self-awareness. Dreams invite us to look deeper into ourselves and examine what they are telling us. Spending time examining the meaning of your dreams can increase both your awareness and your acceptance of your emotions, can lead to important insight about your life, and can lead to a greater sense of wellbeing.\n\nConclusion\n\nThe Transcendent Power of Dreams",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 99,
+            "ingested_at": "2025-06-23T06:30:54.346Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "8799e374-4631-4758-bc64-7c051ab6c5e5",
+          "source": "The-Committee-of-Sleep",
+          "themeCode": "book",
+          "themeName": "book",
+          "themeSimilarity": 0.501984565622137,
+          "fragmentSimilarity": 0.634237,
+          "combinedRelevance": 0.3183771849464873,
+          "fullText": "\nWhen I’m working I never know what the end is going to be or how things are going to come out. I’ve got an idea what direction I want the story to go in or hope it will go in, but mostly I feel like the tail on a kite . . . And if I know when I sit down what’s happening or what’s going to happen, that day and the next day and the day after, I’m happy. But with IT , I got to a point where I couldn’t see ahead any more. And every day I got closer to the place where this young girl . . . they were going to find her.\n\nI didn’t know what was going to happen to her. That made me extremely nervous. Because that’s the way books don’t get done. All at once you just get to a point where there is no more. It’s like pulling a little string out of a hole and all at once it’s broken and you don’t get whatever prize there was on the end of it.\n\nSo I had seven, eight hundred pages and I just couldn’t stand it. I remember going to bed one night saying, ‘I’ve got to have an idea. I’ve to have an idea!’ I fell asleep and dreamed that I was in a junkyard, which was where this part of he story was set.\n\nApparently, I was the girl. There was no girl in the dream. There was just me. And there were all these discarded refrigerators in this dump. I opened one of them and there were these things inside, hanging from the various rusty shelves. They looked like macaroni shells and they were all just sort of trembling in a breeze. Then one of them opened up these wings, flew out and landed on the back of my hand. There was a sensation of warmth, almost like when you get a shot of Novocain or something, and this thing started to turn from white to red. I realized it had anesthetized my hand and it was sucking my blood out. Then they all started to fly out of this refrigerator and to land on me. They were these leeches that looked like macaroni shells. And they were swelling up.\n\nI woke up and I was very frightened. But I was also very happy. Because then I knew what was going to happen. I just took the dream as it was and put it in the book. Dropped it in. I didn’t change anything . . . . I really think what happened with this dream was that I went to sleep and the subconscious went right on working and finally sent up this dream the way that you would send somebody an interoffice message in a pneumatic tube.\n\nKing also describes these unconscious messages with the most time honored metaphor--that of the ocean and its depths.\n\nI think that our minds are the same nutrient bath all the way down to the bottom and different things live at different levels. Some of them are a little bit harder to see because we don’t get down that deep. But whatever’s going on in our daily lives, our daily thoughts, the things that the surface of our minds are concerned with eddy down--trickle down--and then they have some sort of an influence down there. And these messages that we get a lot of times are nothing more than symbolic reworkings of the things that we’re concerned with.\n\nKing also emphasizes that it is in the shallowest sleep that logical ideas arrive. He continues the metaphor by observing that fish near the surface are what we are used to seeing. The deeper ones are more exotic--translucent, florescent, trailing strange frills. These are wondrous in their own habitat, he says, but usually turn into “exploded fish, a total mess” if one attempts to bring them up to the waking world.14\n\nAmerica’s other leading name in horror, Anne Rice also told Epel she uses dreams--both fortuitous ones and those more intentionally provided for her books.",
+          "metadata": {
+            "title": "The Committee Of Sleep",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 25,
+            "ingested_at": "2025-06-23T06:25:26.505Z",
+            "interpreter": "mary",
+            "source_file": "The-Committee-of-Sleep",
+            "total_chunks": 93
+          }
+        },
+        {
+          "fragmentId": "7b1f6155-b81d-4ddd-a10e-a10d7e48df20",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "book",
+          "themeName": "book",
+          "themeSimilarity": 0.501984565622137,
+          "fragmentSimilarity": 0.621781,
+          "combinedRelevance": 0.31212446519709797,
+          "fullText": "\nDreaming should by no means be dismissed just because it occurs while you’re asleep or lacks the logic that guides you during waking hours. Dreams are a different form of thinking. It’s their very wildness that gives them the potential to be transformative. Great leaps in art, design, and fashion are built on the type of divergent thinking that comes naturally in dreaming, and it is culture, language, and creativity that has allowed humans to flourish far beyond our physical evolution. Dreaming is at the heart of all this.\n\nToday the word “dream” means many things: ambition, an ideal, a fantasy, and the vivid narratives generated during sleep. Neuroscience is showing that the boundaries between sleep and waking are not so clean after all. Dreams can help you solve a problem; learn a musical instrument, a language, or a dance move; practice a sport; give you clues about your health; and make predictions about the future. Dreams can be spiritually enriching. Forgotten dreams can still shape your mind and influence your day. You can learn to remember dreams, prime their content and even control them during something called lucid dreaming. Most importantly, dreams can offer the greatest gift—that of self-knowledge. By interpreting your dreams, you can make sense of your experience and explore your emotional life in new and profound ways.\n\nDreams are an elusive form of cognition. Because we experience them alone, closed off from the world, a subjective experience for an audience of one, much about dreams is likely beyond the realm of experimental testing or scientific proof. In this book, I’ve done my best to capture the current state and breadth of knowledge about dreams and dreaming while noting uncertainties in the research and disagreements among researchers. The book also includes theories I’ve developed based on the latest research and my own knowledge of the brain. Ultimately, this book is my synthesis of information from disparate disciplines. It is the product of intense effort and even greater humility.\n\nBefore we begin, consider for a moment the magic of dreaming. When we dream, we transcend our physical selves. We’re no longer aware that we’re lying in bed or even lying down at all. Our eyes are closed, but we can see. Our body is still, but we can walk, run, drive a car, fly. We are silent, but we can hold conversations with people we know and love, alive or dead, and people we’ve never met. We exist in the present, but we can travel back in time, or forward into the future. We are in a single spot but can transport ourselves to places we haven’t been to in years, or places that exist only in our imaginations. We are in a world completely of our own making. And it has the potential to be transcendent. Dreams are our nightly dose of wonder.\n\n1.\n\nWe Have Evolved to Dream\n\nIn the operating theater during a procedure called awake brain surgery, I use a pen-like device to apply tiny amounts of electricity directly onto a patient’s brain. Exposed, the undulating surface of the brain is shimmering and opalescent, punctuated with arteries and veins. The patient is conscious and alert yet feels no pain because the brain has no pain receptors. But the electricity has an effect. Every brain is unique and some spots I touch come alive. Touch one spot, and the patient reports a childhood memory. Touch another, and the patient smells lemon. Touch a third, and the patient feels sadness, embarrassment, or even desire.\n\nThe purpose of awake brain surgery is to find the precise locations where the flicker of electricity produces nothing. These are the spots where it is safe to cut through the surface tissue to reach the tumor below. When a micro-jolt of electricity produces no response, I know dissecting will not result in any functional damage.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 1,
+            "ingested_at": "2025-06-23T06:27:42.969Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.3237562665131578,
+        "topSources": [
+          "when-brain-dreams",
+          "neuroscience-of-sleep-and-dream",
+          "This-Is-Why-You-Dream",
+          "The-Committee-of-Sleep"
+        ]
+      }
+    },
+    {
+      "dreamId": "dream_8",
+      "dreamTitle": "Circadian Rhythm Dream",
+      "dreamContent": "The sun and moon were racing across the sky at incredible speed. Day and night cycled every few minutes. My body felt confused, alternately exhausted and wide awake. I was trying to maintain a normal schedule but meals appeared at random times and clocks showed different times in each room. My bedroom kept shifting between morning brightness and midnight darkness. I felt jet-lagged and disoriented throughout the entire dream.",
+      "matchedThemes": [
+        {
+          "code": "wind",
+          "name": "Unknown Theme",
+          "similarity": 0.646344228851532,
+          "description": "Dreams about moving air, breezes, or atmospheric currents"
+        },
+        {
+          "code": "moon",
+          "name": "Unknown Theme",
+          "similarity": 0.628559928281372,
+          "description": "Dreams about night celestial bodies, lunar phases, or satellite orbs"
+        },
+        {
+          "code": "clock",
+          "name": "Unknown Theme",
+          "similarity": 0.6280096207849,
+          "description": "Dreams about time devices, ticking, or temporal measurement"
+        },
+        {
+          "code": "sun",
+          "name": "Unknown Theme",
+          "similarity": 0.627109832684455,
+          "description": "Dreams about day stars, solar orbs, or light sources"
+        },
+        {
+          "code": "wave",
+          "name": "Unknown Theme",
+          "similarity": 0.621968674591895,
+          "description": "Dreams about water movements, ocean swells, or rolling motions"
+        }
+      ],
+      "retrievedFragments": [
+        {
+          "fragmentId": "0eea7171-a5b2-4d3a-84c1-ae7d09051a5f",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "wind",
+          "themeName": "wind",
+          "themeSimilarity": 0.646344228851532,
+          "fragmentSimilarity": 0.618031,
+          "combinedRelevance": 0.3994607701013412,
+          "fullText": "Introduction\n\nA Nightly Dose of Wonder\n\nI’ve spent my life immersed in the brain. As a dual-trained MD, PhD neurosurgeon and neuroscientist, I perform surgery on patients with cancers and other illnesses. I also run a research laboratory. It is impossible to spend so much time treating and studying the brain without being in awe of it. The more I learn, the more I’m captivated, infatuated even.\n\nWith billions of neurons and trillions of connections between them, the brain is infinitely complex. But in my own ongoing journey of discovery, one feature of the mind captures my attention like no other: dreaming. For many years, I have searched for answers to the essential questions: Why do we dream? How do we dream? And perhaps, most importantly, what do dreams mean? In that, I have abundant company.\n\nDreams have always been a source of mystery. They have captured the attention of humanity’s thinkers, from the ancient Egyptians and Aristotle to Charles Dickens and Maya Angelou, from director Christopher Nolan and activist Nelson Mandela to the slain Brooklyn rapper Notorious B.I.G. They inspire invention and art, medicine and psychology, religion and philosophy. They’ve been seen as omens, messages from the gods and from our subconscious, from the soul and self, from angels and demons. They have changed the course of individual lives and the course of the world, spurring marriage proposals and business deals, inspiring song lyrics and scientific breakthroughs, triggering military invasions and mental breakdowns.\n\nDreams captivate, scare, arouse and inspire us because they are both so real and so surreal. We are simultaneously creators of our dreams and helpless participants in our strange creations. Dreams emerge from us but seem somehow apart from us, home movies we have conjured that do not follow the laws of time or nature, both intimate and out of our control.\n\nAs the British poet Lord Byron wrote:\n\n[…] Sleep hath its own world,\n\nAnd a wide realm of wild reality,\n\nAnd dreams in their development have breath,\n\nAnd tears, and tortures, and the touch of Joy;\n\nThey leave a weight upon our waking thoughts,\n\nThey take a weight off our waking toils.[1]\n\nGiven the often disjointed and illogical nature of dreams, it may be hard to grasp how the imagined tears, tortures and joys of your dreams reveal much about you. Over time, however, they paint a vivid picture of how we see ourselves and the world. They illuminate our nature, our interests, and our deepest concerns. In this way, we are uniquely our dreams, and our dreams are uniquely us.\n\nAlthough the creation of dreams may seem mysterious, their source is anything but. The brain reverberates with electricity, waves of current moving across the brain every moment we’re alive. Dreams are a product of normal brain electrophysiology, and an extraordinary transformation that occurs in the brain each night when we sleep, following the circadian rhythms—the day-night cycles—that biologically govern all life.\n\nDreaming should by no means be dismissed just because it occurs while you’re asleep or lacks the logic that guides you during waking hours. Dreams are a different form of thinking. It’s their very wildness that gives them the potential to be transformative. Great leaps in art, design, and fashion are built on the type of divergent thinking that comes naturally in dreaming, and it is culture, language, and creativity that has allowed humans to flourish far beyond our physical evolution. Dreaming is at the heart of all this.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 0,
+            "ingested_at": "2025-06-23T06:27:41.145Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "1e8ed984-8644-4599-ba03-20b580292fe6",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "wind",
+          "themeName": "wind",
+          "themeSimilarity": 0.646344228851532,
+          "fragmentSimilarity": 0.599028,
+          "combinedRelevance": 0.3871782907204755,
+          "fullText": "\nIn various studies, amputees report dreams that would be impossible in the waking world. A man with an amputated arm dreamed of smashing a mosquito with both hands. Another, of shifting gears as he drove a Ferrari Testarossa and, later, of pouring a drink for a friend, holding a champagne bottle in his right hand and a glass in his left hand. A woman with most of one leg amputated dreamed she ran from a plane after it flew too low overhead.\n\nWhen dreams make us whole, what occurs in the dreamscape is nothing short of magic. Two women confined to wheelchairs as the result of chronic spinal cord injuries independently reported something astonishing. They each told of having dreams that included their wheelchairs. However, they were rarely seated in them. In their dreams, they preferred pushing the empty wheelchair.\n\nFor patients with Parkinson’s and dream enactment behavior, dreams enable them to overcome the limitations of their waking bodies. In defiance of all scientific logic, they exhibit something called paradoxical kinesis. By day, their limbs may be rigid and tight, their movements slow, almost ossified. This isn’t for lack of will. The signaling from the brain to the body is breaking down. When these Parkinson’s patients dream, and they act out their dreams as a result of dream enactment behavior, their movements are not slow or jerky, as you might expect. They can move quickly and fluidly. The tremors, weakness, and rigidity they experience during the day are gone. Their voices, too, are transformed. Quiet and tremulous by day, they are now loud and clear as they shout in their sleep. How this paradoxical kinesis is possible remains an enigma.\n\n* * *\n\n• • •\n\nAs we learn more about the neuroscience of dreaming, we are also learning about the potential inside our bodies and minds that only dreams reveal and release. It’s not just our imagination, narratives, and relationships that are boundless in our dreamscape. The dreaming brain holds other powers.\n\nSince meeting that patient nearly twenty-five years ago, I have immersed my life and study into care and investigation of the human brain—the human person—from a breadth of scientific perspectives. The more I have learned, the more I stand in awe and wonder at the mystery of our minds.\n\nOne such capacity, the ability to awaken inside our dreams, and control the direction of dream events, feels more like magic than science. Despite its description for millennia, only in this decade are we able to scientifically investigate and prove that our brains can indeed be dreaming—and also partially awake.\n\n6.\n\nLucid Dreams: A Hybrid of the Waking and Dreaming Minds\n\nIn 1975, an experiment rocked the field of neuroscience.[1] The goal was nothing less than to revolutionize our understanding of waking, sleeping, and dreaming: to show that dreamers could become self-aware while they were still dreaming, and to prove it by communicating with the outside world. In other words, to prove that lucid dreaming was real.\n\nA participant named Alan Worsley had fallen asleep in a sleep lab in England with very specific instructions.[2] He was asked to move his eyes back and forth when he became aware he was dreaming—while still inside the dream. To show his eye movements weren’t random, he was instructed to move his eyes smoothly left-right-left-right in a way that he had rehearsed while awake. These deliberate eye movements would be impossible to confuse for the erratic eye movements of REM sleep.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 66,
+            "ingested_at": "2025-06-23T06:29:43.071Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "5422095b-51ec-489b-8fe8-1a962505739c",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "wind",
+          "themeName": "wind",
+          "themeSimilarity": 0.646344228851532,
+          "fragmentSimilarity": 0.592718,
+          "combinedRelevance": 0.3830998586364223,
+          "fullText": "\nBecause of the potential control lucid dreaming offers, this unique state of consciousness also creates enormous possibilities to foster creativity, even beyond normal dreaming. To take full advantage of the creative potential of lucid dreaming, you can ask yourself a question before bed as you would when you are priming a normal dream, only now you can potentially take control. Lucid dreams have the added advantage of being more memorable than a typical dream. In one case study, a computer programmer reported using lucid dreams to help design his programs. In his lucid dreams, he reportedly discussed what he was trying to do with Albert Einstein, and together they drew flowcharts on a blackboard until they found a solution.[11]\n\nWith that case study as their springboard, researchers at Liverpool John Moores University decided to see how well nine lucid dreamers did versus nine non-lucid dreamers in solving a task in their sleep.[12] For ten consecutive days, each night at 9 p.m. they received an email with their task. They were either asked to solve a logical puzzle or create a metaphor. For example, they might be asked to find the missing letter in a sequence or create a metaphor for such phrases as “a banknote floating on a river” or “a lighthouse in the desert.”\n\nThe lucid dreamers were encouraged to believe there would be someone in their dream who “knows answers to many questions and is willing to help,” maybe an older wise person, or a trustworthy guide. They were asked to find this figure. If they couldn’t, they were told to go forward, turn left, find a door, go through it, and turn right. These elaborate instructions were designed to raise expectations among the lucid dreamers that they would find their guide. When they did, they were encouraged to ask this dream character to solve the problem they had been given. No matter what answer they were given, the lucid dreamers were told to thank the guide, wake themselves up, and write down the answer.\n\nWhen the results were in, it seems the dream guides were not great at solving puzzles. Out of eleven answers they gave during the study, only one was correct. Because the Executive Network is only partially activated in lucid dreaming, it’s quite possible the puzzles were simply too difficult for the lucid dreamers, guide or not.\n\nPerhaps these imaginary guides would have fared better if the creative challenge had been less of a word problem and more of a visual one. For instance, Worsley, Hearne’s test subject, performed lucid dreaming experiments that tended to involve challenging new ways to manipulate the visual environment of the dreams. In one, he would find a television in his lucid dream, turn it on, change the channel, and manipulate things like the volume, the intensity of the color, or the image on the screen. Worsley also says he has played the piano, walked through walls, created a flame by flicking his fingers like a lighter, and put his arm through a car windshield in his lucid dreams. He even passed one forearm through the other, and has extended body parts like his nose and tongue by gently pulling them out.\n\nBritish artist Dave Green draws portraits of people in his lucid dreams, and he recreates the portraits as soon as he wakes up. Though he is a practiced lucid dreamer, Green says there are challenges to creating art in his dreamscape: Everything in the dream is in a state of flux and could transform into something else at any moment. He describes the process as “an interaction between my conscious and unconscious mind playing itself out on the page in real time.”[13]\n\nWorsley, too, has said the lucid state is tenuous, even for someone adept at becoming lucid in a dream. He says his level of lucidity can change from moment to moment. In that way, for Worsley anyway, the same dream lasting just a few minutes can be both lucid and not lucid.\n\nThe New Frontier of Lucid Dreaming",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 74,
+            "ingested_at": "2025-06-23T06:29:57.058Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "18ee983e-5493-485a-834c-1cddbe62b9c6",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "clock",
+          "themeName": "clock",
+          "themeSimilarity": 0.6280096207849,
+          "fragmentSimilarity": 0.596359,
+          "combinedRelevance": 0.3745191894416621,
+          "fullText": "\nThinking about the prowess of early humans to thrive among creatures that were stronger and faster, it’s probable that their dreams gave them ideas crucial for survival. It seems reasonable that dreams fostered creativity in movement, the procedural knowledge we accumulate in our lives—and ultimately a creative well we as a species have relied upon.\n\nRobert A. Mason and Marcel Adam Just at Carnegie Mellon University’s Center for Cognitive Imaging decided to study what was happening in the brain when people were tying knots.[4] Procedural knowledge such as tying a knot is different from knowing about a thing because it unfolds over time: Tying a knot is a series of movements in sequence. Intriguingly, such procedural memory, like tying laces, tends not to fade even in dementia.\n\nAs a surgeon in training, one of the first things you learn when you get into the operating theater is the surgeon’s knot, a variation of a square knot used to firmly stitch wounds together. Before the use of electricity to singe blood vessels, for example, we used knots to tie them off so we could safely cut them. Sometimes hundreds of knots were needed. If even a single knot came unraveled, it could be disastrous. Tying knots, the movement of fingers and hands, becomes balletic when done right, as if hands have a mind of their own.\n\nIn their study of knot tying, Mason and Just used a functional MRI (fMRI) to show brain activity of test subjects in real time. The researchers found the first step of knot tying was thinking about the process before manipulating the rope. When they asked test subjects to simply imagine tying the knot, the researchers discovered something fascinating: The neural signature was exactly the same as planning to actually tie a knot. In other words, when we dream, our neurons fire as though we are performing the act we’re dreaming about. This allows for dreams to enhance our procedural knowledge, which can be useful in many areas of our lives, including dance, art, and sport. The golfer Jack Nicklaus, for instance, once credited a dream with improving his golf game by giving him a new way to grip his club.\n\nAs a brain surgeon, I try to take advantage of the creative power of my dreams. The night before a particularly challenging operation, I review images of the patient’s brain and brain tumor. While falling asleep, I imagine rotating the tumor, paying particular attention to the surrounding brain tissue I must either avoid or traverse. As I’m waking up, I take a few minutes to revisit the shapes and contours of the planned surgery. This practice has served well to give me the spatial awareness of the anatomy I need to either dissect through or around. Since dreams are visual-spatial experiences, I have no doubt that this mental exercise has been replayed in some way in my dreams, further strengthening my understanding of the operation ahead, even if I don’t always remember my dream in the morning.\n\nMany experiments have shown sleep and dreams help us learn. In one experiment, participants ran around a virtual reality maze. Afterward, half of the subjects napped while the other half stayed awake. When they went back to the VR maze later, those who slept performed better than those who stayed awake. Those who not only slept but dreamed did best of all. For those who didn’t sleep, daydreams about the maze didn’t help.\n\nDid those who slept and dreamed do better because they were dreaming about how to get through the maze? This would be a natural assumption, but it wasn’t the case. Two of the participants dreamed about music. The other had a dream of a bat cave that was like a maze but not the maze itself. Even though the participants were not dreaming of the maze, just the act of dreaming somehow helped them consolidate memories of it. They knew the maze better because they dreamed. The correlation is clear, though how this works is not yet fully understood.\n\nNightmares and Creativity",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 46,
+            "ingested_at": "2025-06-23T06:29:06.705Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        },
+        {
+          "fragmentId": "0357e9f1-8eb2-4f8d-98e6-f7660ebd8d24",
+          "source": "This-Is-Why-You-Dream",
+          "themeCode": "wave",
+          "themeName": "wave",
+          "themeSimilarity": 0.621968674591895,
+          "fragmentSimilarity": 0.599768,
+          "combinedRelevance": 0.3730369080226316,
+          "fullText": "\nAlmost three-quarters of people with PTSD experience frequent nightmares. Unlike the fever that accompanies an infection or the pain that comes with a physical injury, nightmares are not merely a symptom of PTSD. They can exact real emotional harm.\n\nOne of the hallmarks of PTSD is experiencing recurring dreams that replay the traumatic event again and again. The dreams are accompanied by fear, rage, or grief at night, and by hyper-arousability and anxiety during the day. PTSD nightmares are different from nightmares not provoked by trauma, which can be beneficial and even play a fundamental part in childhood development, as discussed in Chapter 2. Bessel van der Kolk, the psychiatrist who wrote The Body Keeps the Score, says trauma is not about the past but how the trauma lives inside you and that “dreams themselves could be traumatic for the dreamer.”[12] In other words, dreaming of an event can re-traumatize the dreamer. The evidence for this is straightforward. During nightmares, our heart rate and breathing quicken as though we are experiencing the event itself. The parts of the brain activated during dreams match how the brain would react when we are awake. For example, running triggers the motor cortex. Experiencing fear triggers the amygdala.\n\nOn the other hand, dreams also have the power to recast traumatic events over time in a way that is therapeutic. Almost everyone experiences trauma in their lifetime, but the range of our responses in both our waking and dreaming lives is enormous. Some of us are able to rebound after a trauma, such as a car accident, the sudden loss of a loved one, or being the victim of a crime, in a psychological response called post-traumatic growth. Others don’t fare as well. We can learn a lot about how well we’re dealing with a trauma by paying attention to our dreams and determining whether they are symbolic or realistic.\n\nBecause the emotional focus of someone who has recently experienced trauma is clear, survivors of recent acute trauma are ideal subjects for dream research. American researcher Ernest Hartmann collected dream series lasting between two weeks and two years from forty such individuals.[13] What he found was that healing from trauma typically means moving from more literal dreams to ones that are represented visually in some other way. Dreams shift from replays or close facsimiles of an event to narratives that are symbolic.\n\nOne very common dream in the wake of trauma features a tidal wave. It has been reported by victims of all kinds of trauma. According to Hartmann, the dream narrative goes like this: “I was walking along a beach with a friend, I’m not sure who, when suddenly a huge wave, 30 feet tall, swept us away. I struggled and struggled in the water. I’m not sure whether I made it out. Then I woke up.” Hartmann found trauma survivors also dream of being swept away in a whirlwind. Hartmann reported that the first four dreams experienced by one woman after being brutally assaulted were of being attacked by a gang, being choked by a curtain, being in the path of an oncoming train, and being caught up in a whirlwind. Disturbing as these were, they were a sign of healing.\n\nOver time, as the trauma becomes less immediate and as the emotional impact of the event shifts, the images in our dreams shift as well. Dreams that begin contextualizing fear or terror may shift to embody helplessness and vulnerability, which might be represented in a dream of a small animal dying on the side of the road or walking in a large field with no shelter in a rainstorm. Then come dreams in which the central image represents survivor’s guilt, and then grief.",
+          "metadata": {
+            "title": "This Is Why You Dream",
+            "topics": [
+              "neuroscience",
+              "dreams",
+              "sleep"
+            ],
+            "chunk_index": 64,
+            "ingested_at": "2025-06-23T06:29:39.074Z",
+            "interpreter": "mary",
+            "source_file": "This-Is-Why-You-Dream",
+            "total_chunks": 102
+          }
+        }
+      ],
+      "metrics": {
+        "fragmentsFound": 5,
+        "averageRelevance": 0.38345900338450656,
+        "topSources": [
+          "This-Is-Why-You-Dream"
+        ]
+      }
+    }
+  ]
+}

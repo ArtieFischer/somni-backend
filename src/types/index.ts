@@ -65,7 +65,16 @@ export interface DreamRecord {
   transcription_status?: 'pending' | 'processing' | 'completed' | 'failed';
   transcription_metadata?: Record<string, any>;
   transcription_job_id?: string;
-  // Note: image_url and image_prompt moved to dream_images table in new schema
+  image_prompt?: string;
+  is_lucid?: boolean;
+  mood?: number; // 1-5
+  clarity?: number; // 1-100
+  location_metadata?: {
+    city?: string;
+    country?: string;
+    countryCode?: string;
+    method?: 'manual' | 'gps';
+  };
 }
 
 // API Error types
