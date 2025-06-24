@@ -108,7 +108,7 @@ export class BGEHybridRAGService {
           }
           if (theme.description) {
             keywords.push(...theme.description.toLowerCase().split(' ')
-              .filter(w => !this.philosophicalStopwords.has(w)));
+              .filter((w: string) => !this.philosophicalStopwords.has(w)));
           }
           
           // Add symbol interpretations
@@ -283,7 +283,11 @@ export class BGEHybridRAGService {
     bm25: number;
   } {
     if (!options.adaptiveScoring) {
-      return options.weights || { semantic: 0.5, sparse: 0.2, bm25: 0.3 };
+      return {
+        semantic: options.weights?.semantic ?? 0.5,
+        sparse: options.weights?.sparse ?? 0.2,
+        bm25: options.weights?.bm25 ?? 0.3
+      };
     }
     
     // Analyze query characteristics
