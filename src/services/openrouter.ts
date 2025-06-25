@@ -419,6 +419,7 @@ Visual scene description:`;
     const startTime = Date.now();
     
     const systemPrompt = `You are DREAM-METADATA v1. Work strictly in English.
+IMPORTANT: You MUST return ONLY a valid JSON object with no other text, explanation, or formatting.
 Return a single-line minified JSON. No additional keys.
 Context: You are analyzing dream descriptions submitted by users seeking psychological help and self-improvement.`;
 
@@ -431,6 +432,7 @@ Context: You are analyzing dream descriptions submitted by users seeking psychol
 • Use only information from the FULL transcript below.
 • For imagePrompt: Be specific with visual details - textures, colors, lighting, atmosphere. No feelings or interpretations.
 • Output **exactly** this JSON schema: {"title":"…","imagePrompt":"…"}
+• CRITICAL: Return ONLY the JSON object, nothing else. No markdown, no explanations, just: {"title":"…","imagePrompt":"…"}
 
 ### DREAM TRANSCRIPT
 ${transcript}`;
@@ -485,11 +487,18 @@ ${transcript}`;
         }
         let metadata: MetadataResponse;
         try {
-          metadata = JSON.parse(content);
+          // Try to extract JSON if the model returned extra text
+          const jsonMatch = content.match(/\{[^}]*"title"[^}]*"imagePrompt"[^}]*\}/);
+          if (jsonMatch) {
+            metadata = JSON.parse(jsonMatch[0]);
+          } else {
+            metadata = JSON.parse(content);
+          }
         } catch (parseError) {
           logger.error('Failed to parse metadata JSON', { 
             error: parseError,
             content,
+            model,
             dreamId: options.dreamId 
           });
           throw new Error('Invalid JSON response from model');

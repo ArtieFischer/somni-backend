@@ -404,6 +404,13 @@ class SupabaseService {
     userId?: string
   ): Promise<boolean> {
     try {
+      // Log what we're about to save
+      logger.info('Updating dream with image prompt', {
+        dreamId,
+        imagePrompt,
+        imagePromptLength: imagePrompt?.length
+      });
+      
       // First update the dream with the image prompt
       const updateData = {
         image_prompt: imagePrompt,
@@ -452,7 +459,9 @@ class SupabaseService {
       logger.info('Dream image updated', { 
         dreamId, 
         userId, 
-        imageUrl 
+        imageUrl,
+        imagePromptSaved: true,
+        imagePrompt
       });
       
       return true;
