@@ -455,13 +455,21 @@ ${transcript}`;
           transcriptLength: transcript.length 
         });
 
-        const completion = await this.client.chat.completions.create({
+        // Check if the model supports response_format parameter
+        const supportsResponseFormat = !model.includes('llama-4-scout');
+        
+        const requestParams: any = {
           model,
           messages,
           temperature: 0.7,
-          max_tokens: 150,
-          response_format: { type: 'json_object' }
-        });
+          max_tokens: 150
+        };
+        
+        if (supportsResponseFormat) {
+          requestParams.response_format = { type: 'json_object' };
+        }
+        
+        const completion = await this.client.chat.completions.create(requestParams);
 
         const content = completion.choices[0]?.message?.content || '';
         const usage: TokenUsage = {
