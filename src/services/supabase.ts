@@ -138,6 +138,14 @@ class SupabaseService {
     userId?: string
   ): Promise<boolean> {
     try {
+      // Log what we're about to save
+      logger.info('Preparing dream transcription update', {
+        dreamId,
+        hasTitle: !!transcription.title,
+        titleValue: transcription.title,
+        titleLength: transcription.title?.length
+      });
+      
       const updateData: Partial<DreamRecord> = {
         raw_transcript: transcription.text,
         ...(transcription.title && { title: transcription.title }),
@@ -179,7 +187,9 @@ class SupabaseService {
         dreamId, 
         userId, 
         textLength: transcription.text.length,
-        languageCode: transcription.languageCode 
+        languageCode: transcription.languageCode,
+        titleSaved: !!updateData.title,
+        titleValue: updateData.title
       });
       
       return true;
