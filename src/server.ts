@@ -18,6 +18,7 @@ import { dreamEmbeddingRouter } from './routes/dreamEmbedding';
 import { debugEmbeddingJobsRouter } from './routes/debug-embedding-jobs';
 import { embeddingWorker } from './workers/embeddingWorker';
 import { debugEmbeddingRouter } from './routes/debugEmbedding';
+import { debugServiceRoleRouter } from './routes/debugServiceRole';
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use('/api/v1/themes', embeddingsSimpleRouter);
 app.use('/api/v1/dream-embeddings', dreamEmbeddingRouter);
 app.use('/api/v1/debug-embedding-jobs', debugEmbeddingJobsRouter);
 app.use('/api/v1/debug-embedding', debugEmbeddingRouter);
+app.use('/api/v1/debug-service-role', debugServiceRoleRouter);
 
 // Root endpoint
 app.get('/', (_req, res) => {
