@@ -31,8 +31,8 @@ class SupabaseService {
    * Used for background jobs and system operations
    */
   getServiceClient(): SupabaseClient {
-    // When using service role key, we can bypass RLS
-    // by using the client without any auth context
+    // Create a new client with service role key that bypasses RLS
+    // Based on Supabase documentation for server-side operations
     return createClient(
       config.supabase.url,
       config.supabase.serviceRoleKey,
@@ -40,13 +40,16 @@ class SupabaseService {
         auth: {
           autoRefreshToken: false,
           persistSession: false,
+          detectSessionInUrl: false
         },
         db: {
           schema: 'public'
         },
         global: {
           headers: {
-            'apikey': config.supabase.serviceRoleKey
+            // Both apikey and Authorization headers should use service role key
+            'apikey': config.supabase.serviceRoleKey,
+            'Authorization': `Bearer ${config.supabase.serviceRoleKey}`
           }
         }
       }
