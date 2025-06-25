@@ -27,6 +27,33 @@ class SupabaseService {
   }
 
   /**
+   * Get a Supabase client that bypasses RLS
+   * Used for background jobs and system operations
+   */
+  getServiceClient(): SupabaseClient {
+    // When using service role key, we can bypass RLS
+    // by using the client without any auth context
+    return createClient(
+      config.supabase.url,
+      config.supabase.serviceRoleKey,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false,
+        },
+        db: {
+          schema: 'public'
+        },
+        global: {
+          headers: {
+            'apikey': config.supabase.serviceRoleKey
+          }
+        }
+      }
+    );
+  }
+
+  /**
    * Verify JWT token and get user information
    */
   async verifyUserToken(token: string) {

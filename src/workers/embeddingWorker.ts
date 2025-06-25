@@ -93,7 +93,7 @@ export class EmbeddingWorker {
     logger.info('Checking for pending jobs', { availableSlots, activeJobs: this.activeJobs.size });
 
     // Get multiple pending jobs up to available slots
-    const { data: jobs, error } = await supabaseService.getClient()
+    const { data: jobs, error } = await supabaseService.getServiceClient()
       .from('embedding_jobs')
       .select('dream_id')
       .eq('status', 'pending')
@@ -135,7 +135,7 @@ export class EmbeddingWorker {
       logger.info('Processing embedding job', { dreamId });
       
       // First, update the job status to processing
-      const { error: updateError } = await supabaseService.getClient()
+      const { error: updateError } = await supabaseService.getServiceClient()
         .from('embedding_jobs')
         .update({
           status: 'processing',
@@ -160,7 +160,7 @@ export class EmbeddingWorker {
         });
 
         // Update job status to completed
-        await supabaseService.getClient()
+        await supabaseService.getServiceClient()
           .from('embedding_jobs')
           .update({
             status: 'completed',
@@ -184,7 +184,7 @@ export class EmbeddingWorker {
         });
 
         // Get current attempts and update job as failed
-        const { data: currentJob } = await supabaseService.getClient()
+        const { data: currentJob } = await supabaseService.getServiceClient()
           .from('embedding_jobs')
           .select('attempts')
           .eq('dream_id', dreamId)
@@ -192,7 +192,7 @@ export class EmbeddingWorker {
         
         const newAttempts = (currentJob?.attempts || 0) + 1;
         
-        await supabaseService.getClient()
+        await supabaseService.getServiceClient()
           .from('embedding_jobs')
           .update({
             status: newAttempts >= 3 ? 'failed' : 'pending', // Retry if under limit
@@ -218,7 +218,7 @@ export class EmbeddingWorker {
       });
 
       // Get current attempts and update job as failed
-      const { data: currentJob } = await supabaseService.getClient()
+      const { data: currentJob } = await supabaseService.getServiceClient()
         .from('embedding_jobs')
         .select('attempts')
         .eq('dream_id', dreamId)
@@ -226,7 +226,7 @@ export class EmbeddingWorker {
       
       const newAttempts = (currentJob?.attempts || 0) + 1;
       
-      await supabaseService.getClient()
+      await supabaseService.getServiceClient()
         .from('embedding_jobs')
         .update({
           status: newAttempts >= 3 ? 'failed' : 'pending',
@@ -247,7 +247,7 @@ export class EmbeddingWorker {
   private async cleanupStaleJobs(): Promise<void> {
     try {
       // Call the cleanup function in the database
-      const { data, error } = await supabaseService.getClient()
+      const { data, error } = await supabaseService.getServiceClient()
         .rpc('cleanup_stale_embedding_jobs');
 
       if (error) {
