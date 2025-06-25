@@ -14,6 +14,8 @@ import ragDebugRouter from './routes/rag-debug';
 import { sceneDescriptionRouter } from './routes/scene-description';
 import embeddingsRouter from './routes/embeddings';
 import embeddingsSimpleRouter from './routes/embeddings-simple';
+import { dreamEmbeddingRouter } from './routes/dreamEmbedding';
+import { embeddingWorker } from './workers/embeddingWorker';
 
 const app = express();
 
@@ -55,6 +57,7 @@ app.use('/api/v1/rag-debug', ragDebugRouter);
 app.use('/api/v1/scene-description', sceneDescriptionRouter);
 app.use('/api/v1/embeddings', embeddingsRouter);
 app.use('/api/v1/themes', embeddingsSimpleRouter);
+app.use('/api/v1/dream-embeddings', dreamEmbeddingRouter);
 
 // Root endpoint
 app.get('/', (_req, res) => {
@@ -82,6 +85,23 @@ app.use((error: Error, _req: express.Request, res: express.Response, _next: expr
 // Start server
 app.listen(config.port, () => {
   logger.info(`Somni Backend Service started on port ${config.port}`);
+  
+  // Start embedding worker
+  embeddingWorker.start();
+  logger.info('Dream embedding worker started');
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM signal received: closing HTTP server');
+  embeddingWorker.stop();
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  logger.info('SIGINT signal received: closing HTTP server');
+  embeddingWorker.stop();
+  process.exit(0);
 });
 
 export default app; 

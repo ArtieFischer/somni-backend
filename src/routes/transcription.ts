@@ -298,6 +298,15 @@ router.post(
         transcription.languageCode
       );
 
+      // Trigger embedding generation (fire-and-forget)
+      // This runs async without blocking the response
+      triggerEmbeddingGeneration(dreamId, transcription.text.length).catch(error => {
+        logger.error('Failed to trigger embedding generation', { 
+          dreamId, 
+          error: error instanceof Error ? error.message : 'Unknown error' 
+        });
+      });
+
       logTranscription('completed', dreamId, userId, {
         textLength: transcription.text.length,
         languageCode: transcription.languageCode,
@@ -399,5 +408,58 @@ router.get('/status', async (_req: Request, res: Response) => {
     });
   }
 });
+
+/**
+ * Trigger embedding generation for a dream (async, non-blocking)
+ */
+async function triggerEmbeddingGeneration(dreamId: string, transcriptLength: number): Promise<void> {
+  try {
+    // Skip very short transcripts
+    const MIN_LENGTH_FOR_EMBEDDING = 50;
+    if (transcriptLength < MIN_LENGTH_FOR_EMBEDDING) {
+      logger.info('Skipping embedding generation for short transcript', { 
+        dreamId, 
+        transcriptLength,
+        minLength: MIN_LENGTH_FOR_EMBEDDING 
+      });
+      
+      // Update dream to skipped status
+      await supabaseService.getSupabase()
+        .from('dreams')
+        .update({ 
+          embedding_status: 'skipped',
+          embedding_error: 'Transcript too short'
+        })
+        .eq('id', dreamId);
+      
+      return;
+    }
+
+    // Create embedding job
+    const { error } = await supabaseService.getSupabase()
+      .from('embedding_jobs')
+      .insert({
+        dream_id: dreamId,
+        status: 'pending',
+        priority: 0, // Normal priority for automatic generation
+        scheduled_at: new Date().toISOString()
+      });
+
+    if (error) {
+      // If job already exists (unique constraint), that's fine
+      if (error.code !== '23505') { // Not a unique violation
+        logger.error('Failed to create embedding job', { dreamId, error });
+      }
+    } else {
+      logger.info('Embedding job created', { dreamId, transcriptLength });
+    }
+  } catch (error) {
+    // Log error but don't throw - this should not affect transcription response
+    logger.error('Error in triggerEmbeddingGeneration', { 
+      dreamId, 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    });
+  }
+}
 
 export { router as transcriptionRouter }; 
