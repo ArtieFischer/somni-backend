@@ -1,14 +1,14 @@
 import { logger } from '../utils/logger';
 import { supabaseService } from './supabase';
 import { BGEEmbeddingsService } from './embeddings-bge.service';
-import type { Database } from '../types/supabase';
 
 // Get BGE embedding service instance
 const bgeEmbeddingService = BGEEmbeddingsService.getInstance();
 
-type Dream = Database['public']['Tables']['dreams']['Row'];
-type DreamEmbedding = Database['public']['Tables']['dream_embeddings']['Insert'];
-type EmbeddingJob = Database['public']['Tables']['embedding_jobs']['Row'];
+// Type definitions - using 'any' for now since we don't have generated types
+type Dream = any;
+type DreamEmbedding = any;
+type EmbeddingJob = any;
 
 interface ChunkMetadata {
   chunkIndex: number;
@@ -179,7 +179,7 @@ export class DreamEmbeddingService {
    * Fetch and validate dream for processing
    */
   private async fetchAndValidateDream(dreamId: string): Promise<Dream | null> {
-    const { data: dream, error } = await supabaseService.getSupabase()
+    const { data: dream, error } = await supabaseService.getClient()
       .from('dreams')
       .select('*')
       .eq('id', dreamId)
@@ -378,7 +378,7 @@ export class DreamEmbeddingService {
       metadata: chunk.metadata
     }));
 
-    const { error } = await supabaseService.getSupabase()
+    const { error } = await supabaseService.getClient()
       .from('dream_embeddings')
       .insert(embeddingRecords);
 
@@ -396,7 +396,7 @@ export class DreamEmbeddingService {
   ): Promise<number> {
     try {
       // Get all theme embeddings
-      const { data: themes, error: themesError } = await supabaseService.getSupabase()
+      const { data: themes, error: themesError } = await supabaseService.getClient()
         .from('themes')
         .select('code, embedding')
         .not('embedding', 'is', null);
@@ -447,7 +447,7 @@ export class DreamEmbeddingService {
           chunk_index: theme.chunkIndex
         }));
 
-        const { error: insertError } = await supabaseService.getSupabase()
+        const { error: insertError } = await supabaseService.getClient()
           .from('dream_themes')
           .insert(themeRecords);
 
@@ -503,17 +503,32 @@ export class DreamEmbeddingService {
    * Acquire processing lock for a dream
    */
   private async acquireProcessingLock(dreamId: string): Promise<boolean> {
-    const { error } = await supabaseService.getSupabase()
+    const { data, error } = await supabaseService.getClient()
       .from('dreams')
       .update({
         embedding_status: 'processing',
-        embedding_started_at: new Date().toISOString()
+        embedding_started_at: new Date().toISOString(),
+        embedding_attempts: await this.getCurrentAttempts(dreamId) + 1
       })
       .eq('id', dreamId)
       .in('embedding_status', ['pending', 'failed'])
-      .select();
+      .select()
+      .single();
 
-    return !error;
+    return !error && data !== null;
+  }
+
+  /**
+   * Get current embedding attempts for a dream
+   */
+  private async getCurrentAttempts(dreamId: string): Promise<number> {
+    const { data } = await supabaseService.getClient()
+      .from('dreams')
+      .select('embedding_attempts')
+      .eq('id', dreamId)
+      .single();
+    
+    return data?.embedding_attempts || 0;
   }
 
   /**
@@ -529,13 +544,13 @@ export class DreamEmbeddingService {
       updates.embedding_error = null;
     } else if (status === 'failed') {
       updates.embedding_error = error;
-      updates.embedding_attempts = supabaseService.getSupabase().sql`embedding_attempts + 1`;
+      // We'll increment attempts in the acquireProcessingLock method
     } else if (status === 'skipped') {
       updates.embedding_error = error;
       updates.embedding_processed_at = new Date().toISOString();
     }
 
-    const { error: updateError } = await supabaseService.getSupabase()
+    const { error: updateError } = await supabaseService.getClient()
       .from('dreams')
       .update(updates)
       .eq('id', dreamId);
@@ -549,7 +564,7 @@ export class DreamEmbeddingService {
    * Get next pending job from queue
    */
   private async getNextPendingJob(): Promise<EmbeddingJob | null> {
-    const { data, error } = await supabaseService.getSupabase()
+    const { data, error } = await supabaseService.getClient()
       .from('embedding_jobs')
       .select('*')
       .in('status', ['pending', 'failed'])
@@ -580,7 +595,7 @@ export class DreamEmbeddingService {
       updates.completed_at = new Date().toISOString();
     }
 
-    const { error } = await supabaseService.getSupabase()
+    const { error } = await supabaseService.getClient()
       .from('embedding_jobs')
       .update(updates)
       .eq('id', jobId);
@@ -598,7 +613,7 @@ export class DreamEmbeddingService {
     
     if (attempts >= job.max_attempts) {
       // Mark as permanently failed
-      await supabaseService.getSupabase()
+      await supabaseService.getClient()
         .from('embedding_jobs')
         .update({
           status: 'failed',
@@ -613,7 +628,7 @@ export class DreamEmbeddingService {
       const scheduledAt = new Date();
       scheduledAt.setMinutes(scheduledAt.getMinutes() + delayMinutes);
 
-      await supabaseService.getSupabase()
+      await supabaseService.getClient()
         .from('embedding_jobs')
         .update({
           status: 'pending',

@@ -29,7 +29,7 @@ router.post('/process', authenticateRequest, async (req: Request, res: Response)
 
   try {
     // Verify dream ownership
-    const { data: dream, error: dreamError } = await supabaseService.getSupabase()
+    const { data: dream, error: dreamError } = await supabaseService.getClient()
       .from('dreams')
       .select('id, user_id, embedding_status')
       .eq('id', dreamId)
@@ -58,7 +58,7 @@ router.post('/process', authenticateRequest, async (req: Request, res: Response)
     }
 
     // Create or update embedding job
-    const { error: jobError } = await supabaseService.getSupabase()
+    const { error: jobError } = await supabaseService.getClient()
       .from('embedding_jobs')
       .upsert({
         dream_id: dreamId,
@@ -79,7 +79,7 @@ router.post('/process', authenticateRequest, async (req: Request, res: Response)
     }
 
     // Update dream status
-    await supabaseService.getSupabase()
+    await supabaseService.getClient()
       .from('dreams')
       .update({ embedding_status: 'pending' })
       .eq('id', dreamId);
@@ -129,7 +129,7 @@ router.get('/search', authenticateRequest, async (req: Request, res: Response) =
       queryEmbedding = embeddings[0];
     } else if (dreamId && typeof dreamId === 'string') {
       // Use existing dream embedding
-      const { data: dreamEmbedding, error } = await supabaseService.getSupabase()
+      const { data: dreamEmbedding, error } = await supabaseService.getClient()
         .from('dream_embeddings')
         .select('embedding')
         .eq('dream_id', dreamId)
@@ -152,7 +152,7 @@ router.get('/search', authenticateRequest, async (req: Request, res: Response) =
     }
 
     // Search for similar dreams
-    const { data: results, error: searchError } = await supabaseService.getSupabase()
+    const { data: results, error: searchError } = await supabaseService.getClient()
       .rpc('search_similar_dreams', {
         query_embedding: JSON.stringify(queryEmbedding),
         user_id_filter: userId,
@@ -198,7 +198,7 @@ router.get('/themes/:dreamId', authenticateRequest, async (req: Request, res: Re
 
   try {
     // Verify dream ownership
-    const { data: dream, error: dreamError } = await supabaseService.getSupabase()
+    const { data: dream, error: dreamError } = await supabaseService.getClient()
       .from('dreams')
       .select('id, user_id')
       .eq('id', dreamId)
@@ -219,7 +219,7 @@ router.get('/themes/:dreamId', authenticateRequest, async (req: Request, res: Re
     }
 
     // Get themes
-    const { data: themes, error: themesError } = await supabaseService.getSupabase()
+    const { data: themes, error: themesError } = await supabaseService.getClient()
       .rpc('get_dream_themes', {
         p_dream_id: dreamId,
         p_min_similarity: Number(minSimilarity)
@@ -263,7 +263,7 @@ router.get('/status/:dreamId', authenticateRequest, async (req: Request, res: Re
 
   try {
     // Get dream with embedding status
-    const { data: dream, error } = await supabaseService.getSupabase()
+    const { data: dream, error } = await supabaseService.getClient()
       .from('dreams')
       .select('id, user_id, embedding_status, embedding_error, embedding_attempts, embedding_processed_at')
       .eq('id', dreamId)
@@ -288,12 +288,12 @@ router.get('/status/:dreamId', authenticateRequest, async (req: Request, res: Re
     let themeCount = 0;
 
     if (dream.embedding_status === 'completed') {
-      const { count: embedCount } = await supabaseService.getSupabase()
+      const { count: embedCount } = await supabaseService.getClient()
         .from('dream_embeddings')
         .select('*', { count: 'exact', head: true })
         .eq('dream_id', dreamId);
 
-      const { count: themeCnt } = await supabaseService.getSupabase()
+      const { count: themeCnt } = await supabaseService.getClient()
         .from('dream_themes')
         .select('*', { count: 'exact', head: true })
         .eq('dream_id', dreamId);
@@ -335,12 +335,12 @@ router.get('/worker/status', authenticateRequest, async (req: Request, res: Resp
     const status = embeddingWorker.getStatus();
     
     // Get pending jobs count
-    const { count: pendingCount } = await supabaseService.getSupabase()
+    const { count: pendingCount } = await supabaseService.getClient()
       .from('embedding_jobs')
       .select('*', { count: 'exact', head: true })
       .eq('status', 'pending');
 
-    const { count: processingCount } = await supabaseService.getSupabase()
+    const { count: processingCount } = await supabaseService.getClient()
       .from('embedding_jobs')
       .select('*', { count: 'exact', head: true })
       .eq('status', 'processing');

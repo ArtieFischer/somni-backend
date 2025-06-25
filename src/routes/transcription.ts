@@ -424,7 +424,7 @@ async function triggerEmbeddingGeneration(dreamId: string, transcriptLength: num
       });
       
       // Update dream to skipped status
-      await supabaseService.getSupabase()
+      await supabaseService.getClient()
         .from('dreams')
         .update({ 
           embedding_status: 'skipped',
@@ -436,7 +436,7 @@ async function triggerEmbeddingGeneration(dreamId: string, transcriptLength: num
     }
 
     // Create embedding job
-    const { error } = await supabaseService.getSupabase()
+    const { error } = await supabaseService.getClient()
       .from('embedding_jobs')
       .insert({
         dream_id: dreamId,

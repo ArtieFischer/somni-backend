@@ -92,7 +92,7 @@ export class EmbeddingWorker {
     const availableSlots = this.MAX_CONCURRENT_JOBS - this.activeJobs.size;
 
     // Get multiple pending jobs up to available slots
-    const { data: jobs, error } = await supabaseService.getSupabase()
+    const { data: jobs, error } = await supabaseService.getClient()
       .from('embedding_jobs')
       .select('dream_id')
       .in('status', ['pending'])
@@ -109,7 +109,7 @@ export class EmbeddingWorker {
     logger.info('Found pending embedding jobs', { count: jobs.length });
 
     // Process jobs concurrently
-    const promises = jobs.map(job => this.processJob(job.dream_id));
+    const promises = jobs.map((job: any) => this.processJob(job.dream_id));
     await Promise.allSettled(promises);
   }
 
@@ -166,13 +166,19 @@ export class EmbeddingWorker {
         error: error instanceof Error ? error.message : 'Unknown error'
       });
 
-      // Update job as failed
-      await supabaseService.getSupabase()
+      // Get current attempts and update job as failed
+      const { data: currentJob } = await supabaseService.getClient()
+        .from('embedding_jobs')
+        .select('attempts')
+        .eq('dream_id', dreamId)
+        .single();
+      
+      await supabaseService.getClient()
         .from('embedding_jobs')
         .update({
           status: 'failed',
           error_message: error instanceof Error ? error.message : 'Unknown error',
-          attempts: supabaseService.getSupabase().sql`attempts + 1`,
+          attempts: (currentJob?.attempts || 0) + 1,
           completed_at: new Date().toISOString()
         })
         .eq('dream_id', dreamId);
@@ -187,7 +193,7 @@ export class EmbeddingWorker {
   private async cleanupStaleJobs(): Promise<void> {
     try {
       // Call the cleanup function in the database
-      const { data, error } = await supabaseService.getSupabase()
+      const { data, error } = await supabaseService.getClient()
         .rpc('cleanup_stale_embedding_jobs');
 
       if (error) {
