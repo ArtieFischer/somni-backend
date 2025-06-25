@@ -15,7 +15,9 @@ import { sceneDescriptionRouter } from './routes/scene-description';
 import embeddingsRouter from './routes/embeddings';
 import embeddingsSimpleRouter from './routes/embeddings-simple';
 import { dreamEmbeddingRouter } from './routes/dreamEmbedding';
+import { debugEmbeddingJobsRouter } from './routes/debug-embedding-jobs';
 import { embeddingWorker } from './workers/embeddingWorker';
+import { debugEmbeddingRouter } from './routes/debugEmbedding';
 
 const app = express();
 
@@ -58,6 +60,8 @@ app.use('/api/v1/scene-description', sceneDescriptionRouter);
 app.use('/api/v1/embeddings', embeddingsRouter);
 app.use('/api/v1/themes', embeddingsSimpleRouter);
 app.use('/api/v1/dream-embeddings', dreamEmbeddingRouter);
+app.use('/api/v1/debug-embedding-jobs', debugEmbeddingJobsRouter);
+app.use('/api/v1/debug-embedding', debugEmbeddingRouter);
 
 // Root endpoint
 app.get('/', (_req, res) => {

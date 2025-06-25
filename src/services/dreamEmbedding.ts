@@ -567,7 +567,7 @@ export class DreamEmbeddingService {
     const { data, error } = await supabaseService.getClient()
       .from('embedding_jobs')
       .select('*')
-      .in('status', ['pending', 'failed'])
+      .or('status.eq.pending,status.eq.failed')
       .lt('attempts', 3)
       .order('priority', { ascending: false })
       .order('scheduled_at', { ascending: true })

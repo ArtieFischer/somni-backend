@@ -90,19 +90,26 @@ export class EmbeddingWorker {
     }
 
     const availableSlots = this.MAX_CONCURRENT_JOBS - this.activeJobs.size;
+    logger.info('Checking for pending jobs', { availableSlots, activeJobs: this.activeJobs.size });
 
     // Get multiple pending jobs up to available slots
     const { data: jobs, error } = await supabaseService.getClient()
       .from('embedding_jobs')
       .select('dream_id')
-      .in('status', ['pending'])
+      .eq('status', 'pending')
       .lt('attempts', 3)
       .lte('scheduled_at', new Date().toISOString())
       .order('priority', { ascending: false })
       .order('scheduled_at', { ascending: true })
       .limit(availableSlots);
 
-    if (error || !jobs || jobs.length === 0) {
+    if (error) {
+      logger.error('Failed to fetch pending jobs', { error: error.message, code: error.code, details: error.details });
+      return;
+    }
+    
+    if (!jobs || jobs.length === 0) {
+      logger.info('No pending jobs found');
       return; // No pending jobs
     }
 
@@ -127,6 +134,21 @@ export class EmbeddingWorker {
     try {
       logger.info('Processing embedding job', { dreamId });
       
+      // First, update the job status to processing
+      const { error: updateError } = await supabaseService.getClient()
+        .from('embedding_jobs')
+        .update({
+          status: 'processing',
+          started_at: new Date().toISOString()
+        })
+        .eq('dream_id', dreamId)
+        .eq('status', 'pending'); // Only update if still pending
+      
+      if (updateError) {
+        logger.error('Failed to update job status to processing', { dreamId, error: updateError });
+        return;
+      }
+      
       const result = await dreamEmbeddingService.processDream(dreamId);
       
       if (result.success) {
@@ -136,6 +158,15 @@ export class EmbeddingWorker {
           themesExtracted: result.themesExtracted,
           processingTimeMs: result.processingTimeMs
         });
+
+        // Update job status to completed
+        await supabaseService.getClient()
+          .from('embedding_jobs')
+          .update({
+            status: 'completed',
+            completed_at: new Date().toISOString()
+          })
+          .eq('dream_id', dreamId);
 
         // Log metrics for monitoring
         this.logMetrics({
@@ -151,6 +182,26 @@ export class EmbeddingWorker {
           error: result.error,
           processingTimeMs: result.processingTimeMs
         });
+
+        // Get current attempts and update job as failed
+        const { data: currentJob } = await supabaseService.getClient()
+          .from('embedding_jobs')
+          .select('attempts')
+          .eq('dream_id', dreamId)
+          .single();
+        
+        const newAttempts = (currentJob?.attempts || 0) + 1;
+        
+        await supabaseService.getClient()
+          .from('embedding_jobs')
+          .update({
+            status: newAttempts >= 3 ? 'failed' : 'pending', // Retry if under limit
+            error_message: result.error,
+            attempts: newAttempts,
+            completed_at: newAttempts >= 3 ? new Date().toISOString() : null,
+            scheduled_at: newAttempts < 3 ? new Date(Date.now() + Math.pow(2, newAttempts) * 60000).toISOString() : undefined
+          })
+          .eq('dream_id', dreamId);
 
         // Log failure metrics
         this.logMetrics({
@@ -173,13 +224,16 @@ export class EmbeddingWorker {
         .eq('dream_id', dreamId)
         .single();
       
+      const newAttempts = (currentJob?.attempts || 0) + 1;
+      
       await supabaseService.getClient()
         .from('embedding_jobs')
         .update({
-          status: 'failed',
+          status: newAttempts >= 3 ? 'failed' : 'pending',
           error_message: error instanceof Error ? error.message : 'Unknown error',
-          attempts: (currentJob?.attempts || 0) + 1,
-          completed_at: new Date().toISOString()
+          attempts: newAttempts,
+          completed_at: newAttempts >= 3 ? new Date().toISOString() : null,
+          scheduled_at: newAttempts < 3 ? new Date(Date.now() + Math.pow(2, newAttempts) * 60000).toISOString() : undefined
         })
         .eq('dream_id', dreamId);
     } finally {
