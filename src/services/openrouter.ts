@@ -413,6 +413,8 @@ Visual scene description:`;
   ): Promise<{
     title: string;
     imagePrompt: string;
+    mood: number;
+    clarity: number;
     usage: TokenUsage;
     model: string;
   }> {
@@ -426,13 +428,17 @@ Context: You are analyzing dream descriptions submitted by users seeking psychol
     const userPrompt = `### TASKS
 1. "title": 4-7 words, evocative, no punctuation at the end.
 2. "imagePrompt": ≤ 30 words. Create a single visual scene that illustrates the dream. Focus only on what can be seen - colors, objects, environment, lighting. Pure visual description, present tense.
+3. "mood": Integer 1-5. Assess the emotional tone: 1=very negative/frightening, 2=somewhat negative/uncomfortable, 3=neutral/mixed, 4=somewhat positive/pleasant, 5=very positive/joyful.
+4. "clarity": Integer 1-100. Assess dream coherence and recall quality: 1-20=fragmented/unclear, 21-40=somewhat unclear, 41-60=moderately clear, 61-80=mostly clear, 81-100=extremely vivid/detailed.
 
 ### RULES
 • Each field is independent – do not let wording of one influence another.  
 • Use only information from the FULL transcript below.
 • For imagePrompt: Be specific with visual details - textures, colors, lighting, atmosphere. No feelings or interpretations.
-• Output **exactly** this JSON schema: {"title":"…","imagePrompt":"…"}
-• CRITICAL: Return ONLY the JSON object, nothing else. No markdown, no explanations, just: {"title":"…","imagePrompt":"…"}
+• For mood: Consider the overall emotional atmosphere and dreamer's apparent feelings.
+• For clarity: Consider level of detail, coherence of narrative, and apparent recall quality.
+• Output **exactly** this JSON schema: {"title":"…","imagePrompt":"…","mood":1-5,"clarity":1-100}
+• CRITICAL: Return ONLY the JSON object, nothing else. No markdown, no explanations, just: {"title":"…","imagePrompt":"…","mood":3,"clarity":50}
 
 ### DREAM TRANSCRIPT
 ${transcript}`;
@@ -464,7 +470,7 @@ ${transcript}`;
           model,
           messages,
           temperature: 0.7,
-          max_tokens: 150
+          max_tokens: 200
         };
         
         if (supportsResponseFormat) {
@@ -484,11 +490,13 @@ ${transcript}`;
         interface MetadataResponse {
           title: string;
           imagePrompt: string;
+          mood: number;
+          clarity: number;
         }
         let metadata: MetadataResponse;
         try {
           // Try to extract JSON if the model returned extra text
-          const jsonMatch = content.match(/\{[^}]*"title"[^}]*"imagePrompt"[^}]*\}/);
+          const jsonMatch = content.match(/\{[^}]*"title"[^}]*"imagePrompt"[^}]*"mood"[^}]*"clarity"[^}]*\}/);
           if (jsonMatch) {
             metadata = JSON.parse(jsonMatch[0]);
           } else {
@@ -505,8 +513,19 @@ ${transcript}`;
         }
 
         // Validate the response structure
-        if (!metadata.title || !metadata.imagePrompt) {
+        if (!metadata.title || !metadata.imagePrompt || 
+            typeof metadata.mood !== 'number' || typeof metadata.clarity !== 'number') {
           throw new Error('Invalid metadata structure');
+        }
+        
+        // Validate mood is between 1-5
+        if (metadata.mood < 1 || metadata.mood > 5) {
+          metadata.mood = Math.max(1, Math.min(5, Math.round(metadata.mood)));
+        }
+        
+        // Validate clarity is between 1-100
+        if (metadata.clarity < 1 || metadata.clarity > 100) {
+          metadata.clarity = Math.max(1, Math.min(100, Math.round(metadata.clarity)));
         }
 
         // Track costs
@@ -528,6 +547,8 @@ ${transcript}`;
         return {
           title: metadata.title,
           imagePrompt: metadata.imagePrompt,
+          mood: metadata.mood,
+          clarity: metadata.clarity,
           usage,
           model
         };

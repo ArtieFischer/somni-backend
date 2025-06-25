@@ -26,7 +26,7 @@ router.post(
   transcriptionRateLimit,
   validateTranscribeRequest,
   async (req: Request, res: Response) => {
-    const { dreamId, audioBase64, duration, options } = req.body as TranscribeRequest;
+    const { dreamId, audioBase64, duration, options, locationMetadata } = req.body as TranscribeRequest;
     const userId = req.user!.id;
     const userEmail = req.user!.email;
 
@@ -132,6 +132,8 @@ router.post(
       let title: string | undefined;
       let imageUrl: string | undefined;
       let imagePrompt: string | undefined;
+      let mood: number | undefined;
+      let clarity: number | undefined;
       
       // Skip metadata generation for very short recordings
       const MIN_DURATION_SECONDS = 5; // Minimum duration in seconds (matching frontend filter)
@@ -172,11 +174,15 @@ router.post(
           
           title = metadata.title;
           imagePrompt = metadata.imagePrompt;
+          mood = metadata.mood;
+          clarity = metadata.clarity;
           
           logger.info('Dream metadata generated', { 
             dreamId, 
             title, 
             imagePrompt,
+            mood,
+            clarity,
             model: metadata.model,
             usage: metadata.usage
           });
@@ -242,6 +248,9 @@ router.post(
         {
           text: transcription.text,
           ...(title && { title }),
+          ...(mood !== undefined && { mood }),
+          ...(clarity !== undefined && { clarity }),
+          ...(locationMetadata && { locationMetadata }),
           languageCode: transcription.languageCode || undefined,
           languageProbability: transcription.languageProbability || undefined,
           metadata: {

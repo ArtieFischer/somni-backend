@@ -19,6 +19,12 @@ export interface TranscribeRequest {
     tagAudioEvents?: boolean;
     diarize?: boolean;
   };
+  locationMetadata?: {
+    city?: string;
+    country?: string;
+    countryCode?: string;
+    method?: 'manual' | 'gps';
+  };
 }
 
 export interface TranscribeResponse {

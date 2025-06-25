@@ -131,6 +131,14 @@ class SupabaseService {
     transcription: {
       text: string;
       title?: string;
+      mood?: number;
+      clarity?: number;
+      locationMetadata?: {
+        city?: string;
+        country?: string;
+        countryCode?: string;
+        method?: 'manual' | 'gps';
+      };
       languageCode?: string | undefined;
       languageProbability?: number | undefined;
       metadata?: Record<string, any>;
@@ -143,12 +151,18 @@ class SupabaseService {
         dreamId,
         hasTitle: !!transcription.title,
         titleValue: transcription.title,
-        titleLength: transcription.title?.length
+        titleLength: transcription.title?.length,
+        mood: transcription.mood,
+        clarity: transcription.clarity,
+        hasLocationMetadata: !!transcription.locationMetadata
       });
       
       const updateData: Partial<DreamRecord> = {
         raw_transcript: transcription.text,
         ...(transcription.title && { title: transcription.title }),
+        ...(transcription.mood !== undefined && { mood: transcription.mood }),
+        ...(transcription.clarity !== undefined && { clarity: transcription.clarity }),
+        ...(transcription.locationMetadata && { location_metadata: transcription.locationMetadata }),
         transcription_status: 'completed',
         transcription_metadata: {
           language_code: transcription.languageCode,
@@ -189,7 +203,10 @@ class SupabaseService {
         textLength: transcription.text.length,
         languageCode: transcription.languageCode,
         titleSaved: !!updateData.title,
-        titleValue: updateData.title
+        titleValue: updateData.title,
+        mood: updateData.mood,
+        clarity: updateData.clarity,
+        locationSaved: !!updateData.location_metadata
       });
       
       return true;
