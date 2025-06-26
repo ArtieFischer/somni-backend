@@ -1,0 +1,111 @@
+🚀 Testing Simple Interpreter
+============================
+
+
+================================================================================
+🌙 Testing: simple-test-001
+================================================================================
+
+📝 Dream: "I was in my childhood home, but the walls were made of glass. I could see through them to an endless..."
+🏷️  Themes: Home, Wall, Glass, Ocean, Mother
+
+📖 Testing Jungian Interpretation...
+
+✅ Jung interpretation successful!
+
+📌 Dream Topic: Vulnerable longing for connection with the Mother
+💭 Quick Take: Reconnecting with the nurturing aspect of the Self through the mother archetype.
+🔣 Symbols: Glass, Ocean, Mother
+
+🔮 Main Interpretation:
+────────────────────────────────────────────────────────────
+The unconscious speaks of an unfulfilled longing for a nurturing connection with the mother aspect of the psyche. The dreamer's anxiety stems from the inability to understand their mother's message, highlighting a disconnection from their inner feminine. The glass walls represent the boundaries between the conscious and unconscious, while the ocean symbolizes the vast, unexplored depths of the Self. The mother figure embodies the anima, urging the dreamer to tap into their receptive and caring qualities.
+────────────────────────────────────────────────────────────
+
+🎯 Core Insights:
+  • Primary Archetype: Anima, the feminine aspect of the psyche, guiding the dreamer towards self-care and emotional awareness
+  • Shadow Elements: The dreamer's unconscious fear of emotional vulnerability and disconnection from their own emotional needs
+  • Compensatory Function: Compensating for the dreamer's tendency to suppress emotions and intellectualize relationships
+  1. Practice self-reflection and journaling to explore emotional needs and desires
+  2. Engage in activities that promote emotional expression and empathy, such as creative pursuits or therapy
+
+❓ Self-Reflection: How can you cultivate a deeper connection with your own emotions and the nurturing aspects of your psyche, and what steps can you take to integrate this into your waking life?
+
+📊 Processing time: 17263ms
+
+
+🕉️  Testing Lakshmi Interpretation...
+
+✅ Lakshmi interpretation successful!
+
+📌 Dream Topic: Reconnecting with Inner Wisdom and Divine Guidance
+💭 Quick Take: Your soul is seeking clarity on life's purpose and spiritual path, calling for inner wisdom and divine connection.
+🔣 Symbols: Home, Glass Walls, Ocean, Mother
+
+🌟 Divine Interpretation:
+────────────────────────────────────────────────────────────
+Beloved soul, your dream reflects your deep longing for spiritual growth and connection to your inner self. The childhood home symbolizes your inner sanctum, where you seek safety and understanding. The glass walls represent your desire for transparency and clarity in your soul journey. The endless ocean signifies the infinite possibilities and the subconscious mind. Your mother, appearing youthful, embodies the divine feminine wisdom and nurturing energy. Her inability to speak and only producing bubbles suggests that your inner voice or intuition might be suppressed or unclear. This dream is a call to explore your inner world, trust your intuition, and seek divine guidance for your soul evolution.
+────────────────────────────────────────────────────────────
+
+🎯 Spiritual Insights:
+  • Karmic Pattern: Self-doubt and suppression of inner wisdom
+  • Energy Analysis: Your heart and third eye chakras are seeking balance and activation to enhance intuition and inner wisdom.
+  • Divine Connection: You are called to embody the divine light within, trusting in the universe's guidance and wisdom.
+
+❓ Sacred Question: What is one area in my life where I've been seeking clarity and guidance, and how can I trust my intuition to lead the way?
+
+📊 Processing time: 16606ms
+
+================================================================================
+🌙 Testing: simple-test-002
+================================================================================
+
+📝 Dream: "I found myself in a library where all the books were floating in the air. When I tried to grab one, ..."
+🏷️  Themes: Library, Book, Butterfly, Key, Water
+
+📖 Testing Jungian Interpretation...
+
+✅ Jung interpretation successful!
+
+📌 Dream Topic: Navigating the Unconscious through Symbolic Reflection
+💭 Quick Take: The unconscious seeks integration of repressed aspects for wholeness
+🔣 Symbols: Library, Butterfly, Golden Key, Water, Stars
+
+🔮 Main Interpretation:
+────────────────────────────────────────────────────────────
+The unconscious speaks to the seeker's disconnection from their inner wisdom, urging them to confront the parts of themselves they've neglected. The library represents the collective unconscious, where the books (knowledge and experiences) are floating, untethered from conventional understanding. The butterfly, a symbol of transformation and the anima, suggests the need to transcend rational thinking and tap into one's creative, intuitive nature. The golden key, handed by the old man, is a compensatory symbol for the conscious attitude of rationality, inviting the seeker to explore the unconscious. The water that reflects stars instead of the face indicates a need to look beyond the ego's reflection and connect with the celestial, transcendent aspects of the Self. This dream is a call to embark on a journey of self-discovery, integrating the opposites, and embracing the divine within.
+────────────────────────────────────────────────────────────
+
+🎯 Core Insights:
+  • Primary Archetype: The Anima/Animus, guiding integration of opposites
+  • Shadow Elements: [object Object]
+  • Compensatory Function: The conscious attitude of rationality is being compensated by the need for intuition and creativity
+  1. Reflect on the areas of your life where you feel disconnected from your inner wisdom and creative expression
+  2. Engage in activities that tap into your intuition and imagination, such as creative pursuits, meditation, or journaling
+
+❓ Self-Reflection: What aspects of yourself have you neglected or suppressed, and how can you begin to reintegrate them into your waking life?
+
+📊 Processing time: 20584ms
+
+
+🕉️  Testing Lakshmi Interpretation...
+
+✅ Lakshmi interpretation successful!
+
+📌 Dream Topic: Unlocking Forgotten Wisdom and Spiritual Evolution
+💭 Quick Take: Beloved, your dream reveals a deep longing for spiritual growth and forgotten wisdom, urging you to unlock inner truths and evolve your soul.
+🔣 Symbols: Library, Book, Butterfly, Key, Water
+
+🌟 Divine Interpretation:
+────────────────────────────────────────────────────────────
+Beloved soul, your dream is a reflection of your soul's journey towards spiritual evolution and self-discovery. The library represents a repository of spiritual knowledge, while the floating books signify the elusive nature of wisdom. The butterfly transformation indicates that your pursuit of knowledge must be gentle and non-attached. The golden key handed by the old man symbolizes the inner wisdom and guidance you possess. Standing in water reflecting stars instead of your face reveals your connection to the divine and the cosmos. This dream is a call to explore your inner world, unlock forgotten wisdom, and align with your dharma. Your karma is to release attachment to external knowledge and instead, cultivate inner wisdom. As you embark on this sacred journey, remember to nurture your divine feminine energy and trust your intuition. May the divine light guide you on your path.
+────────────────────────────────────────────────────────────
+
+🎯 Spiritual Insights:
+  • Karmic Pattern: Release attachment to external knowledge and cultivate inner wisdom
+  • Energy Analysis: Your energy body is reflecting a strong connection to your higher self and the divine feminine.
+  • Divine Connection: You are connected to the divine consciousness and the cosmos.
+
+❓ Sacred Question: What is the one thing you've forgotten about yourself that you're ready to rediscover?
+
+📊 Processing time: 14946ms

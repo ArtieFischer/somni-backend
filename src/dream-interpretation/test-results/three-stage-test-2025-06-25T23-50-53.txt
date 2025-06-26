@@ -1,0 +1,66 @@
+🚀 Testing Three-Stage Interpreter
+==================================
+
+📝 Dream: "I was in my childhood home, but the walls were made of glass. I could see through them to an endless ocean. My mother was there, but she looked younger, like in old photographs. She was trying to tell me something important, but when she spoke, only bubbles came out of her mouth. I felt anxious because I couldn't understand her. Suddenly, the floor became water too, and I was floating between the house and the ocean."
+
+🏷️  Themes: Home, Wall, Glass, Ocean, Mother, Water, Floating, Communication
+
+📊 Theme count: 8 themes
+
+🔄 Starting 3-stage interpretation process...
+
+✅ Three-stage interpretation completed!
+
+⏱️  Total processing time: 32406ms
+
+═══════════════════════════════════════════════════════════════
+📋 STAGE RESULTS
+═══════════════════════════════════════════════════════════════
+
+📊 Process Metadata:
+   • Stages completed: relevance_assessment → full_interpretation → json_formatting
+   • Knowledge fragments used: 2/4
+   • Themes processed: 8
+
+═══════════════════════════════════════════════════════════════
+🎯 FINAL INTERPRETATION
+═══════════════════════════════════════════════════════════════
+
+📌 Dream Topic: Navigating Family Relationships and Personal Identity through Clarity
+💭 Quick Take: The dream reveals a desire for clarity and understanding in family relationships, reflecting anxiety and feelings of overwhelm.
+🔣 Key Symbols: Glass Walls, Ocean, Childhood Home, Mother, Water, Floating
+
+😊 Emotional Tone: Anxiety (intensity: 0.8)
+
+📖 Condensed Interpretation:
+──────────────────────────────────────────────────────────────────────
+This dream is an attempt to process and make sense of emotions related to disconnection from the past or fear of the unknown. The transparent walls symbolize a desire for clarity and understanding in relationships, particularly with family. The ocean represents the unknown, and the childhood home signifies a need to reconnect with one's roots. The dreamer may be seeking a sense of grounding and stability in the face of uncertainty. The dream is an invitation to explore and understand the complexities of family relationships and personal identity.
+──────────────────────────────────────────────────────────────────────
+
+🔍 Core Insights:
+   • Type: jungian
+   • Primary Insight: The dreamer is struggling with anxiety and feelings of overwhelm related to family relationships and personal identity.
+   • Key Pattern: The dream reveals a pattern of disconnection and a desire for clarity and understanding.
+   • Personal Guidance: The dreamer should explore their relationships with family members and consider how to communicate their needs and desires more effectively.
+
+🎭 Archetypal Dynamics:
+   • Primary Archetype: The Mother
+   • Shadow Elements: The shadow elements revealed are feelings of disconnection and fear of the unknown.
+   • Compensatory Function: The compensatory function is to develop a sense of grounding and stability in the face of uncertainty.
+
+🧭 Practical Guidance:
+   1. Practice active listening and empathy in your relationships with family members to improve communication.
+   2. Take time to reflect on your childhood and how it has shaped your current relationships and identity.
+
+❓ Self-Reflection: What are the underlying emotions and needs that are driving your desire for clarity and understanding in your relationships?
+
+
+═══════════════════════════════════════════════════════════════
+📜 FULL COMPREHENSIVE INTERPRETATION
+═══════════════════════════════════════════════════════════════
+
+The unconscious speaks through this dream, revealing the depths of your psyche as you navigate the complexities of family relationships and personal identity. In this dream, you find yourself in your childhood home, but with a crucial difference: the walls are made of glass, allowing you to gaze out at the endless ocean. This transparent boundary between the inner and outer worlds symbolizes your desire for clarity and understanding in your relationships, particularly with your family.
+
+═══════════════════════════════════════════════════════════════
+
+✨ Interpretation process complete!

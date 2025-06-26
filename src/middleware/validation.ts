@@ -402,4 +402,38 @@ export const validateDreamContent = (req: Request, res: Response, next: NextFunc
   req.body.dreamTranscription = cleanedTranscription;
   
   next();
+};
+
+// Theme extraction request validation
+export const validateThemeExtractionRequest = (req: Request, res: Response, next: NextFunction): void => {
+  const { dreamTranscription } = req.body;
+  
+  if (!dreamTranscription || typeof dreamTranscription !== 'string') {
+    res.status(400).json({
+      success: false,
+      error: 'Dream transcription is required for theme extraction',
+      details: {
+        code: 'MISSING_DREAM_TRANSCRIPTION'
+      }
+    });
+    return;
+  }
+  
+  const cleanedTranscription = dreamTranscription.trim();
+  
+  if (cleanedTranscription.length < 50) {
+    res.status(400).json({
+      success: false,
+      error: 'Dream transcription too short for meaningful theme extraction',
+      details: {
+        code: 'DREAM_TOO_SHORT',
+        minLength: 50,
+        received: cleanedTranscription.length
+      }
+    });
+    return;
+  }
+  
+  req.body.dreamTranscription = cleanedTranscription;
+  next();
 }; 

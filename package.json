@@ -11,6 +11,10 @@
     "lint": "eslint src/**/*.ts",
     "type-check": "tsc --noEmit",
     
+    "// === DREAM INTERPRETATION ===": "",
+    "test:modular": "tsx src/dream-interpretation/test-files/test-modular-system.ts",
+    "test:modular-three-stage": "tsx src/dream-interpretation/test-files/test-modular-three-stage.ts",
+    
     "// === THEME MANAGEMENT ===": "",
     "themes:reingest": "tsx src/scripts/rag/reingest-new-themes.ts",
     "themes:rebuild-connections": "tsx src/scripts/rag/rebuild-fragment-themes.ts",

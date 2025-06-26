@@ -1,0 +1,66 @@
+🚀 Testing Three-Stage Interpreter
+==================================
+
+📝 Dream: "I was in my childhood home, but the walls were made of glass. I could see through them to an endless ocean. My mother was there, but she looked younger, like in old photographs. She was trying to tell me something important, but when she spoke, only bubbles came out of her mouth. I felt anxious because I couldn't understand her. Suddenly, the floor became water too, and I was floating between the house and the ocean."
+
+🏷️  Themes: Home, Wall, Glass, Ocean, Mother, Water, Floating, Communication
+
+📊 Theme count: 8 themes
+
+🔄 Starting 3-stage interpretation process...
+
+✅ Three-stage interpretation completed!
+
+⏱️  Total processing time: 35069ms
+
+═══════════════════════════════════════════════════════════════
+📋 STAGE RESULTS
+═══════════════════════════════════════════════════════════════
+
+📊 Process Metadata:
+   • Stages completed: relevance_assessment → full_interpretation → json_formatting
+   • Knowledge fragments used: 2/4
+   • Themes processed: 8
+
+═══════════════════════════════════════════════════════════════
+🎯 FINAL INTERPRETATION
+═══════════════════════════════════════════════════════════════
+
+📌 Dream Topic: Unconscious Processing of Motherly Relationships and Identity
+💭 Quick Take: The dreamer's psyche is processing complex emotions and relationships with their mother and childhood home, seeking resolution and self-discovery.
+🔣 Key Symbols: Home, Mother, Water, Floating, Ocean
+
+😊 Emotional Tone: Nostalgia (intensity: 0.7)
+
+📖 Condensed Interpretation:
+──────────────────────────────────────────────────────────────────────
+This dream is an invitation to explore the dreamer's unconscious mind, where unresolved emotions and conflicts related to their mother and childhood home are surfacing. The dreamer's relationship with their mother is a reflection of their own identity and sense of self. The water and ocean may symbolize the subconscious, representing the dreamer's emotional depths and the need for emotional release. The act of floating may indicate a sense of detachment or disconnection from their emotions, desires, or sense of self. This dream is an opportunity for the dreamer to confront and integrate these unconscious aspects, leading to greater self-awareness and personal growth.
+──────────────────────────────────────────────────────────────────────
+
+🔍 Core Insights:
+   • Type: jungian
+   • Primary Insight: The dreamer's psyche is seeking integration of the mother archetype and the unconscious, promoting self-awareness and personal growth.
+   • Key Pattern: The dream reveals a pattern of emotional disconnection and unresolved conflicts with the mother figure, hindering the dreamer's sense of identity and self-acceptance.
+   • Personal Guidance: The dreamer is encouraged to explore their emotions and desires related to their mother and childhood home, acknowledging and integrating these unconscious aspects to foster greater self-awareness and self-acceptance.
+
+🎭 Archetypal Dynamics:
+   • Primary Archetype: Mother
+   • Shadow Elements: Unresolved emotions and conflicts related to the mother figure
+   • Compensatory Function: Integration of the mother archetype and the unconscious
+
+🧭 Practical Guidance:
+   1. Reflect on your childhood home and memories of your mother, exploring any unresolved emotions or conflicts.
+   2. Practice self-compassion and acknowledge your emotional needs and desires related to your mother and childhood home.
+
+❓ Self-Reflection: What unresolved emotions or conflicts from your childhood are still influencing your adult life and relationships?
+
+
+═══════════════════════════════════════════════════════════════
+📜 FULL COMPREHENSIVE INTERPRETATION
+═══════════════════════════════════════════════════════════════
+
+The unconscious speaks through this dream, revealing the intricate web of relationships between the dreamer's past, present, and future. As we embark on this interpretive journey, let us first acknowledge the dreamer's courage in confronting the complexities of their psyche.
+
+═══════════════════════════════════════════════════════════════
+
+✨ Interpretation process complete!

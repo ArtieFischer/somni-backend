@@ -1,0 +1,68 @@
+{
+  "interpreters": {
+    "jung": {
+      "enabled": true,
+      "temperature": 0.7,
+      "maxTokens": 1500,
+      "topP": 0.9,
+      "frequencyPenalty": 0.3,
+      "presencePenalty": 0.3
+    },
+    "lakshmi": {
+      "enabled": true,
+      "temperature": 0.8,
+      "maxTokens": 1500,
+      "topP": 0.9,
+      "frequencyPenalty": 0.2,
+      "presencePenalty": 0.2
+    },
+    "freud": {
+      "enabled": false,
+      "temperature": 0.6,
+      "maxTokens": 1500,
+      "topP": 0.9,
+      "frequencyPenalty": 0.3,
+      "presencePenalty": 0.3
+    },
+    "mary": {
+      "enabled": false,
+      "temperature": 0.5,
+      "maxTokens": 1200,
+      "topP": 0.9,
+      "frequencyPenalty": 0.2,
+      "presencePenalty": 0.2
+    }
+  },
+  "rag": {
+    "maxFragments": 10,
+    "relevanceThreshold": 0.5,
+    "embeddingModel": "bge-m3",
+    "searchRadius": 0.8,
+    "hybridSearchWeight": 0.7
+  },
+  "conversation": {
+    "maxTurns": 20,
+    "contextWindow": 10,
+    "sessionTimeout": 1800000,
+    "typingDelay": 500,
+    "streamingEnabled": false
+  },
+  "quality": {
+    "minConfidenceScore": 0.7,
+    "maxRetries": 2,
+    "validationEnabled": true,
+    "authenticityThreshold": 0.7
+  },
+  "performance": {
+    "cacheEnabled": true,
+    "cacheTTL": 3600,
+    "parallelStages": false,
+    "maxConcurrentInterpretations": 10,
+    "maxConcurrentConversations": 100
+  },
+  "llm": {
+    "provider": "openai",
+    "model": "gpt-4",
+    "timeout": 60000
+  }
+}

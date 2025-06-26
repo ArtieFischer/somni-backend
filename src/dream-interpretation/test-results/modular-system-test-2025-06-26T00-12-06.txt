@@ -1,0 +1,44 @@
+🚀 Testing Modular Dream Interpretation System
+=============================================
+
+📚 Available Interpreters:
+   • jung: Carl Jung
+     Analytical psychology approach focusing on archetypes, the collective unconscious, and individuation
+   • lakshmi: Swami Lakshmi Devi
+     Vedantic and yogic approach integrating Eastern spiritual wisdom
+
+
+══════════════════════════════════════════════════════════════════════
+📝 Testing Dream: modular-test-001
+══════════════════════════════════════════════════════════════════════
+
+Dream: "I was walking through a dark forest when I came upon a clearing. In the center was a massive tree wi..."
+
+Themes: Forest, Tree, Gold, Owl, Wisdom
+Interpreter: JUNG
+
+
+❌ Error: Relevance assessment failed: Unexpected token '`', "```json
+{
+"... is not valid JSON
+
+══════════════════════════════════════════════════════════════════════
+📝 Testing Dream: modular-test-002
+══════════════════════════════════════════════════════════════════════
+
+Dream: "I found myself in a temple made of crystal. The walls were singing a beautiful melody that made my h..."
+
+Themes: Temple, Crystal, Goddess, Mother, Lotus
+Interpreter: LAKSHMI
+
+
+❌ Error: Relevance assessment failed: Unexpected token '`', "```json
+{
+"... is not valid JSON
+
+
+══════════════════════════════════════════════════════════════════════
+🧪 Testing Error Handling
+══════════════════════════════════════════════════════════════════════
+
+✅ Correctly caught error: Interpreter not found: invalid-interpreter. Available interpreters: jung, lakshmi

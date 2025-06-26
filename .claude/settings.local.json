@@ -28,7 +28,11 @@
       "Bash(mv:*)",
       "Bash(rm:*)",
       "Bash(mkdir:*)",
-      "Bash(npm run test:image-generation:*)"
+      "Bash(npm run test:image-generation:*)",
+      "Bash(node:*)",
+      "Bash(npm run test:*)",
+      "Bash(tree:*)",
+      "Bash(rg:*)"
     ],
     "deny": []
   },

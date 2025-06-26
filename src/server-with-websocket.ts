@@ -1,5 +1,6 @@
 import 'express-async-errors';
 import express from 'express';
+import { createServer } from 'http';
 import cors from 'cors';
 import helmet from 'helmet';
 import { config } from './config';
@@ -20,8 +21,17 @@ import { embeddingWorker } from './workers/embeddingWorker';
 import { debugEmbeddingRouter } from './routes/debugEmbedding';
 import { debugServiceRoleRouter } from './routes/debugServiceRole';
 import { dreamInterpretationRouter } from './routes/dream-interpretation';
+import { conversationRouter } from './routes/conversation';
+import { createWebSocketHandler } from './dream-interpretation/api/websocket-handler';
+import { conversationOrchestrator } from './dream-interpretation/services/conversation-orchestrator';
 
 const app = express();
+
+// Create HTTP server
+const httpServer = createServer(app);
+
+// Initialize WebSocket handler
+const wsHandler = createWebSocketHandler(httpServer);
 
 // Security middleware
 app.use(helmet());
@@ -63,6 +73,7 @@ app.use('/api/v1/embeddings', embeddingsRouter);
 app.use('/api/v1/themes', embeddingsSimpleRouter);
 app.use('/api/v1/dream-embeddings', dreamEmbeddingRouter);
 app.use('/api/v1/dreams', dreamInterpretationRouter);
+app.use('/api/v1/conversations', conversationRouter);
 app.use('/api/v1/debug-embedding-jobs', debugEmbeddingJobsRouter);
 app.use('/api/v1/debug-embedding', debugEmbeddingRouter);
 app.use('/api/v1/debug-service-role', debugServiceRoleRouter);
@@ -73,6 +84,11 @@ app.get('/', (_req, res) => {
     service: 'somni-backend',
     status: 'operational',
     timestamp: new Date().toISOString(),
+    features: {
+      dreamInterpretation: true,
+      conversationalAI: true,
+      webSocket: true
+    }
   });
 });
 
@@ -91,8 +107,9 @@ app.use((error: Error, _req: express.Request, res: express.Response, _next: expr
 });
 
 // Start server
-app.listen(config.port, () => {
+httpServer.listen(config.port, () => {
   logger.info(`Somni Backend Service started on port ${config.port}`);
+  logger.info('WebSocket server initialized');
   
   // Start embedding worker
   embeddingWorker.start();
@@ -100,16 +117,37 @@ app.listen(config.port, () => {
 });
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM signal received: closing HTTP server');
+process.on('SIGTERM', async () => {
+  logger.info('SIGTERM signal received: closing servers');
+  
+  // Shutdown WebSocket handler
+  await wsHandler.shutdown();
+  
+  // Stop embedding worker
   embeddingWorker.stop();
-  process.exit(0);
+  
+  // Close HTTP server
+  httpServer.close(() => {
+    logger.info('HTTP server closed');
+    process.exit(0);
+  });
 });
 
-process.on('SIGINT', () => {
-  logger.info('SIGINT signal received: closing HTTP server');
+process.on('SIGINT', async () => {
+  logger.info('SIGINT signal received: closing servers');
+  
+  // Shutdown WebSocket handler
+  await wsHandler.shutdown();
+  
+  // Stop embedding worker
   embeddingWorker.stop();
-  process.exit(0);
+  
+  // Close HTTP server
+  httpServer.close(() => {
+    logger.info('HTTP server closed');
+    process.exit(0);
+  });
 });
 
-export default app; 
+export default app;
+export { httpServer, wsHandler };
