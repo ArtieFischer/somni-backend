@@ -8,6 +8,8 @@ import { modularThreeStageInterpreter } from '../services/modular-three-stage-in
 import { interpreterRegistry } from '../interpreters/registry';
 import { logger } from '../../utils/logger';
 import { InterpreterType } from '../types';
+import { createClient } from '@supabase/supabase-js';
+import { config } from '../../config';
 
 interface InterpretDreamRequest {
   dreamId: string;
@@ -28,7 +30,28 @@ interface InterpretDreamRequest {
   };
 }
 
+interface InterpretByIdRequest {
+  dreamId: string;
+  userId: string;
+  interpreterType: InterpreterType;
+  options?: {
+    saveToDatabase?: boolean;
+    includeDebugInfo?: boolean;
+  };
+}
+
 export class DreamInterpretationController {
+  private supabase = createClient(
+    config.supabase.url,
+    config.supabase.serviceRoleKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+
   /**
    * POST /api/v1/dreams/interpret
    * Interpret a dream using specified interpreter
@@ -266,6 +289,198 @@ export class DreamInterpretationController {
       res.status(500).json({
         success: false,
         error: 'Failed to extract themes'
+      });
+    }
+  }
+  
+  /**
+   * POST /api/v1/dreams/interpret-by-id
+   * Interpret a dream by fetching all data from database
+   */
+  async interpretDreamById(req: Request, res: Response): Promise<void> {
+    const startTime = Date.now();
+    
+    try {
+      const { dreamId, userId, interpreterType, options } = req.body as InterpretByIdRequest;
+      
+      // Validate request
+      if (!dreamId || !userId || !interpreterType) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required fields: dreamId, userId, interpreterType'
+        });
+        return;
+      }
+      
+      logger.info('Dream interpretation by ID request', {
+        dreamId,
+        userId,
+        interpreter: interpreterType
+      });
+      
+      // Fetch dream data
+      const { data: dream, error: dreamError } = await this.supabase
+        .from('dreams')
+        .select('*')
+        .eq('id', dreamId)
+        .eq('user_id', userId)
+        .single();
+        
+      if (dreamError || !dream) {
+        res.status(404).json({
+          success: false,
+          error: 'Dream not found or access denied'
+        });
+        return;
+      }
+      
+      // Check if dream has transcription
+      if (!dream.raw_transcript || dream.transcription_status !== 'completed') {
+        res.status(422).json({
+          success: false,
+          error: 'Dream transcription not available'
+        });
+        return;
+      }
+      
+      // Fetch themes for this dream
+      const { data: dreamThemes, error: themesError } = await this.supabase
+        .from('dream_themes')
+        .select('theme_code, similarity')
+        .eq('dream_id', dreamId)
+        .order('similarity', { ascending: false });
+        
+      // Get theme details
+      let themes = [];
+      if (dreamThemes && dreamThemes.length > 0) {
+        const themeCodes = dreamThemes.map(dt => dt.theme_code);
+        const { data: themeDetails } = await this.supabase
+          .from('themes')
+          .select('code, name')
+          .in('code', themeCodes);
+          
+        themes = dreamThemes.map(dt => {
+          const detail = themeDetails?.find(td => td.code === dt.theme_code);
+          return {
+            code: dt.theme_code,
+            name: detail?.name || dt.theme_code,
+            relevanceScore: dt.similarity
+          };
+        });
+      }
+      
+      // Get user context (optional)
+      const { data: profile } = await this.supabase
+        .from('profiles')
+        .select('birth_date, bio')
+        .eq('user_id', userId)
+        .single();
+        
+      let userContext = {};
+      if (profile) {
+        const age = profile.birth_date ? 
+          Math.floor((Date.now() - new Date(profile.birth_date).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : 
+          undefined;
+        userContext = {
+          age,
+          emotionalState: dream.mood ? `Mood level: ${dream.mood}/5` : undefined
+        };
+      }
+      
+      // Call the interpreter
+      const result = await modularThreeStageInterpreter.interpretDream({
+        dreamId,
+        userId,
+        dreamTranscription: dream.raw_transcript,
+        interpreterType,
+        themes,
+        userContext
+      });
+      
+      if (result.success && result.data) {
+        // Save to database if requested (default: true)
+        if (options?.saveToDatabase !== false) {
+          await this.saveInterpretation(result.data, dreamId, userId);
+        }
+        
+        res.status(200).json({
+          success: true,
+          data: {
+            interpretation: result.data,
+            metadata: {
+              interpreterId: interpreterType,
+              processingTime: Date.now() - startTime,
+              themesUsed: themes.length,
+              saved: options?.saveToDatabase !== false
+            }
+          },
+          debugInfo: options?.includeDebugInfo ? result.metadata : undefined
+        });
+      } else {
+        res.status(422).json({
+          success: false,
+          error: result.error || 'Failed to generate interpretation'
+        });
+      }
+      
+    } catch (error) {
+      logger.error('Dream interpretation by ID error', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error',
+        message: process.env.NODE_ENV === 'development' ? 
+          (error instanceof Error ? error.message : 'Unknown error') : 
+          undefined
+      });
+    }
+  }
+  
+  /**
+   * Save interpretation to database
+   */
+  private async saveInterpretation(
+    interpretation: any,
+    dreamId: string,
+    userId: string
+  ): Promise<void> {
+    try {
+      const interpretationData = {
+        dream_id: dreamId,
+        user_id: userId,
+        interpreter_type: interpretation.interpreterType,
+        interpretation_summary: interpretation.interpretation,
+        full_response: interpretation,
+        dream_topic: interpretation.dreamTopic,
+        quick_take: interpretation.quickTake,
+        symbols: interpretation.symbols || [],
+        emotional_tone: interpretation.emotionalTone || null,
+        primary_insight: interpretation.interpretationCore?.primaryInsight || 
+                        interpretation.interpreterCore?.primaryInsight || null,
+        key_pattern: interpretation.interpretationCore?.keyPattern || 
+                     interpretation.interpreterCore?.keyPattern || null,
+        knowledge_fragments_used: interpretation.generationMetadata?.knowledgeFragmentsUsed || 0,
+        total_fragments_retrieved: interpretation.generationMetadata?.totalFragmentsRetrieved || 0,
+        fragment_ids_used: interpretation.generationMetadata?.fragmentIdsUsed || [],
+        processing_time_ms: interpretation.processingTime || null,
+        model_used: interpretation.generationMetadata?.model || 'gpt-4o'
+      };
+      
+      const { error } = await this.supabase
+        .from('interpretations')
+        .insert(interpretationData);
+        
+      if (error) {
+        logger.error('Failed to save interpretation', { error, dreamId });
+      } else {
+        logger.info('Interpretation saved successfully', { dreamId, userId });
+      }
+    } catch (error) {
+      logger.error('Save interpretation error', { 
+        error: error instanceof Error ? error.message : 'Unknown error' 
       });
     }
   }

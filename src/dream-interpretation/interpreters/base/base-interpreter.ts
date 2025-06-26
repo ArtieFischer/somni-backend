@@ -66,7 +66,7 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
       
       return {
         success: true,
-        data: this.validateRelevanceAssessment(assessment),
+        data: this.validateRelevanceAssessment(assessment, context.knowledgeFragments || []),
         metadata: {
           model: response.model,
           promptTokens: response.usage?.prompt_tokens,
@@ -359,11 +359,31 @@ ${this.personality.voiceSignature}`;
       .replace('{{keyInsights}}', fullInterpretation.keyInsights.join('\n'));
   }
   
-  protected validateRelevanceAssessment(data: any): RelevanceAssessment {
+  protected validateRelevanceAssessment(
+    data: any, 
+    originalFragments: Array<{ id: string; content: string; metadata: any; relevance: number }>
+  ): RelevanceAssessment {
     // Ensure required fields exist with defaults
+    const relevantFragments = (data.relevantFragments || []).map((fragment: any) => {
+      // Try to match the fragment content to the original fragment ID
+      const originalFragment = originalFragments.find(orig => 
+        orig.content === fragment.content || 
+        // Fallback: partial match for truncated content
+        orig.content.includes(fragment.content) ||
+        fragment.content.includes(orig.content)
+      );
+      
+      return {
+        id: originalFragment?.id || `unknown-${Math.random().toString(36).substr(2, 9)}`,
+        content: fragment.content,
+        relevance: fragment.relevance || 0.5,
+        reason: fragment.reason || 'Selected during relevance assessment'
+      };
+    });
+    
     return {
       relevantThemes: data.relevantThemes || [],
-      relevantFragments: data.relevantFragments || [],
+      relevantFragments,
       focusAreas: data.focusAreas || []
     };
   }

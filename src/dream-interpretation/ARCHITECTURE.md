@@ -173,11 +173,220 @@ npm run test:modular
 
 - **Jung**: Analytical psychology focusing on archetypes and individuation
 - **Lakshmi**: Vedantic and yogic approach with spiritual insights
+- **Freud**: Psychoanalytic approach exploring unconscious desires and defense mechanisms
+- **Mary**: Neuroscientific perspective on dream brain activity and memory consolidation
+
+## Knowledge Retrieval System
+
+### Theme-Based Knowledge Retrieval
+- **Service**: `services/theme-knowledge-retriever.ts`
+- **Purpose**: Retrieves relevant knowledge fragments based on dream themes
+- **Features**:
+  - BGE-M3 embeddings for semantic matching
+  - Fragment similarity threshold (0.3)
+  - Top 10 fragments retrieved before quality control
+  - Max 3 fragments selected after relevance assessment
+  - Fragment IDs tracked for future AI memory features
+
+### Knowledge Fragment Structure
+```typescript
+interface KnowledgeFragment {
+  id: string;
+  content: string;
+  source: string;
+  interpreter: InterpreterType;
+  themes: string[];
+  relevanceScore?: number;
+  metadata?: Record<string, any>;
+}
+```
+
+## API Integration
+
+### Endpoints
+
+1. **POST /api/v1/dreams/interpret-by-id**
+   - Accepts `dreamId`, `userId`, `interpreterType`
+   - Fetches all data from database
+   - Generates interpretation
+   - Saves to interpretations table
+   - Returns full interpretation
+
+2. **POST /api/v1/dreams/interpret**
+   - Legacy endpoint accepting full dream transcription
+   - Used for testing and direct interpretation
+
+3. **POST /api/v1/dreams/interpret-async** (Queue-based)
+   - Queues interpretation for background processing
+   - Returns job ID and queue position
+   - Supports push notifications
+
+4. **GET /api/v1/dreams/interpretation-status/:jobId**
+   - Check status of queued interpretation
+
+5. **GET /api/v1/dreams/:dreamId/interpretations**
+   - Get all interpretations for a dream
+
+6. **GET /api/v1/dreams/interpreters**
+   - List available interpreters with metadata
+
+## Database Schema
+
+### Interpretations Table
+```sql
+CREATE TABLE interpretations (
+  id UUID PRIMARY KEY,
+  dream_id UUID REFERENCES dreams(id),
+  user_id UUID REFERENCES profiles(user_id),
+  interpreter_type TEXT,
+  
+  -- Content
+  interpretation_summary TEXT,  -- 2-3 paragraph summary
+  full_response JSONB,         -- Complete JSON response
+  
+  -- Extracted fields
+  dream_topic TEXT,
+  quick_take TEXT,
+  symbols TEXT[],
+  emotional_tone JSONB,        -- {primary, secondary, intensity}
+  primary_insight TEXT,
+  key_pattern TEXT,
+  
+  -- Metadata
+  knowledge_fragments_used INTEGER,
+  total_fragments_retrieved INTEGER,
+  fragment_ids_used TEXT[],    -- Track which fragments were used
+  processing_time_ms INTEGER,
+  model_used TEXT,
+  
+  -- Timestamps & versioning
+  created_at TIMESTAMPTZ,
+  updated_at TIMESTAMPTZ,
+  version INTEGER,
+  previous_version_id UUID
+);
+```
+
+### Key Features:
+- Full JSON response stored for flexibility
+- Extracted fields for efficient querying
+- Fragment IDs tracked for future "interpreter memory"
+- Support for re-interpretations with versioning
+- Row Level Security enabled
+
+## Three-Stage Process Details
+
+### Stage 1: Relevance Assessment
+- Temperature: 0.3 (low for consistency)
+- Max tokens: 1500
+- Selects up to 3 most relevant fragments
+- Identifies focus areas for interpretation
+
+### Stage 2: Full Interpretation
+- Temperature: 0.7 (balanced creativity)
+- Max tokens: 3000
+- 400-600 word interpretation
+- Incorporates relevant knowledge fragments
+- Uses interpreter-specific perspective
+
+### Stage 3: JSON Formatting
+- Temperature: 0.2 (very low for structure)
+- Max tokens: 2000
+- Structures interpretation into digestible format
+- Ensures consistent output across interpreters
+
+## Interpreter-Specific Features
+
+### Jung
+- Archetypal analysis (Shadow, Anima/Animus, Self)
+- Compensatory function of dreams
+- Individuation process insights
+- Collective unconscious themes
+
+### Lakshmi
+- Karmic patterns and soul lessons
+- Chakra analysis
+- Sanskrit concepts with translations
+- Spiritual guidance and practices
+
+### Freud
+- Manifest vs latent content
+- Dream-work mechanisms
+- Defense mechanisms
+- Psychosexual development stages
+
+### Mary
+- Brain region activity
+- Sleep stage characteristics
+- Neurotransmitter dynamics
+- Memory consolidation processes
+
+## Quality Control
+
+### Fragment Selection
+- Max 4 domain-specific terms per interpretation
+- Max 3 knowledge fragments after quality control
+- Relevance scoring and filtering
+
+### Validation
+- Each interpreter validates its own output
+- Required fields checking
+- Authenticity markers tracking
+
+## Testing
+
+### Available Test Scripts
+```bash
+# Test all interpreters
+npm run test:all-interpreters
+
+# Test single interpreter
+npm run test:single-interpreter
+
+# Test modular system
+npm run test:modular
+
+# Interactive test
+npm run test:interactive
+```
+
+## Frontend Integration
+
+### Synchronous Approach
+```typescript
+const response = await fetch('/api/v1/dreams/interpret-by-id', {
+  method: 'POST',
+  body: JSON.stringify({ dreamId, userId, interpreterType })
+});
+```
+
+### Asynchronous Queue Approach
+```typescript
+// Queue interpretation
+const { jobId } = await queueInterpretation(dreamId, userId, interpreterType);
+
+// Subscribe to real-time updates
+supabase.channel(`dream-${dreamId}`)
+  .on('postgres_changes', { 
+    event: 'INSERT', 
+    table: 'interpretations' 
+  }, handleNewInterpretation)
+  .subscribe();
+```
+
+## Performance Optimizations
+
+- Fragment retrieval limited to top 10
+- Interpreter-specific filtering at database level
+- Indexed searches on themes and symbols
+- Caching of frequently used fragments (planned)
 
 ## Future Enhancements
 
 - Plugin system for external interpreters
 - Interpreter composition (combining multiple perspectives)
-- Dynamic prompt optimization
-- Performance metrics per interpreter
-- A/B testing framework
+- Dynamic prompt optimization based on success metrics
+- Fragment effectiveness tracking
+- Interpreter memory based on fragment usage patterns
+- Multi-language support
+- Voice-based interpretation delivery

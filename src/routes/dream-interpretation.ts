@@ -40,6 +40,17 @@ router.post(
 );
 
 /**
+ * POST /api/v1/dreams/interpret-by-id
+ * Interpret a dream by fetching all data from database
+ * Accepts: { dreamId, userId, interpreterType }
+ */
+router.post(
+  '/interpret-by-id',
+  // interpretationRateLimit,
+  dreamInterpretationController.interpretDreamById.bind(dreamInterpretationController)
+);
+
+/**
  * GET /api/v1/dreams/:dreamId/interpretations
  * Get all interpretations for a specific dream
  */

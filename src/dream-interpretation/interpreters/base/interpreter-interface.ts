@@ -26,6 +26,7 @@ export interface InterpreterContext {
     previousDreams?: string[];
   };
   knowledgeFragments?: Array<{
+    id: string;
     content: string;
     metadata: any;
     relevance: number;
@@ -42,6 +43,7 @@ export interface StageResult<T = any> {
 export interface RelevanceAssessment {
   relevantThemes: string[];
   relevantFragments: Array<{
+    id: string;
     content: string;
     relevance: number;
     reason: string;

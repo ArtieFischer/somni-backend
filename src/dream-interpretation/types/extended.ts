@@ -68,6 +68,7 @@ export interface GenerationMetadata extends BaseGenerationMetadata {
   stagesCompleted?: string[];
   knowledgeFragmentsUsed?: number;
   totalFragmentsRetrieved?: number;
+  fragmentIdsUsed?: string[];
   interpreterMetadata?: any;
   validationWarnings?: string[];
 }

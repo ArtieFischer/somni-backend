@@ -13,6 +13,7 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → ElevenLabs 
 
 ## 🚀 Features
 
+### Core Services
 - **Secure API Gateway**: Dual authentication (API secret + Supabase JWT)
 - **ElevenLabs Integration**: Speech-to-text transcription using `scribe_v1` model
 - **Database Management**: Direct Supabase integration for dream record updates
@@ -22,6 +23,15 @@ Mobile App → Supabase Edge Functions → Somni Backend Service → ElevenLabs 
 - **Error Handling**: Detailed error mapping and user-friendly messages
 - **Audio Validation**: File size and format validation before processing
 - **Usage Tracking**: Transcription usage recording for billing/analytics
+
+### Dream Interpretation System
+- **Four AI Interpreters**: Jung, Lakshmi (Vedantic), Freud, and Mary (Neuroscientist)
+- **Three-Stage Process**: Relevance assessment, full interpretation, JSON formatting
+- **Knowledge Retrieval**: Theme-based fragment retrieval with BGE-M3 embeddings
+- **Modular Architecture**: Easy to add new interpreters
+- **Real-time Updates**: Supabase subscriptions for interpretation status
+- **Queue Support**: Asynchronous interpretation with job tracking
+- **Fragment Tracking**: Stores which knowledge fragments were used for future AI memory
 
 ## 📋 Prerequisites
 
@@ -64,6 +74,13 @@ RATE_LIMIT_MAX_REQUESTS=100
 # Optional Configuration
 LOG_LEVEL=info
 REQUEST_TIMEOUT_MS=30000
+
+# OpenRouter Configuration (for Dream Interpretation)
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+
+# Redis Configuration (for Async Queue - optional)
+REDIS_HOST=localhost
+REDIS_PORT=6379
 ```
 
 ## 🔌 API Endpoints
@@ -79,6 +96,15 @@ REQUEST_TIMEOUT_MS=30000
 
 - `POST /api/v1/transcription/transcribe` - Main transcription endpoint
 - `GET /api/v1/transcription/status` - Transcription service status
+
+### Dream Interpretation
+
+- `POST /api/v1/dreams/interpret-by-id` - Interpret dream using database data
+- `POST /api/v1/dreams/interpret` - Interpret with provided transcription
+- `POST /api/v1/dreams/interpret-async` - Queue interpretation (returns job ID)
+- `GET /api/v1/dreams/interpretation-status/:jobId` - Check job status
+- `GET /api/v1/dreams/:dreamId/interpretations` - Get all interpretations
+- `GET /api/v1/dreams/interpreters` - List available interpreters
 
 ## 🔐 Authentication
 
@@ -121,3 +147,49 @@ const backendResponse = await fetch(
   }
 );
 ```
+
+## 🧠 Dream Interpretation System
+
+The service includes a sophisticated dream interpretation system with multiple AI interpreters.
+
+### Available Interpreters
+
+1. **Carl Jung** - Archetypal analysis and individuation
+2. **Swami Lakshmi** - Vedantic spiritual insights
+3. **Sigmund Freud** - Psychoanalytic exploration
+4. **Dr. Mary Chen** - Neuroscientific perspective
+
+### Basic Usage
+
+```typescript
+// Interpret a dream
+const response = await fetch('/api/v1/dreams/interpret-by-id', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-API-Secret': API_SECRET
+  },
+  body: JSON.stringify({
+    dreamId: 'dream-uuid',
+    userId: 'user-uuid',
+    interpreterType: 'jung' // or 'lakshmi', 'freud', 'mary'
+  })
+});
+
+// Response includes:
+// - interpretation: Full interpretation text
+// - dreamTopic: Brief topic/title
+// - quickTake: 2-3 sentence summary
+// - symbols: Key symbols identified
+// - emotionalTone: Primary emotion and intensity
+// - selfReflection: Thought-provoking question
+```
+
+### Architecture Overview
+
+- **Modular Design**: Easy to add new interpreters
+- **Three-Stage Process**: Ensures quality and consistency
+- **Knowledge Retrieval**: Theme-based fragment matching
+- **Fragment Tracking**: Stores used fragments for future AI memory
+
+For detailed architecture documentation, see [src/dream-interpretation/ARCHITECTURE.md](src/dream-interpretation/ARCHITECTURE.md)

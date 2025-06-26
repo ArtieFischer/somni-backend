@@ -94,6 +94,7 @@ export class ModularThreeStageInterpreter {
       
       // Add metadata
       const processingTime = Date.now() - startTime;
+      const fragmentIdsUsed = relevanceResult.data!.relevantFragments.map(f => f.id);
       const generationMetadata: GenerationMetadata = {
         model: 'multi-model',
         temperature: 0.7,
@@ -101,6 +102,7 @@ export class ModularThreeStageInterpreter {
         stagesCompleted: ['relevance_assessment', 'full_interpretation', 'json_formatting'],
         knowledgeFragmentsUsed: relevanceResult.data!.relevantFragments.length,
         totalFragmentsRetrieved: knowledgeFragments.length,
+        fragmentIdsUsed,
         interpreterMetadata: interpreter.metadata
       };
       
@@ -197,6 +199,7 @@ export class ModularThreeStageInterpreter {
     });
     
     return fragments.map(f => ({
+      id: f.id,
       content: f.content,
       metadata: f.metadata,
       relevance: f.relevanceScore || 0.5
