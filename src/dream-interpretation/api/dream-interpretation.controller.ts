@@ -4,7 +4,8 @@
  */
 
 import { Request, Response } from 'express';
-import { interpretationPipeline } from '../services/interpretation-pipeline';
+import { modularThreeStageInterpreter } from '../services/modular-three-stage-interpreter';
+import { interpreterRegistry } from '../interpreters/registry';
 import { logger } from '../../utils/logger';
 import { InterpreterType } from '../types';
 
@@ -56,37 +57,36 @@ export class DreamInterpretationController {
         userId
       });
       
-      // Call interpretation pipeline
-      const result = await interpretationPipeline.interpretDream({
+      // Call modular three-stage interpreter
+      const result = await modularThreeStageInterpreter.interpretDream({
         dreamId: requestData.dreamId,
         userId,
         dreamTranscription: requestData.dreamTranscription,
         interpreterType: requestData.interpreterType,
-        themes: requestData.themes,
-        userContext: requestData.userContext,
-        options: requestData.options
+        themes: requestData.themes || [],
+        userContext: requestData.userContext
       });
       
-      if (result.success && result.interpretation) {
+      if (result.success && result.data) {
         // Success response
         res.status(200).json({
           success: true,
           data: {
-            interpretation: result.interpretation,
+            interpretation: result.data,
             metadata: {
               interpreterId: requestData.interpreterType,
               processingTime: Date.now() - startTime,
-              confidenceScore: result.interpretation.generationMetadata.confidenceScore
+              confidenceScore: result.data.generationMetadata?.confidenceScore || 0.9
             }
           },
-          debugInfo: result.debugInfo
+          debugInfo: requestData.options?.includeDebugInfo ? result.metadata : undefined
         });
       } else {
         // Failed interpretation
         res.status(422).json({
           success: false,
           error: result.error || 'Failed to generate interpretation',
-          debugInfo: result.debugInfo
+          debugInfo: requestData.options?.includeDebugInfo ? result.metadata : undefined
         });
       }
       
@@ -141,64 +141,73 @@ export class DreamInterpretationController {
    */
   async getInterpreters(req: Request, res: Response): Promise<void> {
     try {
-      const interpreters = [
-        {
-          id: 'jung',
-          name: 'Carl Jung',
-          fullName: 'Dr. Carl Gustav Jung',
-          description: 'Founder of analytical psychology, expert in archetypes and the collective unconscious',
-          approach: 'jungian',
-          available: true,
-          features: [
-            'Archetypal analysis',
-            'Shadow work',
-            'Individuation guidance',
-            'Mythological connections'
-          ]
-        },
-        {
-          id: 'lakshmi',
-          name: 'Lakshmi',
-          fullName: 'Lakshmi Devi',
-          description: 'Divine feminine wisdom keeper, spiritual guide for karmic and dharmic insights',
-          approach: 'spiritual',
-          available: true,
-          features: [
-            'Karmic patterns',
-            'Spiritual evolution',
-            'Chakra analysis',
-            'Divine feminine wisdom'
-          ]
-        },
-        {
-          id: 'freud',
-          name: 'Sigmund Freud',
-          fullName: 'Dr. Sigmund Freud',
-          description: 'Father of psychoanalysis, expert in unconscious desires and dream symbolism',
-          approach: 'freudian',
-          available: false,
-          features: [
-            'Unconscious desires',
-            'Wish fulfillment',
-            'Psychodynamic analysis',
-            'Childhood connections'
-          ]
-        },
-        {
-          id: 'mary',
-          name: 'Mary',
-          fullName: 'Dr. Mary Neuroscientist',
-          description: 'Modern neuroscience perspective on dreams and brain function',
-          approach: 'cognitive',
-          available: false,
-          features: [
-            'Brain activity patterns',
-            'Memory consolidation',
-            'Emotional regulation',
-            'Sleep stage analysis'
-          ]
+      // Get interpreters from registry and enhance with metadata
+      const registeredTypes = interpreterRegistry.getTypes();
+      const interpreters = registeredTypes.map(type => {
+        const metadata = interpreterRegistry.getMetadata(type);
+        
+        if (type === 'jung') {
+          return {
+            id: 'jung',
+            name: 'Carl Jung',
+            fullName: 'Dr. Carl Gustav Jung',
+            description: 'Founder of analytical psychology, expert in archetypes and the collective unconscious',
+            approach: 'jungian',
+            available: true,
+            features: [
+              'Archetypal analysis',
+              'Shadow work',
+              'Individuation guidance',
+              'Mythological connections'
+            ]
+          };
+        } else if (type === 'lakshmi') {
+          return {
+            id: 'lakshmi',
+            name: 'Swami Lakshmi',
+            fullName: 'Swami Lakshmi Devi',
+            description: 'Vedantic spiritual teacher, guide for karmic and dharmic insights',
+            approach: 'spiritual',
+            available: true,
+            features: [
+              'Karmic patterns',
+              'Spiritual evolution',
+              'Chakra analysis',
+              'Divine wisdom'
+            ]
+          };
+        } else if (type === 'freud') {
+          return {
+            id: 'freud',
+            name: 'Sigmund Freud',
+            fullName: 'Dr. Sigmund Freud',
+            description: 'Father of psychoanalysis, explorer of the unconscious mind',
+            approach: 'psychoanalytic',
+            available: true,
+            features: [
+              'Unconscious desires',
+              'Dream-work analysis',
+              'Defense mechanisms',
+              'Childhood connections'
+            ]
+          };
+        } else if (type === 'mary') {
+          return {
+            id: 'mary',
+            name: 'Dr. Mary Chen',
+            fullName: 'Dr. Mary Chen',
+            description: 'Leading neuroscientist specializing in sleep and dream research',
+            approach: 'neuroscientific',
+            available: true,
+            features: [
+              'Brain activity patterns',
+              'Memory consolidation',
+              'Neural mechanisms',
+              'Sleep stage analysis'
+            ]
+          };
         }
-      ];
+      }).filter(Boolean);
       
       res.status(200).json({
         success: true,
@@ -282,8 +291,6 @@ export class DreamInterpretationController {
       errors.push('interpreterType is required');
     } else if (!['jung', 'lakshmi', 'freud', 'mary'].includes(body.interpreterType)) {
       errors.push('Invalid interpreterType. Must be one of: jung, lakshmi, freud, mary');
-    } else if (['freud', 'mary'].includes(body.interpreterType)) {
-      errors.push(`Interpreter ${body.interpreterType} is not yet available`);
     }
     
     if (body.dreamTranscription && body.dreamTranscription.length < 50) {

@@ -69,6 +69,7 @@ export interface GenerationMetadata extends BaseGenerationMetadata {
   knowledgeFragmentsUsed?: number;
   totalFragmentsRetrieved?: number;
   interpreterMetadata?: any;
+  validationWarnings?: string[];
 }
 
 /**

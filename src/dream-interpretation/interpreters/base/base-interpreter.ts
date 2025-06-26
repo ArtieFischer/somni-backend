@@ -182,14 +182,48 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         formatted = JSON.parse(jsonString);
       } catch (parseError) {
         logger.error('JSON parsing failed, attempting to clean:', parseError);
-        // Try to clean common issues
-        jsonString = jsonString
-          .replace(/,\s*}/g, '}') // Remove trailing commas
-          .replace(/,\s*]/g, ']') // Remove trailing commas in arrays
-          .replace(/'/g, '"') // Replace single quotes with double quotes
-          .replace(/(\w+):/g, '"$1":'); // Quote unquoted keys
         
-        formatted = JSON.parse(jsonString);
+        // Function to properly escape string values in JSON
+        const escapeJsonString = (str: string) => {
+          return str
+            .replace(/\\/g, '\\\\')  // Escape backslashes first
+            .replace(/"/g, '\\"')     // Escape quotes
+            .replace(/\n/g, '\\n')    // Escape newlines
+            .replace(/\r/g, '\\r')    // Escape carriage returns
+            .replace(/\t/g, '\\t')    // Escape tabs
+            .replace(/[\u0000-\u001F\u007F-\u009F]/g, ''); // Remove other control characters
+        };
+        
+        // Try to fix the JSON string
+        try {
+          // First attempt: simple cleanup
+          jsonString = jsonString
+            .replace(/,\s*}/g, '}')   // Remove trailing commas in objects
+            .replace(/,\s*]/g, ']')   // Remove trailing commas in arrays
+            .replace(/'/g, '"')       // Replace single quotes with double quotes
+            .replace(/(\w+):/g, '"$1":'); // Quote unquoted keys
+          
+          formatted = JSON.parse(jsonString);
+        } catch (cleanupError) {
+          // Second attempt: more aggressive cleaning
+          logger.warn('Simple cleanup failed, attempting deep cleaning');
+          
+          // Extract and clean string values within the JSON
+          jsonString = jsonString.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, (match, content) => {
+            return '"' + escapeJsonString(content) + '"';
+          });
+          
+          // Remove any remaining control characters outside of strings
+          jsonString = jsonString.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, '');
+          
+          try {
+            formatted = JSON.parse(jsonString);
+          } catch (secondError) {
+            logger.error('Second JSON parsing attempt failed:', secondError);
+            logger.error('Problematic JSON string:', jsonString.substring(0, 500));
+            throw new Error(`Failed to parse JSON after cleaning: ${secondError.message}`);
+          }
+        }
       }
       
       // Add metadata and full interpretation

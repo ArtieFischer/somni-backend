@@ -9,7 +9,7 @@ import {
   ThreeStageRequest,
   GenerationMetadata
 } from '../types/extended';
-import { IDreamInterpreter } from '../interpreters/base/interpreter-interface';
+import { IDreamInterpreter, StageResult } from '../interpreters/base/interpreter-interface';
 import { interpreterRegistry } from '../interpreters/registry';
 import { ThemeKnowledgeRetriever } from './theme-knowledge-retriever';
 import { logger } from '../../utils/logger';
@@ -32,7 +32,7 @@ export class ModularThreeStageInterpreter {
   /**
    * Main interpretation method using the modular architecture
    */
-  async interpretDream(request: ThreeStageRequest): Promise<DreamInterpretation> {
+  async interpretDream(request: ThreeStageRequest): Promise<StageResult<DreamInterpretation>> {
     const startTime = Date.now();
     
     logger.info('Starting modular three-stage interpretation', {
@@ -108,35 +108,62 @@ export class ModularThreeStageInterpreter {
       const validation = interpreter.validate(result);
       if (!validation.isValid) {
         logger.warn('Interpretation validation failed', {
-          errors: validation.errors
+          errors: validation.errors,
+          interpreterType: request.interpreterType,
+          dreamId: request.dreamId
         });
+        // Add validation warnings to the result metadata
+        if (!result.generationMetadata) {
+          result.generationMetadata = generationMetadata;
+        }
+        result.generationMetadata.validationWarnings = validation.errors;
       }
       
       // Return complete interpretation
       return {
-        ...result,
-        dreamId: request.dreamId,
-        interpreterId: request.interpreterType,
-        interpreterType: request.interpreterType,
-        timestamp: new Date().toISOString(),
-        createdAt: new Date(),
-        processingTime,
-        generationMetadata,
-        authenticityMarkers: result.authenticityMarkers || {
-          personalEngagement: 0.9,
-          vocabularyAuthenticity: 0.9,
-          conceptualDepth: 0.9,
-          therapeuticValue: 0.9
+        success: true,
+        data: {
+          ...result,
+          dreamId: request.dreamId,
+          interpreterId: request.interpreterType,
+          interpreterType: request.interpreterType,
+          timestamp: new Date().toISOString(),
+          createdAt: new Date(),
+          processingTime,
+          generationMetadata,
+          authenticityMarkers: result.authenticityMarkers || {
+            personalEngagement: 0.9,
+            vocabularyAuthenticity: 0.9,
+            conceptualDepth: 0.9,
+            therapeuticValue: 0.9
+          }
+        },
+        metadata: {
+          processingTime,
+          stagesCompleted: ['relevance_assessment', 'full_interpretation', 'json_formatting']
         }
       };
       
     } catch (error) {
-      logger.error('Modular three-stage interpretation failed', {
-        error: error instanceof Error ? error.message : 'Unknown error',
-        dreamId: request.dreamId
-      });
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorDetails = {
+        error: errorMessage,
+        dreamId: request.dreamId,
+        interpreterType: request.interpreterType,
+        stack: error instanceof Error ? error.stack : undefined
+      };
       
-      throw error;
+      logger.error('Modular three-stage interpretation failed', errorDetails);
+      
+      return {
+        success: false,
+        error: errorMessage,
+        metadata: {
+          dreamId: request.dreamId,
+          interpreterType: request.interpreterType,
+          errorDetails: errorDetails
+        }
+      };
     }
   }
   
@@ -172,7 +199,7 @@ export class ModularThreeStageInterpreter {
     return fragments.map(f => ({
       content: f.content,
       metadata: f.metadata,
-      relevance: f.similarity || 0.5
+      relevance: f.relevanceScore || 0.5
     }));
   }
   

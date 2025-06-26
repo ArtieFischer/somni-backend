@@ -67,14 +67,20 @@ export class ThemeKnowledgeRetriever {
       // Extract theme codes
       const themeCodes = dreamContext.themes.map(t => t.code);
       
-      // Method 1: Direct theme-based retrieval via fragment_themes
+      // Method 1: Direct theme-based retrieval via fragment_themes, filtered by interpreter
       const { data: fragmentThemes, error: ftError } = await this.supabase
         .from('fragment_themes')
-        .select('fragment_id, theme_code, similarity')
+        .select(`
+          fragment_id, 
+          theme_code, 
+          similarity,
+          knowledge_fragments!inner(interpreter)
+        `)
         .in('theme_code', themeCodes)
-        .gte('similarity', 0.5)
+        .eq('knowledge_fragments.interpreter', interpreterType)
+        .gte('similarity', 0.3) // Lowered threshold from 0.5 to 0.3
         .order('similarity', { ascending: false })
-        .limit(100); // Get more candidates initially
+        .limit(200); // Get more candidates initially
 
       if (ftError || !fragmentThemes || fragmentThemes.length === 0) {
         logger.warn('No fragment-theme connections found', { 
@@ -104,10 +110,10 @@ export class ThemeKnowledgeRetriever {
         fragmentScores.set(ft.fragment_id, existing);
       });
 
-      // Get top fragments
+      // Get top 10 fragments with highest similarity scores
       const topFragmentIds = Array.from(fragmentScores.entries())
         .sort((a, b) => b[1].maxSim - a[1].maxSim)
-        .slice(0, 20)
+        .slice(0, 10) // Limit to top 10 fragments before quality control
         .map(([id]) => id);
 
       // Retrieve actual fragments
@@ -182,14 +188,20 @@ export class ThemeKnowledgeRetriever {
     interpreterType: InterpreterType
   ): Promise<RetrievalResult> {
     try {
-      // Get fragments associated with these themes
+      // Get fragments associated with these themes, filtered by interpreter using a join
       const { data: fragmentThemes, error: ftError } = await this.supabase
         .from('fragment_themes')
-        .select('fragment_id, theme_code, similarity')
+        .select(`
+          fragment_id, 
+          theme_code, 
+          similarity,
+          knowledge_fragments!inner(interpreter)
+        `)
         .in('theme_code', themeCodes)
-        .gte('similarity', 0.5)
+        .eq('knowledge_fragments.interpreter', interpreterType)
+        .gte('similarity', 0.3) // Lowered threshold from 0.5 to 0.3
         .order('similarity', { ascending: false })
-        .limit(100);
+        .limit(200);
 
       if (ftError || !fragmentThemes || fragmentThemes.length === 0) {
         logger.warn('No fragment-theme associations found', { themeCodes });
@@ -216,10 +228,10 @@ export class ThemeKnowledgeRetriever {
         }
       }
 
-      // Get top fragments by similarity
+      // Get top 10 fragments by similarity before quality control
       const topFragmentIds = Array.from(fragmentScores.entries())
         .sort(([, a], [, b]) => b.maxSim - a.maxSim)
-        .slice(0, 20)
+        .slice(0, 10) // Limit to top 10 fragments before quality control
         .map(([id]) => id);
 
       // Retrieve actual fragments

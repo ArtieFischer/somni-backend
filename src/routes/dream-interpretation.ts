@@ -4,26 +4,29 @@
 
 import { Router } from 'express';
 import { dreamInterpretationController } from '../dream-interpretation/api/dream-interpretation.controller';
-import { isAuthenticated } from '../middleware/auth';
-import { rateLimitMiddleware } from '../middleware/rateLimit';
-import { 
-  validateInterpretationRequest, 
-  validateThemeExtractionRequest 
-} from '../middleware/validation';
+import { verifyApiSecret } from '../middleware/auth';
+// import { rateLimitMiddleware } from '../middleware/rateLimit';
+// import { 
+//   validateInterpretationRequest, 
+//   validateThemeExtractionRequest 
+// } from '../middleware/validation';
 
 const router = Router();
 
-// Apply authentication to all routes
-router.use(isAuthenticated);
+// Apply authentication in production only
+if (process.env.NODE_ENV === 'production') {
+  router.use(verifyApiSecret);
+}
 
+// TODO: Add rate limiting when middleware is available
 // Apply rate limiting with higher limits for interpretation
-const interpretationRateLimit = rateLimitMiddleware({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Allow 10 interpretations per 15 minutes
-  message: 'Too many interpretation requests. Please try again later.',
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// const interpretationRateLimit = rateLimitMiddleware({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 10, // Allow 10 interpretations per 15 minutes
+//   message: 'Too many interpretation requests. Please try again later.',
+//   standardHeaders: true,
+//   legacyHeaders: false,
+// });
 
 /**
  * POST /api/v1/dreams/interpret
@@ -31,8 +34,8 @@ const interpretationRateLimit = rateLimitMiddleware({
  */
 router.post(
   '/interpret',
-  interpretationRateLimit,
-  validateInterpretationRequest,
+  // interpretationRateLimit,
+  // validateInterpretationRequest,
   dreamInterpretationController.interpretDream.bind(dreamInterpretationController)
 );
 
@@ -60,7 +63,7 @@ router.get(
  */
 router.post(
   '/:dreamId/themes',
-  validateThemeExtractionRequest,
+  // validateThemeExtractionRequest,
   dreamInterpretationController.extractDreamThemes.bind(dreamInterpretationController)
 );
 

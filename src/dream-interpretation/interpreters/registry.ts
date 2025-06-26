@@ -6,6 +6,8 @@ import { IDreamInterpreter } from './base/interpreter-interface';
 import { InterpreterType } from '../types/extended';
 import { JungDreamInterpreter } from './jung/jung-interpreter';
 import { LakshmiDreamInterpreter } from './lakshmi/lakshmi-interpreter';
+import { FreudInterpreter } from './freud/freud-interpreter';
+import { MaryInterpreter } from './mary/mary-interpreter';
 import { logger } from '../../utils/logger';
 
 export class InterpreterRegistry {
@@ -30,6 +32,8 @@ export class InterpreterRegistry {
   private registerDefaultInterpreters() {
     this.register(new JungDreamInterpreter());
     this.register(new LakshmiDreamInterpreter());
+    this.register(new FreudInterpreter());
+    this.register(new MaryInterpreter());
     
     logger.info('Default interpreters registered', {
       interpreters: Array.from(this.interpreters.keys())

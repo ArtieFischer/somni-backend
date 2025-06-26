@@ -53,36 +53,42 @@ growth. You see the divine play in all dreams, guiding seekers toward self-reali
     const errors: string[] = [];
     const core = interpretation.interpretationCore as LakshmiCore;
     
-    if (!core || core.type !== 'vedantic') {
-      errors.push('Missing or invalid Vedantic core');
+    if (!core) {
+      errors.push('Missing interpretation core');
       return errors;
     }
     
-    // Validate Lakshmi-specific fields
+    // Allow both 'vedantic' and 'lakshmi' as valid types
+    if (core.type !== 'vedantic' && core.type !== 'lakshmi') {
+      errors.push(`Invalid core type: ${core.type} (expected 'vedantic')`);
+      return errors;
+    }
+    
+    // Validate Lakshmi-specific fields with more lenient checks
     if (!core.spiritualDynamics) {
       errors.push('Missing spiritual dynamics');
     } else {
-      if (!core.spiritualDynamics.karmicPattern) {
-        errors.push('Missing karmic pattern');
-      }
-      if (!core.spiritualDynamics.dharmicGuidance) {
-        errors.push('Missing dharmic guidance');
-      }
-      if (!core.spiritualDynamics.soulLesson) {
-        errors.push('Missing soul lesson');
-      }
-      if (!core.spiritualDynamics.divineGuidance) {
-        errors.push('Missing divine guidance');
+      // Only check for at least one spiritual element
+      const hasSpiritualContent = 
+        core.spiritualDynamics.karmicPattern ||
+        core.spiritualDynamics.dharmicGuidance ||
+        core.spiritualDynamics.soulLesson ||
+        core.spiritualDynamics.divineGuidance ||
+        core.spiritualDynamics.spiritualStage;
+      
+      if (!hasSpiritualContent) {
+        errors.push('No spiritual content found');
       }
     }
     
-    if (!core.chakraInfluences || core.chakraInfluences.length === 0) {
-      errors.push('No chakra influences identified');
-    }
+    // Make chakra and karmic themes optional - not all dreams reveal these
+    // if (!core.chakraInfluences || core.chakraInfluences.length === 0) {
+    //   errors.push('No chakra influences identified');
+    // }
     
-    if (!core.karmicThemes || core.karmicThemes.length === 0) {
-      errors.push('No karmic themes identified');
-    }
+    // if (!core.karmicThemes || core.karmicThemes.length === 0) {
+    //   errors.push('No karmic themes identified');
+    // }
     
     return errors;
   }

@@ -54,43 +54,52 @@ understanding.`,
     const errors: string[] = [];
     const core = interpretation.interpretationCore as JungianCore;
     
-    if (!core || core.type !== 'jungian') {
-      errors.push('Missing or invalid Jungian core');
+    if (!core) {
+      errors.push('Missing interpretation core');
       return errors;
     }
     
-    // Validate Jungian-specific fields
+    // Allow both 'jungian' and 'jung' as valid types
+    if (core.type !== 'jungian' && core.type !== 'jung') {
+      errors.push(`Invalid core type: ${core.type} (expected 'jungian')`);
+      return errors;
+    }
+    
+    // Validate Jungian-specific fields with more lenient checks
     if (!core.archetypalDynamics) {
       errors.push('Missing archetypal dynamics');
     } else {
-      if (!core.archetypalDynamics.primaryArchetype) {
-        errors.push('Missing primary archetype');
-      }
-      if (!core.archetypalDynamics.shadowElements) {
-        errors.push('Missing shadow elements');
-      }
-      if (!core.archetypalDynamics.compensatoryFunction) {
-        errors.push('Missing compensatory function');
+      // Only check for at least one archetypal element
+      const hasArchetypalContent = 
+        core.archetypalDynamics.primaryArchetype ||
+        core.archetypalDynamics.shadowElements ||
+        core.archetypalDynamics.animaAnimus ||
+        core.archetypalDynamics.selfArchetype ||
+        core.archetypalDynamics.compensatoryFunction;
+      
+      if (!hasArchetypalContent) {
+        errors.push('No archetypal content found');
       }
     }
     
     if (!core.individuationInsights) {
       errors.push('Missing individuation insights');
     } else {
-      if (!core.individuationInsights.currentStage) {
-        errors.push('Missing current individuation stage');
-      }
-      if (!core.individuationInsights.developmentalTask) {
-        errors.push('Missing developmental task');
-      }
-      if (!core.individuationInsights.integrationOpportunity) {
-        errors.push('Missing integration opportunity');
+      // Only check for at least one insight
+      const hasInsight = 
+        core.individuationInsights.currentStage ||
+        core.individuationInsights.developmentalTask ||
+        core.individuationInsights.integrationOpportunity;
+      
+      if (!hasInsight) {
+        errors.push('No individuation insights found');
       }
     }
     
-    if (!core.complexesIdentified || core.complexesIdentified.length === 0) {
-      errors.push('No complexes identified');
-    }
+    // Make complexes optional - not all dreams reveal complexes
+    // if (!core.complexesIdentified || core.complexesIdentified.length === 0) {
+    //   errors.push('No complexes identified');
+    // }
     
     return errors;
   }

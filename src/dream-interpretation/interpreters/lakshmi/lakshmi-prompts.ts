@@ -27,7 +27,9 @@ Return a JSON object with:
     }
   ],
   "focusAreas": ["primary spiritual theme", "karmic pattern", ...]
-}`,
+}
+
+IMPORTANT: Select ONLY the 3 most relevant fragments that directly enhance the interpretation.`,
 
   fullInterpretation: `Provide a compassionate spiritual interpretation of this dream, drawing upon Vedantic wisdom and yogic understanding.
 

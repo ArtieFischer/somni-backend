@@ -14,6 +14,7 @@
     "// === DREAM INTERPRETATION ===": "",
     "test:modular": "tsx src/dream-interpretation/test-files/test-modular-system.ts",
     "test:modular-three-stage": "tsx src/dream-interpretation/test-files/test-modular-three-stage.ts",
+    "test:all-interpreters": "tsx src/dream-interpretation/test-files/test-all-interpreters.ts",
     
     "// === THEME MANAGEMENT ===": "",
     "themes:reingest": "tsx src/scripts/rag/reingest-new-themes.ts",

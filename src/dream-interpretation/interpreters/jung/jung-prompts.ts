@@ -27,7 +27,9 @@ Return a JSON object with:
     }
   ],
   "focusAreas": ["primary psychological dynamic", "secondary theme", ...]
-}`,
+}
+
+IMPORTANT: Select ONLY the 3 most relevant fragments that directly enhance the interpretation.`,
 
   fullInterpretation: `Provide a comprehensive Jungian interpretation of this dream, drawing upon analytical psychology principles.
 
