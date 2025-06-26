@@ -52,29 +52,32 @@ export const verifySupabaseToken = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const token = req.headers['x-supabase-token'] as string;
+    const authHeader = req.headers.authorization;
     
-    if (!token) {
-      logger.warn('Supabase token missing from request', { 
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      logger.warn('JWT token missing from request', { 
         url: req.url,
         ip: req.ip 
       });
       res.status(401).json({ 
-        error: 'Unauthorized - User token required' 
+        error: 'Unauthorized - Bearer token required' 
       });
       return;
     }
-
-    // Verify token and get user
-    const user = await supabaseService.verifyUserToken(token);
     
-    if (!user) {
-      logger.warn('Invalid or expired Supabase token', { 
+    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    
+    // Verify the JWT token with Supabase
+    const { data: { user }, error } = await supabaseService.auth.getUser(token);
+    
+    if (error || !user) {
+      logger.warn('Invalid JWT token', { 
+        error,
         url: req.url,
         ip: req.ip 
       });
       res.status(401).json({ 
-        error: 'Unauthorized - Invalid or expired token' 
+        error: 'Unauthorized - Invalid token' 
       });
       return;
     }
@@ -128,4 +131,46 @@ export const attachUserContext = (
   }
   
   next();
-}; 
+};
+
+/**
+ * Simple authentication middleware that only checks for user on request
+ * For routes that need authentication but not API secret verification
+ */
+export const isAuthenticated = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      res.status(401).json({ 
+        success: false,
+        error: 'Unauthorized - Bearer token required' 
+      });
+      return;
+    }
+    
+    const token = authHeader.substring(7);
+    const { data: { user }, error } = await supabaseService.auth.getUser(token);
+    
+    if (error || !user) {
+      res.status(401).json({ 
+        success: false,
+        error: 'Unauthorized - Invalid token' 
+      });
+      return;
+    }
+    
+    req.user = user;
+    next();
+  } catch (error) {
+    logger.error('Authentication error', { error });
+    res.status(500).json({ 
+      success: false,
+      error: 'Internal server error during authentication' 
+    });
+  }
+};

@@ -10,22 +10,18 @@
     "test": "jest",
     "lint": "eslint src/**/*.ts",
     "type-check": "tsc --noEmit",
-    
     "// === DREAM INTERPRETATION ===": "",
     "test:modular": "tsx src/dream-interpretation/test-files/test-modular-system.ts",
     "test:modular-three-stage": "tsx src/dream-interpretation/test-files/test-modular-three-stage.ts",
     "test:all-interpreters": "tsx src/dream-interpretation/test-files/test-all-interpreters.ts",
-    
     "// === THEME MANAGEMENT ===": "",
     "themes:reingest": "tsx src/scripts/rag/reingest-new-themes.ts",
     "themes:rebuild-connections": "tsx src/scripts/rag/rebuild-fragment-themes.ts",
-    
     "// === KNOWLEDGE INGESTION ===": "",
     "ingest:jung": "node --expose-gc --max-old-space-size=3072 -r tsx/cjs src/scripts/rag/ingest-jung-stream-bge.ts",
     "ingest:lakshmi": "node --expose-gc --max-old-space-size=2048 -r tsx/cjs src/scripts/rag/ingest-lakshmi-knowledge.ts",
     "ingest:mary": "node --expose-gc --max-old-space-size=2048 -r tsx/cjs src/scripts/rag/ingest-mary-knowledge.ts",
     "ingest:freud": "node --expose-gc --max-old-space-size=2048 -r tsx/cjs src/scripts/rag/ingest-freud-knowledge.ts",
-    
     "// === TAGGING ===": "",
     "tag:all-fragments": "tsx src/scripts/rag/tag-all-fragments.ts",
     "tag:lakshmi": "tsx src/scripts/rag/tag-lakshmi-fragments.ts",
@@ -34,13 +30,11 @@
     "tag:mary-simple": "tsx src/scripts/rag/tag-mary-fragments-simple.ts",
     "tag:freud": "tsx src/scripts/rag/tag-freud-fragments.ts",
     "tag:freud-simple": "tsx src/scripts/rag/tag-freud-fragments-simple.ts",
-    
     "// === TESTING ===": "",
     "test:rag-complete": "tsx src/scripts/rag/test-complete-rag-system.ts",
     "test:lakshmi-rag": "tsx src/scripts/rag/test-lakshmi-rag-system.ts",
     "test:mary-rag": "tsx src/scripts/rag/test-mary-rag-system.ts",
     "test:bge-quality": "tsx src/scripts/rag/test-bge-quality-comprehensive.ts",
-    
     "// === UTILITIES ===": "",
     "check:kb": "tsx src/scripts/rag/check-knowledge-base.ts",
     "setup:image-bucket": "tsx src/scripts/setup-image-bucket.ts",
@@ -58,8 +52,11 @@
   "dependencies": {
     "@elevenlabs/elevenlabs-js": "^2.2.0",
     "@supabase/supabase-js": "^2.38.0",
+    "@types/bull": "^3.15.9",
+    "@types/jsonwebtoken": "^9.0.10",
     "@xenova/transformers": "^2.17.2",
     "axios": "^1.10.0",
+    "bull": "^4.16.5",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "esbuild": "^0.25.5",
@@ -67,8 +64,10 @@
     "express-async-errors": "^3.1.1",
     "express-rate-limit": "^7.1.5",
     "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
     "openai": "^5.3.0",
     "sharp": "^0.34.2",
+    "socket.io": "^4.8.1",
     "tiktoken": "^1.0.21",
     "winston": "^3.11.0",
     "zod": "^3.22.4"

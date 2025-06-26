@@ -42,6 +42,10 @@ const envSchema = z.object({
   // Optional Configuration
   LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
   REQUEST_TIMEOUT_MS: z.string().default('30000'), // 30 seconds
+  
+  // Redis Configuration (optional for MVP)
+  REDIS_HOST: z.string().default('localhost'),
+  REDIS_PORT: z.string().default('6379')
 });
 
 // Parse and validate environment variables
@@ -114,6 +118,12 @@ export const config = {
   
   request: {
     timeoutMs: parseInt(parseResult.data.REQUEST_TIMEOUT_MS, 10),
+  },
+  
+  // Redis Configuration
+  redis: {
+    host: parseResult.data.REDIS_HOST,
+    port: parseInt(parseResult.data.REDIS_PORT, 10),
   },
 };
 

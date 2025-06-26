@@ -23,7 +23,6 @@ import { debugServiceRoleRouter } from './routes/debugServiceRole';
 import { dreamInterpretationRouter } from './routes/dream-interpretation';
 import { conversationRouter } from './routes/conversation';
 import { createWebSocketHandler } from './dream-interpretation/api/websocket-handler';
-import { conversationOrchestrator } from './dream-interpretation/services/conversation-orchestrator';
 
 const app = express();
 

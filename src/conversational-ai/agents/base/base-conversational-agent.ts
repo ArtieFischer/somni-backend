@@ -142,7 +142,7 @@ Important: This is a voice conversation, so keep your responses suitable for spo
   /**
    * Handle conversation turn - to be implemented by specific agents
    */
-  abstract async handleConversationTurn(
+  abstract handleConversationTurn(
     userInput: string,
     context: ConversationContext
   ): Promise<string>;

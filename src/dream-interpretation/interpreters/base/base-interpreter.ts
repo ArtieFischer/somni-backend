@@ -69,8 +69,8 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         data: this.validateRelevanceAssessment(assessment, context.knowledgeFragments || []),
         metadata: {
           model: response.model,
-          promptTokens: response.usage?.prompt_tokens,
-          completionTokens: response.usage?.completion_tokens
+          promptTokens: response.usage?.promptTokens,
+          completionTokens: response.usage?.completionTokens
         }
       };
       
@@ -119,8 +119,8 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         data: result,
         metadata: {
           model: response.model,
-          promptTokens: response.usage?.prompt_tokens,
-          completionTokens: response.usage?.completion_tokens
+          promptTokens: response.usage?.promptTokens,
+          completionTokens: response.usage?.completionTokens
         }
       };
       
@@ -221,7 +221,7 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
           } catch (secondError) {
             logger.error('Second JSON parsing attempt failed:', secondError);
             logger.error('Problematic JSON string:', jsonString.substring(0, 500));
-            throw new Error(`Failed to parse JSON after cleaning: ${secondError.message}`);
+            throw new Error(`Failed to parse JSON after cleaning: ${secondError instanceof Error ? secondError.message : String(secondError)}`);
           }
         }
       }
@@ -247,8 +247,8 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         data: result,
         metadata: {
           model: response.model,
-          promptTokens: response.usage?.prompt_tokens,
-          completionTokens: response.usage?.completion_tokens
+          promptTokens: response.usage?.promptTokens,
+          completionTokens: response.usage?.completionTokens
         }
       };
       

@@ -91,8 +91,8 @@ async function testThresholdComparison() {
           fragments.slice(0, 3).forEach((fragment, index) => {
             console.log(`\n   ${index + 1}. Score: ${fragment.similarity_score.toFixed(4)}`);
             console.log(`      Fragment ID: ${fragment.fragment_id}`);
-            console.log(`      Dream ID: ${fragment.fragments.dream_id}`);
-            console.log(`      Text: "${fragment.fragments.text.substring(0, 100)}${fragment.fragments.text.length > 100 ? '...' : ''}"`);
+            console.log(`      Dream ID: ${(fragment.fragments as any).dream_id}`);
+            console.log(`      Text: "${(fragment.fragments as any).text.substring(0, 100)}${(fragment.fragments as any).text.length > 100 ? '...' : ''}"`);
           });
 
           if (fragments.length > 3) {
@@ -100,8 +100,8 @@ async function testThresholdComparison() {
             fragments.slice(-3).forEach((fragment, index) => {
               console.log(`\n   ${index + 1}. Score: ${fragment.similarity_score.toFixed(4)}`);
               console.log(`      Fragment ID: ${fragment.fragment_id}`);
-              console.log(`      Dream ID: ${fragment.fragments.dream_id}`);
-              console.log(`      Text: "${fragment.fragments.text.substring(0, 100)}${fragment.fragments.text.length > 100 ? '...' : ''}"`);
+              console.log(`      Dream ID: ${(fragment.fragments as any).dream_id}`);
+              console.log(`      Text: "${(fragment.fragments as any).text.substring(0, 100)}${(fragment.fragments as any).text.length > 100 ? '...' : ''}"`);
             });
           }
         }

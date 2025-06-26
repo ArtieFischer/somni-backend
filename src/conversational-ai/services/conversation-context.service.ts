@@ -1,7 +1,6 @@
-import { supabase } from '../../services/supabase';
+import { supabaseService } from '../../services/supabase';
 import { ConversationContext } from '../types/conversation.types';
 import { DreamInterpretation } from '../../dream-interpretation/types/extended';
-import { knowledgeService } from '../../services/knowledge';
 import { logger } from '../../utils/logger';
 
 class ConversationContextService {
@@ -48,7 +47,7 @@ class ConversationContextService {
     interpreterId: string
   ): Promise<DreamInterpretation | null> {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseService.getClient()
         .from('interpretations')
         .select('*')
         .eq('dream_id', dreamId)
@@ -64,25 +63,31 @@ class ConversationContextService {
       const fullResponse = data.full_response ? JSON.parse(data.full_response) : null;
 
       return {
-        id: data.id,
         dreamId: data.dream_id,
+        interpreterId: data.interpreter_type as any,
         interpreterType: data.interpreter_type,
         interpretation: data.interpretation,
         quickTake: data.quick_take,
         dreamTopic: data.dream_topic,
         symbols: data.symbols || [],
-        themes: data.themes || [],
         emotions: data.emotions || [],
         emotionalTone: data.emotional_tone,
         questions: data.questions || [],
         additionalInsights: data.additional_insights,
         interpretationCore: data.interpretation_core,
+        selfReflection: data.self_reflection || '',
+        processingTime: data.processing_time || 0,
+        authenticityMarkers: fullResponse?.authenticityMarkers || {
+          personalEngagement: 0,
+          vocabularyAuthenticity: 0,
+          conceptualDepth: 0,
+          therapeuticValue: 0
+        },
         fullResponse: fullResponse,
-        authenticityMarkers: fullResponse?.authenticityMarkers,
         stageMetadata: fullResponse?.stageMetadata,
         createdAt: new Date(data.created_at),
         userId: data.user_id
-      };
+      } as DreamInterpretation;
     } catch (error) {
       logger.error('Failed to get interpretation:', error);
       return null;
@@ -94,7 +99,7 @@ class ConversationContextService {
    */
   private async getDream(dreamId: string): Promise<any> {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseService.getClient()
         .from('dreams')
         .select('*')
         .eq('id', dreamId)
@@ -134,7 +139,7 @@ class ConversationContextService {
    */
   private async getConversationMessages(conversationId: string): Promise<any[]> {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseService.getClient()
         .from('messages')
         .select('*')
         .eq('conversation_id', conversationId)
@@ -142,7 +147,7 @@ class ConversationContextService {
 
       if (error) throw error;
 
-      return data.map(msg => ({
+      return data.map((msg: any) => ({
         id: msg.id,
         conversationId: msg.conversation_id,
         role: msg.role,
@@ -197,7 +202,7 @@ class ConversationContextService {
 
     return {
       primarySymbols: interpretation.symbols?.slice(0, 3) || [],
-      keyThemes: interpretation.themes?.slice(0, 3) || [],
+      keyThemes: interpretation.symbols?.slice(0, 3) || [],
       emotionalTone: interpretation.emotionalTone,
       coreInsights: coreInsights.slice(0, 3)
     };

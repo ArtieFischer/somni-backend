@@ -1,6 +1,6 @@
 import { Server as HTTPServer } from 'http';
 import { Server as SocketIOServer, Socket } from 'socket.io';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { JungConversationalAgent } from '../agents/jung-conversational.agent';
 import { LakshmiConversationalAgent } from '../agents/lakshmi-conversational.agent';
 import { BaseConversationalAgent } from '../agents/base/base-conversational-agent';
@@ -12,6 +12,7 @@ interface AuthenticatedSocket extends Socket {
   userId?: string;
   conversationId?: string;
   agent?: BaseConversationalAgent;
+  handshake: any;
 }
 
 export class ConversationalAIWebSocketServer {

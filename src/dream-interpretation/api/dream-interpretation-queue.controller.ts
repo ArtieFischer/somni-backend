@@ -133,7 +133,7 @@ export class DreamInterpretationQueueController {
         jobId: job.id,
         dreamId,
         interpreterType,
-        position: await job.getWaitingCount()
+        position: await interpretationQueue.getWaitingCount()
       });
       
       // Return queue information
@@ -142,7 +142,7 @@ export class DreamInterpretationQueueController {
         status: 'queued',
         jobId: job.id.toString(),
         estimatedWaitTime: await this.estimateWaitTime(job),
-        position: await job.getWaitingCount() + 1,
+        position: await interpretationQueue.getWaitingCount() + 1,
         message: 'Interpretation queued successfully'
       });
       
@@ -202,7 +202,7 @@ export class DreamInterpretationQueueController {
         success: true,
         status: state,
         progress: progress,
-        position: state === 'waiting' ? await job.getWaitingCount() + 1 : null,
+        position: state === 'waiting' ? await interpretationQueue.getWaitingCount() + 1 : null,
         estimatedWaitTime: state === 'waiting' ? await this.estimateWaitTime(job) : null,
         data: job.returnvalue
       });
@@ -272,7 +272,7 @@ export class DreamInterpretationQueueController {
    * Estimate wait time based on queue position
    */
   private async estimateWaitTime(job: Bull.Job): Promise<number> {
-    const position = await job.getWaitingCount();
+    const position = await interpretationQueue.getWaitingCount();
     const activeCount = await interpretationQueue.getActiveCount();
     
     // Estimate 5-10 seconds per interpretation

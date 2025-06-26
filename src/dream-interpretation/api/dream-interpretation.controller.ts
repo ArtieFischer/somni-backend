@@ -115,14 +115,14 @@ export class DreamInterpretationController {
       
     } catch (error) {
       logger.error('Dream interpretation endpoint error', {
-        error: error.message,
-        stack: error.stack
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
       });
       
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        message: process.env.NODE_ENV === 'development' ? error.message : undefined
+        message: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined
       });
     }
   }
@@ -148,7 +148,7 @@ export class DreamInterpretationController {
       
     } catch (error) {
       logger.error('Get interpretations error', {
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
       
       res.status(500).json({
@@ -230,19 +230,30 @@ export class DreamInterpretationController {
             ]
           };
         }
+        
+        // Default fallback for unknown interpreter types
+        return {
+          id: type as string,
+          name: metadata?.name || 'Unknown',
+          fullName: metadata?.fullName || 'Unknown Interpreter',
+          description: metadata?.description || 'No description available',
+          approach: metadata?.approach || 'unknown',
+          available: false,
+          features: []
+        };
       }).filter(Boolean);
       
       res.status(200).json({
         success: true,
         data: {
           interpreters,
-          activeCount: interpreters.filter(i => i.available).length
+          activeCount: interpreters.filter((i: any) => i?.available).length
         }
       });
       
     } catch (error) {
       logger.error('Get interpreters error', {
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
       
       res.status(500).json({
@@ -283,7 +294,7 @@ export class DreamInterpretationController {
       
     } catch (error) {
       logger.error('Extract themes error', {
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
       
       res.status(500).json({
@@ -351,7 +362,7 @@ export class DreamInterpretationController {
         .order('similarity', { ascending: false });
         
       // Get theme details
-      let themes = [];
+      let themes: any[] = [];
       if (dreamThemes && dreamThemes.length > 0) {
         const themeCodes = dreamThemes.map(dt => dt.theme_code);
         const { data: themeDetails } = await this.supabase

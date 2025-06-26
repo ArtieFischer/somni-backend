@@ -27,6 +27,13 @@ class SupabaseService {
   }
 
   /**
+   * Get the auth client
+   */
+  get auth() {
+    return this.client.auth;
+  }
+
+  /**
    * Get a Supabase client that bypasses RLS
    * Used for background jobs and system operations
    */

@@ -51,34 +51,26 @@ growth. You see the divine play in all dreams, guiding seekers toward self-reali
   
   protected validateInterpreterSpecific(interpretation: DreamInterpretation): string[] {
     const errors: string[] = [];
-    const core = interpretation.interpretationCore as LakshmiCore;
+    const core = interpretation.interpreterCore as LakshmiCore;
     
     if (!core) {
       errors.push('Missing interpretation core');
       return errors;
     }
     
-    // Allow both 'vedantic' and 'lakshmi' as valid types
-    if (core.type !== 'vedantic' && core.type !== 'lakshmi') {
-      errors.push(`Invalid core type: ${core.type} (expected 'vedantic')`);
+    // Validate Lakshmi type
+    if (core.type !== 'spiritual') {
+      errors.push(`Invalid core type: ${core.type} (expected 'spiritual')`);
       return errors;
     }
     
-    // Validate Lakshmi-specific fields with more lenient checks
-    if (!core.spiritualDynamics) {
-      errors.push('Missing spiritual dynamics');
-    } else {
-      // Only check for at least one spiritual element
-      const hasSpiritualContent = 
-        core.spiritualDynamics.karmicPattern ||
-        core.spiritualDynamics.dharmicGuidance ||
-        core.spiritualDynamics.soulLesson ||
-        core.spiritualDynamics.divineGuidance ||
-        core.spiritualDynamics.spiritualStage;
-      
-      if (!hasSpiritualContent) {
-        errors.push('No spiritual content found');
-      }
+    // Validate Lakshmi-specific fields
+    if (!core.soulMessage) {
+      errors.push('Missing soul message');
+    }
+    
+    if (!core.karmicInsights) {
+      errors.push('Missing karmic insights');
     }
     
     // Make chakra and karmic themes optional - not all dreams reveal these
@@ -95,28 +87,17 @@ growth. You see the divine play in all dreams, guiding seekers toward self-reali
   
   getCoreStructure(): InterpretationCore {
     return {
-      type: 'vedantic',
+      type: 'spiritual',
       primaryInsight: '',
       keyPattern: '',
-      personalGuidance: '',
-      spiritualDynamics: {
-        karmicPattern: '',
-        dharmicGuidance: '',
-        soulLesson: '',
-        spiritualStage: '',
-        divineGuidance: ''
-      },
-      chakraInfluences: [],
-      sanskritConcepts: [],
-      karmicThemes: [],
-      sadhanaRecommendations: []
-    } as LakshmiCore;
+      personalGuidance: ''
+    };
   }
   
   /**
    * Lakshmi-specific method overrides
    */
-  protected extractInterpretationData(interpretation: string): ReturnType<typeof super.extractInterpretationData> {
+  protected override extractInterpretationData(interpretation: string): FullInterpretationResult {
     const baseResult = super.extractInterpretationData(interpretation);
     
     // Look for spiritual symbols

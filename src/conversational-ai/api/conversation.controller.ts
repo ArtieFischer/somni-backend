@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { conversationService } from '../services/conversation.service';
 import { logger } from '../../utils/logger';
 import { 

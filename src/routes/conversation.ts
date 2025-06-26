@@ -6,7 +6,6 @@
 import { Router } from 'express';
 import { isAuthenticated } from '../middleware/auth';
 import { rateLimitMiddleware } from '../middleware/rateLimit';
-import { conversationOrchestrator } from '../dream-interpretation/services/conversation-orchestrator';
 import { logger } from '../utils/logger';
 
 const router = Router();
@@ -36,30 +35,24 @@ router.get('/active', conversationRateLimit, async (req, res) => {
       });
     }
     
-    const sessions = conversationOrchestrator.getUserSessions(userId);
+    // TODO: Implement fetching active conversations from database
+    // For now, return empty array
     
-    res.json({
+    return res.json({
       success: true,
       data: {
-        sessions: sessions.map(session => ({
-          id: session.id,
-          conversationId: session.conversationId,
-          interpreterId: session.interpreterId,
-          status: session.status,
-          startedAt: session.startedAt,
-          dreamId: session.context.dreamId
-        })),
-        count: sessions.length
+        sessions: [],
+        count: 0
       }
     });
     
-  } catch (error) {
+  } catch (error: unknown) {
     logger.error('Failed to get active conversations', {
       userId: req.user?.id,
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
     
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to retrieve active conversations'
     });
@@ -83,38 +76,20 @@ router.get('/:conversationId', conversationRateLimit, async (req, res) => {
     }
     
     // TODO: Fetch conversation history from database
-    // For now, return basic info if session is active
-    const sessions = conversationOrchestrator.getUserSessions(userId);
-    const session = sessions.find(s => s.conversationId === conversationId);
+    // For now, return 404
     
-    if (!session) {
-      return res.status(404).json({
-        success: false,
-        error: 'Conversation not found'
-      });
-    }
-    
-    res.json({
-      success: true,
-      data: {
-        conversationId: session.conversationId,
-        interpreterId: session.interpreterId,
-        status: session.status,
-        startedAt: session.startedAt,
-        endedAt: session.endedAt,
-        dreamId: session.context.dreamId,
-        // TODO: Add conversation history
-        history: []
-      }
+    return res.status(404).json({
+      success: false,
+      error: 'Conversation not found'
     });
     
-  } catch (error) {
+  } catch (error: unknown) {
     logger.error('Failed to get conversation details', {
       conversationId: req.params.conversationId,
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
     
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to retrieve conversation details'
     });
@@ -137,21 +112,10 @@ router.post('/:conversationId/end', conversationRateLimit, async (req, res) => {
       });
     }
     
-    // Find session by conversation ID
-    const sessions = conversationOrchestrator.getUserSessions(userId);
-    const session = sessions.find(s => s.conversationId === conversationId);
+    // TODO: Implement ending conversation in database
+    // For now, return success
     
-    if (!session) {
-      return res.status(404).json({
-        success: false,
-        error: 'Conversation not found'
-      });
-    }
-    
-    // End the conversation
-    await conversationOrchestrator.endConversation(session.id);
-    
-    res.json({
+    return res.json({
       success: true,
       data: {
         conversationId,
@@ -159,13 +123,13 @@ router.post('/:conversationId/end', conversationRateLimit, async (req, res) => {
       }
     });
     
-  } catch (error) {
+  } catch (error: unknown) {
     logger.error('Failed to end conversation', {
       conversationId: req.params.conversationId,
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
     
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to end conversation'
     });
@@ -191,7 +155,7 @@ router.get('/history/:dreamId', conversationRateLimit, async (req, res) => {
     // TODO: Implement fetching conversation history from database
     // This would include all past conversations for this dream
     
-    res.json({
+    return res.json({
       success: true,
       data: {
         dreamId,
@@ -200,13 +164,13 @@ router.get('/history/:dreamId', conversationRateLimit, async (req, res) => {
       }
     });
     
-  } catch (error) {
+  } catch (error: unknown) {
     logger.error('Failed to get conversation history', {
       dreamId: req.params.dreamId,
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
     
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to retrieve conversation history'
     });
@@ -228,15 +192,12 @@ router.get('/stats', conversationRateLimit, async (req, res) => {
       });
     }
     
-    // Get active sessions
-    const activeSessions = conversationOrchestrator.getUserSessions(userId);
-    
     // TODO: Get historical stats from database
     
-    res.json({
+    return res.json({
       success: true,
       data: {
-        activeSessions: activeSessions.length,
+        activeSessions: 0,
         totalConversations: 0, // TODO: From database
         averageDuration: 0, // TODO: Calculate from database
         favoriteInterpreter: null, // TODO: Calculate from database
@@ -244,13 +205,13 @@ router.get('/stats', conversationRateLimit, async (req, res) => {
       }
     });
     
-  } catch (error) {
+  } catch (error: unknown) {
     logger.error('Failed to get conversation stats', {
       userId: req.user?.id,
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
     
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to retrieve conversation statistics'
     });

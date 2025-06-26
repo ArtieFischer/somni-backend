@@ -13,13 +13,8 @@ export class FreudInterpreter extends BaseDreamInterpreter {
       metadata: {
         name: 'Dr. Sigmund Freud',
         description: 'Father of psychoanalysis, explorer of the unconscious mind',
-        expertise: ['Psychoanalytic theory', 'Dream analysis', 'Unconscious processes'],
-        school: 'Classical Psychoanalysis',
         approach: 'Exploring unconscious desires, defense mechanisms, and childhood connections',
-        keyQuote: 'Dreams are the royal road to the unconscious.',
-        strengths: ['Depth psychology', 'Symbolic analysis', 'Unconscious dynamics'],
-        limitations: ['Can be reductionist', 'Emphasis on sexuality', 'Less empirical'],
-        historicalContext: 'Founded psychoanalysis in Vienna, revolutionized understanding of the mind'
+        strengths: ['Depth psychology', 'Symbolic analysis', 'Unconscious dynamics']
       },
       personality: {
         name: 'Sigmund Freud',
@@ -41,18 +36,14 @@ export class FreudInterpreter extends BaseDreamInterpreter {
           'Scientific curiosity',
           'Unflinching honesty'
         ],
-        communicationStyle: {
-          tone: 'Authoritative yet curious, penetrating yet respectful',
-          vocabulary: 'Sophisticated blend of psychoanalytic terminology and accessible explanation',
-          structure: 'Systematic analysis building from surface to depth',
-          specialPhrases: [
-            'The unconscious speaks through...',
-            'This represents a classic case of...',
-            'We must consider the latent content...',
-            'The dream-work has transformed...',
-            'Your psyche is attempting to...'
-          ]
-        }
+        communicationStyle: 'Authoritative yet curious, penetrating yet respectful. Sophisticated blend of psychoanalytic terminology and accessible explanation',
+        languagePatterns: [
+          'The unconscious speaks through...',
+          'This represents a classic case of...',
+          'We must consider the latent content...',
+          'The dream-work has transformed...',
+          'Your psyche is attempting to...'
+        ]
       }
     });
   }
@@ -71,7 +62,7 @@ export class FreudInterpreter extends BaseDreamInterpreter {
 
   protected validateInterpreterSpecific(interpretation: DreamInterpretation): string[] {
     const errors: string[] = [];
-    const core = interpretation.interpretationCore as any;
+    const core = interpretation.interpreterCore as FreudianCore;
     
     if (!core) {
       errors.push('Missing interpretation core');
@@ -84,26 +75,13 @@ export class FreudInterpreter extends BaseDreamInterpreter {
       return errors;
     }
     
-    // Validate Freudian-specific fields with more lenient checks
-    if (!core.psychoanalyticElements) {
-      errors.push('Missing psychoanalytic elements');
-    } else {
-      // Only check for at least one psychoanalytic element
-      const hasAnalyticContent = 
-        core.psychoanalyticElements.manifestContent ||
-        core.psychoanalyticElements.latentContent ||
-        (core.psychoanalyticElements.dreamWork && (
-          core.psychoanalyticElements.dreamWork.condensation ||
-          core.psychoanalyticElements.dreamWork.displacement ||
-          core.psychoanalyticElements.dreamWork.symbolization ||
-          core.psychoanalyticElements.dreamWork.secondaryRevision
-        )) ||
-        core.psychoanalyticElements.primaryDrive ||
-        core.psychoanalyticElements.complexIdentified;
-      
-      if (!hasAnalyticContent) {
-        errors.push('No psychoanalytic content found');
-      }
+    // Validate Freudian-specific fields
+    if (!core.unconsciousContent) {
+      errors.push('Missing unconscious content');
+    }
+    
+    if (!core.wishFulfillment) {
+      errors.push('Missing wish fulfillment analysis');
     }
     
     return errors;
@@ -114,26 +92,7 @@ export class FreudInterpreter extends BaseDreamInterpreter {
       type: 'freudian',
       primaryInsight: '',
       keyPattern: '',
-      personalGuidance: '',
-      psychoanalyticElements: {
-        manifestContent: '',
-        latentContent: '',
-        dreamWork: {
-          condensation: '',
-          displacement: '',
-          symbolization: '',
-          secondaryRevision: ''
-        },
-        primaryDrive: '',
-        defensesMechanisms: [],
-        developmentalStage: '',
-        complexIdentified: ''
-      },
-      therapeuticConsiderations: {
-        resistance: '',
-        transference: '',
-        workingThrough: ''
-      }
+      personalGuidance: ''
     };
   }
 }

@@ -98,4 +98,36 @@ export const generalRateLimit = rateLimit({
   
   standardHeaders: true,
   legacyHeaders: false,
-}); 
+});
+
+/**
+ * Factory function to create custom rate limit middleware
+ */
+export const rateLimitMiddleware = (options: {
+  windowMs: number;
+  max: number;
+  message?: string;
+}) => {
+  return rateLimit({
+    windowMs: options.windowMs,
+    max: options.max,
+    keyGenerator: (req: Request) => {
+      const rateLimitKey = (req as any).rateLimitKey || `ip:${req.ip}`;
+      return rateLimitKey;
+    },
+    handler: (req: Request, res: Response) => {
+      logger.warn('Custom rate limit exceeded', {
+        ip: req.ip,
+        userId: req.user?.id,
+        url: req.url,
+      });
+      
+      res.status(429).json({
+        error: options.message || 'Too many requests. Please try again later.',
+        retryAfter: Math.ceil(options.windowMs / 1000),
+      });
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+};

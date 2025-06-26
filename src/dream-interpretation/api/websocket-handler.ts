@@ -131,7 +131,7 @@ export class WebSocketHandler {
         next();
       } catch (error) {
         logger.error('WebSocket authentication error', {
-          error: error.message
+          error: error instanceof Error ? error.message : 'Unknown error'
         });
         
         next(new Error('Authentication failed'));
@@ -274,12 +274,12 @@ export class WebSocketHandler {
     } catch (error) {
       logger.error('Failed to start conversation', {
         socketId: socket.id,
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
       
       socket.emit('error', {
         code: 'START_CONVERSATION_FAILED',
-        message: error.message || 'Failed to start conversation'
+        message: error instanceof Error ? error.message : 'Failed to start conversation'
       });
     }
   }
@@ -323,14 +323,14 @@ export class WebSocketHandler {
     } catch (error) {
       logger.error('Failed to process message', {
         socketId: socket.id,
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
       
       socket.emit('agentTyping', { isTyping: false });
       
       socket.emit('error', {
         code: 'MESSAGE_PROCESSING_FAILED',
-        message: error.message || 'Failed to process message'
+        message: error instanceof Error ? error.message : 'Failed to process message'
       });
     }
   }
@@ -362,7 +362,7 @@ export class WebSocketHandler {
     } catch (error) {
       logger.error('Failed to end conversation', {
         socketId: socket.id,
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
     }
   }
@@ -398,7 +398,7 @@ export class WebSocketHandler {
       } catch (error) {
         logger.error('Error ending conversation on disconnect', {
           sessionId,
-          error: error.message
+          error: error instanceof Error ? error.message : 'Unknown error'
         });
       }
     }
@@ -467,7 +467,7 @@ export class WebSocketHandler {
         } catch (error) {
           logger.error('Error ending conversation during shutdown', {
             sessionId,
-            error: error.message
+            error: error instanceof Error ? error.message : 'Unknown error'
           });
         }
       }

@@ -2,7 +2,7 @@ import { BaseConversationalAgent, ConversationalAgentConfig } from './base/base-
 import { ConversationContext } from '../types/conversation.types';
 import { lakshmiConversationalPrompts } from '../prompts/lakshmi.prompts';
 // Import existing Lakshmi interpreter for consistency
-import { LakshmiDreamInterpreter } from '../../../dream-interpretation/interpreters/lakshmi/lakshmi-interpreter';
+import { LakshmiDreamInterpreter } from '../../dream-interpretation/interpreters/lakshmi/lakshmi-interpreter';
 
 export class LakshmiConversationalAgent extends BaseConversationalAgent {
   private lakshmiInterpreter: LakshmiDreamInterpreter;

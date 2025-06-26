@@ -52,7 +52,7 @@ understanding.`,
   
   protected validateInterpreterSpecific(interpretation: DreamInterpretation): string[] {
     const errors: string[] = [];
-    const core = interpretation.interpretationCore as JungianCore;
+    const core = interpretation.interpreterCore as JungianCore;
     
     if (!core) {
       errors.push('Missing interpretation core');
@@ -72,28 +72,16 @@ understanding.`,
       // Only check for at least one archetypal element
       const hasArchetypalContent = 
         core.archetypalDynamics.primaryArchetype ||
-        core.archetypalDynamics.shadowElements ||
-        core.archetypalDynamics.animaAnimus ||
-        core.archetypalDynamics.selfArchetype ||
-        core.archetypalDynamics.compensatoryFunction;
+        core.archetypalDynamics.archetypalTension ||
+        core.archetypalDynamics.individuationGuidance;
       
       if (!hasArchetypalContent) {
         errors.push('No archetypal content found');
       }
     }
     
-    if (!core.individuationInsights) {
-      errors.push('Missing individuation insights');
-    } else {
-      // Only check for at least one insight
-      const hasInsight = 
-        core.individuationInsights.currentStage ||
-        core.individuationInsights.developmentalTask ||
-        core.individuationInsights.integrationOpportunity;
-      
-      if (!hasInsight) {
-        errors.push('No individuation insights found');
-      }
+    if (!core.individuationInsight) {
+      errors.push('Missing individuation insight');
     }
     
     // Make complexes optional - not all dreams reveal complexes
@@ -109,28 +97,14 @@ understanding.`,
       type: 'jungian',
       primaryInsight: '',
       keyPattern: '',
-      personalGuidance: '',
-      archetypalDynamics: {
-        primaryArchetype: '',
-        shadowElements: '',
-        animaAnimus: '',
-        selfArchetype: '',
-        compensatoryFunction: ''
-      },
-      individuationInsights: {
-        currentStage: '',
-        developmentalTask: '',
-        integrationOpportunity: ''
-      },
-      complexesIdentified: [],
-      collectiveThemes: []
-    } as JungianCore;
+      personalGuidance: ''
+    };
   }
   
   /**
    * Jung-specific method overrides for enhanced functionality
    */
-  protected extractInterpretationData(interpretation: string): ReturnType<typeof super.extractInterpretationData> {
+  protected override extractInterpretationData(interpretation: string): FullInterpretationResult {
     const baseResult = super.extractInterpretationData(interpretation);
     
     // Look for Jung-specific symbols

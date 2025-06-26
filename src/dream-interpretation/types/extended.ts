@@ -14,6 +14,9 @@ import {
   InterpreterSpecificCore
 } from './index';
 
+// Re-export imported types that are used elsewhere
+export { InterpreterType };
+
 /**
  * Extended DreamInterpretation with additional fields for the modular system
  */
@@ -30,7 +33,7 @@ export interface DreamInterpretation extends Omit<BaseDreamInterpretation, 'inte
   // Extended fields
   interpreterType?: InterpreterType;
   timestamp?: string;
-  processingTime?: number;
+  processingTime: number;
   
   // Optional fields for richer interpretations
   emotionalTone?: EmotionalTone;
@@ -45,7 +48,13 @@ export interface DreamInterpretation extends Omit<BaseDreamInterpretation, 'inte
   generationMetadata?: GenerationMetadata;
   
   // Quality markers
-  authenticityMarkers?: AuthenticityMarkers;
+  authenticityMarkers: AuthenticityMarkers;
+  
+  // Additional extended fields
+  fullResponse?: any;
+  stageMetadata?: any;
+  createdAt: Date;
+  userId?: string;
 }
 
 /**
@@ -188,4 +197,5 @@ export interface PersonalityVoice {
   voiceSignature: string;
   traits: string[];
   languagePatterns: string[];
+  communicationStyle?: string;
 }

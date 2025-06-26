@@ -228,16 +228,17 @@ export class ThemeBasedKnowledgeService {
         .select('*', { count: 'exact', head: true })
         .eq('interpreter', interpreter);
 
+      // First get fragment IDs for this interpreter
+      const { data: fragmentIds } = await this.supabase
+        .from('knowledge_fragments')
+        .select('id')
+        .eq('interpreter', interpreter);
+      
       // Count fragments with themes
       const { data: themedFragmentIds } = await this.supabase
         .from('fragment_themes')
         .select('fragment_id')
-        .in('fragment_id', 
-          this.supabase
-            .from('knowledge_fragments')
-            .select('id')
-            .eq('interpreter', interpreter)
-        );
+        .in('fragment_id', fragmentIds?.map(f => f.id) || []);
 
       const uniqueThemedFragments = new Set(themedFragmentIds?.map(f => f.fragment_id) || []);
 

@@ -2,7 +2,7 @@ import { BaseConversationalAgent, ConversationalAgentConfig } from './base/base-
 import { ConversationContext } from '../types/conversation.types';
 import { jungConversationalPrompts } from '../prompts/jung.prompts';
 // Import existing Jung interpreter for consistency
-import { JungDreamInterpreter } from '../../../dream-interpretation/interpreters/jung/jung-interpreter';
+import { JungDreamInterpreter } from '../../dream-interpretation/interpreters/jung/jung-interpreter';
 
 export class JungConversationalAgent extends BaseConversationalAgent {
   private jungInterpreter: JungDreamInterpreter;
