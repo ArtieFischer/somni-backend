@@ -38,7 +38,8 @@
       "WebFetch(domain:elevenlabs.io)",
       "Bash(npm test:*)",
       "Bash(NODE_OPTIONS=\"--max-old-space-size=8192\" npm run test:all-interpreters 2 >& 1)",
-      "Bash(NODE_OPTIONS=\"--max-old-space-size=8192\" timeout 60 npm run test:all-interpreters 2 >& 1)"
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=8192\" timeout 60 npm run test:all-interpreters 2 >& 1)",
+      "Bash(sed:*)"
     ],
     "deny": []
   },

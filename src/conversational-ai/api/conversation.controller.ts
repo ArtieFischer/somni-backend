@@ -255,12 +255,14 @@ const authenticateJWT = (req: Request, res: Response, next: any) => {
     
     jwt.verify(token, process.env.JWT_SECRET || 'secret', (err: any, user: any) => {
       if (err) {
-        return res.sendStatus(403);
+        res.sendStatus(403);
+        return;
       }
       
       (req as any).user = user;
       next();
     });
+    return; // Add return here to satisfy TypeScript
   } else {
     res.sendStatus(401);
   }
