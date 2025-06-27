@@ -14,11 +14,22 @@ export const verifyApiSecret = (
 ): void => {
   const apiSecret = req.headers['x-api-secret'] as string;
   
+  // Debug logging
+  logger.info('Auth check', {
+    url: req.url,
+    hasApiSecret: !!apiSecret,
+    secretLength: apiSecret?.length,
+    expectedLength: config.security.apiSecretKey?.length,
+    userAgent: req.get('User-Agent'),
+    headers: Object.keys(req.headers)
+  });
+  
   if (!apiSecret) {
     logger.warn('API secret missing from request', { 
       url: req.url,
       userAgent: req.get('User-Agent'),
-      ip: req.ip 
+      ip: req.ip,
+      headers: Object.keys(req.headers)
     });
     res.status(401).json({ 
       error: 'Unauthorized - API secret required' 

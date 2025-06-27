@@ -4,6 +4,18 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { config } from './config';
 import { logger } from './utils/logger';
+
+// Log startup immediately
+console.log('=== SOMNI BACKEND STARTING ===');
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Port:', process.env.PORT || 3000);
+console.log('Timestamp:', new Date().toISOString());
+
+logger.info('Somni backend initializing', {
+  env: process.env.NODE_ENV,
+  port: config.port,
+  nodeVersion: process.version
+});
 import { attachUserContext } from './middleware/auth';
 import { generalRateLimit } from './middleware/rateLimit';
 import { healthRouter } from './routes/health';
@@ -22,6 +34,16 @@ import { debugServiceRoleRouter } from './routes/debugServiceRole';
 import { dreamInterpretationRouter } from './routes/dream-interpretation';
 
 const app = express();
+
+// Immediate health check endpoint (before any middleware)
+app.get('/', (_req, res) => {
+  console.log('Root endpoint hit at:', new Date().toISOString());
+  res.json({ 
+    status: 'alive',
+    service: 'somni-backend',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Security middleware
 app.use(helmet());
