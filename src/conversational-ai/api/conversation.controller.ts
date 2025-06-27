@@ -203,7 +203,7 @@ export class ConversationController {
       }
 
       // For MVP, using direct Supabase query
-      const { data, error } = await require('../../services/supabase').supabase
+      const { data, error } = await require('../../services/supabase').supabaseService.getServiceClient()
         .from('conversations')
         .select(`
           *,

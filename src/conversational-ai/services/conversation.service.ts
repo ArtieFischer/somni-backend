@@ -13,7 +13,7 @@ class ConversationService {
    */
   async createConversation(config: ConversationConfig): Promise<ConversationSession> {
     try {
-      const { data, error } = await supabaseService.getClient()
+      const { data, error } = await supabaseService.getServiceClient()
         .from('conversations')
         .insert({
           user_id: config.userId,
@@ -46,7 +46,7 @@ class ConversationService {
    */
   async getConversation(conversationId: string): Promise<ConversationSession | null> {
     try {
-      const { data, error } = await supabaseService.getClient()
+      const { data, error } = await supabaseService.getServiceClient()
         .from('conversations')
         .select('*')
         .eq('id', conversationId)
@@ -85,7 +85,7 @@ class ConversationService {
       }
 
       // Get dream interpretation
-      const { data: interpretation, error: interpError } = await supabaseService.getClient()
+      const { data: interpretation, error: interpError } = await supabaseService.getServiceClient()
         .from('interpretations')
         .select('*')
         .eq('dream_id', conversation.dreamId)
@@ -97,7 +97,7 @@ class ConversationService {
       }
 
       // Get dream content
-      const { data: dream, error: dreamError } = await supabaseService.getClient()
+      const { data: dream, error: dreamError } = await supabaseService.getServiceClient()
         .from('dreams')
         .select('transcription')
         .eq('id', conversation.dreamId)
@@ -150,7 +150,7 @@ class ConversationService {
    */
   async getConversationMessages(conversationId: string): Promise<ConversationMessage[]> {
     try {
-      const { data, error } = await supabaseService.getClient()
+      const { data, error } = await supabaseService.getServiceClient()
         .from('messages')
         .select('*')
         .eq('conversation_id', conversationId)
@@ -177,7 +177,7 @@ class ConversationService {
    */
   async saveMessage(message: Omit<ConversationMessage, 'id' | 'timestamp'>): Promise<ConversationMessage> {
     try {
-      const { data, error } = await supabaseService.getClient()
+      const { data, error } = await supabaseService.getServiceClient()
         .from('messages')
         .insert({
           conversation_id: message.conversationId,
@@ -209,7 +209,7 @@ class ConversationService {
    */
   async endConversation(conversationId: string): Promise<void> {
     try {
-      const { error } = await supabaseService.getClient()
+      const { error } = await supabaseService.getServiceClient()
         .from('conversations')
         .update({
           status: 'ended',
@@ -258,7 +258,7 @@ class ConversationService {
    */
   async updateElevenLabsSessionId(conversationId: string, sessionId: string): Promise<void> {
     try {
-      const { error } = await supabaseService.getClient()
+      const { error } = await supabaseService.getServiceClient()
         .from('conversations')
         .update({ elevenlabs_session_id: sessionId })
         .eq('id', conversationId);
