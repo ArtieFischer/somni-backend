@@ -7,6 +7,7 @@ import {
   TranscriptionEvent,
   ElevenLabsError
 } from '../types/elevenlabs.types';
+import { logger } from '../../utils/logger';
 
 export class ElevenLabsService extends EventEmitter {
   private config: ElevenLabsConfig;
@@ -14,6 +15,9 @@ export class ElevenLabsService extends EventEmitter {
   private isConnected: boolean = false;
   private reconnectAttempts: number = 0;
   private maxReconnectAttempts: number = 3;
+  private currentConversationId: string | null = null;
+  private pingInterval: NodeJS.Timeout | null = null;
+  private pingTimeout: NodeJS.Timeout | null = null;
 
   constructor(config: ElevenLabsConfig) {
     super();
@@ -22,6 +26,8 @@ export class ElevenLabsService extends EventEmitter {
 
   async connect(conversationId: string): Promise<void> {
     try {
+      this.currentConversationId = conversationId;
+      
       const wsConfig: ElevenLabsWebSocketConfig = {
         authorization: `Bearer ${this.config.apiKey}`,
         agentId: this.config.agentId,
@@ -33,6 +39,8 @@ export class ElevenLabsService extends EventEmitter {
       
       // For private agents, we would need a signed URL from the server
       // For MVP, using public agents with direct connection
+      // Note: The agent_id refers to a pre-configured agent in ElevenLabs dashboard
+      // which already has voice, LLM model, and system prompt configured
       this.ws = new WebSocket(wsUrl);
 
       this.setupEventHandlers();
@@ -47,6 +55,7 @@ export class ElevenLabsService extends EventEmitter {
           this.isConnected = true;
           this.reconnectAttempts = 0;
           this.emit('connected');
+          this.startPingPong();
           resolve();
         });
 
@@ -188,6 +197,9 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   async disconnect(): Promise<void> {
+    this.stopPingPong();
+    this.currentConversationId = null;
+    
     if (this.ws) {
       this.ws.close();
       this.ws = null;
@@ -195,13 +207,78 @@ export class ElevenLabsService extends EventEmitter {
     }
   }
 
+  /**
+   * Start ping/pong to keep connection alive
+   */
+  private startPingPong(): void {
+    this.pingInterval = setInterval(() => {
+      if (this.ws && this.isConnected) {
+        this.ws.ping();
+        
+        // Set timeout for pong response
+        this.pingTimeout = setTimeout(() => {
+          logger.error('Ping timeout - no pong received');
+          this.ws?.terminate();
+        }, 5000);
+      }
+    }, 30000); // Ping every 30 seconds
+
+    // Handle pong
+    if (this.ws) {
+      this.ws.on('pong', () => {
+        if (this.pingTimeout) {
+          clearTimeout(this.pingTimeout);
+          this.pingTimeout = null;
+        }
+      });
+    }
+  }
+
+  /**
+   * Stop ping/pong mechanism
+   */
+  private stopPingPong(): void {
+    if (this.pingInterval) {
+      clearInterval(this.pingInterval);
+      this.pingInterval = null;
+    }
+    
+    if (this.pingTimeout) {
+      clearTimeout(this.pingTimeout);
+      this.pingTimeout = null;
+    }
+  }
+
   private async reconnect(): Promise<void> {
     try {
       console.log(`Reconnection attempt ${this.reconnectAttempts}`);
-      // TODO: Implement proper reconnection with conversation ID
       this.emit('reconnecting', { attempt: this.reconnectAttempts });
+      
+      // Store the conversation ID for reconnection
+      const conversationId = this.currentConversationId;
+      if (!conversationId) {
+        throw new Error('No conversation ID for reconnection');
+      }
+      
+      // Attempt to reconnect
+      await this.connect(conversationId);
+      console.log('Reconnection successful');
+      this.emit('reconnected');
     } catch (error) {
       console.error('Reconnection failed:', error);
+      this.emit('reconnection_failed', { 
+        attempt: this.reconnectAttempts,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+      
+      // Schedule next reconnection attempt if within limits
+      if (this.reconnectAttempts < this.maxReconnectAttempts) {
+        this.reconnectAttempts++;
+        const backoffDelay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 30000);
+        setTimeout(() => this.reconnect(), backoffDelay);
+      } else {
+        this.emit('max_reconnection_attempts_reached');
+      }
     }
   }
 

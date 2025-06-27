@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { conversationService } from '../services/conversation.service';
 import { logger } from '../../utils/logger';
@@ -242,3 +242,38 @@ export class ConversationController {
 
 // Export singleton instance
 export const conversationController = new ConversationController();
+
+// Create and export router
+const conversationRouter = Router();
+
+// JWT authentication middleware
+const authenticateJWT = (req: Request, res: Response, next: any) => {
+  const authHeader = req.headers.authorization;
+  
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+    
+    jwt.verify(token, process.env.JWT_SECRET || 'secret', (err: any, user: any) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      
+      (req as any).user = user;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
+
+// Apply JWT authentication middleware
+conversationRouter.use(authenticateJWT);
+
+// Register routes
+conversationRouter.post('/start', (req, res) => conversationController.startConversation(req, res));
+conversationRouter.post('/:id/end', (req, res) => conversationController.endConversation(req, res));
+conversationRouter.get('/:id/history', (req, res) => conversationController.getConversationHistory(req, res));
+conversationRouter.get('/:id/context', (req, res) => conversationController.getConversationContext(req, res));
+conversationRouter.get('/', (req, res) => conversationController.getUserConversations(req, res));
+
+export { conversationRouter };

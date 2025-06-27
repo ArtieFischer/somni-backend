@@ -22,15 +22,16 @@ import { debugEmbeddingRouter } from './routes/debugEmbedding';
 import { debugServiceRoleRouter } from './routes/debugServiceRole';
 import { dreamInterpretationRouter } from './routes/dream-interpretation';
 import { conversationRouter } from './routes/conversation';
-import { createWebSocketHandler } from './dream-interpretation/api/websocket-handler';
+import { createUnifiedWebSocketServer } from './websocket/unified-websocket-server';
+import { conversationRouter as conversationalAIRouter } from './conversational-ai/api/conversation.controller';
 
 const app = express();
 
 // Create HTTP server
 const httpServer = createServer(app);
 
-// Initialize WebSocket handler
-const wsHandler = createWebSocketHandler(httpServer);
+// Initialize unified WebSocket server with namespaces
+const unifiedWebSocketServer = createUnifiedWebSocketServer(httpServer);
 
 // Security middleware
 app.use(helmet());
@@ -73,6 +74,7 @@ app.use('/api/v1/themes', embeddingsSimpleRouter);
 app.use('/api/v1/dream-embeddings', dreamEmbeddingRouter);
 app.use('/api/v1/dreams', dreamInterpretationRouter);
 app.use('/api/v1/conversations', conversationRouter);
+app.use('/api/conversations', conversationalAIRouter); // Conversational AI endpoints
 app.use('/api/v1/debug-embedding-jobs', debugEmbeddingJobsRouter);
 app.use('/api/v1/debug-embedding', debugEmbeddingRouter);
 app.use('/api/v1/debug-service-role', debugServiceRoleRouter);
@@ -108,7 +110,9 @@ app.use((error: Error, _req: express.Request, res: express.Response, _next: expr
 // Start server
 httpServer.listen(config.port, () => {
   logger.info(`Somni Backend Service started on port ${config.port}`);
-  logger.info('WebSocket server initialized');
+  logger.info('WebSocket servers initialized:');
+  logger.info('  - Dream interpretation WebSocket: /ws');
+  logger.info('  - Conversational AI WebSocket: /ws/conversation');
   
   // Start embedding worker
   embeddingWorker.start();
@@ -119,8 +123,8 @@ httpServer.listen(config.port, () => {
 process.on('SIGTERM', async () => {
   logger.info('SIGTERM signal received: closing servers');
   
-  // Shutdown WebSocket handler
-  await wsHandler.shutdown();
+  // Shutdown unified WebSocket server
+  await unifiedWebSocketServer.shutdown();
   
   // Stop embedding worker
   embeddingWorker.stop();
@@ -135,8 +139,8 @@ process.on('SIGTERM', async () => {
 process.on('SIGINT', async () => {
   logger.info('SIGINT signal received: closing servers');
   
-  // Shutdown WebSocket handler
-  await wsHandler.shutdown();
+  // Shutdown unified WebSocket server
+  await unifiedWebSocketServer.shutdown();
   
   // Stop embedding worker
   embeddingWorker.stop();
@@ -149,4 +153,4 @@ process.on('SIGINT', async () => {
 });
 
 export default app;
-export { httpServer, wsHandler };
+export { httpServer, unifiedWebSocketServer };

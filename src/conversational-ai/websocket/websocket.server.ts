@@ -123,6 +123,14 @@ export class ConversationalAIWebSocketServer {
 
       elevenLabsService.on('transcription', (event) => {
         socket.emit('transcription', event);
+        // Save transcription to database
+        if (event.isFinal) {
+          conversationService.saveMessage({
+            conversationId: socket.conversationId!,
+            role: event.speaker === 'user' ? 'user' : 'assistant',
+            content: event.text
+          }).catch(err => logger.error('Failed to save transcription:', err));
+        }
       });
 
       elevenLabsService.on('agent_response', (response) => {
@@ -135,10 +143,39 @@ export class ConversationalAIWebSocketServer {
 
       elevenLabsService.on('conversation_initiated', (metadata) => {
         socket.emit('conversation_metadata', metadata);
+        // Update ElevenLabs session ID
+        if (metadata.conversationId) {
+          conversationService.updateElevenLabsSessionId(
+            socket.conversationId!,
+            metadata.conversationId
+          ).catch(err => logger.error('Failed to update session ID:', err));
+        }
       });
 
       elevenLabsService.on('error', (error) => {
+        logger.error('ElevenLabs error:', error);
         socket.emit('error', error);
+      });
+
+      // Handle reconnection events
+      elevenLabsService.on('reconnecting', (data) => {
+        socket.emit('reconnecting', data);
+      });
+
+      elevenLabsService.on('reconnected', () => {
+        socket.emit('reconnected');
+      });
+
+      elevenLabsService.on('reconnection_failed', (data) => {
+        socket.emit('reconnection_failed', data);
+      });
+
+      elevenLabsService.on('max_reconnection_attempts_reached', () => {
+        socket.emit('error', { 
+          code: 'MAX_RECONNECTION_ATTEMPTS',
+          message: 'Connection lost and could not be re-established'
+        });
+        this.handleEndConversation(socket);
       });
 
       // Get conversation context
