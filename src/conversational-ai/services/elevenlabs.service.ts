@@ -251,14 +251,16 @@ export class ElevenLabsService extends EventEmitter {
 
   private async reconnect(): Promise<void> {
     try {
-      console.log(`Reconnection attempt ${this.reconnectAttempts}`);
-      this.emit('reconnecting', { attempt: this.reconnectAttempts });
-      
-      // Store the conversation ID for reconnection
+      // Only attempt reconnection if we had a conversation
       const conversationId = this.currentConversationId;
       if (!conversationId) {
-        throw new Error('No conversation ID for reconnection');
+        // No conversation to reconnect to, just stop
+        this.reconnectAttempts = 0;
+        return;
       }
+      
+      console.log(`Reconnection attempt ${this.reconnectAttempts}`);
+      this.emit('reconnecting', { attempt: this.reconnectAttempts });
       
       // Attempt to reconnect
       await this.connect(conversationId);
