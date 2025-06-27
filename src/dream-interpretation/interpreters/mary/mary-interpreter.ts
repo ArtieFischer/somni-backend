@@ -4,6 +4,7 @@
 
 import { BaseDreamInterpreter } from '../base/base-interpreter';
 import { InterpreterType, DreamInterpretation, InterpretationCore } from '../../types/extended';
+import { NeuroscientificCore } from '../../types';
 import { maryPrompts } from './mary-prompts';
 
 export class MaryInterpreter extends BaseDreamInterpreter {

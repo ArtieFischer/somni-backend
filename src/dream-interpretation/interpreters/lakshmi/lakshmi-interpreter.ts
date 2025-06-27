@@ -3,7 +3,7 @@
  */
 
 import { BaseDreamInterpreter } from '../base/base-interpreter';
-import { InterpreterConfig } from '../base/interpreter-interface';
+import { InterpreterConfig, FullInterpretationResult } from '../base/interpreter-interface';
 import { InterpretationCore, DreamInterpretation } from '../../types/extended';
 import { LakshmiCore } from '../../types';
 import { lakshmiPrompts } from './lakshmi-prompts';
@@ -87,7 +87,7 @@ growth. You see the divine play in all dreams, guiding seekers toward self-reali
   
   getCoreStructure(): InterpretationCore {
     return {
-      type: 'spiritual',
+      type: 'vedantic',
       primaryInsight: '',
       keyPattern: '',
       personalGuidance: ''

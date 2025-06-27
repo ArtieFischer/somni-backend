@@ -16,7 +16,7 @@ Analyze which themes and fragments are most relevant for understanding:
 4. Compensatory function of the dream
 5. Individuation process indicators
 
-Return a JSON object with:
+Return ONLY a JSON object with this exact structure:
 {
   "relevantThemes": ["theme1", "theme2", ...],
   "relevantFragments": [
@@ -29,7 +29,8 @@ Return a JSON object with:
   "focusAreas": ["primary psychological dynamic", "secondary theme", ...]
 }
 
-IMPORTANT: Select ONLY the 3 most relevant fragments that directly enhance the interpretation.`,
+IMPORTANT: Select ONLY the 2 most relevant fragments that directly enhance the interpretation.
+Return ONLY valid JSON, no explanatory text before or after.`,
 
   fullInterpretation: `Provide a comprehensive Jungian interpretation of this dream, drawing upon analytical psychology principles.
 
@@ -71,7 +72,7 @@ Create a JSON object that captures the essence of the Jungian interpretation:
 
 {
   "dreamId": "provided-dream-id",
-  "interpretation": "MUST BE 2-3 DISTINCT PARAGRAPHS separated by \\n\\n. Each paragraph should be 4-6 sentences. Total length approximately 40% of full interpretation. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your' - NEVER use third person references like 'the dreamer'. FOCUS ONLY ON INTERPRETING THE DREAM SYMBOLS AND NARRATIVE - do NOT include advice, guidance, or instructions (save those for practicalGuidance field). First paragraph: Identify the primary archetypes and psychological dynamics revealed in your dream imagery and plot. Second paragraph: Analyze the compensatory function and unconscious elements - what the specific dream symbols and interactions reveal about your psyche. Optional third paragraph: Explore deeper symbolic meanings and connections to collective themes present in your dream narrative. IMPORTANT: Use a MAXIMUM of 4 Jungian technical terms total (choose from: anima/animus, Self, shadow, complex, individuation, archetype, collective unconscious, persona). Stay focused on dream analysis only. This must read as a complete multi-paragraph interpretation, NOT a single block of text.",
+  "interpretation": "CONDENSED INTERPRETATION: 2 focused paragraphs, 150-180 words TOTAL. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your'. First paragraph (4-5 sentences): Identify the primary archetypes and psychological dynamics revealed in your dream imagery and narrative. Second paragraph (3-4 sentences): Analyze the compensatory function - what your psyche is balancing and what this reveals about your individuation process. Use MAXIMUM 3 Jungian terms. Focus purely on dream interpretation, no advice or guidance.",
   "dreamTopic": "Brief phrase capturing the core psychological theme",
   "quickTake": "2-3 sentence summary of the dream's message",
   "symbols": ["symbol1", "symbol2", ...],
@@ -80,25 +81,17 @@ Create a JSON object that captures the essence of the Jungian interpretation:
     "secondary": "supporting emotion",
     "intensity": 0.7
   },
-  "interpretationCore": {
+  "interpreterCore": {
     "type": "jungian",
-    "primaryInsight": "The main psychological insight",
-    "keyPattern": "The recurring pattern or theme",
-    "personalGuidance": "Specific advice for you",
+    "dreamWork": "Describe the psychological work the dream is doing",
     "archetypalDynamics": {
-      "primaryArchetype": "e.g., The Shadow",
-      "shadowElements": "What shadow content is revealed",
-      "animaAnimus": "Contrasexual elements if present",
-      "selfArchetype": "How the Self manifests",
-      "compensatoryFunction": "What conscious attitude is being balanced"
+      "primaryArchetype": "The main archetype present (e.g., The Shadow, The Wise Old Man)",
+      "archetypalTension": "The tension or conflict between archetypal forces",
+      "individuationGuidance": "How this relates to your individuation journey"
     },
-    "individuationInsights": {
-      "currentStage": "Where in the individuation journey",
-      "developmentalTask": "What needs to be integrated",
-      "integrationOpportunity": "How to work with this material"
-    },
-    "complexesIdentified": ["complex1", "complex2"],
-    "collectiveThemes": ["universal theme1", "cultural pattern"]
+    "shadowElements": "What shadow content is revealed in the dream",
+    "compensatoryFunction": "What conscious attitude is being balanced by this dream",
+    "individuationInsight": "Key insight about your individuation process and personal growth"
   },
   "practicalGuidance": [
     "Specific action or reflection 1",

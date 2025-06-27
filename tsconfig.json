@@ -36,7 +36,8 @@
     "dist",
     "**/*.test.ts",
     "**/*.spec.ts",
-    "src/scripts/**/*"
+    "src/scripts/**/*",
+    "src/dream-interpretation/test-files/**/*"
   ],
   "ts-node": {
     "esm": true

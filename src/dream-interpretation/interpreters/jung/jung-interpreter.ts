@@ -3,7 +3,7 @@
  */
 
 import { BaseDreamInterpreter } from '../base/base-interpreter';
-import { InterpreterConfig } from '../base/interpreter-interface';
+import { InterpreterConfig, FullInterpretationResult } from '../base/interpreter-interface';
 import { InterpretationCore, DreamInterpretation } from '../../types/extended';
 import { JungianCore } from '../../types';
 import { jungPrompts } from './jung-prompts';

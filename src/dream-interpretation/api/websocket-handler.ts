@@ -247,16 +247,10 @@ export class WebSocketHandler {
       
       // Start conversation
       const session = await conversationOrchestrator.startConversation({
-        sessionId,
         userId,
         dreamId: data.dreamId,
-        interpreterId: data.interpreterId,
-        dreamInterpretation: data.dreamInterpretation,
-        userName: data.userName,
-        initialMessage: data.initialMessage,
-        options: {
-          streamResponses: true
-        }
+        interpreterId: data.interpreterId as InterpreterType,
+        conversationId: sessionId
       });
       
       // Store conversation ID
@@ -267,7 +261,7 @@ export class WebSocketHandler {
         socket.emit('conversationStarted', {
           sessionId: session.id,
           conversationId: session.conversationId,
-          interpreterId: session.interpreterId
+          interpreterId: session.interpreterId as InterpreterType
         });
       }
       
@@ -316,8 +310,12 @@ export class WebSocketHandler {
       
       // Send response
       socket.emit('agentResponse', {
-        response: response.response,
-        metadata: response.metadata
+        response: response,
+        metadata: {
+          turnNumber: 1,
+          tokensUsed: 0,
+          contextWindowUsage: 0
+        }
       });
       
     } catch (error) {

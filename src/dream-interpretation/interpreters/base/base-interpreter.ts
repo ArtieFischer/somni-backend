@@ -21,6 +21,7 @@ import {
 } from '../../types/extended';
 import { openRouterService } from '../../../services/openrouter';
 import { logger } from '../../../utils/logger';
+import { dreamInterpretationConfig } from '../../config';
 
 export abstract class BaseDreamInterpreter implements IDreamInterpreter {
   protected openrouter = openRouterService;
@@ -42,6 +43,13 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
     try {
       const prompt = this.buildRelevancePrompt(context);
       
+      // Get current model from config
+      const config = dreamInterpretationConfig.getLLMConfig();
+      const currentModel = config.primaryModel;
+      
+      // Use higher token limit for gemini-2.5-flash
+      const maxTokens = currentModel.includes('gemini-2.5-flash') ? 1500 : 800;
+      
       const response = await this.openrouter.generateCompletion(
         [
           {
@@ -55,14 +63,48 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         ],
         {
           temperature: 0.3,
-          maxTokens: 1500,
-          interpreterType: this.type
+          maxTokens,
+          interpreterType: this.type,
+          responseFormat: { type: 'json_object' }
         }
       );
       
-      // Extract JSON from response (handle markdown code blocks)
-      const jsonMatch = response.content.match(/\{[\s\S]*\}/);
-      const assessment = JSON.parse(jsonMatch ? jsonMatch[0] : response.content);
+      // Parse JSON response - with schema validation, the response should be valid JSON
+      let assessment;
+      try {
+        assessment = JSON.parse(response.content);
+      } catch (parseError) {
+        // Log the actual response for debugging
+        logger.error('Failed to parse JSON response in assessRelevance', {
+          rawContent: response.content,
+          contentLength: response.content.length,
+          parseError: parseError.message
+        });
+        
+        // Fallback: Extract JSON from response (handle markdown code blocks)
+        let cleanedContent = response.content;
+        
+        // Remove markdown code blocks
+        cleanedContent = cleanedContent.replace(/```json\s*/gi, '').replace(/```\s*/g, '');
+        
+        // Try to extract JSON object
+        const jsonMatch = cleanedContent.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          let jsonStr = jsonMatch[0];
+          
+          // Try to fix common JSON issues
+          // Fix unescaped quotes within string values
+          jsonStr = jsonStr.replace(/"([^"]*)":\s*"([^"]*)"/g, (match, key, value) => {
+            // Escape any unescaped quotes within the value
+            const escapedValue = value.replace(/(?<!\\)"/g, '\\"');
+            return `"${key}": "${escapedValue}"`;
+          });
+          
+          assessment = JSON.parse(jsonStr);
+        } else {
+          assessment = JSON.parse(cleanedContent);
+        }
+      }
       
       return {
         success: true,
@@ -144,6 +186,13 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
     try {
       const prompt = this.buildFormattingPrompt(context, fullInterpretation, relevanceData);
       
+      // Use a model better suited for JSON generation
+      const jsonFriendlyModel = this.type === 'mary' 
+        ? 'mistralai/mistral-nemo:free'  // Mary uses Mistral for JSON
+        : this.type === 'freud'
+        ? 'openai/gpt-4o-mini'  // Freud already has GPT-4o-mini as fallback
+        : undefined;  // Others use default chain
+      
       const response = await this.openrouter.generateCompletion(
         [
           {
@@ -158,75 +207,53 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         {
           temperature: 0.2,
           maxTokens: 2000,
-          interpreterType: this.type
+          interpreterType: this.type,
+          responseFormat: { type: 'json_object' },
+          model: jsonFriendlyModel
         }
       );
       
-      // Extract JSON from response (handle markdown code blocks)
-      let jsonString = response.content;
-      
-      // Try to extract JSON from markdown code blocks first
-      const codeBlockMatch = response.content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
-      if (codeBlockMatch) {
-        jsonString = codeBlockMatch[1];
-      } else {
-        // Fall back to finding raw JSON
-        const jsonMatch = response.content.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          jsonString = jsonMatch[0];
-        }
-      }
-      
+      // Parse JSON response - with schema validation, the response should be valid JSON
       let formatted;
       try {
-        formatted = JSON.parse(jsonString);
+        formatted = JSON.parse(response.content);
       } catch (parseError) {
-        logger.error('JSON parsing failed, attempting to clean:', parseError);
+        logger.warn('Direct JSON parsing failed, attempting extraction:', parseError);
         
-        // Function to properly escape string values in JSON
-        const escapeJsonString = (str: string) => {
-          return str
-            .replace(/\\/g, '\\\\')  // Escape backslashes first
-            .replace(/"/g, '\\"')     // Escape quotes
-            .replace(/\n/g, '\\n')    // Escape newlines
-            .replace(/\r/g, '\\r')    // Escape carriage returns
-            .replace(/\t/g, '\\t')    // Escape tabs
-            .replace(/[\u0000-\u001F\u007F-\u009F]/g, ''); // Remove other control characters
-        };
+        // Extract JSON from response (handle markdown code blocks)
+        let jsonString = response.content;
         
-        // Try to fix the JSON string
-        try {
-          // First attempt: simple cleanup
-          jsonString = jsonString
-            .replace(/,\s*}/g, '}')   // Remove trailing commas in objects
-            .replace(/,\s*]/g, ']')   // Remove trailing commas in arrays
-            .replace(/'/g, '"')       // Replace single quotes with double quotes
-            .replace(/(\w+):/g, '"$1":'); // Quote unquoted keys
-          
-          formatted = JSON.parse(jsonString);
-        } catch (cleanupError) {
-          // Second attempt: more aggressive cleaning
-          logger.warn('Simple cleanup failed, attempting deep cleaning');
-          
-          // Extract and clean string values within the JSON
-          jsonString = jsonString.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, (match, content) => {
-            return '"' + escapeJsonString(content) + '"';
-          });
-          
-          // Remove any remaining control characters outside of strings
-          jsonString = jsonString.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, '');
-          
-          try {
-            formatted = JSON.parse(jsonString);
-          } catch (secondError) {
-            logger.error('Second JSON parsing attempt failed:', secondError);
-            logger.error('Problematic JSON string:', jsonString.substring(0, 500));
-            throw new Error(`Failed to parse JSON after cleaning: ${secondError instanceof Error ? secondError.message : String(secondError)}`);
+        // Try to extract JSON from markdown code blocks first
+        const codeBlockMatch = response.content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+        if (codeBlockMatch) {
+          jsonString = codeBlockMatch[1];
+        } else {
+          // Fall back to finding raw JSON
+          const jsonMatch = response.content.match(/\{[\s\S]*\}/);
+          if (jsonMatch) {
+            jsonString = jsonMatch[0];
           }
+        }
+        
+        try {
+          formatted = JSON.parse(jsonString);
+        } catch (secondError) {
+          logger.error('JSON extraction and parsing failed:', secondError);
+          logger.error('Response content:', response.content.substring(0, 500));
+          
+          // With strict schema, parsing failures should be rare
+          // If they occur, it's likely a model issue
+          throw new Error(`Failed to parse JSON response: ${secondError instanceof Error ? secondError.message : String(secondError)}`);
         }
       }
       
       // Add metadata and full interpretation
+      // Fix: Map interpretationCore to interpreterCore if present
+      if (formatted.interpretationCore) {
+        formatted.interpreterCore = formatted.interpretationCore;
+        delete formatted.interpretationCore;
+      }
+      
       const result: FormattedInterpretation = {
         ...formatted,
         fullInterpretation: fullInterpretation.interpretation,
@@ -318,11 +345,11 @@ ${this.personality.voiceSignature}`;
     
     switch (stage) {
       case 'relevance':
-        return `${basePrompt}\n\nYour task is to assess the relevance of provided knowledge fragments and themes to the dream. Return only valid JSON.`;
+        return `${basePrompt}\n\nYour task is to assess the relevance of provided knowledge fragments and themes to the dream. Return ONLY valid JSON without any markdown formatting, code blocks, or additional text. Do not wrap the JSON in \`\`\`json blocks. Start your response with { and end with }.`;
       case 'interpretation':
         return `${basePrompt}\n\nYour task is to provide a comprehensive dream interpretation using your unique perspective and expertise.`;
       case 'formatting':
-        return `${basePrompt}\n\nYour task is to format the interpretation into a structured JSON response. Return only valid JSON.`;
+        return `${basePrompt}\n\nYour task is to format the interpretation into a structured JSON response. Return ONLY valid JSON without any markdown formatting, code blocks, or additional text. Do not wrap the JSON in \`\`\`json blocks. Start your response with { and end with }.`;
     }
   }
   

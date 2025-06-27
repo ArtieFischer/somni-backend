@@ -4,6 +4,7 @@
 
 import { BaseDreamInterpreter } from '../base/base-interpreter';
 import { InterpreterType, DreamInterpretation, InterpretationCore } from '../../types/extended';
+import { FreudianCore } from '../../types';
 import { freudPrompts } from './freud-prompts';
 
 export class FreudInterpreter extends BaseDreamInterpreter {

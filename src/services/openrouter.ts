@@ -40,6 +40,7 @@ export class OpenRouterService {
       stream?: boolean;
       interpreterType?: InterpreterType;
       dreamId?: string;
+      responseFormat?: { type: 'json_object' };
     } = {}
   ): Promise<{
     content: string;
@@ -110,6 +111,7 @@ export class OpenRouterService {
       maxTokens?: number;
       interpreterType?: InterpreterType;
       dreamId?: string;
+      responseFormat?: { type: 'json_object' };
     },
     startTime: number
   ): Promise<{
@@ -136,15 +138,33 @@ export class OpenRouterService {
         interpreterType: options.interpreterType,
       });
 
-      const completion = await this.client.chat.completions.create({
+      // Check if model supports response_format
+      // Llama 4 models don't support response_format parameter
+      const supportsResponseFormat = !modelParams.model.includes('llama-4-scout') && !modelParams.model.includes('llama-4-maverick') && !modelParams.model.includes('gemma');
+      
+      const requestParams = {
         model: modelParams.model,
         messages,
         temperature: modelParams.temperature,
         max_tokens: modelParams.maxTokens,
         stream: false,
+        ...(options.responseFormat && supportsResponseFormat && { response_format: options.responseFormat }),
+      };
+      
+      logger.info('OpenRouter request params', {
+        model: requestParams.model,
+        max_tokens: requestParams.max_tokens,
+        temperature: requestParams.temperature,
+        hasResponseFormat: !!requestParams.response_format
       });
+      
+      const completion = await this.client.chat.completions.create(requestParams);
 
-      if (!completion.choices[0]?.message?.content) {
+      if (!completion || !completion.choices || !completion.choices[0]) {
+        throw new Error('Invalid response structure from OpenRouter API');
+      }
+
+      if (!completion.choices[0].message?.content) {
         throw new Error('No content returned from OpenRouter API');
       }
 
@@ -312,13 +332,13 @@ Title:`;
     try {
       logger.info('Generating dream title', {
         transcriptLength: transcript.length,
-        model: options.model || 'meta-llama/llama-4-scout:free',
+        model: options.model || 'meta-llama/llama-4-maverick:free',
       });
 
       const response = await this.generateCompletion(
         [{ role: 'user', content: prompt }],
         {
-          model: options.model || 'meta-llama/llama-4-scout:free',
+          model: options.model || 'meta-llama/llama-4-maverick:free',
           temperature: options.temperature ?? 0.7,
           maxTokens: options.maxTokens ?? 20,
         }
@@ -370,13 +390,13 @@ Visual scene description:`;
     try {
       logger.info('Generating dream scene description', {
         transcriptLength: transcript.length,
-        model: options.model || 'meta-llama/llama-4-scout:free',
+        model: options.model || 'meta-llama/llama-4-maverick:free',
       });
 
       const response = await this.generateCompletion(
         [{ role: 'user', content: prompt }],
         {
-          model: options.model || 'meta-llama/llama-4-scout:free',
+          model: options.model || 'meta-llama/llama-4-maverick:free',
           temperature: options.temperature ?? 0.8,
           maxTokens: options.maxTokens ?? 100,
         }
@@ -448,132 +468,208 @@ ${transcript}`;
       { role: 'user', content: userPrompt }
     ];
 
-    // Use Llama 4 as primary, with Mistral Nemo as fallback for controversial content
+    // Enhanced model chain with JSON-friendly models
+    // Models known to work well with JSON: Mistral variants, Dolphin, and newer models
     const modelChain = options.model 
       ? [options.model]
-      : ['meta-llama/llama-4-scout:free', 'mistralai/mistral-nemo:free', 'cognitivecomputations/dolphin3.0-mistral-24b:free'];
+      : [
+          'mistralai/mistral-nemo:free',           // Good at following instructions
+          'cognitivecomputations/dolphin3.0-mistral-24b:free', // Very good at structured output
+          'google/gemma-2-9b-it:free',             // Google's model, good at structured tasks
+          'meta-llama/llama-4-maverick:free'        // Fallback, doesn't support response_format
+        ];
     
     let lastError: unknown;
+    const maxRetriesPerModel = 2; // Retry each model up to 2 times for JSON parsing issues
 
     for (const model of modelChain) {
-      try {
-        logger.info('Attempting dream metadata generation', { 
-          model,
-          dreamId: options.dreamId,
-          transcriptLength: transcript.length 
-        });
-
-        // Check if the model supports response_format parameter
-        const supportsResponseFormat = !model.includes('llama-4-scout');
-        
-        const requestParams: any = {
-          model,
-          messages,
-          temperature: 0.7,
-          max_tokens: 200
-        };
-        
-        if (supportsResponseFormat) {
-          requestParams.response_format = { type: 'json_object' };
-        }
-        
-        const completion = await this.client.chat.completions.create(requestParams);
-
-        const content = completion.choices[0]?.message?.content || '';
-        const usage: TokenUsage = {
-          promptTokens: completion.usage?.prompt_tokens || 0,
-          completionTokens: completion.usage?.completion_tokens || 0,
-          totalTokens: completion.usage?.total_tokens || 0,
-        };
-
-        // Parse and validate the JSON response
-        interface MetadataResponse {
-          title: string;
-          imagePrompt: string;
-          mood: number;
-          clarity: number;
-        }
-        let metadata: MetadataResponse;
+      for (let attempt = 1; attempt <= maxRetriesPerModel; attempt++) {
         try {
-          // Try to extract JSON if the model returned extra text
-          const jsonMatch = content.match(/\{[^}]*"title"[^}]*"imagePrompt"[^}]*"mood"[^}]*"clarity"[^}]*\}/);
-          if (jsonMatch) {
-            metadata = JSON.parse(jsonMatch[0]);
-          } else {
-            metadata = JSON.parse(content);
-          }
-        } catch (parseError) {
-          logger.error('Failed to parse metadata JSON', { 
-            error: parseError,
-            content,
+          logger.info('Attempting dream metadata generation', { 
             model,
+            attempt,
+            dreamId: options.dreamId,
+            transcriptLength: transcript.length 
+          });
+
+          // Check if the model supports response_format parameter
+          const supportsResponseFormat = !model.includes('llama-4-scout') && !model.includes('llama-4-maverick');
+          
+          const requestParams: any = {
+            model,
+            messages,
+            temperature: attempt === 1 ? 0.7 : 0.3, // Lower temperature on retry
+            max_tokens: 250 // Slightly more tokens to ensure complete JSON
+          };
+          
+          if (supportsResponseFormat) {
+            requestParams.response_format = { type: 'json_object' };
+          }
+          
+          const completion = await this.client.chat.completions.create(requestParams);
+
+          const content = completion.choices[0]?.message?.content || '';
+          const usage: TokenUsage = {
+            promptTokens: completion.usage?.prompt_tokens || 0,
+            completionTokens: completion.usage?.completion_tokens || 0,
+            totalTokens: completion.usage?.total_tokens || 0,
+          };
+
+          // Parse and validate the JSON response
+          interface MetadataResponse {
+            title: string;
+            imagePrompt: string;
+            mood: number;
+            clarity: number;
+          }
+          let metadata: MetadataResponse;
+          
+          try {
+            // Clean the content first
+            let cleanedContent = content.trim();
+            
+            // Remove common prefixes/suffixes that models might add
+            cleanedContent = cleanedContent.replace(/^```json\s*/i, '');
+            cleanedContent = cleanedContent.replace(/\s*```$/i, '');
+            cleanedContent = cleanedContent.replace(/^json\s*/i, '');
+            cleanedContent = cleanedContent.replace(/^Here is the JSON.*?:/i, '');
+            cleanedContent = cleanedContent.replace(/^The JSON response is.*?:/i, '');
+            
+            // Try multiple extraction strategies
+            let jsonString: string | null = null;
+            
+            // Strategy 1: Direct parse if it's clean JSON
+            if (cleanedContent.startsWith('{') && cleanedContent.endsWith('}')) {
+              jsonString = cleanedContent;
+            }
+            
+            // Strategy 2: Extract JSON with all required fields
+            if (!jsonString) {
+              const fullJsonMatch = cleanedContent.match(/\{[^{}]*"title"[^{}]*"imagePrompt"[^{}]*"mood"[^{}]*"clarity"[^{}]*\}/);
+              if (fullJsonMatch) {
+                jsonString = fullJsonMatch[0];
+              }
+            }
+            
+            // Strategy 3: Extract any JSON-like object and hope it has our fields
+            if (!jsonString) {
+              const anyJsonMatch = cleanedContent.match(/\{[^{}]+\}/);
+              if (anyJsonMatch) {
+                jsonString = anyJsonMatch[0];
+              }
+            }
+            
+            if (!jsonString) {
+              throw new Error('No JSON object found in response');
+            }
+            
+            metadata = JSON.parse(jsonString);
+            
+          } catch (parseError) {
+            logger.error('Failed to parse metadata JSON', { 
+              error: parseError,
+              content: content.substring(0, 500), // Log first 500 chars
+              model,
+              attempt,
+              dreamId: options.dreamId 
+            });
+            
+            if (attempt < maxRetriesPerModel) {
+              // Wait before retrying
+              await this.delay(500);
+              continue; // Retry with same model
+            }
+            
+            throw new Error('Invalid JSON response from model after retries');
+          }
+
+          // Validate the response structure
+          if (!metadata.title || !metadata.imagePrompt || 
+              typeof metadata.mood !== 'number' || typeof metadata.clarity !== 'number') {
+            logger.error('Invalid metadata structure', {
+              model,
+              metadata,
+              dreamId: options.dreamId
+            });
+            
+            if (attempt < maxRetriesPerModel) {
+              await this.delay(500);
+              continue; // Retry with same model
+            }
+            
+            throw new Error('Invalid metadata structure');
+          }
+          
+          // Validate and clamp mood to 1-5
+          if (metadata.mood < 1 || metadata.mood > 5) {
+            metadata.mood = Math.max(1, Math.min(5, Math.round(metadata.mood)));
+          }
+          
+          // Validate and clamp clarity to 1-100
+          if (metadata.clarity < 1 || metadata.clarity > 100) {
+            metadata.clarity = Math.max(1, Math.min(100, Math.round(metadata.clarity)));
+          }
+          
+          // Clean up title and imagePrompt
+          metadata.title = metadata.title.trim().replace(/\.$/, ''); // Remove trailing period
+          metadata.imagePrompt = metadata.imagePrompt.trim();
+
+          // Track costs
+          modelConfigService.trackCost(
+            model,
+            usage,
+            'jung' as InterpreterType, // Use a default type for metadata
+            options.dreamId || 'metadata-gen'
+          );
+
+          const responseTime = Date.now() - startTime;
+          logger.info('Dream metadata generated successfully', {
+            model,
+            dreamId: options.dreamId,
+            responseTime,
+            usage,
+            attempt
+          });
+
+          return {
+            title: metadata.title,
+            imagePrompt: metadata.imagePrompt,
+            mood: metadata.mood,
+            clarity: metadata.clarity,
+            usage,
+            model
+          };
+
+        } catch (error) {
+          lastError = error;
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          const is503Error = errorMessage.includes('503');
+          const isRateLimit = errorMessage.includes('429');
+          
+          logger.error('Dream metadata generation failed', {
+            model,
+            attempt,
+            dreamId: options.dreamId,
+            error: errorMessage,
+            is503Error,
+            isRateLimit
+          });
+
+          // If it's the last attempt for the last model, throw
+          if (model === modelChain[modelChain.length - 1] && attempt === maxRetriesPerModel) {
+            throw this.handleOpenRouterError(lastError);
+          }
+
+          // Wait before next attempt/model
+          let waitTime = 1000; // Default wait
+          if (is503Error) waitTime = 3000;
+          if (isRateLimit) waitTime = 5000;
+          
+          logger.info(`Waiting ${waitTime}ms before ${attempt < maxRetriesPerModel ? 'retry' : 'next model'}`, { 
             dreamId: options.dreamId 
           });
-          throw new Error('Invalid JSON response from model');
+          await this.delay(waitTime);
         }
-
-        // Validate the response structure
-        if (!metadata.title || !metadata.imagePrompt || 
-            typeof metadata.mood !== 'number' || typeof metadata.clarity !== 'number') {
-          throw new Error('Invalid metadata structure');
-        }
-        
-        // Validate mood is between 1-5
-        if (metadata.mood < 1 || metadata.mood > 5) {
-          metadata.mood = Math.max(1, Math.min(5, Math.round(metadata.mood)));
-        }
-        
-        // Validate clarity is between 1-100
-        if (metadata.clarity < 1 || metadata.clarity > 100) {
-          metadata.clarity = Math.max(1, Math.min(100, Math.round(metadata.clarity)));
-        }
-
-        // Track costs
-        modelConfigService.trackCost(
-          model,
-          usage,
-          'jung' as InterpreterType, // Use a default type for metadata
-          options.dreamId || 'metadata-gen'
-        );
-
-        const responseTime = Date.now() - startTime;
-        logger.info('Dream metadata generated successfully', {
-          model,
-          dreamId: options.dreamId,
-          responseTime,
-          usage
-        });
-
-        return {
-          title: metadata.title,
-          imagePrompt: metadata.imagePrompt,
-          mood: metadata.mood,
-          clarity: metadata.clarity,
-          usage,
-          model
-        };
-
-      } catch (error) {
-        lastError = error;
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        const is503Error = errorMessage.includes('503');
-        
-        logger.error('Dream metadata generation failed', {
-          model,
-          dreamId: options.dreamId,
-          error: errorMessage,
-          is503Error
-        });
-
-        if (model === modelChain[modelChain.length - 1]) {
-          // This was the last model in the chain
-          throw this.handleOpenRouterError(lastError);
-        }
-
-        // Wait longer for 503 errors
-        const waitTime = is503Error ? 3000 : 1000;
-        logger.info(`Waiting ${waitTime}ms before trying next model`, { dreamId: options.dreamId });
-        await this.delay(waitTime);
       }
     }
 
@@ -628,4 +724,4 @@ ${transcript}`;
 }
 
 // Export singleton instance
-export const openRouterService = new OpenRouterService(); 
+export const openRouterService = new OpenRouterService();

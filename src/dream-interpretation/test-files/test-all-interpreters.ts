@@ -45,7 +45,6 @@ async function testAllInterpreters() {
         })),
         userContext: {
           age: 35,
-          lifeStage: 'adult',
           currentLifeSituation: 'Career transition and family responsibilities',
           emotionalState: 'Contemplative, seeking clarity'
         }
@@ -63,8 +62,13 @@ async function testAllInterpreters() {
         // Display knowledge retrieval statistics
         if (interpretation.generationMetadata) {
           console.log('\n📚 Knowledge Retrieval:');
-          console.log(`  - Total fragments retrieved: ${interpretation.generationMetadata.totalFragmentsRetrieved || 'N/A'}`);
-          console.log(`  - Fragments used after quality control: ${interpretation.generationMetadata.knowledgeFragmentsUsed || 'N/A'}`);
+          console.log(`  - Total fragments retrieved: ${interpretation.generationMetadata.totalFragmentsRetrieved ?? 'N/A'}`);
+          console.log(`  - Fragments used after quality control: ${interpretation.generationMetadata.knowledgeFragmentsUsed ?? 'N/A'}`);
+          if (interpretation.generationMetadata.fragmentIdsUsed) {
+            console.log(`  - Fragment IDs tracked: ${interpretation.generationMetadata.fragmentIdsUsed.length}`);
+          }
+        } else {
+          console.log('\n📚 Knowledge Retrieval: No metadata available');
         }
         
         console.log('\n🔍 Symbols:', interpretation.symbols.join(', '));

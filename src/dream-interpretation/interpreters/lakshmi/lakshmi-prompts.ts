@@ -16,7 +16,7 @@ Analyze which themes and fragments are most relevant for understanding:
 4. Past life connections or samskaras
 5. Dharmic guidance and life purpose
 
-Return a JSON object with:
+Return ONLY a JSON object with this exact structure:
 {
   "relevantThemes": ["theme1", "theme2", ...],
   "relevantFragments": [
@@ -29,7 +29,8 @@ Return a JSON object with:
   "focusAreas": ["primary spiritual theme", "karmic pattern", ...]
 }
 
-IMPORTANT: Select ONLY the 3 most relevant fragments that directly enhance the interpretation.`,
+IMPORTANT: Select ONLY the 2 most relevant fragments that directly enhance the interpretation.
+Return ONLY valid JSON, no explanatory text before or after.`,
 
   fullInterpretation: `Provide a compassionate spiritual interpretation of this dream, drawing upon Vedantic wisdom and yogic understanding.
 
@@ -71,7 +72,7 @@ Create a JSON object that captures the essence of the Vedantic interpretation:
 
 {
   "dreamId": "provided-dream-id",
-  "interpretation": "MUST BE 2-3 DISTINCT PARAGRAPHS separated by \\n\\n. Each paragraph should be 4-6 sentences. Total length approximately 40% of full interpretation. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your' - NEVER use third person references like 'the dreamer' or 'the soul'. FOCUS ONLY ON INTERPRETING THE DREAM SYMBOLS AND NARRATIVE - do NOT include advice, practices, or instructions (save those for practicalGuidance field). First paragraph: Identify the spiritual patterns and karmic themes revealed through your dream imagery and events - what the symbols represent spiritually for you. Second paragraph: Analyze the energy dynamics and chakra influences as shown through your dream interactions and emotions. Optional third paragraph: Explore deeper spiritual meanings and divine messages embedded in your dream narrative. IMPORTANT: Use a MAXIMUM of 4 Sanskrit/spiritual terms total (choose from: karma, dharma, chakra, maya, samsara, moksha, atman, prana) and provide brief translations. Stay focused on dream analysis only. This must read as a complete multi-paragraph interpretation, NOT a single block of text.",
+  "interpretation": "CONDENSED INTERPRETATION: 2 focused paragraphs, 150-180 words TOTAL. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your'. First paragraph (4-5 sentences): Identify the spiritual patterns and karmic themes revealed through your dream imagery and events. Second paragraph (3-4 sentences): Analyze the energy dynamics and soul messages being communicated through your dream's symbolism. Use MAXIMUM 3 Sanskrit/spiritual terms with brief translations. Focus purely on spiritual dream interpretation, no practices or advice.",
   "dreamTopic": "Brief phrase capturing the spiritual theme",
   "quickTake": "2-3 sentence summary of the soul's message",
   "symbols": ["symbol1", "symbol2", ...],

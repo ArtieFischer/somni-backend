@@ -17,7 +17,7 @@ Analyze which themes and fragments are most relevant for understanding:
 5. Neurotransmitter systems and their influence
 6. Cognitive processing and executive function aspects
 
-Return a JSON object with:
+Return ONLY a JSON object with this exact structure:
 {
   "relevantThemes": ["theme1", "theme2", ...],
   "relevantFragments": [
@@ -30,7 +30,8 @@ Return a JSON object with:
   "focusAreas": ["primary neural process", "cognitive function", "emotional processing", ...]
 }
 
-IMPORTANT: Select ONLY the 3 most relevant fragments that directly enhance the interpretation.`,
+IMPORTANT: Select ONLY the 2 most relevant fragments that directly enhance the interpretation.
+Return ONLY valid JSON, no explanatory text before or after.`,
 
   fullInterpretation: `Provide a comprehensive neuroscientific interpretation of this dream, drawing upon current sleep and brain research.
 
@@ -73,7 +74,7 @@ Create a JSON object that captures the essence of the neuroscientific interpreta
 
 {
   "dreamId": "provided-dream-id",
-  "interpretation": "MUST BE 2-3 DISTINCT PARAGRAPHS separated by \\n\\n. Each paragraph should be 4-6 sentences. Total length approximately 40% of full interpretation. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your' - NEVER use third person references. FOCUS ONLY ON INTERPRETING THE DREAM FROM A NEUROSCIENCE PERSPECTIVE - do NOT include sleep hygiene advice or behavioral recommendations (save those for practicalGuidance field). First paragraph: Analyze the neural mechanisms active in your dream - which brain regions generated the specific imagery and emotions you experienced. Second paragraph: Explore how your brain was processing memories and emotions through the dream narrative, including relevant neurotransmitter activity. Optional third paragraph: Connect dream patterns to cognitive functions and neural plasticity demonstrated in your dream. IMPORTANT: Use a MAXIMUM of 4 neuroscientific terms total (choose from: hippocampus, amygdala, prefrontal cortex, REM sleep, consolidation, neural plasticity, neurotransmitters, activation-synthesis). Stay focused on brain-based dream analysis only.",
+  "interpretation": "CONDENSED INTERPRETATION: 2 focused paragraphs, 150-180 words TOTAL. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your'. First paragraph (4-5 sentences): Explain which brain regions (hippocampus, amygdala, cortex) generated your specific dream imagery and the neural mechanisms involved. Second paragraph (3-4 sentences): Analyze what memory consolidation or emotional processing your brain was performing through this dream narrative. Use MAXIMUM 3 neuroscientific terms. Focus purely on brain-based dream analysis, no sleep hygiene advice.",
   "dreamTopic": "Brief phrase capturing the neural/cognitive theme",
   "quickTake": "2-3 sentence summary of the brain's processing",
   "symbols": ["symbol1", "symbol2", ...],

@@ -134,9 +134,9 @@ const defaultConfig: DreamInterpretationConfig = {
   
   llm: {
     provider: 'openrouter',
-    primaryModel: 'meta-llama/llama-4-scout:free',
+    primaryModel: 'google/gemini-2.5-flash-preview-05-20',
     fallbackModel: 'mistralai/mistral-nemo:free',
-    fallbackModel2: 'cognitivecomputations/dolphin3.0-mistral-24b:free',
+    fallbackModel2: 'google/gemini-2.5-flash-preview-05-20',
     baseUrl: 'https://openrouter.ai/api/v1',
     timeout: 60000, // 60 seconds
     siteUrl: 'https://somni.app',
@@ -378,7 +378,7 @@ export class DreamInterpretationConfiguration {
         throw new Error(`Invalid configuration: ${validation.errors.join(', ')}`);
       }
     } catch (error) {
-      throw new Error(`Failed to import configuration: ${error.message}`);
+      throw new Error(`Failed to import configuration: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 }

@@ -34,11 +34,12 @@ export interface CostEntry {
 
 // Quick model switching constants - Easy entry point for model comparison
 export const QUICK_MODELS = {
-  LLAMA_4: 'meta-llama/llama-4-scout:free',
+  LLAMA_4: 'google/gemini-2.5-flash-preview-05-20',
   GPT_4O_MINI: 'openai/gpt-4o-mini', 
   CLAUDE_HAIKU: 'anthropic/claude-3-haiku',
   LLAMA_3_1: 'meta-llama/llama-3.1-8b-instruct:free',
-  GEMMA_2: 'google/gemma-2-9b-it:free'
+  GEMMA_2: 'google/gemma-2-9b-it:free',
+  MISTRAL_NEMO: 'mistralai/mistral-nemo:free'
 } as const;
 
 export class ModelConfigService {
@@ -50,7 +51,7 @@ export class ModelConfigService {
   private readonly interpreterConfigs: Record<InterpreterType, InterpreterModelConfig> = {
     jung: {
       defaultModel: QUICK_MODELS.LLAMA_4,
-      fallbackModel: QUICK_MODELS.LLAMA_3_1,
+      fallbackModel: QUICK_MODELS.MISTRAL_NEMO,
       temperature: 0.9,  // Higher for more creative Jungian analysis
       maxTokens: 2000
     },
@@ -68,7 +69,7 @@ export class ModelConfigService {
     },
     lakshmi: {
       defaultModel: QUICK_MODELS.LLAMA_4,
-      fallbackModel: QUICK_MODELS.LLAMA_3_1,
+      fallbackModel: QUICK_MODELS.MISTRAL_NEMO,
       temperature: 0.8,  // Higher for mystical interpretations
       maxTokens: 1500
     }
@@ -88,12 +89,42 @@ export class ModelConfigService {
         interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
       },
       {
+        id: 'meta-llama/llama-4-maverick:free',
+        name: 'Llama 4 Maverick (Free)',
+        provider: 'openrouter',
+        maxTokens: 20000,
+        temperature: 0.9,
+        costPerKToken: 0,
+        recommended: true,
+        interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
+      },
+      {
+        id: 'x-ai/grok-3-mini',
+        name: 'Grok 3 Mini',
+        provider: 'openrouter',
+        maxTokens: 10000,
+        temperature: 0.7,
+        costPerKToken: 0.10,
+        recommended: true,
+        interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
+      },
+      {
         id: 'meta-llama/llama-3.1-8b-instruct:free',
         name: 'Llama 3.1 8B (Free)',
         provider: 'openrouter',
         maxTokens: 8000,
         temperature: 0.7,
         costPerKToken: 0,
+        recommended: true,
+        interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
+      },
+      {
+        id: 'google/gemini-2.5-flash-preview-05-20',
+        name: 'Gemini 2.5 Flash Preview',
+        provider: 'openrouter',
+        maxTokens: 128000,
+        temperature: 0.7,
+        costPerKToken: 0.15,
         recommended: true,
         interpreterTypes: ['jung', 'freud', 'mary', 'lakshmi'],
       },

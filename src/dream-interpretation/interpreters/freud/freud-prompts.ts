@@ -17,7 +17,7 @@ Analyze which themes and fragments are most relevant for understanding:
 5. Oedipal/Electra dynamics if present
 6. Manifest vs latent dream content
 
-Return a JSON object with:
+Return ONLY a JSON object with this exact structure:
 {
   "relevantThemes": ["theme1", "theme2", ...],
   "relevantFragments": [
@@ -30,7 +30,8 @@ Return a JSON object with:
   "focusAreas": ["primary drive", "defense mechanism", "childhood connection", ...]
 }
 
-IMPORTANT: Select ONLY the 3 most relevant fragments that directly enhance the interpretation.`,
+IMPORTANT: Select ONLY the 2 most relevant fragments that directly enhance the interpretation.
+Return ONLY valid JSON, no explanatory text before or after.`,
 
   fullInterpretation: `Provide a penetrating psychoanalytic interpretation of this dream, drawing upon classical Freudian theory.
 
@@ -73,7 +74,7 @@ Create a JSON object that captures the essence of the psychoanalytic interpretat
 
 {
   "dreamId": "provided-dream-id",
-  "interpretation": "MUST BE 2-3 DISTINCT PARAGRAPHS separated by \\n\\n. Each paragraph should be 4-6 sentences. Total length approximately 40% of full interpretation. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your' - NEVER use third person references. FOCUS ONLY ON INTERPRETING THE DREAM SYMBOLS AND NARRATIVE - do NOT include therapeutic advice or instructions (save those for practicalGuidance field). First paragraph: Analyze the manifest content and identify the primary unconscious wishes revealed through your dream imagery and narrative. Second paragraph: Explore the dream-work mechanisms - how your psyche disguised forbidden desires through condensation, displacement, and symbolization in specific dream elements. Optional third paragraph: Connect dream patterns to deeper psychosexual dynamics or childhood experiences reflected in your dream. IMPORTANT: Use a MAXIMUM of 4 psychoanalytic terms total (choose from: unconscious, repression, id/ego/superego, libido, transference, complex, defense mechanism, wish-fulfillment). Stay focused on dream analysis only. This must read as a complete multi-paragraph interpretation.",
+  "interpretation": "CONDENSED INTERPRETATION: 2 focused paragraphs, 150-180 words TOTAL. ALWAYS ADDRESS THE USER DIRECTLY as 'you/your'. First paragraph (4-5 sentences): Analyze the manifest content and uncover the latent content hidden beneath your dream imagery and narrative. Second paragraph (3-4 sentences): Explore the dream-work mechanisms (condensation, displacement) and identify the unconscious wish or repressed desire being expressed. Use MAXIMUM 3 psychoanalytic terms. Focus purely on dream interpretation, no therapeutic advice.",
   "dreamTopic": "Brief phrase capturing the core psychodynamic theme",
   "quickTake": "2-3 sentence summary of the unconscious message",
   "symbols": ["symbol1", "symbol2", ...],

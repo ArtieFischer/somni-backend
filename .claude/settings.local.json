@@ -35,7 +35,8 @@
       "Bash(rg:*)",
       "Bash(./test-interpret.sh:*)",
       "Bash(npx ts-node:*)",
-      "WebFetch(domain:elevenlabs.io)"
+      "WebFetch(domain:elevenlabs.io)",
+      "Bash(npm test:*)"
     ],
     "deny": []
   },

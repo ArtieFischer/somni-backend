@@ -96,14 +96,14 @@ export class ModularThreeStageInterpreter {
       const processingTime = Date.now() - startTime;
       const fragmentIdsUsed = relevanceResult.data!.relevantFragments.map(f => f.id);
       const generationMetadata: GenerationMetadata = {
-        model: 'multi-model',
-        temperature: 0.7,
-        maxTokens: 2000,
-        stagesCompleted: ['relevance_assessment', 'full_interpretation', 'json_formatting'],
-        knowledgeFragmentsUsed: relevanceResult.data!.relevantFragments.length,
+        dynamicElements: ['relevance_assessment', 'full_interpretation', 'json_formatting'],
+        repetitionGuards: [],
+        knowledgeSourcesUsed: fragmentIdsUsed,
+        contextFactors: ['dreamContent', 'userContext', 'interpreterPersonality'],
+        confidenceScore: 0.85,
         totalFragmentsRetrieved: knowledgeFragments.length,
-        fragmentIdsUsed,
-        interpreterMetadata: interpreter.metadata
+        knowledgeFragmentsUsed: relevanceResult.data!.relevantFragments.length,
+        fragmentIdsUsed: fragmentIdsUsed
       };
       
       // Validate the result
@@ -133,6 +133,7 @@ export class ModularThreeStageInterpreter {
           createdAt: new Date(),
           processingTime,
           generationMetadata,
+          validationResult: validation,
           authenticityMarkers: result.authenticityMarkers || {
             personalEngagement: 0.9,
             vocabularyAuthenticity: 0.9,

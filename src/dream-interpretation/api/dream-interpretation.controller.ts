@@ -234,10 +234,10 @@ export class DreamInterpretationController {
         // Default fallback for unknown interpreter types
         return {
           id: type as string,
-          name: metadata?.name || 'Unknown',
-          fullName: metadata?.fullName || 'Unknown Interpreter',
-          description: metadata?.description || 'No description available',
-          approach: metadata?.approach || 'unknown',
+          name: metadata?.metadata?.name || 'Unknown',
+          fullName: metadata?.personality?.name || 'Unknown Interpreter',
+          description: metadata?.metadata?.description || 'No description available',
+          approach: metadata?.metadata?.approach || 'unknown',
           available: false,
           features: []
         };
