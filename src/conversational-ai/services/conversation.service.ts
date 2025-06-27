@@ -111,8 +111,12 @@ class ConversationService {
       // Get relevant knowledge fragments (from interpretation)
       let relevantKnowledge: any[] = [];
       if (interpretation?.full_response) {
-        const fullResponse = JSON.parse(interpretation.full_response);
-        if (fullResponse.stageMetadata?.relevanceAssessment?.relevantFragments) {
+        // full_response might already be an object if stored as JSONB
+        const fullResponse = typeof interpretation.full_response === 'string' 
+          ? JSON.parse(interpretation.full_response)
+          : interpretation.full_response;
+          
+        if (fullResponse?.stageMetadata?.relevanceAssessment?.relevantFragments) {
           relevantKnowledge = fullResponse.stageMetadata.relevanceAssessment.relevantFragments;
         }
       }
