@@ -5,7 +5,7 @@
 
 import { Server as HTTPServer } from 'http';
 import { Server as SocketIOServer, Namespace } from 'socket.io';
-import * as jwt from 'jsonwebtoken';
+import { supabaseService } from '../services/supabase';
 import { logger } from '../utils/logger';
 
 // Import handlers
@@ -50,7 +50,7 @@ export class UnifiedWebSocketServer {
   }
 
   /**
-   * Shared authentication middleware
+   * Shared authentication middleware using Supabase tokens
    */
   private createAuthMiddleware() {
     return async (socket: AuthenticatedSocket, next: (err?: Error) => void) => {
@@ -61,12 +61,32 @@ export class UnifiedWebSocketServer {
           return next(new Error('Authentication required'));
         }
 
-        // Verify JWT token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as any;
+        // Verify token with Supabase
+        const { data: { user }, error } = await supabaseService.auth.getUser(token);
+        
+        if (error || !user) {
+          logger.warn('Invalid WebSocket token', { 
+            error,
+            socketId: socket.id
+          });
+          return next(new Error('Invalid authentication token'));
+        }
         
         // Attach user info to socket
-        socket.userId = decoded.userId || decoded.id;
-        socket.data = { user: decoded };
+        socket.userId = user.id;
+        socket.data = { 
+          user: {
+            id: user.id,
+            email: user.email,
+            user_metadata: user.user_metadata
+          }
+        };
+        
+        logger.debug('WebSocket authentication successful', {
+          userId: user.id,
+          socketId: socket.id,
+          namespace: socket.nsp.name
+        });
         
         next();
       } catch (error) {

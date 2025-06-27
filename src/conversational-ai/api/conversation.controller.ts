@@ -1,5 +1,4 @@
 import { Request, Response, Router } from 'express';
-import * as jwt from 'jsonwebtoken';
 import { conversationService } from '../services/conversation.service';
 import { logger } from '../../utils/logger';
 import { 
@@ -43,17 +42,6 @@ export class ConversationController {
 
       const conversation = await conversationService.createConversation(config);
 
-      // Generate JWT token for WebSocket auth
-      const wsToken = jwt.sign(
-        { 
-          userId,
-          conversationId: conversation.id,
-          type: 'conversation'
-        },
-        process.env.JWT_SECRET!,
-        { expiresIn: '1h' }
-      );
-
       // Build WebSocket URL
       const wsProtocol = process.env.NODE_ENV === 'production' ? 'wss' : 'ws';
       const wsHost = process.env.WS_HOST || req.get('host');
@@ -62,7 +50,7 @@ export class ConversationController {
       const response: StartConversationResponse = {
         conversationId: conversation.id,
         websocketUrl,
-        token: wsToken
+        token: req.headers.authorization?.split(' ')[1] || '' // Pass through Supabase token
       };
 
       res.status(201).json(response);
@@ -246,30 +234,11 @@ export const conversationController = new ConversationController();
 // Create and export router
 const conversationRouter = Router();
 
-// JWT authentication middleware
-const authenticateJWT = (req: Request, res: Response, next: any) => {
-  const authHeader = req.headers.authorization;
-  
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    
-    jwt.verify(token, process.env.JWT_SECRET || 'secret', (err: any, user: any) => {
-      if (err) {
-        res.sendStatus(403);
-        return;
-      }
-      
-      (req as any).user = user;
-      next();
-    });
-    return; // Add return here to satisfy TypeScript
-  } else {
-    res.sendStatus(401);
-  }
-};
+// Use Supabase authentication middleware
+import { isAuthenticated } from '../../middleware/auth';
 
-// Apply JWT authentication middleware
-conversationRouter.use(authenticateJWT);
+// Apply Supabase authentication middleware
+conversationRouter.use(isAuthenticated);
 
 // Register routes
 conversationRouter.post('/start', (req, res) => conversationController.startConversation(req, res));
