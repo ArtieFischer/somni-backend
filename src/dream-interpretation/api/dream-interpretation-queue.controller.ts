@@ -9,7 +9,7 @@ import { config } from '../../config';
 import { logger } from '../../utils/logger';
 import { InterpreterType } from '../types';
 import Bull from 'bull';
-import { modularThreeStageInterpreter } from '../services/modular-three-stage-interpreter';
+// import { modularThreeStageInterpreter } from '../services/modular-three-stage-interpreter'; // Not needed for sync redirect
 
 // Initialize job queue
 const interpretationQueue = new Bull('dream-interpretations', {
@@ -60,15 +60,7 @@ export class DreamInterpretationQueueController {
       const { dreamInterpretationController } = await import('./dream-interpretation.controller');
       return dreamInterpretationController.interpretDreamById(req, res);
       
-      // Validate request
-      if (!dreamId || !userId || !interpreterType) {
-        res.status(400).json({
-          success: false,
-          error: 'Missing required fields: dreamId, userId, interpreterType'
-        });
-        return;
-      }
-      
+      /* Commented out Redis queue implementation for future use
       // Quick validation - check if dream exists and has transcription
       const { data: dream, error: dreamError } = await this.supabase
         .from('dreams')
@@ -157,6 +149,7 @@ export class DreamInterpretationQueueController {
         position: await interpretationQueue.getWaitingCount() + 1,
         message: 'Interpretation queued successfully'
       });
+      */
       
     } catch (error) {
       logger.error('Queue interpretation error', {
@@ -178,6 +171,24 @@ export class DreamInterpretationQueueController {
     try {
       const { jobId } = req.params;
       
+      if (!jobId) {
+        res.status(400).json({
+          success: false,
+          error: 'Job ID is required'
+        });
+        return;
+      }
+      
+      // Since we're not using Redis queue, just return a simple status
+      // In a real implementation with queue, this would check job status
+      res.json({
+        success: true,
+        status: 'processing',
+        message: 'Interpretation is being processed synchronously',
+        jobId: jobId
+      });
+      
+      /* Redis implementation commented out for future use
       // Get job from queue
       const job = await interpretationQueue.getJob(jobId);
       
@@ -218,6 +229,7 @@ export class DreamInterpretationQueueController {
         estimatedWaitTime: state === 'waiting' ? await this.estimateWaitTime(job) : null,
         data: job.returnvalue
       });
+      */
       
     } catch (error) {
       res.status(500).json({
@@ -227,6 +239,7 @@ export class DreamInterpretationQueueController {
     }
   }
   
+  /* Commented out Redis-dependent methods for future use
   /**
    * POST /api/v1/dreams/cancel-interpretation/:jobId
    * Cancel a queued interpretation
@@ -295,6 +308,7 @@ export class DreamInterpretationQueueController {
   }
 }
 
+/* Commented out Redis job processor for future use
 // Job processor (separate worker process)
 interpretationQueue.process('interpret', async (job) => {
   const { dreamId, userId, interpreterType } = job.data;
@@ -450,6 +464,7 @@ interpretationQueue.process('interpret', async (job) => {
     throw error;
   }
 });
+*/
 
 // Placeholder for push notification function
 async function sendPushNotification(userId: string, notification: any) {
