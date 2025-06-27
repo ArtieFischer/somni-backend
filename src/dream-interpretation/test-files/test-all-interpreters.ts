@@ -72,6 +72,15 @@ async function testAllInterpreters() {
         }
         
         console.log('\n🔍 Symbols:', interpretation.symbols.join(', '));
+        
+        // Display emotions
+        if (interpretation.emotionalTone) {
+          console.log('\n🎭 Emotions:');
+          console.log(`  - Primary: ${interpretation.emotionalTone.primary}`);
+          console.log(`  - Secondary: ${interpretation.emotionalTone.secondary}`);
+          console.log(`  - Intensity: ${(interpretation.emotionalTone.intensity * 100).toFixed(0)}%`);
+        }
+        
         console.log('\n💭 Condensed Interpretation:');
         console.log(interpretation.interpretation);
         

@@ -97,7 +97,7 @@ Create a JSON object that captures the essence of the Jungian interpretation:
     "Specific action or reflection 1",
     "Specific action or reflection 2"
   ],
-  "selfReflection": "A specific, contextualized question that directly references elements from the dream (e.g., 'What does the glass wall between you and your mother represent in your current relationship?' or 'When the floor became water and you began floating, what control did you need to release?'). Make it personal and tied to specific dream imagery."
+  "selfReflection": "SHORT QUESTION (10-15 words MAX) about SPECIFIC dream element. MUST reference actual dream imagery/event. Examples: 'What did the shadow figure reveal about you?' or 'Why did the bridge collapse suddenly?' DO NOT ask generic questions. MUST BE UNDER 15 WORDS."
 }
 
 Return ONLY valid JSON.`

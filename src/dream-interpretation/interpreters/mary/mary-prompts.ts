@@ -127,7 +127,7 @@ Create a JSON object that captures the essence of the neuroscientific interpreta
     "Brain-health focused suggestion",
     "Sleep optimization recommendation"
   ],
-  "selfReflection": "A scientifically-grounded question that references specific dream elements while exploring neural processes (e.g., 'When you experienced the sensation of flying in your dream, what real-life situations might your brain be rehearsing through motor cortex activation?' or 'As familiar faces morphed into strangers, how might your hippocampus be reorganizing social memories?'). Connect dream imagery to brain function."
+  "selfReflection": "SHORT QUESTION (10-15 words MAX) about SPECIFIC dream element. MUST reference actual dream imagery/event. Examples: 'What memories triggered the flying sensation?' or 'Why did familiar faces blur?' DO NOT ask generic questions. MUST BE UNDER 15 WORDS."
 }
 
 Return ONLY valid JSON.`

@@ -112,7 +112,7 @@ Create a JSON object that captures the essence of the psychoanalytic interpretat
     "Specific psychoanalytic reflection or insight",
     "Suggestion for further self-analysis"
   ],
-  "selfReflection": "A penetrating question that references specific dream elements while pointing to unconscious material (e.g., 'When you found yourself unable to speak to your father in the dream, what forbidden words or feelings toward authority remain unspoken in your waking life?' or 'As you searched frantically for the lost key, what essential part of your childhood self have you locked away?'). Ground it in dream specifics while probing the unconscious."
+  "selfReflection": "SHORT QUESTION (10-15 words MAX) about SPECIFIC dream element. MUST reference actual dream imagery/event. Examples: 'What did losing your voice reveal?' or 'Why was the door locked?' DO NOT ask generic questions. MUST BE UNDER 15 WORDS."
 }
 
 Return ONLY valid JSON.`

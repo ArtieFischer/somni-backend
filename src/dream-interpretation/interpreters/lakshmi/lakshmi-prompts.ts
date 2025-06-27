@@ -114,7 +114,7 @@ Create a JSON object that captures the essence of the Vedantic interpretation:
     "Specific spiritual practice or reflection",
     "Daily life application"
   ],
-  "selfReflection": "A specific, spiritually-oriented question that references concrete elements from the dream (e.g., 'When you saw your mother speaking in bubbles, what unspoken truths from your lineage are seeking expression through you?' or 'As the solid floor transformed into flowing water, which rigid beliefs about your spiritual path are ready to become fluid?'). Ground it in specific dream imagery while pointing to spiritual growth."
+  "selfReflection": "SHORT QUESTION (10-15 words MAX) about SPECIFIC dream element. MUST reference actual dream imagery/event. Examples: 'What truth did the golden light carry?' or 'Why did the temple doors open?' DO NOT ask generic questions. MUST BE UNDER 15 WORDS."
 }
 
 Return ONLY valid JSON.`
