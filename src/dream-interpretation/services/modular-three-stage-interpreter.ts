@@ -59,19 +59,42 @@ export class ModularThreeStageInterpreter {
       };
       
       // Stage 1: Assess relevance
-      logger.info('Stage 1: Assessing relevance');
+      logger.info('Stage 1: Assessing relevance', {
+        dreamId: request.dreamId,
+        interpreterType: request.interpreterType,
+        fragmentCount: knowledgeFragments.length
+      });
+      
       const relevanceResult = await interpreter.assessRelevance(context);
+      
+      logger.info('Stage 1 complete', {
+        dreamId: request.dreamId,
+        success: relevanceResult.success,
+        error: relevanceResult.error,
+        relevantFragments: relevanceResult.data?.relevantFragments?.length || 0
+      });
       
       if (!relevanceResult.success) {
         throw new Error(`Relevance assessment failed: ${relevanceResult.error}`);
       }
       
       // Stage 2: Generate full interpretation
-      logger.info('Stage 2: Generating full interpretation');
+      logger.info('Stage 2: Generating full interpretation', {
+        dreamId: request.dreamId,
+        interpreterType: request.interpreterType
+      });
+      
       const interpretationResult = await interpreter.generateFullInterpretation(
         context, 
         relevanceResult.data!
       );
+      
+      logger.info('Stage 2 complete', {
+        dreamId: request.dreamId,
+        success: interpretationResult.success,
+        error: interpretationResult.error,
+        hasData: !!interpretationResult.data
+      });
       
       if (!interpretationResult.success) {
         throw new Error(`Full interpretation failed: ${interpretationResult.error}`);

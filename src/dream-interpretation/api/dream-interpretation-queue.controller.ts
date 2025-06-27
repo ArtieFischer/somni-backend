@@ -48,17 +48,48 @@ export class DreamInterpretationQueueController {
     try {
       const { dreamId, userId, interpreterType, priority = 0 } = req.body;
       
-      // For now, just redirect to the synchronous interpretation endpoint
+      // For now, return immediately and process in background
       // since we don't have Redis configured
-      logger.info('Redirecting to synchronous interpretation (Redis not configured)', {
+      logger.info('Starting interpretation in background (no Redis)', {
         dreamId,
         userId,
         interpreterType
       });
       
-      // Call the synchronous interpretation controller directly
+      // Return immediately to avoid timeout
+      res.status(202).json({
+        success: true,
+        message: 'Interpretation started',
+        dreamId,
+        interpreterType,
+        status: 'processing'
+      });
+      
+      // Process in background (fire and forget)
       const { dreamInterpretationController } = await import('./dream-interpretation.controller');
-      return dreamInterpretationController.interpretDreamById(req, res);
+      
+      // Create a mock response object that won't actually send anything
+      const mockRes = {
+        status: () => mockRes,
+        json: (data: any) => {
+          logger.info('Background interpretation complete', { 
+            dreamId, 
+            success: data.success,
+            error: data.error
+          });
+        },
+        send: () => {},
+        end: () => {}
+      } as any;
+      
+      // Process in background
+      dreamInterpretationController.interpretDreamById(req, mockRes).catch(error => {
+        logger.error('Background interpretation failed', { 
+          error: error.message,
+          dreamId,
+          interpreterType 
+        });
+      });
       
       /* Commented out Redis queue implementation for future use
       // Quick validation - check if dream exists and has transcription

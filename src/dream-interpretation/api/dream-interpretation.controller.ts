@@ -312,6 +312,13 @@ export class DreamInterpretationController {
     const startTime = Date.now();
     
     try {
+      logger.info('interpretDreamById called', { 
+        body: req.body,
+        headers: req.headers,
+        method: req.method,
+        path: req.path
+      });
+      
       const { dreamId, userId, interpreterType, options } = req.body as InterpretByIdRequest;
       
       // Validate request
@@ -340,10 +347,12 @@ export class DreamInterpretationController {
       logger.info('Dream interpretation by ID request', {
         dreamId,
         userId,
-        interpreter: interpreterType
+        interpreter: interpreterType,
+        timestamp: new Date().toISOString()
       });
       
       // Fetch dream data
+      logger.info('Fetching dream from database', { dreamId, userId });
       const { data: dream, error: dreamError } = await this.supabase
         .from('dreams')
         .select('*')
@@ -352,12 +361,24 @@ export class DreamInterpretationController {
         .single();
         
       if (dreamError || !dream) {
+        logger.error('Dream fetch failed', { 
+          dreamError, 
+          dreamId, 
+          userId,
+          dreamFound: !!dream 
+        });
         res.status(404).json({
           success: false,
           error: 'Dream not found or access denied'
         });
         return;
       }
+      
+      logger.info('Dream fetched successfully', {
+        dreamId,
+        hasTranscript: !!dream.raw_transcript,
+        transcriptionStatus: dream.transcription_status
+      });
       
       // Check if dream has transcription
       if (!dream.raw_transcript || dream.transcription_status !== 'completed') {
@@ -369,16 +390,24 @@ export class DreamInterpretationController {
       }
       
       // Fetch themes for this dream
+      logger.info('Fetching themes for dream', { dreamId });
       const { data: dreamThemes, error: themesError } = await this.supabase
         .from('dream_themes')
         .select('theme_code, similarity')
         .eq('dream_id', dreamId)
         .order('similarity', { ascending: false });
         
+      logger.info('Dream themes fetch result', {
+        dreamId,
+        themesFound: dreamThemes?.length || 0,
+        themesError
+      });
+        
       // Get theme details
       let themes: any[] = [];
       if (dreamThemes && dreamThemes.length > 0) {
         const themeCodes = dreamThemes.map(dt => dt.theme_code);
+        logger.info('Fetching theme details', { themeCodes });
         const { data: themeDetails } = await this.supabase
           .from('themes')
           .select('code, name')
@@ -413,6 +442,14 @@ export class DreamInterpretationController {
       }
       
       // Call the interpreter
+      logger.info('Starting interpretation', {
+        dreamId,
+        interpreterType,
+        themeCount: themes.length,
+        transcriptLength: dream.raw_transcript?.length || 0,
+        hasUserContext: !!userContext
+      });
+      
       const result = await modularThreeStageInterpreter.interpretDream({
         dreamId,
         userId,
@@ -420,6 +457,14 @@ export class DreamInterpretationController {
         interpreterType,
         themes,
         userContext
+      });
+      
+      logger.info('Interpretation completed', {
+        dreamId,
+        success: result.success,
+        hasData: !!result.data,
+        error: result.error,
+        processingTime: result.metadata?.processingTime
       });
       
       if (result.success && result.data) {
