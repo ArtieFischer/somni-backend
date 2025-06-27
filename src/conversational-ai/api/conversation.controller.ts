@@ -43,8 +43,10 @@ export class ConversationController {
       const conversation = await conversationService.createConversation(config);
 
       // Build WebSocket URL
-      const wsProtocol = process.env.NODE_ENV === 'production' ? 'wss' : 'ws';
       const wsHost = process.env.WS_HOST || req.get('host');
+      // Force wss:// for Railway deployments
+      const isProduction = wsHost?.includes('railway.app') || process.env.NODE_ENV === 'production';
+      const wsProtocol = isProduction ? 'wss' : 'ws';
       const websocketUrl = `${wsProtocol}://${wsHost}/ws/conversation`;
 
       const response: StartConversationResponse = {
