@@ -158,7 +158,7 @@ export class OpenRouterService {
         hasResponseFormat: !!requestParams.response_format
       });
       
-      const completion = await this.client.chat.completions.create(requestParams);
+      const completion = await this.client.chat.completions.create(requestParams) as OpenAI.Chat.Completions.ChatCompletion;
 
       if (!completion || !completion.choices || !completion.choices[0]) {
         throw new Error('Invalid response structure from OpenRouter API');

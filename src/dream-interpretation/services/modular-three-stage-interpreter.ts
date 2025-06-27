@@ -133,7 +133,6 @@ export class ModularThreeStageInterpreter {
           createdAt: new Date(),
           processingTime,
           generationMetadata,
-          validationResult: validation,
           authenticityMarkers: result.authenticityMarkers || {
             personalEngagement: 0.9,
             vocabularyAuthenticity: 0.9,

@@ -78,7 +78,7 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         logger.error('Failed to parse JSON response in assessRelevance', {
           rawContent: response.content,
           contentLength: response.content.length,
-          parseError: parseError.message
+          parseError: parseError instanceof Error ? parseError.message : String(parseError)
         });
         
         // Fallback: Extract JSON from response (handle markdown code blocks)
