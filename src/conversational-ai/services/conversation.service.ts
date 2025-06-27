@@ -99,7 +99,7 @@ class ConversationService {
       // Get dream content
       const { data: dream, error: dreamError } = await supabaseService.getServiceClient()
         .from('dreams')
-        .select('transcription')
+        .select('raw_transcript')
         .eq('id', conversation.dreamId)
         .single();
 
@@ -136,7 +136,7 @@ class ConversationService {
           source: k.metadata?.source || 'Unknown',
           relevance: k.relevance || 0.5
         })),
-        dreamContent: dream.transcription,
+        dreamContent: dream.raw_transcript,
         previousMessages: messages
       };
     } catch (error) {
