@@ -18,7 +18,7 @@ class ConversationService {
         .insert({
           user_id: config.userId,
           dream_id: config.dreamId,
-          interpreter_type: config.interpreterId,  // Database uses interpreter_type, not interpreter_id
+          interpreter_id: config.interpreterId,
           status: 'active',
           started_at: new Date().toISOString()
         })
@@ -31,7 +31,7 @@ class ConversationService {
         id: data.id,
         userId: data.user_id,
         dreamId: data.dream_id,
-        interpreterId: data.interpreter_type,  // Database uses interpreter_type
+        interpreterId: data.interpreter_id,
         startedAt: new Date(data.started_at),
         status: data.status
       };
@@ -61,7 +61,7 @@ class ConversationService {
         id: data.id,
         userId: data.user_id,
         dreamId: data.dream_id,
-        interpreterId: data.interpreter_type,  // Database uses interpreter_type
+        interpreterId: data.interpreter_id,
         elevenLabsSessionId: data.elevenlabs_session_id,
         startedAt: new Date(data.started_at),
         endedAt: data.ended_at ? new Date(data.ended_at) : undefined,
