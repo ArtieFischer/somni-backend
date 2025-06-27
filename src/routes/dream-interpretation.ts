@@ -4,6 +4,7 @@
 
 import { Router } from 'express';
 import { dreamInterpretationController } from '../dream-interpretation/api/dream-interpretation.controller';
+import { dreamInterpretationQueueController } from '../dream-interpretation/api/dream-interpretation-queue.controller';
 import { verifyApiSecret } from '../middleware/auth';
 // import { rateLimitMiddleware } from '../middleware/rateLimit';
 // import { 
@@ -76,6 +77,25 @@ router.post(
   '/:dreamId/themes',
   // validateThemeExtractionRequest,
   dreamInterpretationController.extractDreamThemes.bind(dreamInterpretationController)
+);
+
+/**
+ * POST /api/v1/dreams/interpret-async
+ * Queue a dream for asynchronous interpretation
+ */
+router.post(
+  '/interpret-async',
+  // interpretationRateLimit,
+  dreamInterpretationQueueController.queueInterpretation.bind(dreamInterpretationQueueController)
+);
+
+/**
+ * GET /api/v1/dreams/jobs/:jobId
+ * Get status of an interpretation job
+ */
+router.get(
+  '/jobs/:jobId',
+  dreamInterpretationQueueController.getJobStatus.bind(dreamInterpretationQueueController)
 );
 
 export { router as dreamInterpretationRouter };

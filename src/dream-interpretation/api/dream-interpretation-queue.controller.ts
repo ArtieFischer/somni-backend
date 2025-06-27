@@ -48,6 +48,18 @@ export class DreamInterpretationQueueController {
     try {
       const { dreamId, userId, interpreterType, priority = 0 } = req.body;
       
+      // For now, just redirect to the synchronous interpretation endpoint
+      // since we don't have Redis configured
+      logger.info('Redirecting to synchronous interpretation (Redis not configured)', {
+        dreamId,
+        userId,
+        interpreterType
+      });
+      
+      // Call the synchronous interpretation controller directly
+      const { dreamInterpretationController } = await import('./dream-interpretation.controller');
+      return dreamInterpretationController.interpretDreamById(req, res);
+      
       // Validate request
       if (!dreamId || !userId || !interpreterType) {
         res.status(400).json({
