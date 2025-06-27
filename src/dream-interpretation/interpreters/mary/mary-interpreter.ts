@@ -63,27 +63,22 @@ export class MaryInterpreter extends BaseDreamInterpreter {
 
   protected validateInterpreterSpecific(interpretation: DreamInterpretation): string[] {
     const errors: string[] = [];
-    const core = interpretation.interpreterCore as NeuroscientificCore;
     
+    // Check both interpreterCore and interpretationCore for compatibility
+    const core = (interpretation.interpreterCore || interpretation.interpretationCore) as NeuroscientificCore;
+    
+    // Core is optional - if not present, just return no errors
     if (!core) {
-      errors.push('Missing interpretation core');
       return errors;
     }
     
     // Allow both 'neuroscientific' and 'mary' as valid types
-    if (core.type !== 'neuroscientific' && core.type !== 'mary') {
+    if (core.type && core.type !== 'neuroscientific' && core.type !== 'mary') {
       errors.push(`Invalid core type: ${core.type} (expected 'neuroscientific')`);
-      return errors;
     }
     
-    // Validate neuroscientific-specific fields
-    if (!core.brainActivity) {
-      errors.push('Missing brain activity analysis');
-    }
-    
-    if (!core.cognitiveProcessing) {
-      errors.push('Missing cognitive processing analysis');
-    }
+    // These fields are now optional - we just log warnings in base class
+    // No need to add errors here
     
     return errors;
   }

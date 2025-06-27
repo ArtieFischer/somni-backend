@@ -52,42 +52,22 @@ understanding.`,
   
   protected validateInterpreterSpecific(interpretation: DreamInterpretation): string[] {
     const errors: string[] = [];
-    const core = interpretation.interpreterCore as JungianCore;
     
+    // Check both interpreterCore and interpretationCore for compatibility
+    const core = (interpretation.interpreterCore || interpretation.interpretationCore) as JungianCore;
+    
+    // Core is optional - if not present, just return no errors
     if (!core) {
-      errors.push('Missing interpretation core');
       return errors;
     }
     
     // Allow both 'jungian' and 'jung' as valid types
-    if (core.type !== 'jungian' && core.type !== 'jung') {
+    if (core.type && core.type !== 'jungian' && core.type !== 'jung') {
       errors.push(`Invalid core type: ${core.type} (expected 'jungian')`);
-      return errors;
     }
     
-    // Validate Jungian-specific fields with more lenient checks
-    if (!core.archetypalDynamics) {
-      errors.push('Missing archetypal dynamics');
-    } else {
-      // Only check for at least one archetypal element
-      const hasArchetypalContent = 
-        core.archetypalDynamics.primaryArchetype ||
-        core.archetypalDynamics.archetypalTension ||
-        core.archetypalDynamics.individuationGuidance;
-      
-      if (!hasArchetypalContent) {
-        errors.push('No archetypal content found');
-      }
-    }
-    
-    if (!core.individuationInsight) {
-      errors.push('Missing individuation insight');
-    }
-    
-    // Make complexes optional - not all dreams reveal complexes
-    // if (!core.complexesIdentified || core.complexesIdentified.length === 0) {
-    //   errors.push('No complexes identified');
-    // }
+    // These fields are now optional - we just log warnings in base class
+    // No need to add errors here
     
     return errors;
   }

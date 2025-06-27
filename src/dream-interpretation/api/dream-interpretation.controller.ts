@@ -323,6 +323,20 @@ export class DreamInterpretationController {
         return;
       }
       
+      // Validate UUID format
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (!uuidRegex.test(dreamId) || !uuidRegex.test(userId)) {
+        res.status(400).json({
+          success: false,
+          error: 'Invalid UUID format for dreamId or userId',
+          details: {
+            dreamIdValid: uuidRegex.test(dreamId),
+            userIdValid: uuidRegex.test(userId)
+          }
+        });
+        return;
+      }
+      
       logger.info('Dream interpretation by ID request', {
         dreamId,
         userId,
@@ -485,7 +499,15 @@ export class DreamInterpretationController {
         .insert(interpretationData);
         
       if (error) {
-        logger.error('Failed to save interpretation', { error, dreamId });
+        logger.error('Failed to save interpretation', { 
+          error: error.message || error,
+          code: error.code,
+          details: error.details,
+          hint: error.hint,
+          dreamId,
+          userId,
+          interpretationData
+        });
       } else {
         logger.info('Interpretation saved successfully', { dreamId, userId });
       }

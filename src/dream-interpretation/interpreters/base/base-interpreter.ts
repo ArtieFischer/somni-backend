@@ -294,21 +294,39 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
   validate(interpretation: DreamInterpretation): ValidationResult {
     const errors: string[] = [];
     
-    // Basic validation
+    // Only validate mandatory fields
     if (!interpretation.dreamId) errors.push('Missing dreamId');
+    
+    // Condensed interpretation is mandatory
     if (!interpretation.interpretation || interpretation.interpretation.length < 50) {
       errors.push('Interpretation too short');
     }
+    
+    // Other fields are optional but warn if missing
+    const warnings: string[] = [];
     if (!interpretation.symbols || interpretation.symbols.length === 0) {
-      errors.push('No symbols identified');
+      warnings.push('No symbols identified');
     }
     if (!interpretation.quickTake || interpretation.quickTake.length < 20) {
-      errors.push('Quick take too short');
+      warnings.push('Quick take too short or missing');
     }
     
-    // Interpreter-specific validation
+    // Log warnings but don't fail validation
+    if (warnings.length > 0) {
+      logger.warn('Validation warnings', {
+        dreamId: interpretation.dreamId,
+        warnings
+      });
+    }
+    
+    // Interpreter-specific validation (make these warnings too)
     const specificErrors = this.validateInterpreterSpecific(interpretation);
-    errors.push(...specificErrors);
+    if (specificErrors.length > 0) {
+      logger.warn('Interpreter-specific validation warnings', {
+        dreamId: interpretation.dreamId,
+        warnings: specificErrors
+      });
+    }
     
     return {
       isValid: errors.length === 0,

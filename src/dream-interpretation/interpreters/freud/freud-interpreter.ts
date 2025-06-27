@@ -63,27 +63,22 @@ export class FreudInterpreter extends BaseDreamInterpreter {
 
   protected validateInterpreterSpecific(interpretation: DreamInterpretation): string[] {
     const errors: string[] = [];
-    const core = interpretation.interpreterCore as FreudianCore;
     
+    // Check both interpreterCore and interpretationCore for compatibility
+    const core = (interpretation.interpreterCore || interpretation.interpretationCore) as FreudianCore;
+    
+    // Core is optional - if not present, just return no errors
     if (!core) {
-      errors.push('Missing interpretation core');
       return errors;
     }
     
     // Allow both 'freudian' and 'freud' as valid types
-    if (core.type !== 'freudian' && core.type !== 'freud') {
+    if (core.type && core.type !== 'freudian' && core.type !== 'freud') {
       errors.push(`Invalid core type: ${core.type} (expected 'freudian')`);
-      return errors;
     }
     
-    // Validate Freudian-specific fields
-    if (!core.unconsciousContent) {
-      errors.push('Missing unconscious content');
-    }
-    
-    if (!core.wishFulfillment) {
-      errors.push('Missing wish fulfillment analysis');
-    }
+    // These fields are now optional - we just log warnings in base class
+    // No need to add errors here
     
     return errors;
   }

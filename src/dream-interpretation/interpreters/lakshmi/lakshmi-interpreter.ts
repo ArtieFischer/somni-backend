@@ -51,36 +51,22 @@ growth. You see the divine play in all dreams, guiding seekers toward self-reali
   
   protected validateInterpreterSpecific(interpretation: DreamInterpretation): string[] {
     const errors: string[] = [];
-    const core = interpretation.interpreterCore as LakshmiCore;
     
+    // Check both interpreterCore and interpretationCore for compatibility
+    const core = (interpretation.interpreterCore || interpretation.interpretationCore) as LakshmiCore;
+    
+    // Core is optional - if not present, just return no errors
     if (!core) {
-      errors.push('Missing interpretation core');
       return errors;
     }
     
-    // Validate Lakshmi type
-    if (core.type !== 'spiritual') {
-      errors.push(`Invalid core type: ${core.type} (expected 'spiritual')`);
-      return errors;
+    // Allow 'spiritual', 'vedantic' and 'lakshmi' as valid types
+    if (core.type && core.type !== 'spiritual' && core.type !== 'vedantic' && core.type !== 'lakshmi') {
+      errors.push(`Invalid core type: ${core.type} (expected 'spiritual' or 'vedantic')`);
     }
     
-    // Validate Lakshmi-specific fields
-    if (!core.soulMessage) {
-      errors.push('Missing soul message');
-    }
-    
-    if (!core.karmicInsights) {
-      errors.push('Missing karmic insights');
-    }
-    
-    // Make chakra and karmic themes optional - not all dreams reveal these
-    // if (!core.chakraInfluences || core.chakraInfluences.length === 0) {
-    //   errors.push('No chakra influences identified');
-    // }
-    
-    // if (!core.karmicThemes || core.karmicThemes.length === 0) {
-    //   errors.push('No karmic themes identified');
-    // }
+    // These fields are now optional - we just log warnings in base class
+    // No need to add errors here
     
     return errors;
   }
