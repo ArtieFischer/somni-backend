@@ -4,7 +4,7 @@
  */
 
 import { Server as HTTPServer } from 'http';
-import { Server as SocketIOServer, Namespace } from 'socket.io';
+import { Server as SocketIOServer, Namespace, Socket } from 'socket.io';
 import { supabaseService } from '../services/supabase';
 import { logger } from '../utils/logger';
 
@@ -12,10 +12,14 @@ import { logger } from '../utils/logger';
 import { DreamInterpretationHandler } from '../dream-interpretation/websocket/dream-interpretation-handler';
 import { ConversationalAIHandler } from '../conversational-ai/websocket/conversational-ai-handler';
 
-interface AuthenticatedSocket {
+interface SocketData {
   userId?: string;
-  data?: any;
-  handshake: any;
+  user?: any;
+}
+
+interface AuthenticatedSocket extends Socket {
+  userId?: string;
+  data: SocketData;
 }
 
 export class UnifiedWebSocketServer {
