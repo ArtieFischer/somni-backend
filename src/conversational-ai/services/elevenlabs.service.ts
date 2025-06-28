@@ -185,6 +185,11 @@ export class ElevenLabsService extends EventEmitter {
         logger.debug('ElevenLabs: Received ping');
         break;
       
+      case 'audio':
+        // Audio data is sent as a separate message type
+        logger.debug('ElevenLabs: Received audio message');
+        break;
+        
       default:
         console.log('Unknown message type:', message.type);
     }

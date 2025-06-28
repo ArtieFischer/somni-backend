@@ -46,6 +46,24 @@ class ConversationService {
    */
   async findOrCreateConversation(config: ConversationConfig): Promise<ConversationSession> {
     try {
+      logger.info('Finding or creating conversation', {
+        userId: config.userId,
+        dreamId: config.dreamId,
+        interpreterId: config.interpreterId
+      });
+      
+      // Debug: Check all conversations for this user
+      const { data: allUserConvos } = await supabaseService.getServiceClient()
+        .from('conversations')
+        .select('id, user_id, dream_id, interpreter_id, status')
+        .eq('user_id', config.userId)
+        .limit(5);
+        
+      logger.info('All user conversations', {
+        count: allUserConvos?.length || 0,
+        conversations: allUserConvos
+      });
+      
       // First, try to find an existing conversation
       const { data: existing, error: findError } = await supabaseService.getServiceClient()
         .from('conversations')
@@ -56,13 +74,20 @@ class ConversationService {
         .order('created_at', { ascending: false })
         .limit(1);
 
+      logger.info('Query result', {
+        foundRows: existing?.length || 0,
+        error: findError?.message || null
+      });
+
       // Check if we found any conversations (existing will be an array)
       if (!findError && existing && existing.length > 0) {
         const conversation = existing[0];
         logger.info('Found existing conversation', {
           conversationId: conversation.id,
           dreamId: config.dreamId,
-          interpreterId: config.interpreterId
+          interpreterId: config.interpreterId,
+          status: conversation.status,
+          messageCount: await this.getConversationMessages(conversation.id).then(msgs => msgs.length)
         });
         
         // Update status to active if it was ended
