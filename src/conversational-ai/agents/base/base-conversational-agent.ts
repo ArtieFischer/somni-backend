@@ -180,6 +180,7 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       
       // Dream Content
       dreamContent: context.dreamContent,
+      dream_topic: dreamMetadata?.title || '',
       dreamSymbols: interpretation?.symbols || [],
       clarity: dreamMetadata?.clarity || 75, // Default to 75% if not available
       mood: dreamMetadata?.mood || 3, // Default to neutral mood
@@ -202,30 +203,31 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
   /**
    * Get dream metadata from dreams table
    */
-  protected async getDreamMetadata(context: ConversationContext): Promise<{ clarity: number; mood: number } | null> {
+  protected async getDreamMetadata(context: ConversationContext): Promise<{ clarity: number; mood: number; title: string } | null> {
     try {
       if (!context.interpretation?.dreamId) {
-        return { clarity: 75, mood: 3 }; // Defaults
+        return { clarity: 75, mood: 3, title: '' }; // Defaults
       }
 
       const { data, error } = await supabaseService.getServiceClient()
         .from('dreams')
-        .select('mood, clarity, transcription_metadata')
+        .select('mood, clarity, title, transcription_metadata')
         .eq('id', context.interpretation.dreamId)
         .single();
 
       if (error || !data) {
         logger.warn('Could not fetch dream metadata:', error);
-        return { clarity: 75, mood: 3 };
+        return { clarity: 75, mood: 3, title: '' };
       }
 
       return {
         clarity: data.clarity || 75,
-        mood: data.mood || 3
+        mood: data.mood || 3,
+        title: data.title || ''
       };
     } catch (error) {
       logger.error('Error fetching dream metadata:', error);
-      return { clarity: 75, mood: 3 };
+      return { clarity: 75, mood: 3, title: '' };
     }
   }
 

@@ -22,6 +22,7 @@ This guide provides instructions for integrating the Conversational AI feature w
   
   // Dream Content
   dreamContent: string,           // From dreams.raw_transcript
+  dream_topic: string,            // From dreams.title
   dreamSymbols: string[],         // From interpretations.symbols
   clarity: number,                // From dreams.clarity (1-100)
   mood: number,                   // From dreams.mood (1-5)
