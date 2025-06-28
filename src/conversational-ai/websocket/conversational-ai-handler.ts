@@ -125,6 +125,12 @@ export class ConversationalAIHandler {
       await this.handleUserAudioEnd(socket);
     });
 
+    // User activity signal to keep session active during silence
+    socket.on('user_activity_signal', async () => {
+      logger.debug('Received user activity signal', { userId: socket.userId });
+      await this.handleUserActivitySignal(socket);
+    });
+
     // Text input (fallback)
     socket.on('text_input', async (data) => {
       logger.info('Received text_input event', { userId: socket.userId, text: data.text });
@@ -209,6 +215,11 @@ export class ConversationalAIHandler {
           content: event.text
         }).catch(err => logger.error('Failed to save transcription:', err));
       }
+    });
+
+    elevenLabsService.on('vad_score', (event: any) => {
+      // Forward VAD scores to frontend for UI feedback
+      socket.emit('vad_score', event);
     });
 
     elevenLabsService.on('agent_response', (response: any) => {
@@ -447,6 +458,24 @@ export class ConversationalAIHandler {
       }
     } catch (error) {
       logger.error('Failed to handle user audio end:', error);
+    }
+  }
+
+  /**
+   * Handle user activity signal to keep session active during silence
+   */
+  private async handleUserActivitySignal(socket: ConversationSocket): Promise<void> {
+    try {
+      if (!socket.agent) {
+        return; // Silently ignore if agent not initialized
+      }
+
+      const elevenLabsService = (socket.agent as any).elevenLabsService;
+      if (elevenLabsService?.isActive()) {
+        elevenLabsService.sendUserActivity();
+      }
+    } catch (error) {
+      logger.error('Failed to handle user activity signal:', error);
     }
   }
 

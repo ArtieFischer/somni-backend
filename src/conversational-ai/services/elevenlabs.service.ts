@@ -92,7 +92,11 @@ export class ElevenLabsService extends EventEmitter {
     });
 
     this.ws.on('error', (error) => {
-      console.error('WebSocket error:', error);
+      logger.error('ElevenLabs WebSocket error:', {
+        error: error.message,
+        code: (error as any).code,
+        conversationId: this.currentConversationId
+      });
       this.emit('error', { code: 'WS_ERROR', message: error.message });
     });
 
@@ -228,6 +232,11 @@ export class ElevenLabsService extends EventEmitter {
         break;
       
       case 'error':
+        logger.error('ElevenLabs error message received', {
+          code: message.code,
+          message: message.message,
+          details: message.details
+        });
         this.emit('error', {
           code: message.code || 'UNKNOWN_ERROR',
           message: message.message || 'An error occurred',
@@ -247,7 +256,10 @@ export class ElevenLabsService extends EventEmitter {
         break;
         
       default:
-        console.log('Unknown message type:', message.type);
+        logger.debug('Unknown ElevenLabs message type:', { 
+          type: message.type,
+          hasData: !!message 
+        });
     }
   }
 
@@ -430,6 +442,23 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   /**
+   * Send user activity signal to keep session active
+   */
+  sendUserActivity(): void {
+    if (!this.isConnected || !this.ws) {
+      return;
+    }
+    
+    logger.debug('ElevenLabs: Sending user activity signal');
+    
+    this.ws.send(JSON.stringify({
+      type: 'user_activity'
+    }));
+    
+    this.lastActivityTime = Date.now();
+  }
+
+  /**
    * Send session termination signal (e.g., when user stops recording)
    */
   sendSessionTermination(): void {
@@ -437,13 +466,12 @@ export class ElevenLabsService extends EventEmitter {
       return; // Silently ignore if not connected
     }
 
-    logger.info('ElevenLabs: Sending session termination signal');
+    logger.info('ElevenLabs: Session termination signal (not sending to preserve pending transcriptions)');
     
-    // Don't send terminate_session - it might cancel pending transcriptions
-    // Instead, just mark end of audio input
-    this.ws.send(JSON.stringify({
-      type: 'user_audio_end'
-    }));
+    // Don't send any termination signal - it might cancel pending transcriptions
+    // ElevenLabs will process the audio that was already sent
+    // Just update our activity time
+    this.lastActivityTime = Date.now();
   }
 
   async disconnect(): Promise<void> {

@@ -8,7 +8,7 @@ Sometimes audio recordings don't get transcribed by ElevenLabs, especially for l
 ### 1. Session Termination Signal
 The `terminate_session: true` signal was being sent when user stops recording, which might cancel pending transcriptions.
 
-**Fix**: Changed to send `user_audio_end` instead.
+**Fix**: Don't send any termination signal, let ElevenLabs process the audio naturally.
 
 ### 2. Long Recordings with Silence
 Recordings with many silent chunks might confuse ElevenLabs STT:
@@ -24,10 +24,9 @@ Backend wasn't tracking if transcriptions were received after sending audio.
 
 1. **Better Session End Handling**:
    ```javascript
-   // Instead of terminate_session
-   this.ws.send(JSON.stringify({
-     type: 'user_audio_end'
-   }));
+   // Don't send any termination signal
+   // Just update activity time
+   this.lastActivityTime = Date.now();
    ```
 
 2. **Transcription Timeout Detection**:
@@ -45,18 +44,29 @@ Backend wasn't tracking if transcriptions were received after sending audio.
 
 ## Frontend Recommendations
 
-1. **Limit Recording Duration**:
+1. **Configure ElevenLabs Agent**:
+   - In ElevenLabs Dashboard → Agent → Advanced → Turn Timeout
+   - Set to **30 seconds** (maximum) for thoughtful conversations
+
+2. **Send Activity Signals During Silence**:
    ```javascript
-   const MAX_RECORDING_DURATION = 30000; // 30 seconds
+   // Every 8 seconds during recording, if silent
+   if (isRecording && vadScore < 0.3) {
+     socket.emit('user_activity_signal');
+   }
    ```
 
-2. **Implement Voice Activity Detection**:
-   - Stop recording after 3 seconds of silence
-   - Show visual feedback for voice activity
-
-3. **Better Error Handling**:
+3. **Visual Feedback**:
+   - Show "Listening..." when VAD score > 0.3
+   - Show "Take your time..." when VAD score < 0.3
    - Show "Processing..." after recording stops
-   - Show error if no transcription received
+
+4. **Smart Recording**:
+   ```javascript
+   // Don't auto-stop on silence - let user control
+   // Or use long silence threshold (10+ seconds)
+   const SILENCE_BEFORE_STOP = 10000; // 10 seconds
+   ```
 
 ## Backend Monitoring
 
