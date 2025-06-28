@@ -218,7 +218,8 @@ export class ElevenLabsService extends EventEmitter {
 
     logger.info('Sending conversation initiation to ElevenLabs', {
       hasVariables: !!dynamicVariables,
-      variableKeys: dynamicVariables ? Object.keys(dynamicVariables) : []
+      variableKeys: dynamicVariables ? Object.keys(dynamicVariables) : [],
+      message: JSON.stringify(initMessage)
     });
 
     this.ws.send(JSON.stringify(initMessage));
