@@ -248,6 +248,12 @@ export class ConversationalAIHandler {
       // Get message count to indicate if this is a resumed conversation
       const messages = await conversationService.getConversationMessages(conversation.id);
       
+      logger.info('Conversation initialization complete', {
+        conversationId: conversation.id,
+        messageCount: messages.length,
+        isResumed: messages.length > 0
+      });
+      
       // Emit success event
       socket.emit('conversation_initialized', {
         conversationId: conversation.id,
