@@ -6,7 +6,7 @@ export class EmbeddingWorker {
   private isRunning: boolean = false;
   private processingInterval: NodeJS.Timeout | null = null;
   private cleanupInterval: NodeJS.Timeout | null = null;
-  private readonly PROCESSING_INTERVAL_MS = 5000; // Check for new jobs every 5 seconds
+  private readonly PROCESSING_INTERVAL_MS = 30000; // Check for new jobs every 30 seconds
   private readonly CLEANUP_INTERVAL_MS = 300000; // Clean up stale jobs every 5 minutes
   private readonly MAX_CONCURRENT_JOBS = 2; // Process up to 2 jobs concurrently
   private activeJobs: Set<string> = new Set();
@@ -90,7 +90,7 @@ export class EmbeddingWorker {
     }
 
     const availableSlots = this.MAX_CONCURRENT_JOBS - this.activeJobs.size;
-    logger.info('Checking for pending jobs', { availableSlots, activeJobs: this.activeJobs.size });
+    logger.debug('Checking for pending jobs', { availableSlots, activeJobs: this.activeJobs.size });
 
     // Get multiple pending jobs up to available slots
     const { data: jobs, error } = await supabaseService.getServiceClient()
@@ -109,7 +109,7 @@ export class EmbeddingWorker {
     }
     
     if (!jobs || jobs.length === 0) {
-      logger.info('No pending jobs found');
+      logger.debug('No pending jobs found');
       return; // No pending jobs
     }
 

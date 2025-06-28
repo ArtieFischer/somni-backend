@@ -158,6 +158,17 @@ export class ConversationalAIHandler {
       logger.error('Socket error:', error);
       socket.emit('error', { message: 'An error occurred' });
     });
+
+    // Debug: Log all incoming events
+    socket.onAny((eventName: string, ...args: any[]) => {
+      logger.info('Socket event received', {
+        event: eventName,
+        userId: socket.userId,
+        conversationId: socket.conversationId,
+        hasData: args.length > 0,
+        dataPreview: args[0] ? JSON.stringify(args[0]).substring(0, 100) : null
+      });
+    });
   }
 
   /**
