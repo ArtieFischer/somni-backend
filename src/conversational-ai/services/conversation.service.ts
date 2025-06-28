@@ -165,7 +165,7 @@ class ConversationService {
       return data.map((msg: any) => ({
         id: msg.id,
         conversationId: msg.conversation_id,
-        role: msg.sender === 'user' ? 'user' : 'assistant',  // Map sender to role
+        role: msg.role || (msg.sender === 'user' ? 'user' : 'assistant'),  // Use role if exists, fallback to sender mapping
         content: msg.content,
         audioUrl: msg.audio_url,
         timestamp: new Date(msg.created_at)
@@ -186,6 +186,7 @@ class ConversationService {
         .insert({
           conversation_id: message.conversationId,
           sender: message.role === 'user' ? 'user' : 'interpreter',  // Map role to sender
+          role: message.role,  // Also include role column
           content: message.content,
           audio_url: message.audioUrl
         })
@@ -197,7 +198,7 @@ class ConversationService {
       return {
         id: data.id,
         conversationId: data.conversation_id,
-        role: data.sender === 'user' ? 'user' : 'assistant',  // Map sender to role
+        role: data.role || (data.sender === 'user' ? 'user' : 'assistant'),  // Use role if exists, fallback to sender mapping
         content: data.content,
         audioUrl: data.audio_url,
         timestamp: new Date(data.created_at)
