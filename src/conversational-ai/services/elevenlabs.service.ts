@@ -248,9 +248,9 @@ export class ElevenLabsService extends EventEmitter {
     
     // If this is a resumed conversation, override the first message
     if (dynamicVariables?.is_resumed_conversation === 'true') {
-      initMessage.overrides = {
+      initMessage.conversation_config_override = {
         agent: {
-          firstMessage: `Welcome back ${dynamicVariables.user_name}, how else can I help you?`
+          first_message: `Welcome back ${dynamicVariables.user_name}, how else can I help you explore your dream?`
         }
       };
     }
@@ -271,7 +271,7 @@ export class ElevenLabsService extends EventEmitter {
       hasVariables: !!dynamicVariables,
       variableKeys: dynamicVariables ? Object.keys(dynamicVariables) : [],
       debugValues: debugVars,
-      hasOverrides: !!initMessage.overrides,
+      hasConfigOverride: !!initMessage.conversation_config_override,
       isResumed: dynamicVariables?.is_resumed_conversation,
       fullMessage: JSON.stringify(initMessage)
     });
