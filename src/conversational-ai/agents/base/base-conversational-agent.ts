@@ -213,7 +213,7 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       
       // Interpretation Data
       quickTake: interpretation?.quickTake || '',
-      interpretationSummary: this.truncateText(interpretation?.interpretationSummary || interpretation?.interpretation || '', 500),
+      interpretationSummary: interpretation?.interpretationSummary || interpretation?.interpretation || '',
       
       // Conversation Context
       previousMessages: previousMessagesFormatted.trim() || 'No previous messages',

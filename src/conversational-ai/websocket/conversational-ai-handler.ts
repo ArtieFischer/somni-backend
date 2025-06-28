@@ -189,6 +189,14 @@ export class ConversationalAIHandler {
       socket.emit('error', error);
     });
 
+    elevenLabsService.on('inactivity_timeout', (data: any) => {
+      logger.warn('ElevenLabs inactivity timeout detected', data);
+      socket.emit('inactivity_timeout', {
+        message: 'Connection closed due to inactivity. Please send a message to continue.',
+        conversationId: data.conversationId
+      });
+    });
+
     // Reconnection events - commented out to prevent loops
     // elevenLabsService.on('reconnecting', (data: any) => {
     //   socket.emit('reconnecting', data);
@@ -225,8 +233,8 @@ export class ConversationalAIHandler {
         return;
       }
 
-      // Create a new conversation
-      const conversation = await conversationService.createConversation({
+      // Find or create a conversation for this dream/interpreter combination
+      const conversation = await conversationService.findOrCreateConversation({
         userId: socket.userId!,
         dreamId,
         interpreterId
@@ -237,10 +245,15 @@ export class ConversationalAIHandler {
       // Initialize the conversation
       await this.initializeConversation(socket);
       
+      // Get message count to indicate if this is a resumed conversation
+      const messages = await conversationService.getConversationMessages(conversation.id);
+      
       // Emit success event
       socket.emit('conversation_initialized', {
         conversationId: conversation.id,
-        elevenLabsSessionId: conversation.elevenLabsSessionId || null
+        elevenLabsSessionId: conversation.elevenLabsSessionId || null,
+        isResumed: messages.length > 0,
+        messageCount: messages.length
       });
       
     } catch (error) {

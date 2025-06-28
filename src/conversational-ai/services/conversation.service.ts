@@ -42,6 +42,69 @@ class ConversationService {
   }
 
   /**
+   * Find or create a conversation for a dream/interpreter combination
+   */
+  async findOrCreateConversation(config: ConversationConfig): Promise<ConversationSession> {
+    try {
+      // First, try to find an existing conversation
+      const { data: existing, error: findError } = await supabaseService.getServiceClient()
+        .from('conversations')
+        .select('*')
+        .eq('user_id', config.userId)
+        .eq('dream_id', config.dreamId)
+        .eq('interpreter_id', config.interpreterId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (!findError && existing) {
+        logger.info('Found existing conversation', {
+          conversationId: existing.id,
+          dreamId: config.dreamId,
+          interpreterId: config.interpreterId
+        });
+        
+        // Update status to active if it was ended
+        if (existing.status === 'ended') {
+          const { error: updateError } = await supabaseService.getServiceClient()
+            .from('conversations')
+            .update({ 
+              status: 'active',
+              resumed_at: new Date().toISOString()
+            })
+            .eq('id', existing.id);
+            
+          if (updateError) {
+            logger.error('Failed to update conversation status:', updateError);
+          }
+        }
+        
+        return {
+          id: existing.id,
+          userId: existing.user_id,
+          dreamId: existing.dream_id,
+          interpreterId: existing.interpreter_id,
+          elevenLabsSessionId: existing.elevenlabs_session_id,
+          startedAt: new Date(existing.started_at),
+          endedAt: existing.ended_at ? new Date(existing.ended_at) : undefined,
+          status: 'active'
+        };
+      }
+
+      // No existing conversation found, create a new one
+      logger.info('Creating new conversation', {
+        dreamId: config.dreamId,
+        interpreterId: config.interpreterId
+      });
+      
+      return this.createConversation(config);
+    } catch (error) {
+      logger.error('Failed to find or create conversation:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Get conversation by ID
    */
   async getConversation(conversationId: string): Promise<ConversationSession | null> {

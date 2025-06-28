@@ -18,6 +18,8 @@ export class ElevenLabsService extends EventEmitter {
   private currentConversationId: string | null = null;
   private pingInterval: NodeJS.Timeout | null = null;
   private pingTimeout: NodeJS.Timeout | null = null;
+  private keepAliveInterval: NodeJS.Timeout | null = null;
+  private lastActivityTime: number = Date.now();
   private pendingInitialization: Record<string, any> | null = null;
 
   constructor(config: ElevenLabsConfig) {
@@ -58,6 +60,7 @@ export class ElevenLabsService extends EventEmitter {
           this.reconnectAttempts = 0;
           this.emit('connected');
           this.startPingPong();
+          this.startKeepAlive();
           resolve();
         });
 
@@ -91,24 +94,37 @@ export class ElevenLabsService extends EventEmitter {
 
     this.ws.on('close', (code, reason) => {
       this.isConnected = false;
-      logger.error('ElevenLabs WebSocket closed', { 
-        code, 
-        reason: reason?.toString() || 'Unknown reason',
-        conversationId: this.currentConversationId,
-        reconnectAttempts: this.reconnectAttempts
-      });
-      this.emit('disconnected', { code, reason: reason?.toString() });
+      this.stopKeepAlive();
       
-      // Disable automatic reconnection for now to debug the issue
-      // if (this.reconnectAttempts < this.maxReconnectAttempts) {
-      //   this.reconnectAttempts++;
-      //   setTimeout(() => this.reconnect(), 1000 * this.reconnectAttempts);
-      // }
+      const reasonStr = reason?.toString() || 'Unknown reason';
+      const isInactivityTimeout = code === 1000 && reasonStr.includes('inactivity') || 
+                                  code === 1001 || 
+                                  (Date.now() - this.lastActivityTime > 55000);
+      
+      if (isInactivityTimeout) {
+        logger.warn('ElevenLabs WebSocket closed due to inactivity', { 
+          code, 
+          reason: reasonStr,
+          conversationId: this.currentConversationId,
+          lastActivity: new Date(this.lastActivityTime).toISOString()
+        });
+        this.emit('inactivity_timeout', { conversationId: this.currentConversationId });
+      } else {
+        logger.error('ElevenLabs WebSocket closed', { 
+          code, 
+          reason: reasonStr,
+          conversationId: this.currentConversationId,
+          reconnectAttempts: this.reconnectAttempts
+        });
+      }
+      
+      this.emit('disconnected', { code, reason: reasonStr, isInactivityTimeout });
     });
   }
 
   private handleMessage(message: any): void {
     logger.info('ElevenLabs: Received message', { type: message.type });
+    this.lastActivityTime = Date.now();
     
     switch (message.type) {
       case 'conversation_initiation_metadata':
@@ -274,10 +290,13 @@ export class ElevenLabsService extends EventEmitter {
       type: 'user_message',
       text: text
     }));
+    
+    this.lastActivityTime = Date.now();
   }
 
   async disconnect(): Promise<void> {
     this.stopPingPong();
+    this.stopKeepAlive();
     this.currentConversationId = null;
     
     if (this.ws) {
@@ -326,6 +345,40 @@ export class ElevenLabsService extends EventEmitter {
     if (this.pingTimeout) {
       clearTimeout(this.pingTimeout);
       this.pingTimeout = null;
+    }
+  }
+
+  /**
+   * Start keep-alive mechanism to prevent inactivity timeout
+   */
+  private startKeepAlive(): void {
+    // Send a keep-alive message every 45 seconds (before the 60-second timeout)
+    this.keepAliveInterval = setInterval(() => {
+      const timeSinceLastActivity = Date.now() - this.lastActivityTime;
+      
+      if (this.ws && this.isConnected && timeSinceLastActivity > 40000) {
+        logger.debug('Sending keep-alive user_activity message', {
+          timeSinceLastActivity,
+          conversationId: this.currentConversationId
+        });
+        
+        // Send user_activity to keep connection alive
+        this.ws.send(JSON.stringify({
+          type: 'user_activity'
+        }));
+        
+        this.lastActivityTime = Date.now();
+      }
+    }, 20000); // Check every 20 seconds
+  }
+
+  /**
+   * Stop keep-alive mechanism
+   */
+  private stopKeepAlive(): void {
+    if (this.keepAliveInterval) {
+      clearInterval(this.keepAliveInterval);
+      this.keepAliveInterval = null;
     }
   }
 
