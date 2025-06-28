@@ -48,9 +48,21 @@ This guide provides instructions for integrating the Conversational AI feature w
 ```typescript
 import { io, Socket } from 'socket.io-client';
 
+// Option 1: For new conversations (recommended)
 const socket = io(`${BACKEND_URL}/conversational-ai`, {
   auth: {
     token: userAuthToken  // JWT token from authentication
+  },
+  transports: ['websocket']
+});
+
+// Option 2: For resuming existing conversations
+const socket = io(`${BACKEND_URL}/conversational-ai`, {
+  auth: {
+    token: userAuthToken
+  },
+  query: {
+    conversationId: existingConversationId  // Optional, for resuming
   },
   transports: ['websocket']
 });

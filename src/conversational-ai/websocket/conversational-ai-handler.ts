@@ -23,27 +23,30 @@ export class ConversationalAIHandler {
    * Handle new socket connection
    */
   handleConnection(socket: ConversationSocket): void {
-    // Get conversation ID from query
-    const conversationId = socket.handshake.query.conversationId as string;
+    // Get user ID from socket data (set by auth middleware)
+    socket.userId = (socket as any).data?.user?.id || (socket as any).data?.user?.userId;
     
-    if (!conversationId) {
-      socket.emit('error', { message: 'Conversation ID required' });
+    if (!socket.userId) {
+      socket.emit('error', { message: 'Authentication required' });
       socket.disconnect();
       return;
     }
 
-    socket.conversationId = conversationId;
-    socket.userId = (socket as any).data?.user?.id || (socket as any).data?.user?.userId;
+    // Check if conversationId is provided in query (existing conversation)
+    const conversationId = socket.handshake.query.conversationId as string;
+    
+    if (conversationId) {
+      socket.conversationId = conversationId;
+      // Initialize existing conversation
+      this.initializeConversation(socket)
+        .catch(error => {
+          logger.error('Failed to initialize conversation:', error);
+          socket.emit('error', { message: 'Failed to initialize conversation' });
+          socket.disconnect();
+        });
+    }
 
-    // Initialize conversation
-    this.initializeConversation(socket)
-      .catch(error => {
-        logger.error('Failed to initialize conversation:', error);
-        socket.emit('error', { message: 'Failed to initialize conversation' });
-        socket.disconnect();
-      });
-
-    // Setup event listeners
+    // Setup event listeners (including initialize_conversation for new conversations)
     this.setupEventListeners(socket);
   }
 
@@ -104,6 +107,11 @@ export class ConversationalAIHandler {
    * Setup Socket.IO event listeners
    */
   private setupEventListeners(socket: ConversationSocket): void {
+    // Initialize new conversation
+    socket.on('initialize_conversation', async (data) => {
+      await this.handleInitializeConversation(socket, data);
+    });
+
     // Audio streaming
     socket.on('audio_chunk', async (data) => {
       await this.handleAudioChunk(socket, data);
@@ -111,6 +119,16 @@ export class ConversationalAIHandler {
 
     // Text input (fallback)
     socket.on('text_input', async (data) => {
+      await this.handleTextInput(socket, data);
+    });
+
+    // Send audio (alternative event name)
+    socket.on('send_audio', async (data) => {
+      await this.handleAudioChunk(socket, data);
+    });
+
+    // Send text (alternative event name)
+    socket.on('send_text', async (data) => {
       await this.handleTextInput(socket, data);
     });
 
@@ -181,6 +199,42 @@ export class ConversationalAIHandler {
         return new LakshmiConversationalAgent();
       default:
         throw new Error(`Unknown interpreter: ${interpreterId}`);
+    }
+  }
+
+  /**
+   * Handle initialize conversation event
+   */
+  private async handleInitializeConversation(socket: ConversationSocket, data: any): Promise<void> {
+    try {
+      const { dreamId, interpreterId } = data;
+      
+      if (!dreamId || !interpreterId) {
+        socket.emit('error', { message: 'dreamId and interpreterId are required' });
+        return;
+      }
+
+      // Create a new conversation
+      const conversation = await conversationService.createConversation({
+        userId: socket.userId!,
+        dreamId,
+        interpreterId
+      });
+
+      socket.conversationId = conversation.id;
+      
+      // Initialize the conversation
+      await this.initializeConversation(socket);
+      
+      // Emit success event
+      socket.emit('conversation_initialized', {
+        conversationId: conversation.id,
+        elevenLabsSessionId: conversation.elevenLabsSessionId || null
+      });
+      
+    } catch (error) {
+      logger.error('Failed to handle initialize conversation:', error);
+      socket.emit('error', { message: 'Failed to initialize conversation' });
     }
   }
 
