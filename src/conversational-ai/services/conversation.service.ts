@@ -71,7 +71,7 @@ class ConversationService {
         .eq('user_id', config.userId)
         .eq('dream_id', config.dreamId)
         .eq('interpreter_id', config.interpreterId)
-        .order('created_at', { ascending: false })
+        .order('started_at', { ascending: false })
         .limit(1);
 
       logger.info('Query result', {
