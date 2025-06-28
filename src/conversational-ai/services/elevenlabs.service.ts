@@ -179,6 +179,12 @@ export class ElevenLabsService extends EventEmitter {
         } as ElevenLabsError);
         break;
       
+      case 'ping':
+        // ElevenLabs sends ping messages to keep connection alive
+        // We can respond with pong if needed
+        logger.debug('ElevenLabs: Received ping');
+        break;
+      
       default:
         console.log('Unknown message type:', message.type);
     }

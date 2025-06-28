@@ -54,25 +54,26 @@ class ConversationService {
         .eq('dream_id', config.dreamId)
         .eq('interpreter_id', config.interpreterId)
         .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+        .limit(1);
 
-      if (!findError && existing) {
+      // Check if we found any conversations (existing will be an array)
+      if (!findError && existing && existing.length > 0) {
+        const conversation = existing[0];
         logger.info('Found existing conversation', {
-          conversationId: existing.id,
+          conversationId: conversation.id,
           dreamId: config.dreamId,
           interpreterId: config.interpreterId
         });
         
         // Update status to active if it was ended
-        if (existing.status === 'ended') {
+        if (conversation.status === 'ended') {
           const { error: updateError } = await supabaseService.getServiceClient()
             .from('conversations')
             .update({ 
               status: 'active',
               resumed_at: new Date().toISOString()
             })
-            .eq('id', existing.id);
+            .eq('id', conversation.id);
             
           if (updateError) {
             logger.error('Failed to update conversation status:', updateError);
@@ -80,13 +81,13 @@ class ConversationService {
         }
         
         return {
-          id: existing.id,
-          userId: existing.user_id,
-          dreamId: existing.dream_id,
-          interpreterId: existing.interpreter_id,
-          elevenLabsSessionId: existing.elevenlabs_session_id,
-          startedAt: new Date(existing.started_at),
-          endedAt: existing.ended_at ? new Date(existing.ended_at) : undefined,
+          id: conversation.id,
+          userId: conversation.user_id,
+          dreamId: conversation.dream_id,
+          interpreterId: conversation.interpreter_id,
+          elevenLabsSessionId: conversation.elevenlabs_session_id,
+          startedAt: new Date(conversation.started_at),
+          endedAt: conversation.ended_at ? new Date(conversation.ended_at) : undefined,
           status: 'active'
         };
       }
