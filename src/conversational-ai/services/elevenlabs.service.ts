@@ -24,6 +24,8 @@ export class ElevenLabsService extends EventEmitter {
   private inactivityCheckInterval: NodeJS.Timeout | null = null;
   private transcriptionTimeout: NodeJS.Timeout | null = null;
   private lastAudioSentTime: number = 0;
+  private audioChunkCount: number = 0;
+  private totalAudioBytesSent: number = 0;
 
   constructor(config: ElevenLabsConfig) {
     super();
@@ -188,6 +190,10 @@ export class ElevenLabsService extends EventEmitter {
           this.transcriptionTimeout = null;
         }
         
+        // Reset audio stats after successful transcription
+        this.audioChunkCount = 0;
+        this.totalAudioBytesSent = 0;
+        
         // Only emit non-empty transcriptions
         if (message.user_transcription_event.user_transcript && message.user_transcription_event.user_transcript.trim()) {
           this.emit('transcription', {
@@ -287,18 +293,23 @@ export class ElevenLabsService extends EventEmitter {
     }
 
     let audioToSend: string;
+    let audioSizeBytes: number = 0;
     
     // Handle different input formats
     if (typeof audioData === 'string') {
       // Already base64 encoded from mobile
       audioToSend = audioData;
+      // Estimate original size (base64 is ~33% larger)
+      audioSizeBytes = Math.floor(audioData.length * 0.75);
       logger.debug('Sending base64 audio to ElevenLabs', {
         conversationId: this.currentConversationId,
         base64Length: audioData.length,
+        estimatedBytes: audioSizeBytes,
         wsReadyState: this.ws.readyState
       });
     } else if (Buffer.isBuffer(audioData)) {
       // Direct buffer - convert to base64
+      audioSizeBytes = audioData.length;
       audioToSend = audioData.toString('base64');
       logger.debug('Converting Buffer to base64 for ElevenLabs', {
         conversationId: this.currentConversationId,
@@ -308,12 +319,27 @@ export class ElevenLabsService extends EventEmitter {
       });
     } else {
       // ArrayBuffer - convert to base64
+      audioSizeBytes = audioData.byteLength;
       audioToSend = Buffer.from(audioData).toString('base64');
       logger.debug('Converting ArrayBuffer to base64 for ElevenLabs', {
         conversationId: this.currentConversationId,
         originalSize: audioData.byteLength,
         base64Length: audioToSend.length,
         wsReadyState: this.ws.readyState
+      });
+    }
+    
+    // Track audio statistics
+    this.audioChunkCount++;
+    this.totalAudioBytesSent += audioSizeBytes;
+    
+    // Log if we're sending a lot of data
+    if (this.audioChunkCount % 10 === 0) {
+      logger.info('Audio streaming statistics', {
+        conversationId: this.currentConversationId,
+        chunkssSent: this.audioChunkCount,
+        totalBytesSent: this.totalAudioBytesSent,
+        totalDurationEstimate: Math.floor(this.totalAudioBytesSent / 32000) + 's' // 16kHz * 2 bytes
       });
     }
     
@@ -334,10 +360,17 @@ export class ElevenLabsService extends EventEmitter {
     this.transcriptionTimeout = setTimeout(() => {
       logger.warn('ElevenLabs: No transcription received within timeout', {
         conversationId: this.currentConversationId,
+        timeSinceLastAudio: Date.now() - this.lastAudioSentTime,
+        totalAudioSent: this.totalAudioBytesSent,
+        chunkCount: this.audioChunkCount
+      });
+      
+      // Emit timeout event for frontend awareness
+      this.emit('transcription_timeout', {
+        conversationId: this.currentConversationId,
         timeSinceLastAudio: Date.now() - this.lastAudioSentTime
       });
-      // Don't emit error, just log for monitoring
-    }, 10000); // 10 second timeout
+    }, 15000); // 15 second timeout (increased from 10)
   }
 
   sendConversationConfig(config: any): void {

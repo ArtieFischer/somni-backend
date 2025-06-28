@@ -182,16 +182,31 @@ export class ConversationalAIHandler {
    */
   private setupElevenLabsForwarding(socket: ConversationSocket, elevenLabsService: any): void {
     elevenLabsService.on('audio', (chunk: any) => {
-      // Convert Buffer to ArrayBuffer for frontend
-      const audioData = chunk instanceof Buffer ? chunk : chunk.data;
-      const arrayBuffer = audioData instanceof Buffer 
-        ? audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength)
-        : audioData;
+      // Convert audio data to base64 for reliable transport
+      let base64Audio: string;
       
-      // Emit in the format expected by frontend
+      if (chunk instanceof Buffer) {
+        base64Audio = chunk.toString('base64');
+      } else if (chunk.data instanceof Buffer) {
+        base64Audio = chunk.data.toString('base64');
+      } else {
+        // If it's already an ArrayBuffer or other format
+        base64Audio = Buffer.from(chunk.data || chunk).toString('base64');
+      }
+      
+      // Log audio chunk for debugging
+      logger.debug('Forwarding audio chunk to frontend', {
+        conversationId: socket.conversationId,
+        chunkSize: base64Audio.length,
+        isBuffer: chunk instanceof Buffer
+      });
+      
+      // Emit in base64 format for better compatibility
       socket.emit('audio_chunk', {
-        chunk: arrayBuffer,
-        isLast: false // ElevenLabs doesn't signal last chunk, handled by session end
+        audio: base64Audio,
+        format: 'base64',
+        sampleRate: 16000, // ElevenLabs uses 16kHz
+        isLast: false
       });
     });
 
@@ -223,6 +238,12 @@ export class ConversationalAIHandler {
     });
 
     elevenLabsService.on('agent_response', (response: any) => {
+      logger.info('Agent response event', {
+        conversationId: socket.conversationId,
+        textLength: response.text?.length || 0,
+        isTentative: response.isTentative
+      });
+      
       socket.emit('agent_response', response);
       // Save agent response to database
       if (response.text && !response.isTentative) {
@@ -232,6 +253,14 @@ export class ConversationalAIHandler {
           content: response.text
         }).catch(err => logger.error('Failed to save agent response:', err));
       }
+    });
+
+    // Add audio completion event
+    elevenLabsService.on('audio_done', () => {
+      logger.info('Audio playback complete', {
+        conversationId: socket.conversationId
+      });
+      socket.emit('audio_done');
     });
 
     elevenLabsService.on('conversation_initiated', async (data: any) => {
@@ -246,6 +275,13 @@ export class ConversationalAIHandler {
       socket.emit('elevenlabs_conversation_initiated', {
         audioFormat: data.audioFormat || 'pcm_16000',
         conversationId: data.conversationId
+      });
+      
+      // Log audio format for debugging
+      logger.info('ElevenLabs audio format configured', {
+        format: data.audioFormat || 'pcm_16000',
+        elevenLabsConversationId: data.conversationId,
+        ourConversationId: socket.conversationId
       });
     });
 
@@ -296,6 +332,21 @@ export class ConversationalAIHandler {
       socket.emit('elevenlabs_disconnected', {
         reason: 'inactivity_timeout',
         timeout: 60000
+      });
+    });
+
+    elevenLabsService.on('transcription_timeout', (data: any) => {
+      logger.warn('Transcription timeout detected', {
+        ...data,
+        socketId: socket.id,
+        userId: socket.userId
+      });
+      
+      // Forward to frontend
+      socket.emit('transcription_timeout', {
+        message: 'No transcription received for the audio. The recording might be too long or contain too much silence.',
+        conversationId: data.conversationId,
+        timestamp: new Date().toISOString()
       });
     });
 
