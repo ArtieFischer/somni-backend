@@ -123,7 +123,10 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   private handleMessage(message: any): void {
-    logger.info('ElevenLabs: Received message', { type: message.type });
+    // Only log non-ping messages at info level
+    if (message.type !== 'ping') {
+      logger.info('ElevenLabs: Received message', { type: message.type });
+    }
     this.lastActivityTime = Date.now();
     
     switch (message.type) {
