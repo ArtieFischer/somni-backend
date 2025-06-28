@@ -202,21 +202,21 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       // Dream Content
       dreamContent: context.dreamContent,
       dream_topic: dreamMetadata?.title || this.extractDreamTopic(context.dreamContent) || 'Dream Experience',
-      dreamSymbols: interpretation?.symbols || [],
+      dreamSymbols: Array.isArray(interpretation?.symbols) ? interpretation.symbols.join(', ') : '',
       clarity: dreamMetadata?.clarity || 75, // Default to 75% if not available
       mood: dreamMetadata?.mood || 3, // Default to neutral mood
       
       // Emotional Analysis
       emotionalToneprimary: emotionalTonePrimary,
       emotionalToneintensity: emotionalToneIntensity,
-      recurringThemes: recurringThemes,
+      recurringThemes: recurringThemes.join(', ') || 'none',
       
       // Interpretation Data
       quickTake: interpretation?.quickTake || '',
-      interpretationSummary: interpretation?.interpretationSummary || interpretation?.interpretation || '',
+      interpretationSummary: this.truncateText(interpretation?.interpretationSummary || interpretation?.interpretation || '', 500),
       
       // Conversation Context
-      previousMessages: previousMessagesFormatted,
+      previousMessages: previousMessagesFormatted.trim() || 'No previous messages',
       max_turn_length: 150 // Configurable per agent
     };
   }
@@ -250,6 +250,14 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       logger.error('Error fetching dream metadata:', error);
       return { clarity: 75, mood: 3, title: '' };
     }
+  }
+
+  /**
+   * Truncate text to a maximum length
+   */
+  protected truncateText(text: string, maxLength: number): string {
+    if (!text || text.length <= maxLength) return text;
+    return text.substring(0, maxLength - 3) + '...';
   }
 
   /**

@@ -216,10 +216,20 @@ export class ElevenLabsService extends EventEmitter {
       dynamic_variables: dynamicVariables || {}
     };
 
+    // Log key values for debugging
+    const debugVars = dynamicVariables ? {
+      user_name: dynamicVariables.user_name,
+      dream_topic: dynamicVariables.dream_topic,
+      age: dynamicVariables.age,
+      emotionalToneprimary: dynamicVariables.emotionalToneprimary,
+      hasContent: !!dynamicVariables.dreamContent,
+      contentLength: dynamicVariables.dreamContent?.length || 0
+    } : {};
+    
     logger.info('Sending conversation initiation to ElevenLabs', {
       hasVariables: !!dynamicVariables,
       variableKeys: dynamicVariables ? Object.keys(dynamicVariables) : [],
-      message: JSON.stringify(initMessage)
+      debugValues: debugVars
     });
 
     this.ws.send(JSON.stringify(initMessage));
