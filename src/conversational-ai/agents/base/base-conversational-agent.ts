@@ -37,8 +37,26 @@ export abstract class BaseConversationalAgent extends BaseDreamInterpreter {
    */
   async initializeConversation(conversationId: string, context?: ConversationContext, userProfile?: any): Promise<ElevenLabsService> {
     try {
+      const apiKey = process.env.ELEVENLABS_API_KEY || '';
+      
+      logger.info('Initializing ElevenLabs conversation:', {
+        conversationId,
+        hasApiKey: !!apiKey,
+        apiKeyLength: apiKey.length,
+        agentId: this.elevenLabsAgentId,
+        hasAgentId: !!this.elevenLabsAgentId
+      });
+      
+      if (!apiKey) {
+        throw new Error('ELEVENLABS_API_KEY environment variable is not set');
+      }
+      
+      if (!this.elevenLabsAgentId) {
+        throw new Error('ElevenLabs agent ID is not configured');
+      }
+      
       this.elevenLabsService = new ElevenLabsService({
-        apiKey: process.env.ELEVENLABS_API_KEY || '',
+        apiKey,
         agentId: this.elevenLabsAgentId,
         voiceSettings: this.voiceSettings
       });

@@ -145,7 +145,7 @@ export class ConversationalAIHandler {
    */
   private setupElevenLabsForwarding(socket: ConversationSocket, elevenLabsService: any): void {
     elevenLabsService.on('audio', (chunk: any) => {
-      socket.emit('audio_response', chunk);
+      socket.emit('audio_chunk', chunk);
     });
 
     elevenLabsService.on('transcription', (event: any) => {
@@ -162,6 +162,18 @@ export class ConversationalAIHandler {
 
     elevenLabsService.on('agent_response', (response: any) => {
       socket.emit('agent_response', response);
+    });
+
+    elevenLabsService.on('conversation_initiated', async (data: any) => {
+      // Update the ElevenLabs session ID in the database
+      if (data.conversationId && socket.conversationId) {
+        await conversationService.updateElevenLabsSessionId(
+          socket.conversationId, 
+          data.conversationId
+        );
+      }
+      // Forward to client
+      socket.emit('elevenlabs_conversation_initiated', data);
     });
 
     elevenLabsService.on('error', (error: any) => {
