@@ -126,14 +126,17 @@ class ConversationService {
           id: interpretation.id,
           dreamId: interpretation.dream_id,
           interpreterType: interpretation.interpreter_type,
-          interpretation: interpretation.interpretation,
+          interpretation: interpretation.interpretation_summary, // Main interpretation text
+          interpretationSummary: interpretation.interpretation_summary,
           quickTake: interpretation.quick_take,
-          symbols: interpretation.symbols,
-          themes: interpretation.themes,
-          emotions: interpretation.emotions,
-          questions: interpretation.questions,
-          additionalInsights: interpretation.additional_insights,
-          interpretationCore: interpretation.interpretation_core
+          symbols: interpretation.symbols || [],
+          themes: this.extractThemesFromFullResponse(interpretation.full_response),
+          emotions: this.extractEmotionsFromFullResponse(interpretation.full_response),
+          questions: this.extractQuestionsFromFullResponse(interpretation.full_response),
+          additionalInsights: this.extractInsightsFromFullResponse(interpretation.full_response),
+          interpretationCore: interpretation.primary_insight || interpretation.quick_take,
+          emotionalTone: this.extractEmotionalToneFromFullResponse(interpretation.full_response, interpretation.emotional_tone),
+          fullResponse: interpretation.full_response
         } : undefined,
         relevantKnowledge: relevantKnowledge.map((k: any) => ({
           content: k.content,
@@ -273,6 +276,146 @@ class ConversationService {
       logger.error('Failed to update ElevenLabs session ID:', error);
       throw error;
     }
+  }
+
+  /**
+   * Get user profile
+   */
+  async getUserProfile(userId: string): Promise<any> {
+    try {
+      const { data, error } = await supabaseService.getServiceClient()
+        .from('profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') return null; // Not found
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      logger.error('Failed to get user profile:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Extract themes from full_response JSONB
+   */
+  private extractThemesFromFullResponse(fullResponse: any): string[] {
+    if (!fullResponse) return [];
+    
+    const response = typeof fullResponse === 'string' 
+      ? JSON.parse(fullResponse) 
+      : fullResponse;
+    
+    // Try different possible locations for themes
+    return response?.themes || 
+           response?.interpretation?.themes || 
+           response?.stageMetadata?.themeIdentification?.themes ||
+           [];
+  }
+
+  /**
+   * Extract emotions from full_response JSONB
+   */
+  private extractEmotionsFromFullResponse(fullResponse: any): string[] {
+    if (!fullResponse) return [];
+    
+    const response = typeof fullResponse === 'string' 
+      ? JSON.parse(fullResponse) 
+      : fullResponse;
+    
+    // Extract emotions from various possible locations
+    const emotions = [];
+    
+    if (response?.emotions) {
+      emotions.push(...response.emotions);
+    }
+    
+    if (response?.emotionalTone) {
+      emotions.push(response.emotionalTone);
+    }
+    
+    if (response?.stageMetadata?.emotionalAnalysis?.emotions) {
+      emotions.push(...response.stageMetadata.emotionalAnalysis.emotions);
+    }
+    
+    return [...new Set(emotions)]; // Remove duplicates
+  }
+
+  /**
+   * Extract questions from full_response JSONB
+   */
+  private extractQuestionsFromFullResponse(fullResponse: any): string[] {
+    if (!fullResponse) return [];
+    
+    const response = typeof fullResponse === 'string' 
+      ? JSON.parse(fullResponse) 
+      : fullResponse;
+    
+    return response?.questions || 
+           response?.followUpQuestions ||
+           response?.guidingQuestions ||
+           [];
+  }
+
+  /**
+   * Extract additional insights from full_response JSONB
+   */
+  private extractInsightsFromFullResponse(fullResponse: any): string[] {
+    if (!fullResponse) return [];
+    
+    const response = typeof fullResponse === 'string' 
+      ? JSON.parse(fullResponse) 
+      : fullResponse;
+    
+    const insights = [];
+    
+    if (response?.additionalInsights) {
+      insights.push(...(Array.isArray(response.additionalInsights) 
+        ? response.additionalInsights 
+        : [response.additionalInsights]));
+    }
+    
+    if (response?.keyInsights) {
+      insights.push(...(Array.isArray(response.keyInsights) 
+        ? response.keyInsights 
+        : [response.keyInsights]));
+    }
+    
+    return insights;
+  }
+
+  /**
+   * Extract emotional tone from full_response JSONB or emotional_tone column
+   */
+  private extractEmotionalToneFromFullResponse(fullResponse: any, emotionalToneColumn?: any): string | any {
+    // First check if we have emotional_tone column data
+    if (emotionalToneColumn) {
+      // If it's already an object with primary field, return as is
+      if (typeof emotionalToneColumn === 'object' && emotionalToneColumn.primary) {
+        return emotionalToneColumn;
+      }
+      // If it's a string, return it
+      if (typeof emotionalToneColumn === 'string') {
+        return emotionalToneColumn;
+      }
+    }
+    
+    // Otherwise extract from full_response
+    if (!fullResponse) return 'neutral';
+    
+    const response = typeof fullResponse === 'string' 
+      ? JSON.parse(fullResponse) 
+      : fullResponse;
+    
+    return response?.emotionalTone?.primary || 
+           response?.emotionalTone ||
+           response?.stageMetadata?.emotionalAnalysis?.primaryTone ||
+           'neutral';
   }
 }
 

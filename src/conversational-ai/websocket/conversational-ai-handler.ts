@@ -64,21 +64,24 @@ export class ConversationalAIHandler {
       throw new Error('Unauthorized');
     }
 
+    // Get user profile for dynamic variables
+    const userProfile = await conversationService.getUserProfile(conversation.userId);
+
     // Create appropriate agent
     const agent = this.createAgent(conversation.interpreterId);
     socket.agent = agent;
     this.agents.set(conversationId, agent);
 
-    // Initialize ElevenLabs connection (if available)
+    // Get conversation context first (needed for ElevenLabs initialization)
+    const context = await conversationService.getConversationContext(conversationId);
+
+    // Initialize ElevenLabs connection with context and user profile
     try {
-      const elevenLabsService = await agent.initializeConversation(conversationId);
+      const elevenLabsService = await agent.initializeConversation(conversationId, context, userProfile);
       this.setupElevenLabsForwarding(socket, elevenLabsService);
     } catch (error) {
       logger.warn('ElevenLabs initialization failed, falling back to text mode:', error);
     }
-
-    // Get conversation context
-    const context = await conversationService.getConversationContext(conversationId);
 
     // Send conversation starter
     const starter = agent.getConversationStarter(context);

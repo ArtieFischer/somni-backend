@@ -181,6 +181,28 @@ export class ElevenLabsService extends EventEmitter {
     }));
   }
 
+  /**
+   * Send initial conversation configuration with dynamic variables
+   */
+  sendConversationInitiation(dynamicVariables?: Record<string, any>): void {
+    if (!this.isConnected || !this.ws) {
+      throw new Error('Not connected to ElevenLabs');
+    }
+
+    const initMessage: any = {
+      type: 'conversation_initiation_client_data'
+    };
+
+    // Add dynamic variables if provided
+    if (dynamicVariables) {
+      initMessage.custom_llm_extra_body = {
+        dynamic_variables: dynamicVariables
+      };
+    }
+
+    this.ws.send(JSON.stringify(initMessage));
+  }
+
   sendToolResponse(toolCallId: string, result: any): void {
     if (!this.isConnected || !this.ws) {
       throw new Error('Not connected to ElevenLabs');

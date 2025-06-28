@@ -26,7 +26,22 @@ export interface ConversationMessage {
 }
 
 export interface ConversationContext {
-  interpretation: any; // Will use existing DreamInterpretation type
+  interpretation: {
+    id: string;
+    dreamId: string;
+    interpreterType: string;
+    interpretation: string;
+    interpretationSummary?: string;
+    quickTake: string;
+    symbols: string[];
+    themes: string[];
+    emotions: string[];
+    questions: string[];
+    additionalInsights: string[];
+    interpretationCore: string;
+    emotionalTone?: string;
+    fullResponse?: any; // Contains detailed metadata
+  } | undefined;
   relevantKnowledge: Array<{
     content: string;
     source: string;

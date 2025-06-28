@@ -3,6 +3,7 @@ import { InterpreterConfig } from '../../../dream-interpretation/interpreters/ba
 import { ConversationContext, ConversationMessage } from '../../types/conversation.types';
 import { ElevenLabsService } from '../../services/elevenlabs.service';
 import { logger } from '../../../utils/logger';
+import { supabaseService } from '../../../services/supabase';
 
 export interface ConversationalAgentConfig extends InterpreterConfig {
   elevenLabsAgentId: string;
@@ -34,7 +35,7 @@ export abstract class BaseConversationalAgent extends BaseDreamInterpreter {
   /**
    * Initialize ElevenLabs connection for conversation
    */
-  async initializeConversation(conversationId: string, context?: ConversationContext): Promise<ElevenLabsService> {
+  async initializeConversation(conversationId: string, context?: ConversationContext, userProfile?: any): Promise<ElevenLabsService> {
     try {
       this.elevenLabsService = new ElevenLabsService({
         apiKey: process.env.ELEVENLABS_API_KEY || '',
@@ -44,10 +45,16 @@ export abstract class BaseConversationalAgent extends BaseDreamInterpreter {
 
       await this.elevenLabsService.connect(conversationId);
       
-      // Send initial conversation configuration if context provided
+      // Build and send dynamic variables for conversation initialization
       if (context) {
-        const config = this.buildConversationConfig(context);
-        this.elevenLabsService.sendConversationConfig(config);
+        const dynamicVariables = await this.buildDynamicVariables(context, userProfile);
+        this.elevenLabsService.sendConversationInitiation(dynamicVariables);
+        
+        logger.info(`Initialized ElevenLabs conversation with variables:`, {
+          conversationId,
+          agentId: this.elevenLabsAgentId,
+          dynamicVariables
+        });
       }
       
       return this.elevenLabsService;
@@ -106,6 +113,117 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       this.formatConversationHistory(context.previousMessages) : '';
 
     return `${basePrompt}\n\n${dreamContext}\n\n${historyContext}`;
+  }
+
+  /**
+   * Build dynamic variables for ElevenLabs conversation
+   */
+  async buildDynamicVariables(context: ConversationContext, userProfile?: any): Promise<Record<string, any>> {
+    const interpretation = context.interpretation;
+    
+    // Calculate age from birth_date if available
+    let age = null;
+    if (userProfile?.birth_date) {
+      const birthDate = new Date(userProfile.birth_date);
+      const today = new Date();
+      age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+    }
+
+    // Extract emotional tone data from interpretation
+    let emotionalTonePrimary = 'neutral';
+    let emotionalToneIntensity = 0.5;
+    
+    if (interpretation?.emotionalTone) {
+      // emotionalTone might be a string or an object
+      if (typeof interpretation.emotionalTone === 'string') {
+        emotionalTonePrimary = interpretation.emotionalTone;
+      } else if (interpretation.emotionalTone?.primary) {
+        emotionalTonePrimary = interpretation.emotionalTone.primary;
+        emotionalToneIntensity = interpretation.emotionalTone.intensity || 0.5;
+      }
+    }
+    
+    // Also check in full_response for more detailed emotional analysis
+    if (interpretation?.fullResponse) {
+      const fullResponse = typeof interpretation.fullResponse === 'string' 
+        ? JSON.parse(interpretation.fullResponse)
+        : interpretation.fullResponse;
+        
+      if (fullResponse?.stageMetadata?.emotionalAnalysis) {
+        const emotionalAnalysis = fullResponse.stageMetadata.emotionalAnalysis;
+        emotionalTonePrimary = emotionalAnalysis.primaryTone || emotionalTonePrimary;
+        emotionalToneIntensity = emotionalAnalysis.intensity || emotionalToneIntensity;
+      }
+    }
+
+    // Extract recurring themes from interpretation
+    const recurringThemes = interpretation?.themes || [];
+
+    // Get dream metadata (mood, clarity)
+    const dreamMetadata = await this.getDreamMetadata(context);
+    
+    // Format previous messages for the prompt
+    const previousMessagesFormatted = context.previousMessages ? 
+      this.formatConversationHistory(context.previousMessages.slice(-20)) : '';
+
+    return {
+      // User Context
+      user_name: userProfile?.username || userProfile?.handle || 'Dreamer',
+      age: age || 'unknown',
+      
+      // Dream Content
+      dreamContent: context.dreamContent,
+      dreamSymbols: interpretation?.symbols || [],
+      clarity: dreamMetadata?.clarity || 75, // Default to 75% if not available
+      mood: dreamMetadata?.mood || 3, // Default to neutral mood
+      
+      // Emotional Analysis
+      emotionalToneprimary: emotionalTonePrimary,
+      emotionalToneintensity: emotionalToneIntensity,
+      recurringThemes: recurringThemes,
+      
+      // Interpretation Data
+      quickTake: interpretation?.quickTake || '',
+      interpretationSummary: interpretation?.interpretationSummary || interpretation?.interpretation || '',
+      
+      // Conversation Context
+      previousMessages: previousMessagesFormatted,
+      max_turn_length: 150 // Configurable per agent
+    };
+  }
+
+  /**
+   * Get dream metadata from dreams table
+   */
+  protected async getDreamMetadata(context: ConversationContext): Promise<{ clarity: number; mood: number } | null> {
+    try {
+      if (!context.interpretation?.dreamId) {
+        return { clarity: 75, mood: 3 }; // Defaults
+      }
+
+      const { data, error } = await supabaseService.getServiceClient()
+        .from('dreams')
+        .select('mood, clarity, transcription_metadata')
+        .eq('id', context.interpretation.dreamId)
+        .single();
+
+      if (error || !data) {
+        logger.warn('Could not fetch dream metadata:', error);
+        return { clarity: 75, mood: 3 };
+      }
+
+      return {
+        clarity: data.clarity || 75,
+        mood: data.mood || 3
+      };
+    } catch (error) {
+      logger.error('Error fetching dream metadata:', error);
+      return { clarity: 75, mood: 3 };
+    }
   }
 
   /**

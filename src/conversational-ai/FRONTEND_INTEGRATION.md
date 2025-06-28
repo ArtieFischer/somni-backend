@@ -2,589 +2,334 @@
 
 ## Overview
 
-This guide provides detailed instructions for integrating the Conversational AI feature with your frontend application. The system supports real-time voice conversations with AI agents that maintain the same personalities as the dream interpreters.
+This guide provides instructions for integrating the Conversational AI feature with your frontend application. The system enables real-time voice conversations with AI agents (Jung and Lakshmi) through WebSocket connections.
 
-## Architecture
+## Current Implementation Status
 
+### Backend Ready ✅
+- WebSocket server with Socket.IO namespaces (`/conversational-ai`)
+- ElevenLabs integration with dynamic variables
+- Conversation persistence in Supabase
+- Dream context retrieval from interpretations
+- User profile integration
+
+### Dynamic Variables Passed to ElevenLabs
+```typescript
+{
+  // User Context
+  user_name: string,              // From profiles.username or handle
+  age: number | 'unknown',        // Calculated from profiles.birth_date
+  
+  // Dream Content
+  dreamContent: string,           // From dreams.raw_transcript
+  dreamSymbols: string[],         // From interpretations.symbols
+  clarity: number,                // From dreams.clarity (1-100)
+  mood: number,                   // From dreams.mood (1-5)
+  
+  // Emotional Analysis
+  emotionalToneprimary: string,   // From interpretations.emotionalTone
+  emotionalToneintensity: number, // From interpretation metadata
+  recurringThemes: string[],      // From interpretations.themes
+  
+  // Interpretation Data
+  quickTake: string,              // From interpretations.quickTake
+  interpretationSummary: string,  // From interpretations.interpretationSummary
+  
+  // Conversation Context
+  previousMessages: string,       // Formatted conversation history
+  max_turn_length: number         // Default: 150
+}
 ```
-┌─────────────────┐     WebSocket      ┌─────────────────┐     WebSocket      ┌─────────────────┐
-│                 │ ◄─────────────────► │                 │ ◄─────────────────► │                 │
-│  Frontend App   │    (Socket.IO)      │  Backend Server │  (ElevenLabs API)  │   ElevenLabs    │
-│                 │                     │                 │                     │                 │
-└─────────────────┘                     └─────────────────┘                     └─────────────────┘
-     Audio/Text                              Routing                              AI Processing
-```
 
-## Complete Frontend Flow
+## Frontend Requirements
 
-### 1. Prerequisites
-
-```bash
-# Install required packages (React Native example)
-npm install socket.io-client expo-av
-
-# For React web
-npm install socket.io-client
-```
-
-### 2. Conversation Initialization
+### 1. Socket.IO Connection Setup
 
 ```typescript
-// services/conversationService.ts
 import { io, Socket } from 'socket.io-client';
 
-interface ConversationConfig {
-  dreamId: string;
-  interpreterId: 'jung' | 'lakshmi';
-  authToken: string;
-}
-
-class ConversationService {
-  private socket: Socket | null = null;
-  private recording: Audio.Recording | null = null;
-  
-  async startConversation(config: ConversationConfig): Promise<void> {
-    // Step 1: Initialize conversation via REST API
-    const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${config.authToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        dreamId: config.dreamId,
-        interpreterId: config.interpreterId
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to start conversation');
-    }
-
-    const { conversationId, websocketUrl, token } = await response.json();
-
-    // Step 2: Connect to WebSocket
-    this.socket = io(websocketUrl, {
-      auth: { token },
-      query: { conversationId },
-      transports: ['websocket'],
-      reconnection: true,
-      reconnectionAttempts: 3,
-      reconnectionDelay: 1000
-    });
-
-    this.setupEventListeners();
-  }
-}
+const socket = io(`${BACKEND_URL}/conversational-ai`, {
+  auth: {
+    token: userAuthToken  // JWT token from authentication
+  },
+  transports: ['websocket']
+});
 ```
 
-### 3. Audio Recording and Streaming
+### 2. Required Events to Handle
 
+#### Incoming Events (from server):
 ```typescript
-// React Native implementation
+// Connection established
+socket.on('connect', () => {
+  console.log('Connected to conversational AI');
+});
+
+// Conversation initialization confirmed
+socket.on('conversation_initialized', (data: {
+  conversationId: string;
+  elevenLabsSessionId: string;
+}) => {
+  // Store conversation ID for future reference
+});
+
+// Real-time transcription of user speech
+socket.on('user_transcript', (data: {
+  text: string;
+  isFinal: boolean;
+}) => {
+  // Display user's spoken text
+});
+
+// Agent's text response
+socket.on('agent_response', (data: {
+  text: string;
+  role: string;
+}) => {
+  // Display agent's response text
+});
+
+// Audio chunks from agent
+socket.on('audio_chunk', (data: {
+  chunk: ArrayBuffer;
+  isLast: boolean;
+}) => {
+  // Play audio chunk
+});
+
+// Conversation ended
+socket.on('conversation_ended', (data: {
+  conversationId: string;
+  duration: number;
+}) => {
+  // Clean up resources
+});
+
+// Error handling
+socket.on('error', (error: {
+  code: string;
+  message: string;
+}) => {
+  // Handle errors appropriately
+});
+```
+
+#### Outgoing Events (to server):
+```typescript
+// Initialize conversation
+socket.emit('initialize_conversation', {
+  dreamId: string;        // Required: ID of the dream being discussed
+  interpreterId: string;  // Required: 'jung' or 'lakshmi'
+});
+
+// Send audio data (PCM 16-bit, 16kHz mono)
+socket.emit('send_audio', {
+  audio: ArrayBuffer;     // Audio chunk
+});
+
+// Send text input (optional alternative to voice)
+socket.emit('send_text', {
+  text: string;
+});
+
+// End conversation
+socket.emit('end_conversation');
+```
+
+### 3. Audio Recording Configuration
+
+For React Native with Expo:
+```typescript
 import { Audio } from 'expo-av';
 
-class AudioManager {
-  private recording: Audio.Recording | null = null;
-  private isRecording = false;
-  
-  async initializeAudio(): Promise<void> {
-    // Request permissions
-    const { status } = await Audio.requestPermissionsAsync();
-    if (status !== 'granted') {
-      throw new Error('Audio permission not granted');
-    }
-
-    // Configure audio mode
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: true,
-      playsInSilentModeIOS: true,
-      staysActiveInBackground: true,
-      shouldDuckAndroid: true,
-      playThroughEarpieceAndroid: false
-    });
-  }
-
-  async startRecording(onAudioData: (data: ArrayBuffer) => void): Promise<void> {
-    this.recording = new Audio.Recording();
-    
-    await this.recording.prepareToRecordAsync({
-      android: {
-        extension: '.wav',
-        outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_PCM_16BIT,
-        audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_PCM_16BIT,
-        sampleRate: 16000, // ElevenLabs preferred rate
-        numberOfChannels: 1,
-        bitRate: 128000,
-      },
-      ios: {
-        extension: '.wav',
-        audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
-        sampleRate: 16000,
-        numberOfChannels: 1,
-        bitRate: 128000,
-        linearPCMBitDepth: 16,
-        linearPCMIsBigEndian: false,
-        linearPCMIsFloat: false,
-      },
-    });
-
-    await this.recording.startAsync();
-    this.isRecording = true;
-
-    // Stream audio chunks every 100ms
-    this.streamAudioChunks(onAudioData);
-  }
-
-  private async streamAudioChunks(onAudioData: (data: ArrayBuffer) => void): Promise<void> {
-    while (this.isRecording) {
-      if (this.recording) {
-        const status = await this.recording.getStatusAsync();
-        if (status.isRecording && status.durationMillis > 100) {
-          // Get audio URI and convert to ArrayBuffer
-          const uri = this.recording.getURI();
-          if (uri) {
-            const response = await fetch(uri);
-            const arrayBuffer = await response.arrayBuffer();
-            onAudioData(arrayBuffer);
-          }
-        }
-      }
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
-  }
-
-  async stopRecording(): Promise<void> {
-    this.isRecording = false;
-    if (this.recording) {
-      await this.recording.stopAndUnloadAsync();
-      this.recording = null;
-    }
-  }
-}
-```
-
-### 4. WebSocket Event Handling
-
-```typescript
-interface ConversationEvents {
-  onConnectionEstablished: () => void;
-  onUserTranscript: (text: string) => void;
-  onAgentResponse: (text: string, isTentative: boolean) => void;
-  onAudioResponse: (audioData: ArrayBuffer) => void;
-  onVADScore: (score: number) => void;
-  onError: (error: Error) => void;
-}
-
-class ConversationManager {
-  private audioPlayer = new AudioPlayer();
-  
-  setupEventListeners(events: ConversationEvents): void {
-    if (!this.socket) return;
-
-    // Connection events
-    this.socket.on('connect', () => {
-      console.log('Connected to conversation server');
-      events.onConnectionEstablished();
-    });
-
-    this.socket.on('conversation_started', (data) => {
-      // Initial greeting from agent
-      events.onAgentResponse(data.message, false);
-    });
-
-    // Transcription events
-    this.socket.on('transcription', (data) => {
-      if (data.speaker === 'user') {
-        events.onUserTranscript(data.text);
-      }
-    });
-
-    // Agent responses
-    this.socket.on('agent_response', (data) => {
-      events.onAgentResponse(data.text, data.isTentative);
-    });
-
-    // Audio responses
-    this.socket.on('audio_response', async (data) => {
-      const audioBuffer = data.chunk;
-      await this.audioPlayer.playAudio(audioBuffer);
-      events.onAudioResponse(audioBuffer);
-    });
-
-    // Voice Activity Detection
-    this.socket.on('vad_score', (data) => {
-      events.onVADScore(data.score);
-    });
-
-    // Error handling
-    this.socket.on('error', (error) => {
-      events.onError(new Error(error.message || 'Connection error'));
-    });
-
-    this.socket.on('disconnect', (reason) => {
-      console.log('Disconnected:', reason);
-      if (reason === 'io server disconnect') {
-        // Server disconnected, don't attempt to reconnect
-        events.onError(new Error('Server disconnected'));
-      }
-    });
-  }
-
-  sendAudioChunk(audioData: ArrayBuffer): void {
-    if (this.socket?.connected) {
-      this.socket.emit('audio_chunk', { chunk: audioData });
-    }
-  }
-
-  sendTextMessage(text: string): void {
-    if (this.socket?.connected) {
-      this.socket.emit('text_input', { text });
-    }
-  }
-
-  endConversation(): void {
-    if (this.socket?.connected) {
-      this.socket.emit('end_conversation');
-      this.socket.disconnect();
-    }
-  }
-}
-```
-
-### 5. Audio Playback
-
-```typescript
-class AudioPlayer {
-  private currentSound: Audio.Sound | null = null;
-  private audioQueue: ArrayBuffer[] = [];
-  private isPlaying = false;
-
-  async playAudio(audioBuffer: ArrayBuffer): Promise<void> {
-    // Add to queue
-    this.audioQueue.push(audioBuffer);
-    
-    // Start playing if not already playing
-    if (!this.isPlaying) {
-      this.processAudioQueue();
-    }
-  }
-
-  private async processAudioQueue(): Promise<void> {
-    this.isPlaying = true;
-    
-    while (this.audioQueue.length > 0) {
-      const audioBuffer = this.audioQueue.shift()!;
-      
-      try {
-        // Convert ArrayBuffer to base64 for React Native
-        const base64 = btoa(
-          new Uint8Array(audioBuffer)
-            .reduce((data, byte) => data + String.fromCharCode(byte), '')
-        );
-        
-        this.currentSound = new Audio.Sound();
-        await this.currentSound.loadAsync({
-          uri: `data:audio/pcm;base64,${base64}`
-        });
-        
-        await this.currentSound.playAsync();
-        
-        // Wait for playback to complete
-        await new Promise<void>((resolve) => {
-          this.currentSound!.setOnPlaybackStatusUpdate((status) => {
-            if (status.isLoaded && status.didJustFinish) {
-              resolve();
-            }
-          });
-        });
-        
-        await this.currentSound.unloadAsync();
-        this.currentSound = null;
-        
-      } catch (error) {
-        console.error('Error playing audio:', error);
-      }
-    }
-    
-    this.isPlaying = false;
-  }
-
-  async stop(): Promise<void> {
-    this.audioQueue = [];
-    if (this.currentSound) {
-      await this.currentSound.stopAsync();
-      await this.currentSound.unloadAsync();
-      this.currentSound = null;
-    }
-    this.isPlaying = false;
-  }
-}
-```
-
-### 6. React Component Example
-
-```tsx
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-
-interface Message {
-  id: string;
-  speaker: 'user' | 'agent';
-  text: string;
-  timestamp: Date;
-}
-
-export function ConversationScreen({ dreamId, interpreterId }: Props) {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isRecording, setIsRecording] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [agentText, setAgentText] = useState('');
-  
-  const conversationManager = useRef(new ConversationManager());
-  const audioManager = useRef(new AudioManager());
-
-  useEffect(() => {
-    startConversation();
-    return () => {
-      conversationManager.current.endConversation();
-    };
-  }, []);
-
-  const startConversation = async () => {
-    try {
-      await audioManager.current.initializeAudio();
-      
-      await conversationManager.current.startConversation({
-        dreamId,
-        interpreterId,
-        authToken: getAuthToken()
-      });
-
-      conversationManager.current.setupEventListeners({
-        onConnectionEstablished: () => setIsConnected(true),
-        onUserTranscript: (text) => {
-          addMessage('user', text);
-        },
-        onAgentResponse: (text, isTentative) => {
-          if (!isTentative) {
-            addMessage('agent', text);
-          }
-          setAgentText(text);
-        },
-        onAudioResponse: (audioData) => {
-          // Audio is played automatically by AudioPlayer
-        },
-        onVADScore: (score) => {
-          setIsSpeaking(score > 0.5);
-        },
-        onError: (error) => {
-          console.error('Conversation error:', error);
-          // Handle error in UI
-        }
-      });
-    } catch (error) {
-      console.error('Failed to start conversation:', error);
-    }
-  };
-
-  const toggleRecording = async () => {
-    if (isRecording) {
-      await audioManager.current.stopRecording();
-      setIsRecording(false);
-    } else {
-      setIsRecording(true);
-      await audioManager.current.startRecording((audioData) => {
-        conversationManager.current.sendAudioChunk(audioData);
-      });
-    }
-  };
-
-  const addMessage = (speaker: 'user' | 'agent', text: string) => {
-    setMessages(prev => [...prev, {
-      id: Date.now().toString(),
-      speaker,
-      text,
-      timestamp: new Date()
-    }]);
-  };
-
-  return (
-    <View style={styles.container}>
-      <ScrollView style={styles.messageList}>
-        {messages.map(message => (
-          <View 
-            key={message.id} 
-            style={[
-              styles.message,
-              message.speaker === 'user' ? styles.userMessage : styles.agentMessage
-            ]}
-          >
-            <Text>{message.text}</Text>
-          </View>
-        ))}
-      </ScrollView>
-      
-      {agentText && (
-        <View style={styles.agentStatus}>
-          <Text>{interpreterId === 'jung' ? 'Jung' : 'Lakshmi'}: {agentText}</Text>
-        </View>
-      )}
-      
-      <View style={styles.controls}>
-        <TouchableOpacity 
-          style={[styles.recordButton, isRecording && styles.recording]}
-          onPress={toggleRecording}
-          disabled={!isConnected}
-        >
-          <Text>{isRecording ? 'Stop' : 'Start'} Recording</Text>
-        </TouchableOpacity>
-        
-        {isSpeaking && <Text>You are speaking...</Text>}
-      </View>
-    </View>
-  );
-}
-```
-
-## Error Handling
-
-### Connection Errors
-```typescript
-// Automatic reconnection is handled by Socket.IO
-const socket = io(url, {
-  reconnection: true,
-  reconnectionAttempts: 3,
-  reconnectionDelay: 1000,
-  reconnectionDelayMax: 5000
-});
-
-// Manual reconnection
-socket.on('disconnect', (reason) => {
-  if (reason === 'io server disconnect') {
-    // Server forcefully disconnected, manual reconnection needed
-    setTimeout(() => {
-      socket.connect();
-    }, 1000);
-  }
-});
-```
-
-### Audio Errors
-```typescript
-// Handle audio permission errors
-try {
-  const { status } = await Audio.requestPermissionsAsync();
-  if (status !== 'granted') {
-    // Show UI message to user about missing permissions
-  }
-} catch (error) {
-  // Handle permission request failure
-}
-
-// Handle recording errors
-recording.setOnRecordingStatusUpdate((status) => {
-  if (status.error) {
-    console.error('Recording error:', status.error);
-    // Stop recording and show error to user
-  }
-});
-```
-
-## Testing
-
-### 1. Test Connection
-```typescript
-// Test WebSocket connection
-socket.on('connect', () => {
-  console.log('✅ WebSocket connected');
-});
-
-socket.on('connect_error', (error) => {
-  console.error('❌ Connection error:', error.message);
-});
-```
-
-### 2. Test Audio Flow
-```typescript
-// Test audio recording
-const testRecording = async () => {
-  const recording = new Audio.Recording();
-  await recording.prepareToRecordAsync(recordingOptions);
-  await recording.startAsync();
-  
-  setTimeout(async () => {
-    await recording.stopAndUnloadAsync();
-    const uri = recording.getURI();
-    console.log('✅ Recording saved to:', uri);
-  }, 2000);
+const recordingOptions = {
+  android: {
+    extension: '.pcm',
+    outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_PCM_16BIT,
+    audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_DEFAULT,
+    sampleRate: 16000,  // ElevenLabs requirement
+    numberOfChannels: 1,
+    bitRate: 256000,
+  },
+  ios: {
+    extension: '.pcm',
+    audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
+    sampleRate: 16000,  // ElevenLabs requirement
+    numberOfChannels: 1,
+    bitRate: 256000,
+    linearPCMBitDepth: 16,
+    linearPCMIsBigEndian: false,
+    linearPCMIsFloat: false,
+  },
 };
 ```
 
-### 3. Test Message Flow
-```typescript
-// Send test message
-socket.emit('text_input', { text: 'Hello, can you hear me?' });
+### 4. Audio Playback
 
-// Listen for response
-socket.on('agent_response', (data) => {
-  console.log('✅ Received response:', data.text);
+```typescript
+// Convert incoming audio chunks to playable format
+const playAudioChunk = async (audioData: ArrayBuffer) => {
+  // For React Native
+  const sound = new Audio.Sound();
+  
+  // Convert ArrayBuffer to base64 for React Native
+  const base64Audio = btoa(
+    new Uint8Array(audioData)
+      .reduce((data, byte) => data + String.fromCharCode(byte), '')
+  );
+  
+  await sound.loadAsync({
+    uri: `data:audio/pcm;base64,${base64Audio}`
+  });
+  
+  await sound.playAsync();
+};
+```
+
+### 5. Complete Flow Example
+
+```typescript
+class ConversationManager {
+  private socket: Socket;
+  private recording: Audio.Recording | null = null;
+  private audioQueue: ArrayBuffer[] = [];
+  
+  async startConversation(dreamId: string, interpreterId: string) {
+    // 1. Connect to WebSocket
+    this.socket = io(`${BACKEND_URL}/conversational-ai`, {
+      auth: { token: getAuthToken() }
+    });
+    
+    // 2. Set up event listeners
+    this.socket.on('connect', () => {
+      // 3. Initialize conversation
+      this.socket.emit('initialize_conversation', {
+        dreamId,
+        interpreterId
+      });
+    });
+    
+    this.socket.on('conversation_initialized', async () => {
+      // 4. Start recording audio
+      await this.startRecording();
+    });
+    
+    this.socket.on('audio_chunk', (data) => {
+      // 5. Queue and play audio responses
+      this.queueAudio(data.chunk);
+    });
+  }
+  
+  private async startRecording() {
+    const { status } = await Audio.requestPermissionsAsync();
+    if (status !== 'granted') return;
+    
+    this.recording = new Audio.Recording();
+    await this.recording.prepareToRecordAsync(recordingOptions);
+    await this.recording.startAsync();
+    
+    // Stream audio chunks every 100ms
+    this.streamAudioInterval = setInterval(async () => {
+      if (this.recording) {
+        const uri = this.recording.getURI();
+        if (uri) {
+          const audioData = await this.getAudioData(uri);
+          this.socket.emit('send_audio', { audio: audioData });
+        }
+      }
+    }, 100);
+  }
+}
+```
+
+## Important Implementation Notes
+
+### 1. Authentication
+- Use JWT tokens in Socket.IO auth
+- Tokens should include user_id claim
+- Handle token expiration gracefully
+
+### 2. Error Handling
+```typescript
+socket.on('error', (error) => {
+  switch (error.code) {
+    case 'CONVERSATION_NOT_FOUND':
+      // Reinitialize conversation
+      break;
+    case 'ELEVENLABS_ERROR':
+      // Fallback to text-only mode
+      break;
+    case 'UNAUTHORIZED':
+      // Refresh auth token
+      break;
+  }
 });
 ```
 
-## Performance Optimization
+### 3. Network Optimization
+- Implement exponential backoff for reconnections
+- Buffer audio chunks during network interruptions
+- Use compression for audio data if needed
 
-### 1. Audio Chunking
-- Send audio chunks every 100-200ms for optimal latency
-- Use 16kHz sample rate as recommended by ElevenLabs
-- Compress audio if bandwidth is limited
+### 4. State Management
+Track these states in your frontend:
+- `isConnected`: WebSocket connection status
+- `isRecording`: Audio recording status
+- `conversationId`: Current conversation ID
+- `messages`: Array of conversation messages
+- `isAgentSpeaking`: Whether agent audio is playing
 
-### 2. Message Batching
-- Batch rapid UI updates to prevent performance issues
-- Use debouncing for transcription updates
+### 5. Cleanup
+```typescript
+// Always clean up resources
+const cleanup = async () => {
+  if (recording) {
+    await recording.stopAndUnloadAsync();
+  }
+  if (socket) {
+    socket.emit('end_conversation');
+    socket.disconnect();
+  }
+  // Clear audio queue and stop playback
+};
+```
 
-### 3. Memory Management
-- Properly cleanup audio resources
-- Disconnect WebSocket when leaving screen
-- Clear message history for long conversations
+## Testing Endpoints
 
-## Troubleshooting
+### REST API Endpoints
+- `POST /api/dreams/:dreamId/interpret` - Generate interpretation first
+- `GET /api/conversations/:conversationId` - Get conversation details
+- `GET /api/conversations/:conversationId/messages` - Get message history
 
-### Common Issues
+### WebSocket Testing
+1. Connect to `ws://localhost:3001/conversational-ai`
+2. Send `initialize_conversation` event
+3. Send audio or text data
+4. Verify responses are received
 
-1. **No Audio Input**
-   - Check microphone permissions
-   - Verify audio mode configuration
-   - Test with device microphone app
+## Next Steps for Frontend
 
-2. **No Audio Output**
-   - Check device volume
-   - Verify audio format compatibility
-   - Test with simple audio playback
+1. **Implement Audio Streaming**
+   - Set up continuous audio recording
+   - Stream PCM 16-bit audio at 16kHz
+   - Handle audio playback queue
 
-3. **Connection Drops**
-   - Check network stability
-   - Verify JWT token expiration
-   - Monitor WebSocket reconnection events
+2. **Build Conversation UI**
+   - Real-time transcript display
+   - Agent response visualization
+   - Voice activity indicators
 
-4. **High Latency**
-   - Reduce audio quality/bitrate
-   - Check network speed
-   - Consider geographic proximity to servers
+3. **Add State Management**
+   - Track conversation state
+   - Persist messages locally
+   - Handle offline scenarios
 
-## Security Considerations
+4. **Optimize Performance**
+   - Implement audio compression
+   - Add request debouncing
+   - Cache conversation data
 
-1. **Never expose API keys in frontend code**
-2. **Always use HTTPS/WSS in production**
-3. **Implement rate limiting for audio uploads**
-4. **Validate all user inputs before sending**
-5. **Store auth tokens securely**
-
-## Next Steps
-
-1. Implement visual feedback for audio levels
-2. Add conversation history persistence
-3. Support multiple languages
-4. Add offline mode with queued messages
-5. Implement push notifications for async responses
+5. **Enhance UX**
+   - Add speaking indicators
+   - Show connection status
+   - Implement push-to-talk option

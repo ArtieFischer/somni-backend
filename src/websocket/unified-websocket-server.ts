@@ -42,7 +42,7 @@ export class UnifiedWebSocketServer {
 
     // Initialize namespaces
     this.dreamNamespace = this.io.of('/ws/dream');
-    this.conversationNamespace = this.io.of('/ws/conversation');
+    this.conversationNamespace = this.io.of('/conversational-ai');
 
     // Setup middleware and handlers
     this.setupAuthMiddleware();
@@ -50,7 +50,7 @@ export class UnifiedWebSocketServer {
 
     logger.info('Unified WebSocket server initialized with namespaces:');
     logger.info('  - Dream interpretation: /ws/dream');
-    logger.info('  - Conversational AI: /ws/conversation');
+    logger.info('  - Conversational AI: /conversational-ai');
   }
 
   /**
