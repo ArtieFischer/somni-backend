@@ -109,31 +109,37 @@ export class ConversationalAIHandler {
 
     // Audio streaming
     socket.on('audio_chunk', async (data) => {
+      logger.info('Received audio_chunk event', { userId: socket.userId });
       await this.handleAudioChunk(socket, data);
     });
 
     // User audio streaming (from mobile guide)
     socket.on('user-audio', async (data) => {
+      logger.info('Received user-audio event', { userId: socket.userId });
       await this.handleAudioChunk(socket, data);
     });
 
     // User audio end signal (from mobile guide)
     socket.on('user-audio-end', async () => {
+      logger.info('Received user-audio-end event', { userId: socket.userId });
       await this.handleUserAudioEnd(socket);
     });
 
     // Text input (fallback)
     socket.on('text_input', async (data) => {
+      logger.info('Received text_input event', { userId: socket.userId, text: data.text });
       await this.handleTextInput(socket, data);
     });
 
     // Send audio (alternative event name)
     socket.on('send_audio', async (data) => {
+      logger.info('Received send_audio event', { userId: socket.userId });
       await this.handleAudioChunk(socket, data);
     });
 
     // Send text (alternative event name)
     socket.on('send_text', async (data) => {
+      logger.info('Received send_text event', { userId: socket.userId, text: data.text });
       await this.handleTextInput(socket, data);
     });
 
@@ -337,12 +343,31 @@ export class ConversationalAIHandler {
    */
   private async handleAudioChunk(socket: ConversationSocket, data: any): Promise<void> {
     try {
+      // Log incoming audio chunk details
+      logger.info('Received audio chunk from client', {
+        conversationId: socket.conversationId,
+        userId: socket.userId,
+        hasAudio: !!data.audio,
+        hasChunk: !!data.chunk,
+        audioLength: data.audio?.length || data.chunk?.length || 0,
+        dataType: typeof (data.audio || data.chunk),
+        socketId: socket.id
+      });
+
       if (!socket.agent) {
+        logger.warn('Audio chunk received but agent not initialized', {
+          conversationId: socket.conversationId,
+          userId: socket.userId
+        });
         throw new Error('Agent not initialized');
       }
 
       // Check if connection has timed out
       if (socket.hasTimedOut) {
+        logger.warn('Audio chunk received after timeout', {
+          conversationId: socket.conversationId,
+          userId: socket.userId
+        });
         socket.emit('error', { 
           message: 'Connection has timed out. Please reconnect to continue.',
           code: 'CONNECTION_TIMEOUT',
@@ -353,8 +378,17 @@ export class ConversationalAIHandler {
 
       const elevenLabsService = (socket.agent as any).elevenLabsService;
       if (elevenLabsService?.isActive()) {
+        logger.debug('Forwarding audio to ElevenLabs', {
+          conversationId: socket.conversationId,
+          audioSize: data.audio?.length || data.chunk?.length || 0
+        });
         elevenLabsService.sendAudio(data.audio || data.chunk);
       } else {
+        logger.error('ElevenLabs service not active', {
+          conversationId: socket.conversationId,
+          userId: socket.userId,
+          hasService: !!elevenLabsService
+        });
         socket.emit('error', { 
           message: 'Voice service not available. Please reconnect.',
           code: 'SERVICE_UNAVAILABLE',

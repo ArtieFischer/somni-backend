@@ -234,18 +234,34 @@ export class ElevenLabsService extends EventEmitter {
 
   sendAudio(audioData: ArrayBuffer | string): void {
     if (!this.isConnected || !this.ws) {
+      logger.error('Cannot send audio - not connected to ElevenLabs', {
+        isConnected: this.isConnected,
+        hasWebSocket: !!this.ws,
+        conversationId: this.currentConversationId
+      });
       throw new Error('Not connected to ElevenLabs');
     }
 
     // Handle both raw binary and base64 string input
     if (typeof audioData === 'string') {
       // Already base64 encoded from mobile
+      logger.debug('Sending base64 audio to ElevenLabs', {
+        conversationId: this.currentConversationId,
+        base64Length: audioData.length,
+        wsReadyState: this.ws.readyState
+      });
       this.ws.send(JSON.stringify({
         user_audio_chunk: audioData
       }));
     } else {
       // Convert ArrayBuffer to base64 for ElevenLabs format
       const base64Audio = Buffer.from(audioData).toString('base64');
+      logger.debug('Converting and sending ArrayBuffer audio to ElevenLabs', {
+        conversationId: this.currentConversationId,
+        originalSize: audioData.byteLength,
+        base64Length: base64Audio.length,
+        wsReadyState: this.ws.readyState
+      });
       this.ws.send(JSON.stringify({
         user_audio_chunk: base64Audio
       }));
