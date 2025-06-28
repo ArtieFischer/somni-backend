@@ -210,12 +210,10 @@ export class ElevenLabsService extends EventEmitter {
       throw new Error('Not connected to ElevenLabs');
     }
 
-    // According to ElevenLabs docs, dynamic_variables go inside custom_llm_extra_body
+    // According to ElevenLabs docs, dynamic_variables go at the root level
     const initMessage = {
       type: 'conversation_initiation_client_data',
-      custom_llm_extra_body: {
-        dynamic_variables: dynamicVariables || {}
-      }
+      dynamic_variables: dynamicVariables || {}
     };
 
     logger.info('Sending conversation initiation to ElevenLabs', {

@@ -201,7 +201,7 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       
       // Dream Content
       dreamContent: context.dreamContent,
-      dream_topic: dreamMetadata?.title || '',
+      dream_topic: dreamMetadata?.title || this.extractDreamTopic(context.dreamContent) || 'Dream Experience',
       dreamSymbols: interpretation?.symbols || [],
       clarity: dreamMetadata?.clarity || 75, // Default to 75% if not available
       mood: dreamMetadata?.mood || 3, // Default to neutral mood
@@ -250,6 +250,27 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       logger.error('Error fetching dream metadata:', error);
       return { clarity: 75, mood: 3, title: '' };
     }
+  }
+
+  /**
+   * Extract a topic from dream content if no title is provided
+   */
+  protected extractDreamTopic(dreamContent: string): string {
+    if (!dreamContent || dreamContent.length < 10) {
+      return 'Dream Experience';
+    }
+    
+    // Take the first 50 characters or first sentence
+    const firstSentence = dreamContent.match(/^[^.!?]+[.!?]?/);
+    if (firstSentence) {
+      const topic = firstSentence[0].substring(0, 50).trim();
+      return topic.endsWith('.') || topic.endsWith('!') || topic.endsWith('?') 
+        ? topic.slice(0, -1) 
+        : topic;
+    }
+    
+    // Fallback to first 50 characters
+    return dreamContent.substring(0, 50).trim() + '...';
   }
 
   /**
