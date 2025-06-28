@@ -108,12 +108,20 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   private handleMessage(message: any): void {
+    logger.info('ElevenLabs: Received message', { type: message.type });
+    
     switch (message.type) {
       case 'conversation_initiation_metadata':
         // Now we can send our initialization message with dynamic variables
+        logger.info('ElevenLabs: Received conversation metadata, sending initialization');
         if (this.pendingInitialization) {
+          logger.info('ElevenLabs: Sending pending initialization with variables', {
+            variableKeys: Object.keys(this.pendingInitialization)
+          });
           this.sendConversationInitiation(this.pendingInitialization);
           this.pendingInitialization = null;
+        } else {
+          logger.warn('ElevenLabs: No pending initialization variables to send');
         }
         this.emit('conversation_initiated', {
           conversationId: message.conversation_initiation_metadata_event.conversation_id,
@@ -214,6 +222,16 @@ export class ElevenLabsService extends EventEmitter {
     });
 
     this.ws.send(JSON.stringify(initMessage));
+    
+    // Send user_activity to trigger the agent's first message
+    setTimeout(() => {
+      if (this.isConnected && this.ws) {
+        logger.info('Sending user_activity to trigger agent first message');
+        this.ws.send(JSON.stringify({
+          type: 'user_activity'
+        }));
+      }
+    }, 500);
   }
 
   sendToolResponse(toolCallId: string, result: any): void {

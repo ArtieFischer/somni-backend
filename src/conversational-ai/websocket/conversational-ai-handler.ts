@@ -162,6 +162,14 @@ export class ConversationalAIHandler {
 
     elevenLabsService.on('agent_response', (response: any) => {
       socket.emit('agent_response', response);
+      // Save agent response to database
+      if (response.text && !response.isTentative) {
+        conversationService.saveMessage({
+          conversationId: socket.conversationId!,
+          role: 'assistant',
+          content: response.text
+        }).catch(err => logger.error('Failed to save agent response:', err));
+      }
     });
 
     elevenLabsService.on('conversation_initiated', async (data: any) => {
