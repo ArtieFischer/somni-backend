@@ -61,22 +61,22 @@ export abstract class BaseConversationalAgent extends BaseDreamInterpreter {
         voiceSettings: this.voiceSettings
       });
 
-      await this.elevenLabsService.connect(conversationId);
+      // Build dynamic variables before connecting
+      const dynamicVariables = context ? await this.buildDynamicVariables(context, userProfile) : undefined;
       
-      // Build and send dynamic variables for conversation initialization
-      if (context) {
-        const dynamicVariables = await this.buildDynamicVariables(context, userProfile);
-        this.elevenLabsService.sendConversationInitiation(dynamicVariables);
-        
+      // Connect with dynamic variables
+      await this.elevenLabsService.connect(conversationId, dynamicVariables);
+      
+      if (dynamicVariables) {
         logger.info(`Initialized ElevenLabs conversation with variables:`, {
           conversationId,
           agentId: this.elevenLabsAgentId,
           dynamicVariables
         });
-        
-        // Note: The agent should automatically send its first message
-        // based on the configuration in the ElevenLabs dashboard
       }
+      
+      // Note: The agent should automatically send its first message
+      // based on the configuration in the ElevenLabs dashboard
       
       return this.elevenLabsService;
     } catch (error) {

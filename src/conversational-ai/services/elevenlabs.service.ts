@@ -18,15 +18,17 @@ export class ElevenLabsService extends EventEmitter {
   private currentConversationId: string | null = null;
   private pingInterval: NodeJS.Timeout | null = null;
   private pingTimeout: NodeJS.Timeout | null = null;
+  private pendingInitialization: Record<string, any> | null = null;
 
   constructor(config: ElevenLabsConfig) {
     super();
     this.config = config;
   }
 
-  async connect(conversationId: string): Promise<void> {
+  async connect(conversationId: string, dynamicVariables?: Record<string, any>): Promise<void> {
     try {
       this.currentConversationId = conversationId;
+      this.pendingInitialization = dynamicVariables || null;
       
       const wsConfig: ElevenLabsWebSocketConfig = {
         authorization: `Bearer ${this.config.apiKey}`,
@@ -108,6 +110,11 @@ export class ElevenLabsService extends EventEmitter {
   private handleMessage(message: any): void {
     switch (message.type) {
       case 'conversation_initiation_metadata':
+        // Now we can send our initialization message with dynamic variables
+        if (this.pendingInitialization) {
+          this.sendConversationInitiation(this.pendingInitialization);
+          this.pendingInitialization = null;
+        }
         this.emit('conversation_initiated', {
           conversationId: message.conversation_initiation_metadata_event.conversation_id,
           audioFormat: message.conversation_initiation_metadata_event.agent_output_audio_format
