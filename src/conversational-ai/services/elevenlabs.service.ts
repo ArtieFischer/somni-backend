@@ -92,7 +92,7 @@ export class ElevenLabsService extends EventEmitter {
       logger.error('ElevenLabs WebSocket closed', { 
         code, 
         reason: reason?.toString() || 'Unknown reason',
-        conversationId: this.conversationId,
+        conversationId: this.currentConversationId,
         reconnectAttempts: this.reconnectAttempts
       });
       this.emit('disconnected', { code, reason: reason?.toString() });
