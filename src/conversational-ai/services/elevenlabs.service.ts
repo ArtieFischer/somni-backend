@@ -272,7 +272,8 @@ export class ElevenLabsService extends EventEmitter {
       variableKeys: dynamicVariables ? Object.keys(dynamicVariables) : [],
       debugValues: debugVars,
       hasOverrides: !!initMessage.overrides,
-      isResumed: dynamicVariables?.is_resumed_conversation
+      isResumed: dynamicVariables?.is_resumed_conversation,
+      fullMessage: JSON.stringify(initMessage)
     });
 
     this.ws.send(JSON.stringify(initMessage));
