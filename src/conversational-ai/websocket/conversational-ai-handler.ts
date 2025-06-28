@@ -119,6 +119,12 @@ export class ConversationalAIHandler {
       await this.handleAudioChunk(socket, data);
     });
 
+    // User audio start signal (for PTT)
+    socket.on('user-audio-start', async () => {
+      logger.info('Received user-audio-start event', { userId: socket.userId });
+      await this.handleUserAudioStart(socket);
+    });
+
     // User audio end signal (from mobile guide)
     socket.on('user-audio-end', async () => {
       logger.info('Received user-audio-end event', { userId: socket.userId });
@@ -426,6 +432,9 @@ export class ConversationalAIHandler {
    */
   private async handleAudioChunk(socket: ConversationSocket, data: any): Promise<void> {
     try {
+      // Check if this is a silence chunk
+      const isSilence = data.isSilence || false;
+      
       // Log incoming audio chunk details
       logger.info('Received audio chunk from client', {
         conversationId: socket.conversationId,
@@ -434,6 +443,7 @@ export class ConversationalAIHandler {
         hasChunk: !!data.chunk,
         audioLength: data.audio?.length || data.chunk?.length || 0,
         dataType: typeof (data.audio || data.chunk),
+        isSilence,
         socketId: socket.id
       });
 
@@ -463,7 +473,8 @@ export class ConversationalAIHandler {
       if (elevenLabsService?.isActive()) {
         logger.debug('Forwarding audio to ElevenLabs', {
           conversationId: socket.conversationId,
-          audioSize: data.audio?.length || data.chunk?.length || 0
+          audioSize: data.audio?.length || data.chunk?.length || 0,
+          isSilence
         });
         elevenLabsService.sendAudio(data.audio || data.chunk);
       } else {
@@ -509,6 +520,34 @@ export class ConversationalAIHandler {
       }
     } catch (error) {
       logger.error('Failed to handle user audio end:', error);
+    }
+  }
+
+  /**
+   * Handle user audio start signal (when user starts recording)
+   */
+  private async handleUserAudioStart(socket: ConversationSocket): Promise<void> {
+    try {
+      logger.info('Handling user audio start', {
+        conversationId: socket.conversationId,
+        userId: socket.userId,
+        hasAgent: !!socket.agent
+      });
+
+      if (!socket.agent) {
+        logger.warn('User audio start received but agent not initialized');
+        return;
+      }
+
+      const elevenLabsService = (socket.agent as any).elevenLabsService;
+      if (elevenLabsService?.isActive()) {
+        logger.info('Sending user_message_begin to ElevenLabs');
+        elevenLabsService.sendUserMessageBegin();
+      } else {
+        logger.warn('ElevenLabs service not active when audio started');
+      }
+    } catch (error) {
+      logger.error('Failed to handle user audio start:', error);
     }
   }
 

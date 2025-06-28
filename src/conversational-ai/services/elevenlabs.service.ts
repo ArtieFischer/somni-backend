@@ -152,10 +152,15 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   private handleMessage(message: any): void {
-    // Only log non-ping messages at info level
-    if (message.type !== 'ping') {
-      logger.info('ElevenLabs: Received message', { type: message.type });
-    }
+    // Log ALL messages for debugging
+    logger.info('ElevenLabs: Received message', { 
+      type: message.type,
+      hasUserTranscript: !!message.user_transcription_event,
+      hasAgentResponse: !!message.agent_response_event,
+      messageKeys: Object.keys(message),
+      eventKeys: message.user_transcription_event ? Object.keys(message.user_transcription_event) : []
+    });
+    
     this.lastActivityTime = Date.now();
     
     switch (message.type) {
@@ -225,10 +230,28 @@ export class ElevenLabsService extends EventEmitter {
       
       case 'user_transcript_interim':
         // Handle interim transcripts (non-final)
-        logger.debug('ElevenLabs: Interim user transcript', {
+        logger.info('ElevenLabs: Interim user transcript', {
           text: message.user_transcription_event?.user_transcript || '',
           length: message.user_transcription_event?.user_transcript?.length || 0
         });
+        break;
+      
+      case 'user_transcription':
+        // Alternative event name for transcriptions
+        logger.info('ElevenLabs: User transcription (alt)', {
+          hasTranscript: !!message.user_transcript,
+          transcript: message.user_transcript,
+          length: message.user_transcript?.length || 0
+        });
+        
+        if (message.user_transcript && message.user_transcript.trim()) {
+          this.emit('transcription', {
+            text: message.user_transcript,
+            speaker: 'user',
+            timestamp: Date.now(),
+            isFinal: true
+          } as TranscriptionEvent);
+        }
         break;
       
       case 'vad_score':
@@ -262,9 +285,11 @@ export class ElevenLabsService extends EventEmitter {
         break;
         
       default:
-        logger.debug('Unknown ElevenLabs message type:', { 
+        logger.info('Unknown ElevenLabs message type:', { 
           type: message.type,
-          hasData: !!message 
+          hasData: !!message,
+          messageKeys: Object.keys(message),
+          messagePreview: JSON.stringify(message).substring(0, 200)
         });
     }
   }
@@ -492,6 +517,27 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   /**
+   * Send user message begin signal (optional for PTT)
+   */
+  sendUserMessageBegin(): void {
+    if (!this.isConnected || !this.ws) {
+      return;
+    }
+    
+    logger.debug('ElevenLabs: Sending user_message_begin signal');
+    
+    this.ws.send(JSON.stringify({
+      type: 'user_message_begin'
+    }));
+    
+    // Reset audio tracking for new message
+    this.audioChunkCount = 0;
+    this.totalAudioBytesSent = 0;
+    
+    this.lastActivityTime = Date.now();
+  }
+
+  /**
    * Send session termination signal (e.g., when user stops recording)
    */
   sendSessionTermination(): void {
@@ -499,11 +545,22 @@ export class ElevenLabsService extends EventEmitter {
       return; // Silently ignore if not connected
     }
 
-    logger.info('ElevenLabs: Session termination signal (not sending to preserve pending transcriptions)');
+    logger.info('ElevenLabs: Session termination - sending end_user_audio for PTT', {
+      audioChunksSent: this.audioChunkCount,
+      totalBytesSent: this.totalAudioBytesSent
+    });
     
-    // Don't send any termination signal - it might cancel pending transcriptions
-    // ElevenLabs will process the audio that was already sent
-    // Just update our activity time
+    try {
+      // For push-to-talk, send the proper boundary frame
+      this.ws.send(JSON.stringify({
+        type: 'end_user_audio'
+      }));
+      
+      logger.info('ElevenLabs: Sent end_user_audio boundary frame');
+    } catch (error) {
+      logger.error('Failed to send end_user_audio signal', error);
+    }
+    
     this.lastActivityTime = Date.now();
   }
 
