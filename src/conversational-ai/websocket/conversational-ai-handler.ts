@@ -189,10 +189,40 @@ export class ConversationalAIHandler {
       socket.emit('error', error);
     });
 
+    elevenLabsService.on('disconnected', (data: any) => {
+      logger.info('ElevenLabs disconnected event', {
+        ...data,
+        socketId: socket.id,
+        userId: socket.userId
+      });
+      
+      // Forward disconnection event to client
+      socket.emit('elevenlabs_disconnected', {
+        code: data.code,
+        reason: data.reason,
+        isInactivityTimeout: data.isInactivityTimeout,
+        conversationId: socket.conversationId
+      });
+    });
+
     elevenLabsService.on('inactivity_timeout', (data: any) => {
-      logger.warn('ElevenLabs inactivity timeout detected', data);
+      logger.warn('ElevenLabs inactivity timeout detected', {
+        ...data,
+        socketId: socket.id,
+        userId: socket.userId
+      });
+      
+      // Emit the timeout event to the client
       socket.emit('inactivity_timeout', {
         message: 'Connection closed due to inactivity. Please send a message to continue.',
+        conversationId: data.conversationId,
+        detectedBy: data.detectedBy || 'websocket_close',
+        timestamp: new Date().toISOString()
+      });
+      
+      // Also emit a more general disconnection event
+      socket.emit('elevenlabs_disconnected', {
+        reason: 'inactivity_timeout',
         conversationId: data.conversationId
       });
     });

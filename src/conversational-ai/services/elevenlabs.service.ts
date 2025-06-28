@@ -21,6 +21,7 @@ export class ElevenLabsService extends EventEmitter {
   private keepAliveInterval: NodeJS.Timeout | null = null;
   private lastActivityTime: number = Date.now();
   private pendingInitialization: Record<string, any> | null = null;
+  private inactivityCheckInterval: NodeJS.Timeout | null = null;
 
   constructor(config: ElevenLabsConfig) {
     super();
@@ -61,6 +62,7 @@ export class ElevenLabsService extends EventEmitter {
           this.emit('connected');
           this.startPingPong();
           this.startKeepAlive();
+          this.startInactivityCheck();
           resolve();
         });
 
@@ -95,22 +97,41 @@ export class ElevenLabsService extends EventEmitter {
     this.ws.on('close', (code, reason) => {
       this.isConnected = false;
       this.stopKeepAlive();
+      this.stopInactivityCheck();
       
       const reasonStr = reason?.toString() || 'Unknown reason';
-      const isInactivityTimeout = code === 1000 && reasonStr.includes('inactivity') || 
-                                  code === 1001 || 
-                                  (Date.now() - this.lastActivityTime > 55000);
+      const timeSinceLastActivity = Date.now() - this.lastActivityTime;
+      
+      // Enhanced logging for debugging
+      logger.info('ElevenLabs WebSocket close event', {
+        code,
+        reason: reasonStr,
+        conversationId: this.currentConversationId,
+        lastActivity: new Date(this.lastActivityTime).toISOString(),
+        timeSinceLastActivity: timeSinceLastActivity,
+        reasonIncludesInactivity: reasonStr.toLowerCase().includes('inactivity'),
+        reasonIncludesTimeout: reasonStr.toLowerCase().includes('timeout')
+      });
+      
+      // More comprehensive inactivity detection
+      const isInactivityTimeout = 
+        (code === 1000 && (reasonStr.toLowerCase().includes('inactivity') || reasonStr.toLowerCase().includes('timeout'))) || 
+        code === 1001 || 
+        code === 1006 || // Abnormal closure
+        (code === 1000 && timeSinceLastActivity > 55000) || // Normal closure after inactivity
+        (reasonStr.toLowerCase().includes('timeout'));
       
       if (isInactivityTimeout) {
-        logger.warn('ElevenLabs WebSocket closed due to inactivity', { 
+        logger.warn('ElevenLabs WebSocket closed due to inactivity/timeout', { 
           code, 
           reason: reasonStr,
           conversationId: this.currentConversationId,
-          lastActivity: new Date(this.lastActivityTime).toISOString()
+          lastActivity: new Date(this.lastActivityTime).toISOString(),
+          timeSinceLastActivity: timeSinceLastActivity
         });
         this.emit('inactivity_timeout', { conversationId: this.currentConversationId });
       } else {
-        logger.error('ElevenLabs WebSocket closed', { 
+        logger.error('ElevenLabs WebSocket closed (non-timeout)', { 
           code, 
           reason: reasonStr,
           conversationId: this.currentConversationId,
@@ -325,6 +346,7 @@ export class ElevenLabsService extends EventEmitter {
   async disconnect(): Promise<void> {
     this.stopPingPong();
     this.stopKeepAlive();
+    this.stopInactivityCheck();
     this.currentConversationId = null;
     
     if (this.ws) {
@@ -380,24 +402,34 @@ export class ElevenLabsService extends EventEmitter {
    * Start keep-alive mechanism to prevent inactivity timeout
    */
   private startKeepAlive(): void {
-    // Send a keep-alive message every 45 seconds (before the 60-second timeout)
+    // Send a keep-alive message more frequently to prevent timeout
     this.keepAliveInterval = setInterval(() => {
       const timeSinceLastActivity = Date.now() - this.lastActivityTime;
       
-      if (this.ws && this.isConnected && timeSinceLastActivity > 40000) {
-        logger.debug('Sending keep-alive user_activity message', {
+      // Send keep-alive if no activity for 30 seconds (well before the 60-second timeout)
+      if (this.ws && this.isConnected && timeSinceLastActivity > 30000) {
+        logger.info('Sending keep-alive user_activity message', {
           timeSinceLastActivity,
-          conversationId: this.currentConversationId
+          conversationId: this.currentConversationId,
+          wsReadyState: this.ws.readyState
         });
         
-        // Send user_activity to keep connection alive
-        this.ws.send(JSON.stringify({
-          type: 'user_activity'
-        }));
-        
-        this.lastActivityTime = Date.now();
+        try {
+          // Send user_activity to keep connection alive
+          this.ws.send(JSON.stringify({
+            type: 'user_activity'
+          }));
+          
+          this.lastActivityTime = Date.now();
+          logger.debug('Keep-alive sent successfully');
+        } catch (error) {
+          logger.error('Failed to send keep-alive', {
+            error: error instanceof Error ? error.message : 'Unknown error',
+            wsReadyState: this.ws?.readyState
+          });
+        }
       }
-    }, 20000); // Check every 20 seconds
+    }, 15000); // Check every 15 seconds (more frequent than before)
   }
 
   /**
@@ -407,6 +439,52 @@ export class ElevenLabsService extends EventEmitter {
     if (this.keepAliveInterval) {
       clearInterval(this.keepAliveInterval);
       this.keepAliveInterval = null;
+    }
+  }
+
+  /**
+   * Start proactive inactivity check
+   */
+  private startInactivityCheck(): void {
+    // Check for inactivity every 10 seconds
+    this.inactivityCheckInterval = setInterval(() => {
+      const timeSinceLastActivity = Date.now() - this.lastActivityTime;
+      
+      // If no activity for 65 seconds (5 seconds after ElevenLabs timeout)
+      if (timeSinceLastActivity > 65000) {
+        logger.warn('Proactive inactivity timeout detected', {
+          timeSinceLastActivity,
+          conversationId: this.currentConversationId,
+          wsReadyState: this.ws?.readyState,
+          isConnected: this.isConnected
+        });
+        
+        // Emit timeout event
+        this.emit('inactivity_timeout', { 
+          conversationId: this.currentConversationId,
+          timeSinceLastActivity,
+          proactiveDetection: true 
+        });
+        
+        // Force close the connection if still open
+        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+          logger.info('Force closing connection due to inactivity');
+          this.ws.close(1000, 'Inactivity timeout');
+        }
+        
+        // Stop checking
+        this.stopInactivityCheck();
+      }
+    }, 10000); // Check every 10 seconds
+  }
+
+  /**
+   * Stop inactivity check
+   */
+  private stopInactivityCheck(): void {
+    if (this.inactivityCheckInterval) {
+      clearInterval(this.inactivityCheckInterval);
+      this.inactivityCheckInterval = null;
     }
   }
 
