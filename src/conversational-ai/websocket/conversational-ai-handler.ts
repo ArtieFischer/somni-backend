@@ -14,6 +14,7 @@ interface ConversationSocket extends Socket {
   userId?: string;
   conversationId?: string;
   agent?: BaseConversationalAgent;
+  hasTimedOut?: boolean;
 }
 
 export class ConversationalAIHandler {
@@ -55,6 +56,9 @@ export class ConversationalAIHandler {
    */
   private async initializeConversation(socket: ConversationSocket): Promise<void> {
     const conversationId = socket.conversationId!;
+    
+    // Clear any previous timeout state
+    socket.hasTimedOut = false;
     
     // Get conversation details
     const conversation = await conversationService.getConversation(conversationId);
@@ -108,6 +112,16 @@ export class ConversationalAIHandler {
       await this.handleAudioChunk(socket, data);
     });
 
+    // User audio streaming (from mobile guide)
+    socket.on('user-audio', async (data) => {
+      await this.handleAudioChunk(socket, data);
+    });
+
+    // User audio end signal (from mobile guide)
+    socket.on('user-audio-end', async () => {
+      await this.handleUserAudioEnd(socket);
+    });
+
     // Text input (fallback)
     socket.on('text_input', async (data) => {
       await this.handleTextInput(socket, data);
@@ -145,7 +159,17 @@ export class ConversationalAIHandler {
    */
   private setupElevenLabsForwarding(socket: ConversationSocket, elevenLabsService: any): void {
     elevenLabsService.on('audio', (chunk: any) => {
-      socket.emit('audio_chunk', chunk);
+      // Convert Buffer to ArrayBuffer for frontend
+      const audioData = chunk instanceof Buffer ? chunk : chunk.data;
+      const arrayBuffer = audioData instanceof Buffer 
+        ? audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength)
+        : audioData;
+      
+      // Emit in the format expected by frontend
+      socket.emit('audio_chunk', {
+        chunk: arrayBuffer,
+        isLast: false // ElevenLabs doesn't signal last chunk, handled by session end
+      });
     });
 
     elevenLabsService.on('transcription', (event: any) => {
@@ -180,8 +204,11 @@ export class ConversationalAIHandler {
           data.conversationId
         );
       }
-      // Forward to client
-      socket.emit('elevenlabs_conversation_initiated', data);
+      // Forward to client with expected format
+      socket.emit('elevenlabs_conversation_initiated', {
+        audioFormat: data.audioFormat || 'pcm_16000',
+        conversationId: data.conversationId
+      });
     });
 
     elevenLabsService.on('error', (error: any) => {
@@ -196,12 +223,15 @@ export class ConversationalAIHandler {
         userId: socket.userId
       });
       
+      // Mark socket as timed out if this was an inactivity timeout
+      if (data.isInactivityTimeout) {
+        socket.hasTimedOut = true;
+      }
+      
       // Forward disconnection event to client
       socket.emit('elevenlabs_disconnected', {
-        code: data.code,
-        reason: data.reason,
-        isInactivityTimeout: data.isInactivityTimeout,
-        conversationId: socket.conversationId
+        reason: data.reason || 'disconnected',
+        timeout: data.isInactivityTimeout ? 60000 : undefined
       });
     });
 
@@ -212,18 +242,22 @@ export class ConversationalAIHandler {
         userId: socket.userId
       });
       
+      // Mark socket as timed out to prevent fallback
+      socket.hasTimedOut = true;
+      
       // Emit the timeout event to the client
       socket.emit('inactivity_timeout', {
-        message: 'Connection closed due to inactivity. Please send a message to continue.',
+        message: 'Connection timed out due to inactivity. Please reconnect to continue.',
         conversationId: data.conversationId,
         detectedBy: data.detectedBy || 'websocket_close',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        requiresReconnect: true
       });
       
       // Also emit a more general disconnection event
       socket.emit('elevenlabs_disconnected', {
         reason: 'inactivity_timeout',
-        conversationId: data.conversationId
+        timeout: 60000
       });
     });
 
@@ -307,15 +341,47 @@ export class ConversationalAIHandler {
         throw new Error('Agent not initialized');
       }
 
+      // Check if connection has timed out
+      if (socket.hasTimedOut) {
+        socket.emit('error', { 
+          message: 'Connection has timed out. Please reconnect to continue.',
+          code: 'CONNECTION_TIMEOUT',
+          requiresReconnect: true
+        });
+        return;
+      }
+
       const elevenLabsService = (socket.agent as any).elevenLabsService;
       if (elevenLabsService?.isActive()) {
         elevenLabsService.sendAudio(data.audio || data.chunk);
       } else {
-        socket.emit('error', { message: 'Audio processing unavailable, please use text input' });
+        socket.emit('error', { 
+          message: 'Voice service not available. Please reconnect.',
+          code: 'SERVICE_UNAVAILABLE',
+          requiresReconnect: true
+        });
       }
     } catch (error) {
       logger.error('Failed to handle audio chunk:', error);
       socket.emit('error', { message: 'Failed to process audio' });
+    }
+  }
+
+  /**
+   * Handle user audio end signal (when user stops recording)
+   */
+  private async handleUserAudioEnd(socket: ConversationSocket): Promise<void> {
+    try {
+      if (!socket.agent) {
+        return; // Silently ignore if agent not initialized
+      }
+
+      const elevenLabsService = (socket.agent as any).elevenLabsService;
+      if (elevenLabsService?.isActive()) {
+        elevenLabsService.sendSessionTermination();
+      }
+    } catch (error) {
+      logger.error('Failed to handle user audio end:', error);
     }
   }
 
@@ -326,6 +392,16 @@ export class ConversationalAIHandler {
     try {
       if (!socket.agent || !socket.conversationId) {
         throw new Error('Agent or conversation not initialized');
+      }
+
+      // Check if connection has timed out
+      if (socket.hasTimedOut) {
+        socket.emit('error', { 
+          message: 'Connection has timed out. Please reconnect to continue.',
+          code: 'CONNECTION_TIMEOUT',
+          requiresReconnect: true
+        });
+        return;
       }
 
       const { text } = data;
@@ -340,7 +416,17 @@ export class ConversationalAIHandler {
         return;
       }
       
-      // Fallback: Only use OpenRouter if ElevenLabs is not available
+      // Prevent fallback if this is due to timeout
+      if (!elevenLabsService) {
+        socket.emit('error', { 
+          message: 'Voice service not available. Please reconnect.',
+          code: 'SERVICE_UNAVAILABLE',
+          requiresReconnect: true
+        });
+        return;
+      }
+      
+      // Fallback: Only use OpenRouter if ElevenLabs is not available (but not due to timeout)
       logger.warn('ElevenLabs not available, falling back to OpenRouter');
       
       // Save user message

@@ -220,26 +220,38 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   private handleAudioData(data: Buffer): void {
+    // Emit the raw buffer data for streaming
+    this.emit('audio', data);
+    
+    // Also emit as AudioChunk for backward compatibility
     const audioChunk: AudioChunk = {
       data: data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength),
       timestamp: Date.now(),
       sequence: 0 // TODO: Implement proper sequencing
     };
-    
-    this.emit('audio', audioChunk);
+    this.emit('audio_chunk', audioChunk);
   }
 
-  sendAudio(audioData: ArrayBuffer): void {
+  sendAudio(audioData: ArrayBuffer | string): void {
     if (!this.isConnected || !this.ws) {
       throw new Error('Not connected to ElevenLabs');
     }
 
-    // Convert to base64 for ElevenLabs format
-    const base64Audio = Buffer.from(audioData).toString('base64');
+    // Handle both raw binary and base64 string input
+    if (typeof audioData === 'string') {
+      // Already base64 encoded from mobile
+      this.ws.send(JSON.stringify({
+        user_audio_chunk: audioData
+      }));
+    } else {
+      // Convert ArrayBuffer to base64 for ElevenLabs format
+      const base64Audio = Buffer.from(audioData).toString('base64');
+      this.ws.send(JSON.stringify({
+        user_audio_chunk: base64Audio
+      }));
+    }
     
-    this.ws.send(JSON.stringify({
-      user_audio_chunk: base64Audio
-    }));
+    this.lastActivityTime = Date.now();
   }
 
   sendConversationConfig(config: any): void {
@@ -341,6 +353,21 @@ export class ElevenLabsService extends EventEmitter {
     }));
     
     this.lastActivityTime = Date.now();
+  }
+
+  /**
+   * Send session termination signal (e.g., when user stops recording)
+   */
+  sendSessionTermination(): void {
+    if (!this.isConnected || !this.ws) {
+      return; // Silently ignore if not connected
+    }
+
+    logger.info('ElevenLabs: Sending session termination signal');
+    
+    this.ws.send(JSON.stringify({
+      terminate_session: true
+    }));
   }
 
   async disconnect(): Promise<void> {
