@@ -526,6 +526,13 @@ export class ElevenLabsService extends EventEmitter {
     
     logger.debug('ElevenLabs: Sending user_message_begin signal');
     
+    // Clear any existing transcription timeout from previous message
+    if (this.transcriptionTimeout) {
+      clearTimeout(this.transcriptionTimeout);
+      this.transcriptionTimeout = null;
+      logger.debug('ElevenLabs: Cleared previous transcription timeout on new message begin');
+    }
+    
     this.ws.send(JSON.stringify({
       type: 'user_message_begin'
     }));
@@ -549,6 +556,13 @@ export class ElevenLabsService extends EventEmitter {
       audioChunksSent: this.audioChunkCount,
       totalBytesSent: this.totalAudioBytesSent
     });
+    
+    // Clear transcription timeout since we're ending the session
+    if (this.transcriptionTimeout) {
+      clearTimeout(this.transcriptionTimeout);
+      this.transcriptionTimeout = null;
+      logger.debug('ElevenLabs: Cleared transcription timeout on session termination');
+    }
     
     try {
       // For push-to-talk, send the proper boundary frame
