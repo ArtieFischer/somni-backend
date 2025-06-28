@@ -427,13 +427,23 @@ export class ConversationalAIHandler {
    */
   private async handleUserAudioEnd(socket: ConversationSocket): Promise<void> {
     try {
+      logger.info('Handling user audio end', {
+        conversationId: socket.conversationId,
+        userId: socket.userId,
+        hasAgent: !!socket.agent
+      });
+
       if (!socket.agent) {
+        logger.warn('User audio end received but agent not initialized');
         return; // Silently ignore if agent not initialized
       }
 
       const elevenLabsService = (socket.agent as any).elevenLabsService;
       if (elevenLabsService?.isActive()) {
+        logger.info('Sending session termination to ElevenLabs');
         elevenLabsService.sendSessionTermination();
+      } else {
+        logger.warn('ElevenLabs service not active when audio ended');
       }
     } catch (error) {
       logger.error('Failed to handle user audio end:', error);

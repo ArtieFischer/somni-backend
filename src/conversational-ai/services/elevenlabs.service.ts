@@ -22,6 +22,8 @@ export class ElevenLabsService extends EventEmitter {
   private lastActivityTime: number = Date.now();
   private pendingInitialization: Record<string, any> | null = null;
   private inactivityCheckInterval: NodeJS.Timeout | null = null;
+  private transcriptionTimeout: NodeJS.Timeout | null = null;
+  private lastAudioSentTime: number = 0;
 
   constructor(config: ElevenLabsConfig) {
     super();
@@ -172,14 +174,27 @@ export class ElevenLabsService extends EventEmitter {
       case 'user_transcript':
         logger.info('ElevenLabs: User transcript received', {
           text: message.user_transcription_event.user_transcript,
-          length: message.user_transcription_event.user_transcript?.length || 0
+          length: message.user_transcription_event.user_transcript?.length || 0,
+          isEmpty: !message.user_transcription_event.user_transcript || message.user_transcription_event.user_transcript.trim() === ''
         });
-        this.emit('transcription', {
-          text: message.user_transcription_event.user_transcript,
-          speaker: 'user',
-          timestamp: Date.now(),
-          isFinal: true
-        } as TranscriptionEvent);
+        
+        // Clear transcription timeout
+        if (this.transcriptionTimeout) {
+          clearTimeout(this.transcriptionTimeout);
+          this.transcriptionTimeout = null;
+        }
+        
+        // Only emit non-empty transcriptions
+        if (message.user_transcription_event.user_transcript && message.user_transcription_event.user_transcript.trim()) {
+          this.emit('transcription', {
+            text: message.user_transcription_event.user_transcript,
+            speaker: 'user',
+            timestamp: Date.now(),
+            isFinal: true
+          } as TranscriptionEvent);
+        } else {
+          logger.warn('ElevenLabs: Received empty user transcript');
+        }
         break;
       
       case 'agent_response':
@@ -196,6 +211,14 @@ export class ElevenLabsService extends EventEmitter {
       
       case 'agent_response_audio':
         // Audio data will be handled as binary
+        break;
+      
+      case 'user_transcript_interim':
+        // Handle interim transcripts (non-final)
+        logger.debug('ElevenLabs: Interim user transcript', {
+          text: message.user_transcription_event?.user_transcript || '',
+          length: message.user_transcription_event?.user_transcript?.length || 0
+        });
         break;
       
       case 'vad_score':
@@ -288,6 +311,21 @@ export class ElevenLabsService extends EventEmitter {
     }));
     
     this.lastActivityTime = Date.now();
+    this.lastAudioSentTime = Date.now();
+    
+    // Clear any existing transcription timeout
+    if (this.transcriptionTimeout) {
+      clearTimeout(this.transcriptionTimeout);
+    }
+    
+    // Set a timeout for transcription response
+    this.transcriptionTimeout = setTimeout(() => {
+      logger.warn('ElevenLabs: No transcription received within timeout', {
+        conversationId: this.currentConversationId,
+        timeSinceLastAudio: Date.now() - this.lastAudioSentTime
+      });
+      // Don't emit error, just log for monitoring
+    }, 10000); // 10 second timeout
   }
 
   sendConversationConfig(config: any): void {
@@ -401,8 +439,10 @@ export class ElevenLabsService extends EventEmitter {
 
     logger.info('ElevenLabs: Sending session termination signal');
     
+    // Don't send terminate_session - it might cancel pending transcriptions
+    // Instead, just mark end of audio input
     this.ws.send(JSON.stringify({
-      terminate_session: true
+      type: 'user_audio_end'
     }));
   }
 
@@ -411,6 +451,12 @@ export class ElevenLabsService extends EventEmitter {
     this.stopKeepAlive();
     this.stopInactivityCheck();
     this.currentConversationId = null;
+    
+    // Clear transcription timeout
+    if (this.transcriptionTimeout) {
+      clearTimeout(this.transcriptionTimeout);
+      this.transcriptionTimeout = null;
+    }
     
     if (this.ws) {
       this.ws.close();
