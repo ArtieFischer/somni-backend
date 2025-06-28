@@ -232,11 +232,11 @@ export class ElevenLabsService extends EventEmitter {
       dynamic_variables: dynamicVariables || {}
     };
     
-    // If we have a custom first message in dynamic variables, add it to conversation config
-    if (dynamicVariables?.first_message) {
-      initMessage.conversation_config_override = {
+    // If this is a resumed conversation, override the first message
+    if (dynamicVariables?.is_resumed_conversation === 'true') {
+      initMessage.overrides = {
         agent: {
-          first_message: dynamicVariables.first_message
+          firstMessage: `Welcome back ${dynamicVariables.user_name}, how else can I help you?`
         }
       };
     }
@@ -248,13 +248,17 @@ export class ElevenLabsService extends EventEmitter {
       age: dynamicVariables.age,
       emotionalToneprimary: dynamicVariables.emotionalToneprimary,
       hasContent: !!dynamicVariables.dreamContent,
-      contentLength: dynamicVariables.dreamContent?.length || 0
+      contentLength: dynamicVariables.dreamContent?.length || 0,
+      hasFirstMessage: !!dynamicVariables.first_message,
+      firstMessagePreview: dynamicVariables.first_message?.substring(0, 50)
     } : {};
     
     logger.info('Sending conversation initiation to ElevenLabs', {
       hasVariables: !!dynamicVariables,
       variableKeys: dynamicVariables ? Object.keys(dynamicVariables) : [],
-      debugValues: debugVars
+      debugValues: debugVars,
+      hasOverrides: !!initMessage.overrides,
+      isResumed: dynamicVariables?.is_resumed_conversation
     });
 
     this.ws.send(JSON.stringify(initMessage));
