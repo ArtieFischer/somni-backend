@@ -3,7 +3,7 @@
  * Run this to verify timeout events are being received
  */
 
-import { io, Socket } from 'socket.io-client';
+const io = require('socket.io-client');
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
@@ -13,7 +13,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001';
 const AUTH_TOKEN = process.env.TEST_AUTH_TOKEN || '';
 
-let socket: Socket;
+let socket: any;
 
 async function testTimeout() {
   console.log('🔄 Testing ElevenLabs timeout behavior...\n');

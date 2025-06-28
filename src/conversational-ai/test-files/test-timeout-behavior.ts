@@ -1,4 +1,4 @@
-import { io, Socket } from 'socket.io-client';
+const io = require('socket.io-client');
 import * as dotenv from 'dotenv';
 import path from 'path';
 
@@ -12,7 +12,7 @@ console.log('Testing ElevenLabs timeout behavior...');
 console.log('Backend URL:', BACKEND_URL);
 
 async function testTimeoutBehavior() {
-  let socket: Socket | null = null;
+  let socket: any = null;
 
   try {
     // Connect to the conversational AI namespace
@@ -33,34 +33,34 @@ async function testTimeoutBehavior() {
       });
     });
 
-    socket.on('conversation_initialized', (data) => {
+    socket.on('conversation_initialized', (data: any) => {
       console.log('✅ Conversation initialized:', data);
     });
 
-    socket.on('conversation_started', (data) => {
+    socket.on('conversation_started', (data: any) => {
       console.log('✅ Conversation started:', data);
       console.log('\n⏳ Now waiting for timeout (should occur after ~60 seconds of inactivity)...');
     });
 
-    socket.on('inactivity_timeout', (data) => {
+    socket.on('inactivity_timeout', (data: any) => {
       console.log('\n🔔 TIMEOUT EVENT RECEIVED:', data);
       console.log('Timestamp:', new Date().toISOString());
     });
 
-    socket.on('elevenlabs_disconnected', (data) => {
+    socket.on('elevenlabs_disconnected', (data: any) => {
       console.log('\n🔌 ElevenLabs disconnected:', data);
     });
 
-    socket.on('error', (error) => {
+    socket.on('error', (error: any) => {
       console.error('❌ Error:', error);
     });
 
-    socket.on('disconnect', (reason) => {
+    socket.on('disconnect', (reason: any) => {
       console.log('\n🔌 Socket disconnected:', reason);
     });
 
     // Log all events for debugging
-    socket.onAny((eventName, ...args) => {
+    socket.onAny((eventName: any, ...args: any[]) => {
       if (!['transcription', 'audio_chunk'].includes(eventName)) {
         console.log(`📨 Event: ${eventName}`, args);
       }
