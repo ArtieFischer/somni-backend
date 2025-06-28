@@ -86,20 +86,11 @@ export class ConversationalAIHandler {
       logger.warn('ElevenLabs initialization failed, falling back to text mode:', error);
     }
 
-    // Send conversation starter
-    const starter = agent.getConversationStarter(context);
+    // Send conversation started event without a message to let ElevenLabs handle the first message
     socket.emit('conversation_started', {
-      message: starter,
       interpreter: conversation.interpreterId,
-      mode: socket.agent['elevenLabsService'] ? 'voice' : 'text'
-    });
-
-    // Also emit as transcription for compatibility
-    socket.emit('transcription', {
-      text: starter,
-      speaker: 'agent',
-      timestamp: Date.now(),
-      isFinal: true
+      mode: socket.agent['elevenLabsService'] ? 'voice' : 'text',
+      elevenLabsSessionId: conversation.elevenLabsSessionId
     });
   }
 
