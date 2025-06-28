@@ -40,7 +40,7 @@ export class ConversationController {
         userId
       };
 
-      const conversation = await conversationService.createConversation(config);
+      const conversation = await conversationService.findOrCreateConversation(config);
 
       // Build WebSocket URL
       const wsHost = process.env.WS_HOST || req.get('host');
