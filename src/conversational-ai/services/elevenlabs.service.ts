@@ -227,10 +227,19 @@ export class ElevenLabsService extends EventEmitter {
     }
 
     // According to ElevenLabs docs, dynamic_variables go at the root level
-    const initMessage = {
+    const initMessage: any = {
       type: 'conversation_initiation_client_data',
       dynamic_variables: dynamicVariables || {}
     };
+    
+    // If we have a custom first message in dynamic variables, add it to conversation config
+    if (dynamicVariables?.first_message) {
+      initMessage.conversation_config_override = {
+        agent: {
+          first_message: dynamicVariables.first_message
+        }
+      };
+    }
 
     // Log key values for debugging
     const debugVars = dynamicVariables ? {

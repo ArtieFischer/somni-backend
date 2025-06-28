@@ -217,7 +217,12 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       
       // Conversation Context
       previousMessages: previousMessagesFormatted.trim() || 'No previous messages',
-      max_turn_length: 150 // Configurable per agent
+      max_turn_length: 150, // Configurable per agent
+      
+      // Custom first message based on conversation history
+      first_message: context.previousMessages && context.previousMessages.length > 0
+        ? `Welcome back ${userProfile?.username || userProfile?.handle || 'my friend'}, how else can I help you?`
+        : `Good day my dear ${userProfile?.username || userProfile?.handle || 'friend'}! Ah your profound dream about ${dreamMetadata?.title || this.extractDreamTopic(context.dreamContent) || 'your experience'}... What would you like to know about it?`
     };
   }
 
