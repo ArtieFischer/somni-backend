@@ -141,9 +141,12 @@ ${context.relevantKnowledge.map(k => `- ${k.content} (${k.source})`).join('\n')}
       // emotionalTone might be a string or an object
       if (typeof interpretation.emotionalTone === 'string') {
         emotionalTonePrimary = interpretation.emotionalTone;
-      } else if (interpretation.emotionalTone?.primary) {
-        emotionalTonePrimary = interpretation.emotionalTone.primary;
-        emotionalToneIntensity = interpretation.emotionalTone.intensity || 0.5;
+      } else if (typeof interpretation.emotionalTone === 'object' && interpretation.emotionalTone !== null) {
+        const toneObj = interpretation.emotionalTone as any;
+        if (toneObj.primary) {
+          emotionalTonePrimary = toneObj.primary;
+          emotionalToneIntensity = toneObj.intensity || 0.5;
+        }
       }
     }
     

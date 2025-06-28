@@ -28,9 +28,28 @@ class ConversationContextService {
         : [];
 
       return {
-        interpretation: interpretation || undefined,
+        interpretation: interpretation ? {
+          id: interpretation.dreamId, // Use dreamId as id since DreamInterpretation doesn't have id
+          dreamId: interpretation.dreamId,
+          interpreterType: String(interpretation.interpreterType || interpretation.interpreterId),
+          interpretation: interpretation.interpretation,
+          interpretationSummary: interpretation.interpretation,
+          quickTake: interpretation.quickTake,
+          symbols: interpretation.symbols || [],
+          themes: this.extractThemes(interpretation),
+          emotions: this.extractEmotions(interpretation),
+          questions: this.extractQuestions(interpretation),
+          additionalInsights: this.extractAdditionalInsights(interpretation),
+          interpretationCore: typeof interpretation.interpretationCore === 'object' 
+            ? interpretation.interpretationCore.primaryInsight 
+            : (interpretation.interpretationCore || interpretation.quickTake),
+          emotionalTone: typeof interpretation.emotionalTone === 'object' && interpretation.emotionalTone !== null
+            ? (interpretation.emotionalTone as any).primary || String(interpretation.emotionalTone)
+            : interpretation.emotionalTone,
+          fullResponse: interpretation.fullResponse
+        } : undefined,
         relevantKnowledge,
-        dreamContent: dream?.transcription || '',
+        dreamContent: dream?.raw_transcript || dream?.transcription || '',
         previousMessages
       };
     } catch (error) {
@@ -66,17 +85,21 @@ class ConversationContextService {
         dreamId: data.dream_id,
         interpreterId: data.interpreter_type as any,
         interpreterType: data.interpreter_type,
-        interpretation: data.interpretation,
+        interpretation: data.interpretation_summary, // Use interpretation_summary from DB
         quickTake: data.quick_take,
         dreamTopic: data.dream_topic,
         symbols: data.symbols || [],
-        emotions: data.emotions || [],
+        selfReflection: fullResponse?.selfReflection || '',
+        processingTime: data.processing_time_ms || 0,
         emotionalTone: data.emotional_tone,
-        questions: data.questions || [],
-        additionalInsights: data.additional_insights,
-        interpretationCore: data.interpretation_core,
-        selfReflection: data.self_reflection || '',
-        processingTime: data.processing_time || 0,
+        practicalGuidance: fullResponse?.practicalGuidance || [],
+        fullInterpretation: data.interpretation_summary,
+        interpretationCore: data.primary_insight ? {
+          type: data.interpreter_type as any,
+          primaryInsight: data.primary_insight,
+          keyPattern: data.key_pattern || '',
+          personalGuidance: fullResponse?.personalGuidance || ''
+        } : undefined,
         authenticityMarkers: fullResponse?.authenticityMarkers || {
           personalEngagement: 0,
           vocabularyAuthenticity: 0,
@@ -159,6 +182,75 @@ class ConversationContextService {
       logger.error('Failed to get conversation messages:', error);
       return [];
     }
+  }
+
+  /**
+   * Extract themes from interpretation
+   */
+  private extractThemes(interpretation: DreamInterpretation): string[] {
+    if (!interpretation.fullResponse) return [];
+    
+    const fullResponse = interpretation.fullResponse;
+    return fullResponse?.themes || 
+           fullResponse?.interpretation?.themes || 
+           fullResponse?.stageMetadata?.themeIdentification?.themes ||
+           [];
+  }
+
+  /**
+   * Extract emotions from interpretation
+   */
+  private extractEmotions(interpretation: DreamInterpretation): string[] {
+    const emotions: string[] = [];
+    
+    if (interpretation.emotionalTone) {
+      if (typeof interpretation.emotionalTone === 'string') {
+        emotions.push(interpretation.emotionalTone);
+      } else if (interpretation.emotionalTone.primary) {
+        emotions.push(interpretation.emotionalTone.primary);
+      }
+    }
+    
+    if (interpretation.fullResponse?.emotions) {
+      emotions.push(...interpretation.fullResponse.emotions);
+    }
+    
+    return [...new Set(emotions)];
+  }
+
+  /**
+   * Extract questions from interpretation
+   */
+  private extractQuestions(interpretation: DreamInterpretation): string[] {
+    if (!interpretation.fullResponse) return [];
+    
+    const fullResponse = interpretation.fullResponse;
+    return fullResponse?.questions || 
+           fullResponse?.followUpQuestions ||
+           fullResponse?.guidingQuestions ||
+           [];
+  }
+
+  /**
+   * Extract additional insights from interpretation
+   */
+  private extractAdditionalInsights(interpretation: DreamInterpretation): string[] {
+    const insights: string[] = [];
+    
+    if (interpretation.practicalGuidance) {
+      insights.push(...interpretation.practicalGuidance);
+    }
+    
+    if (interpretation.fullResponse?.additionalInsights) {
+      const additionalInsights = interpretation.fullResponse.additionalInsights;
+      if (Array.isArray(additionalInsights)) {
+        insights.push(...additionalInsights);
+      } else if (typeof additionalInsights === 'string') {
+        insights.push(additionalInsights);
+      }
+    }
+    
+    return insights;
   }
 
   /**
