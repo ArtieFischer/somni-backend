@@ -218,6 +218,22 @@ export class ElevenLabsService extends EventEmitter {
     }));
   }
 
+  /**
+   * Send user text message to ElevenLabs
+   */
+  sendUserText(text: string): void {
+    if (!this.isConnected || !this.ws) {
+      throw new Error('Not connected to ElevenLabs');
+    }
+
+    logger.info('ElevenLabs: Sending user text message', { text });
+    
+    this.ws.send(JSON.stringify({
+      type: 'user_message',
+      text: text
+    }));
+  }
+
   async disconnect(): Promise<void> {
     this.stopPingPong();
     this.currentConversationId = null;

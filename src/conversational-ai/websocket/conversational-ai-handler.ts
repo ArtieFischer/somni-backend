@@ -252,7 +252,7 @@ export class ConversationalAIHandler {
 
       const elevenLabsService = (socket.agent as any).elevenLabsService;
       if (elevenLabsService?.isActive()) {
-        elevenLabsService.sendAudio(data.chunk);
+        elevenLabsService.sendAudio(data.audio || data.chunk);
       } else {
         socket.emit('error', { message: 'Audio processing unavailable, please use text input' });
       }
@@ -272,7 +272,20 @@ export class ConversationalAIHandler {
       }
 
       const { text } = data;
-
+      const elevenLabsService = (socket.agent as any).elevenLabsService;
+      
+      // If ElevenLabs is active, send text through WebSocket
+      if (elevenLabsService?.isActive()) {
+        logger.info('Forwarding text to ElevenLabs', { text });
+        elevenLabsService.sendUserText(text);
+        // The response will come through the existing event handlers
+        // (transcription events, audio_chunk events, etc.)
+        return;
+      }
+      
+      // Fallback: Only use OpenRouter if ElevenLabs is not available
+      logger.warn('ElevenLabs not available, falling back to OpenRouter');
+      
       // Save user message
       await conversationService.saveMessage({
         conversationId: socket.conversationId,
