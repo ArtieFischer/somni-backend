@@ -181,14 +181,14 @@ export class ConversationalAIHandler {
       socket.emit('error', error);
     });
 
-    // Reconnection events
-    elevenLabsService.on('reconnecting', (data: any) => {
-      socket.emit('reconnecting', data);
-    });
+    // Reconnection events - commented out to prevent loops
+    // elevenLabsService.on('reconnecting', (data: any) => {
+    //   socket.emit('reconnecting', data);
+    // });
 
-    elevenLabsService.on('reconnected', () => {
-      socket.emit('reconnected');
-    });
+    // elevenLabsService.on('reconnected', () => {
+    //   socket.emit('reconnected');
+    // });
   }
 
   /**

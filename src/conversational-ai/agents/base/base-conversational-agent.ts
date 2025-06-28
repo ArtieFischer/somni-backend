@@ -73,6 +73,9 @@ export abstract class BaseConversationalAgent extends BaseDreamInterpreter {
           agentId: this.elevenLabsAgentId,
           dynamicVariables
         });
+        
+        // Note: The agent should automatically send its first message
+        // based on the configuration in the ElevenLabs dashboard
       }
       
       return this.elevenLabsService;

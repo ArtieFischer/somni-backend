@@ -89,13 +89,19 @@ export class ElevenLabsService extends EventEmitter {
 
     this.ws.on('close', (code, reason) => {
       this.isConnected = false;
-      this.emit('disconnected', { code, reason: reason.toString() });
+      logger.error('ElevenLabs WebSocket closed', { 
+        code, 
+        reason: reason?.toString() || 'Unknown reason',
+        conversationId: this.conversationId,
+        reconnectAttempts: this.reconnectAttempts
+      });
+      this.emit('disconnected', { code, reason: reason?.toString() });
       
-      // Basic reconnection logic for MVP
-      if (this.reconnectAttempts < this.maxReconnectAttempts) {
-        this.reconnectAttempts++;
-        setTimeout(() => this.reconnect(), 1000 * this.reconnectAttempts);
-      }
+      // Disable automatic reconnection for now to debug the issue
+      // if (this.reconnectAttempts < this.maxReconnectAttempts) {
+      //   this.reconnectAttempts++;
+      //   setTimeout(() => this.reconnect(), 1000 * this.reconnectAttempts);
+      // }
     });
   }
 
@@ -189,16 +195,16 @@ export class ElevenLabsService extends EventEmitter {
       throw new Error('Not connected to ElevenLabs');
     }
 
-    const initMessage: any = {
-      type: 'conversation_initiation_client_data'
+    // According to docs, dynamic_variables should be at the root level
+    const initMessage = {
+      type: 'conversation_initiation_client_data',
+      dynamic_variables: dynamicVariables || {}
     };
 
-    // Add dynamic variables if provided
-    if (dynamicVariables) {
-      initMessage.custom_llm_extra_body = {
-        dynamic_variables: dynamicVariables
-      };
-    }
+    logger.info('Sending conversation initiation to ElevenLabs', {
+      hasVariables: !!dynamicVariables,
+      variableKeys: dynamicVariables ? Object.keys(dynamicVariables) : []
+    });
 
     this.ws.send(JSON.stringify(initMessage));
   }
