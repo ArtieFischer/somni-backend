@@ -170,6 +170,10 @@ export class ElevenLabsService extends EventEmitter {
         break;
       
       case 'user_transcript':
+        logger.info('ElevenLabs: User transcript received', {
+          text: message.user_transcription_event.user_transcript,
+          length: message.user_transcription_event.user_transcript?.length || 0
+        });
         this.emit('transcription', {
           text: message.user_transcription_event.user_transcript,
           speaker: 'user',
@@ -179,6 +183,11 @@ export class ElevenLabsService extends EventEmitter {
         break;
       
       case 'agent_response':
+        logger.info('ElevenLabs: Agent response', {
+          text: message.agent_response_event.agent_response,
+          isTentative: message.agent_response_event.is_tentative,
+          length: message.agent_response_event.agent_response?.length || 0
+        });
         this.emit('agent_response', {
           text: message.agent_response_event.agent_response,
           isTentative: message.agent_response_event.is_tentative
@@ -232,7 +241,7 @@ export class ElevenLabsService extends EventEmitter {
     this.emit('audio_chunk', audioChunk);
   }
 
-  sendAudio(audioData: ArrayBuffer | string): void {
+  sendAudio(audioData: ArrayBuffer | string | Buffer): void {
     if (!this.isConnected || !this.ws) {
       logger.error('Cannot send audio - not connected to ElevenLabs', {
         isConnected: this.isConnected,
@@ -242,30 +251,41 @@ export class ElevenLabsService extends EventEmitter {
       throw new Error('Not connected to ElevenLabs');
     }
 
-    // Handle both raw binary and base64 string input
+    let audioToSend: string;
+    
+    // Handle different input formats
     if (typeof audioData === 'string') {
       // Already base64 encoded from mobile
+      audioToSend = audioData;
       logger.debug('Sending base64 audio to ElevenLabs', {
         conversationId: this.currentConversationId,
         base64Length: audioData.length,
         wsReadyState: this.ws.readyState
       });
-      this.ws.send(JSON.stringify({
-        user_audio_chunk: audioData
-      }));
-    } else {
-      // Convert ArrayBuffer to base64 for ElevenLabs format
-      const base64Audio = Buffer.from(audioData).toString('base64');
-      logger.debug('Converting and sending ArrayBuffer audio to ElevenLabs', {
+    } else if (Buffer.isBuffer(audioData)) {
+      // Direct buffer - convert to base64
+      audioToSend = audioData.toString('base64');
+      logger.debug('Converting Buffer to base64 for ElevenLabs', {
         conversationId: this.currentConversationId,
-        originalSize: audioData.byteLength,
-        base64Length: base64Audio.length,
+        bufferSize: audioData.length,
+        base64Length: audioToSend.length,
         wsReadyState: this.ws.readyState
       });
-      this.ws.send(JSON.stringify({
-        user_audio_chunk: base64Audio
-      }));
+    } else {
+      // ArrayBuffer - convert to base64
+      audioToSend = Buffer.from(audioData).toString('base64');
+      logger.debug('Converting ArrayBuffer to base64 for ElevenLabs', {
+        conversationId: this.currentConversationId,
+        originalSize: audioData.byteLength,
+        base64Length: audioToSend.length,
+        wsReadyState: this.ws.readyState
+      });
     }
+    
+    // Send audio in the format ElevenLabs expects
+    this.ws.send(JSON.stringify({
+      user_audio_chunk: audioToSend
+    }));
     
     this.lastActivityTime = Date.now();
   }

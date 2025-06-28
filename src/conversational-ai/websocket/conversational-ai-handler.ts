@@ -190,6 +190,16 @@ export class ConversationalAIHandler {
     });
 
     elevenLabsService.on('transcription', (event: any) => {
+      // Log transcription for debugging
+      logger.info('Transcription event', {
+        conversationId: socket.conversationId,
+        speaker: event.speaker,
+        text: event.text,
+        textLength: event.text?.length || 0,
+        isFinal: event.isFinal,
+        isEmpty: !event.text || event.text.trim().length === 0
+      });
+      
       socket.emit('transcription', event);
       // Save transcription to database
       if (event.isFinal) {
