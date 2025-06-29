@@ -165,8 +165,21 @@ export class ElevenLabsService extends EventEmitter {
     
     switch (message.type) {
       case 'conversation_initiation_metadata':
+        // Log the client_events we're configured to receive
+        const clientEvents = message.conversation_initiation_metadata_event?.client_events || [];
+        logger.info('ElevenLabs: Received conversation metadata', {
+          conversationId: message.conversation_initiation_metadata_event.conversation_id,
+          clientEvents: clientEvents,
+          hasUserTranscript: clientEvents.includes('user_transcript'),
+          hasAgentResponse: clientEvents.includes('agent_response')
+        });
+        
+        // Verify we have the necessary events
+        if (!clientEvents.includes('user_transcript')) {
+          logger.error('ElevenLabs: WARNING - user_transcript not in client_events, transcriptions will not be received!');
+        }
+        
         // Now we can send our initialization message with dynamic variables
-        logger.info('ElevenLabs: Received conversation metadata, sending initialization');
         if (this.pendingInitialization) {
           logger.info('ElevenLabs: Sending pending initialization with variables', {
             variableKeys: Object.keys(this.pendingInitialization)
@@ -420,15 +433,25 @@ export class ElevenLabsService extends EventEmitter {
     // According to ElevenLabs docs, dynamic_variables go at the root level
     const initMessage: any = {
       type: 'conversation_initiation_client_data',
-      dynamic_variables: dynamicVariables || {}
+      dynamic_variables: dynamicVariables || {},
+      // ALWAYS include conversation_config_override with client_events
+      conversation_config_override: {
+        conversation: {
+          client_events: [
+            'audio',
+            'user_transcript',
+            'agent_response',
+            'agent_response_correction',
+            'conversation_initiation_metadata'
+          ]
+        }
+      }
     };
     
-    // If this is a resumed conversation, override the first message
+    // If this is a resumed conversation, also override the first message
     if (dynamicVariables?.is_resumed_conversation === 'true') {
-      initMessage.conversation_config_override = {
-        agent: {
-          first_message: `Welcome back ${dynamicVariables.user_name}, how else can I help you explore your dream?`
-        }
+      initMessage.conversation_config_override.agent = {
+        first_message: `Welcome back ${dynamicVariables.user_name}, how else can I help you explore your dream?`
       };
     }
 
