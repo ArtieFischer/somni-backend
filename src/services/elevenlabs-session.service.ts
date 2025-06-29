@@ -179,10 +179,10 @@ export class ElevenLabsSessionService {
     
     const { context, userProfile, dreamId, interpreterId } = params;
     
-    // Get dream details
+    // Get dream details (emotions column might not exist yet)
     const { data: dream, error } = await supabaseService.getServiceClient()
       .from('dreams')
-      .select('raw_transcript, emotions, themes, recorded_at')
+      .select('raw_transcript, themes, recorded_at')
       .eq('id', dreamId)
       .single();
     
@@ -209,7 +209,7 @@ export class ElevenLabsSessionService {
     };
     
     // Extract emotions from dream or interpretation
-    const dreamEmotions = dream?.emotions || context.interpretation?.emotions || [];
+    const dreamEmotions = context.interpretation?.emotions || [];
     
     return {
       user_name: userProfile?.first_name || 'Dreamer',

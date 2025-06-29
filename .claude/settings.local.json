@@ -50,6 +50,8 @@
       "Bash(npm run:*)",
       "Bash(npx eslint:*)",
       "mcp__supabase__get_logs",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__list_migrations",
       "mcp__supabase__apply_migration"
     ],
     "deny": []

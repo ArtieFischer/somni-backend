@@ -67,11 +67,19 @@ export class DreamSharingService {
         .single();
 
       if (error) {
-        console.error('Error sharing dream:', error);
+        console.error('Error sharing dream:', {
+          error,
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code,
+          dreamId,
+          userId
+        });
         return {
           success: false,
           shareId: '',
-          error: error.message
+          error: error.message || 'Database error when sharing dream'
         };
       }
 
