@@ -179,10 +179,10 @@ export class ElevenLabsSessionService {
     
     const { context, userProfile, dreamId, interpreterId } = params;
     
-    // Get dream details (emotions column might not exist yet)
+    // Get dream details - only select existing columns
     const { data: dream, error } = await supabaseService.getServiceClient()
       .from('dreams')
-      .select('raw_transcript, themes, recorded_at')
+      .select('raw_transcript, created_at, mood, clarity')
       .eq('id', dreamId)
       .single();
     
@@ -216,8 +216,10 @@ export class ElevenLabsSessionService {
       user_profile: `${userProfile?.age || 'unknown'} years old, ${userProfile?.location || 'location unknown'}`,
       dream_content: dream?.raw_transcript || context.dreamContent || 'No dream content available',
       dream_emotions: dreamEmotions,
-      dream_themes: dream?.themes || context.interpretation?.themes || [],
-      dream_date: dream?.recorded_at ? new Date(dream.recorded_at).toLocaleDateString() : 'unknown',
+      dream_themes: context.interpretation?.themes || [],
+      dream_date: dream?.created_at ? new Date(dream.created_at).toLocaleDateString() : 'unknown',
+      dream_mood: dream?.mood ? `${dream.mood}/10` : 'not specified',
+      dream_clarity: dream?.clarity ? `${dream.clarity}/10` : 'not specified',
       conversation_context: conversationSummary,
       last_topic: lastTopic,
       interpreter_style: interpreterStyles[interpreterId] || 'Provide thoughtful dream analysis',
