@@ -47,7 +47,7 @@ export class TranscriptPollerService extends EventEmitter {
       }
     }
 
-    // Poll every 2 seconds
+    // Poll every 1 second during active conversation for real-time transcripts
     this.pollingInterval = setInterval(async () => {
       try {
         const transcripts = await this.fetchTranscripts(elevenLabsConversationId);
@@ -105,7 +105,7 @@ export class TranscriptPollerService extends EventEmitter {
           });
         }
       }
-    }, 2000);
+    }, 1000); // 1 second for real-time polling
     
     // Also run an immediate poll after a delay to catch early transcripts
     setTimeout(async () => {
