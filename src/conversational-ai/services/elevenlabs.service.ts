@@ -176,7 +176,18 @@ export class ElevenLabsService extends EventEmitter {
         
         // Verify we have the necessary events
         if (!clientEvents.includes('user_transcript')) {
-          logger.error('ElevenLabs: WARNING - user_transcript not in client_events, transcriptions will not be received!');
+          logger.error('ElevenLabs: CRITICAL ERROR - user_transcript not in client_events!', {
+            receivedEvents: clientEvents,
+            expectedEvents: ['audio', 'user_transcript', 'agent_response'],
+            conversationId: message.conversation_initiation_metadata_event.conversation_id
+          });
+          
+          // Emit error to frontend
+          this.emit('error', {
+            code: 'MISSING_TRANSCRIPT_EVENTS',
+            message: 'ElevenLabs configuration error: transcripts will not be received',
+            details: { clientEvents }
+          });
         }
         
         // Now we can send our initialization message with dynamic variables
@@ -294,15 +305,22 @@ export class ElevenLabsService extends EventEmitter {
       
       case 'audio':
         // Audio data is sent as a separate message type
-        logger.debug('ElevenLabs: Received audio message');
+        logger.debug('ElevenLabs: Received audio message', {
+          hasAudioEvent: !!message.audio_event,
+          audioEventKeys: message.audio_event ? Object.keys(message.audio_event) : [],
+          messageStructure: JSON.stringify(message).substring(0, 200)
+        });
         break;
         
       default:
-        logger.info('Unknown ElevenLabs message type:', { 
+        logger.warn('Unknown ElevenLabs message type:', { 
           type: message.type,
           hasData: !!message,
           messageKeys: Object.keys(message),
-          messagePreview: JSON.stringify(message).substring(0, 200)
+          messagePreview: JSON.stringify(message).substring(0, 500),
+          possibleTranscript: message.user_transcript || message.transcript || null,
+          allEventKeys: Object.keys(message).filter(k => k.includes('event')),
+          allTranscriptKeys: Object.keys(message).filter(k => k.includes('transcript'))
         });
     }
   }
@@ -478,15 +496,21 @@ export class ElevenLabsService extends EventEmitter {
 
     this.ws.send(JSON.stringify(initMessage));
     
-    // Send user_activity to trigger the agent's first message
-    setTimeout(() => {
-      if (this.isConnected && this.ws) {
-        logger.info('Sending user_activity to trigger agent first message');
-        this.ws.send(JSON.stringify({
-          type: 'user_activity'
-        }));
-      }
-    }, 500);
+    // For resumed conversations, the agent should send first_message automatically
+    // Don't send user_activity as it might interfere with transcript detection
+    if (dynamicVariables?.is_resumed_conversation !== 'true') {
+      // Only send user_activity for new conversations if needed
+      setTimeout(() => {
+        if (this.isConnected && this.ws) {
+          logger.info('Sending user_activity for new conversation');
+          this.ws.send(JSON.stringify({
+            type: 'user_activity'
+          }));
+        }
+      }, 1000); // Increase delay to ensure config is processed
+    } else {
+      logger.info('Skipping user_activity for resumed conversation - agent should speak first');
+    }
   }
 
   sendToolResponse(toolCallId: string, result: any): void {

@@ -227,7 +227,23 @@ export class ConversationalAIHandler {
         isEmpty: !event.text || event.text.trim().length === 0
       });
       
+      // Emit both event names for compatibility
       socket.emit('transcription', event);
+      
+      // Also emit as user_transcript for frontend compatibility
+      if (event.speaker === 'user') {
+        socket.emit('user_transcript', {
+          text: event.text,
+          isFinal: event.isFinal,
+          timestamp: event.timestamp || Date.now()
+        });
+        
+        // Additional debug event
+        socket.emit('elevenlabs_transcript_received', {
+          text: event.text,
+          source: 'elevenlabs'
+        });
+      }
       // Save transcription to database
       if (event.isFinal) {
         conversationService.saveMessage({
