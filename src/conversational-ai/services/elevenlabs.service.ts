@@ -166,10 +166,14 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   private handleMessage(message: any): void {
+    // Add temporary debug logging to see raw packets
+    console.debug('[RAW]', JSON.stringify(message).slice(0, 120));
+    
     // Log ALL messages for debugging
     logger.info('ElevenLabs: Received message', { 
       type: message.type,
       hasUserTranscript: !!message.user_transcription_event,
+      hasUserTranscriptEvent: !!message.user_transcript_event,
       hasAgentResponse: !!message.agent_response_event,
       messageKeys: Object.keys(message),
       eventKeys: message.user_transcription_event ? Object.keys(message.user_transcription_event) : []
@@ -179,28 +183,21 @@ export class ElevenLabsService extends EventEmitter {
     
     switch (message.type) {
       case 'conversation_initiation_metadata':
-        // Log the client_events we're configured to receive
-        const clientEvents = message.conversation_initiation_metadata_event?.client_events || [];
+        // The metadata packet no longer exposes client_events according to API spec
+        // Assume the agent dashboard configuration is correct
+        const clientEvents: string[] = ['audio', 'user_transcript', 'agent_response'];
         this.elevenLabsConversationId = message.conversation_initiation_metadata_event?.conversation_id;
         
-        logger.info('ElevenLabs: Received conversation metadata', {
+        logger.info('ElevenLabs conversation metadata received', {
           conversationId: this.elevenLabsConversationId,
-          clientEvents: clientEvents,
-          hasUserTranscript: clientEvents.includes('user_transcript'),
-          hasAgentResponse: clientEvents.includes('agent_response'),
+          agentOutputFormat: message.conversation_initiation_metadata_event?.agent_output_audio_format,
+          userInputFormat: message.conversation_initiation_metadata_event?.user_input_audio_format,
+          assumedClientEvents: clientEvents,
           fullEvent: JSON.stringify(message.conversation_initiation_metadata_event)
         });
         
-        // Since agent dashboard shows events are configured, let's just start the conversation
-        // and monitor what we actually receive
-        logger.info('ElevenLabs conversation metadata received', {
-          conversationId: this.elevenLabsConversationId,
-          clientEvents,
-          agentOutputFormat: message.conversation_initiation_metadata_event?.agent_output_audio_format,
-          userInputFormat: message.conversation_initiation_metadata_event?.user_input_audio_format
-        });
-        
-        // Always schedule polling as backup since dashboard config seems correct
+        // Since we're assuming client events are configured correctly, don't schedule polling immediately
+        // Only start it if we don't receive any transcripts after some time
         this.schedulePollingFallback();
         
         // Now we can send our initialization message with dynamic variables
@@ -220,10 +217,18 @@ export class ElevenLabsService extends EventEmitter {
         break;
       
       case 'user_transcript':
+        // Handle both possible field names: user_transcription_event and user_transcript_event
+        const transcriptText = 
+          message.user_transcription_event?.user_transcript ??
+          message.user_transcript_event?.user_transcript;
+        
         logger.info('ElevenLabs: User transcript received', {
-          text: message.user_transcription_event.user_transcript,
-          length: message.user_transcription_event.user_transcript?.length || 0,
-          isEmpty: !message.user_transcription_event.user_transcript || message.user_transcription_event.user_transcript.trim() === ''
+          text: transcriptText,
+          length: transcriptText?.length || 0,
+          isEmpty: !transcriptText || transcriptText.trim() === '',
+          hasTranscriptionEvent: !!message.user_transcription_event,
+          hasTranscriptEvent: !!message.user_transcript_event,
+          rawMessage: JSON.stringify(message).slice(0, 200)
         });
         
         // Mark that we're receiving transcripts
@@ -247,9 +252,9 @@ export class ElevenLabsService extends EventEmitter {
         this.totalAudioBytesSent = 0;
         
         // Only emit non-empty transcriptions
-        if (message.user_transcription_event.user_transcript && message.user_transcription_event.user_transcript.trim()) {
+        if (transcriptText && transcriptText.trim()) {
           this.emit('transcription', {
-            text: message.user_transcription_event.user_transcript,
+            text: transcriptText,
             speaker: 'user',
             timestamp: Date.now(),
             isFinal: true
