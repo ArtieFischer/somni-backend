@@ -279,8 +279,28 @@ export class ElevenLabsSessionService {
     const interpretationSummary = interpretation?.interpretation_summary || context.interpretation?.interpretationSummary || '';
     const dreamTopic = interpretation?.dream_topic || 'general';
     
-    // Build previousMessages string (empty for now as requested)
-    const previousMessages = '';
+    // Build previousMessages string from context
+    let previousMessagesString = '';
+    if (context.previousMessages && context.previousMessages.length > 0) {
+      // Take last 20 messages
+      const recentMessages = context.previousMessages.slice(-20);
+      
+      // Format messages with speaker labels
+      const formattedMessages = recentMessages.map((msg: any) => {
+        const speaker = msg.role === 'user' ? userName : interpreterId.charAt(0).toUpperCase() + interpreterId.slice(1);
+        // Truncate long messages to keep the string manageable
+        const content = msg.content.length > 200 ? msg.content.substring(0, 197) + '...' : msg.content;
+        return `${speaker}: ${content}`;
+      });
+      
+      previousMessagesString = formattedMessages.join(' | ');
+      
+      logger.info('Formatted previous messages for ElevenLabs', {
+        messageCount: recentMessages.length,
+        totalLength: previousMessagesString.length,
+        preview: previousMessagesString.substring(0, 200) + '...'
+      });
+    }
     
     const dynamicVariables = {
       // All required fields
@@ -296,7 +316,7 @@ export class ElevenLabsSessionService {
       mood: mood,
       quickTake: quickTake,
       interpretationSummary: interpretationSummary,
-      previousMessages: previousMessages,
+      previousMessages: previousMessagesString,
       dream_topic: dreamTopic
     };
     
@@ -318,6 +338,8 @@ export class ElevenLabsSessionService {
       interpretationSummary: dynamicVariables.interpretationSummary.substring(0, 100) + '...',
       previousMessages: dynamicVariables.previousMessages,
       dream_topic: dynamicVariables.dream_topic,
+      hasPreviousMessages: previousMessagesString.length > 0,
+      previousMessagesCount: context.previousMessages?.length || 0,
       fullDynamicVariables: dynamicVariables
     });
     

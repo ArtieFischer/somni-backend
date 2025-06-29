@@ -39,7 +39,7 @@ router.post('/init', async (req, res) => {
       return;
     }
     
-    // 1. Find or create conversation
+    // 1. Find or create conversation (this keeps the same database conversation for the dream)
     const conversation = await conversationService.findOrCreateConversation({
       userId,
       dreamId,
@@ -61,7 +61,30 @@ router.post('/init', async (req, res) => {
       interpreterId
     });
     
-    // 5. Create secure session token with dynamic variables
+    // Log dynamic variables as requested
+    logger.info('Dynamic variables for ElevenLabs session', {
+      conversationId: conversation.id,
+      dreamId,
+      interpreterId,
+      dynamicVariables: {
+        user_name: dynamicVariables.user_name,
+        max_turn_length: dynamicVariables.max_turn_length,
+        dreamContent: dynamicVariables.dreamContent.substring(0, 100) + '...',
+        dreamSymbols: dynamicVariables.dreamSymbols,
+        age: dynamicVariables.age,
+        recurringThemes: dynamicVariables.recurringThemes,
+        emotionalToneprimary: dynamicVariables.emotionalToneprimary,
+        emotionalToneintensity: dynamicVariables.emotionalToneintensity,
+        clarity: dynamicVariables.clarity,
+        mood: dynamicVariables.mood,
+        quickTake: dynamicVariables.quickTake,
+        interpretationSummary: dynamicVariables.interpretationSummary.substring(0, 100) + '...',
+        previousMessages: dynamicVariables.previousMessages,
+        dream_topic: dynamicVariables.dream_topic
+      }
+    });
+    
+    // 5. ALWAYS create a NEW session token with dynamic variables (never reuse)
     const sessionData = await ElevenLabsSessionService.createSessionToken({
       agentId: agentConfig.agentId,
       userId,
@@ -70,7 +93,10 @@ router.post('/init', async (req, res) => {
       dynamicVariables
     });
     
-    // 6. Store session in database
+    // 6. Generate a NEW ElevenLabs session ID (unique for each voice session)
+    const elevenLabsSessionId = `${conversation.id}_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    
+    // 7. Store the NEW session in database
     await ElevenLabsSessionService.storeSession({
       userId,
       conversationId: conversation.id,
@@ -79,47 +105,58 @@ router.post('/init', async (req, res) => {
       expiresAt: sessionData.expiresAt
     });
     
-    // 7. Update conversation with ElevenLabs agent info
+    // 8. Update conversation with the NEW ElevenLabs session ID
     await conversationService.updateConversation(conversation.id, {
       elevenlabs_agent_id: agentConfig.agentId,
-      implementation_type: 'elevenlabs'
+      elevenlabs_session_id: elevenLabsSessionId,
+      implementation_type: 'elevenlabs',
+      last_message_at: new Date(),
+      resumed_at: (context.previousMessages?.length || 0) > 0 ? new Date() : undefined
     });
     
-    // 8. Generate signed URL for frontend
+    // 9. Generate NEW signed URL for frontend (never reuse)
     const signedUrl = await ElevenLabsSessionService.generateSignedUrl({
       agentId: agentConfig.agentId,
       sessionToken: sessionData.token,
       dynamicVariables
     });
     
-    // 9. Initialize conversation with dynamic variables on ElevenLabs
+    // 10. Initialize conversation with dynamic variables on ElevenLabs
     try {
       await ElevenLabsSessionService.initializeConversationWithDynamicVariables({
         agentId: agentConfig.agentId,
         dynamicVariables
       });
-      logger.info('Successfully initialized conversation with dynamic variables', {
+      logger.info('Successfully initialized NEW conversation with dynamic variables', {
         conversationId: conversation.id,
-        user_name: dynamicVariables.user_name
+        elevenLabsSessionId,
+        user_name: dynamicVariables.user_name,
+        previousMessagesCount: context.previousMessages?.length || 0
       });
     } catch (error) {
       logger.warn('Failed to pre-initialize conversation, frontend will handle dynamic variables:', error);
     }
     
-    logger.info('ElevenLabs conversation initialized', {
+    logger.info('ElevenLabs conversation initialized with FRESH session', {
       conversationId: conversation.id,
+      elevenLabsSessionId,
       interpreterId,
-      userId
+      userId,
+      isNewSession: true,
+      previousMessagesInConversation: context.previousMessages?.length || 0
     });
     
+    // 11. Return fresh session data (never mark as resumed for ElevenLabs)
     res.json({
       success: true,
       data: {
         conversationId: conversation.id,
-        signedUrl,
-        authToken: sessionData.token, // Include auth token for frontend
+        elevenLabsSessionId, // Always new
+        signedUrl, // Always fresh
+        authToken: sessionData.token, // Fresh auth token
         dynamicVariables,
-        isResumed: (context.previousMessages?.length || 0) > 0,
+        previousMessages: context.previousMessages || [], // Include for context
+        isResumed: false, // ALWAYS false - no more session resumption
         messageCount: context.previousMessages?.length || 0
       }
     });
@@ -159,7 +196,7 @@ router.post('/init', async (req, res) => {
  */
 router.post('/messages', async (req, res) => {
   try {
-    const { conversationId, role, content, timestamp, metadata } = req.body;
+    const { conversationId, role, content, metadata } = req.body;
     const userId = req.user!.id;
     
     // Input validation
@@ -189,18 +226,34 @@ router.post('/messages', async (req, res) => {
       return;
     }
     
-    // Save message
+    // Extract elevenLabsSessionId from metadata
+    const elevenLabsSessionId = metadata?.elevenLabsSessionId;
+    
+    // Save message with ElevenLabs metadata
     const message = await conversationService.saveMessage({
       conversationId,
       role,
       content,
-      audioUrl: metadata?.audioUrl
+      audioUrl: metadata?.audioUrl,
+      elevenLabsMetadata: elevenLabsSessionId ? {
+        session_id: elevenLabsSessionId,
+        timestamp: metadata?.timestamp || new Date().toISOString(),
+        audioUrl: metadata?.audioUrl
+      } : null
+    } as any);
+    
+    // Update conversation last_message_at
+    await conversationService.updateConversation(conversationId, {
+      last_message_at: new Date()
     });
     
     logger.info('Message saved', {
       conversationId,
+      elevenLabsSessionId,
       messageId: message.id,
-      role
+      role,
+      hasMetadata: !!metadata,
+      hasAudioUrl: !!metadata?.audioUrl
     });
     
     res.json({

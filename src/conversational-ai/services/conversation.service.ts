@@ -271,7 +271,7 @@ class ConversationService {
   /**
    * Save a message
    */
-  async saveMessage(message: Omit<ConversationMessage, 'id' | 'timestamp'>): Promise<ConversationMessage> {
+  async saveMessage(message: Omit<ConversationMessage, 'id' | 'timestamp'> & { elevenLabsMetadata?: any }): Promise<ConversationMessage> {
     try {
       const { data, error } = await supabaseService.getServiceClient()
         .from('messages')
@@ -280,7 +280,8 @@ class ConversationService {
           sender: message.role === 'user' ? 'user' : 'interpreter',  // Map role to sender
           role: message.role,  // Also include role column
           content: message.content,
-          audio_url: message.audioUrl
+          audio_url: message.audioUrl,
+          elevenlabs_metadata: message.elevenLabsMetadata || null
         })
         .select()
         .single();
@@ -512,9 +513,11 @@ class ConversationService {
    */
   async updateConversation(conversationId: string, updates: {
     elevenlabs_agent_id?: string;
+    elevenlabs_session_id?: string;
     implementation_type?: 'websocket' | 'elevenlabs';
     status?: string;
     last_message_at?: Date;
+    resumed_at?: Date;
     message_count?: number;
   }): Promise<void> {
     try {
@@ -522,6 +525,9 @@ class ConversationService {
       
       if (updates.elevenlabs_agent_id) {
         updateData.elevenlabs_agent_id = updates.elevenlabs_agent_id;
+      }
+      if (updates.elevenlabs_session_id) {
+        updateData.elevenlabs_session_id = updates.elevenlabs_session_id;
       }
       if (updates.implementation_type) {
         updateData.implementation_type = updates.implementation_type;
@@ -531,6 +537,9 @@ class ConversationService {
       }
       if (updates.last_message_at) {
         updateData.last_message_at = updates.last_message_at.toISOString();
+      }
+      if (updates.resumed_at) {
+        updateData.resumed_at = updates.resumed_at.toISOString();
       }
       if (updates.message_count !== undefined) {
         updateData.message_count = updates.message_count;
