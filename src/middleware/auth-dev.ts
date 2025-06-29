@@ -29,14 +29,16 @@ export const isAuthenticatedDev = async (
         token === process.env.SUPABASE_SERVICE_ROLE_KEY) {
       logger.warn('Using service role key for authentication - DEV ONLY');
       
-      // For service role, we need to get the user from the request body
+      // For service role, we need to get the user from the request body or params
       // This is a hack for testing only!
-      if (req.body.dreamId) {
+      const dreamId = req.body.dreamId || req.params.dreamId;
+      
+      if (dreamId) {
         // Get the user who owns this dream
         const { data: dream } = await supabaseService.getServiceClient()
           .from('dreams')
           .select('user_id')
-          .eq('id', req.body.dreamId)
+          .eq('id', dreamId)
           .single();
         
         if (dream) {
@@ -48,7 +50,7 @@ export const isAuthenticatedDev = async (
       
       res.status(400).json({
         success: false,
-        error: 'When using service role key, dreamId is required in body'
+        error: 'When using service role key, dreamId is required in body or params'
       });
       return;
     }
