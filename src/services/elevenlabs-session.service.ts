@@ -226,9 +226,26 @@ export class ElevenLabsSessionService {
     // Extract emotions from interpretation (already extracted from emotional_tone)
     const dreamEmotions = context.interpretation?.emotions || [];
     
+    // Debug user profile structure
+    logger.info('User profile data for dynamic variables', {
+      hasUserProfile: !!userProfile,
+      userProfileKeys: userProfile ? Object.keys(userProfile) : [],
+      username: userProfile?.username,
+      handle: userProfile?.handle,
+      birthDate: userProfile?.birth_date,
+      locationCity: userProfile?.location_city,
+      locationCountry: userProfile?.location_country,
+      profilePreview: userProfile ? JSON.stringify(userProfile).substring(0, 200) : null
+    });
+    
+    // Calculate age from birth_date if available
+    const age = userProfile?.birth_date 
+      ? Math.floor((Date.now() - new Date(userProfile.birth_date).getTime()) / (365.25 * 24 * 60 * 60 * 1000))
+      : null;
+    
     return {
-      user_name: userProfile?.first_name || 'Dreamer',
-      user_profile: `${userProfile?.age || 'unknown'} years old, ${userProfile?.location || 'location unknown'}`,
+      user_name: userProfile?.username || userProfile?.handle || 'Dreamer',
+      user_profile: `${age || 'unknown'} years old, ${userProfile?.location_city || userProfile?.location_country || 'location unknown'}`,
       dream_content: dream?.raw_transcript || context.dreamContent || 'No dream content available',
       dream_emotions: dreamEmotions,
       dream_themes: context.interpretation?.themes || [],
