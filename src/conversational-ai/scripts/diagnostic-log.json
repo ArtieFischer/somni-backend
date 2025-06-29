@@ -1,0 +1,62 @@
+[
+  {
+    "timestamp": "2025-06-29T01:02:34.696Z",
+    "message": {
+      "conversation_initiation_metadata_event": {
+        "conversation_id": "conv_01jywka6eqe6tb3x1m05vg0d82",
+        "agent_output_audio_format": "pcm_16000",
+        "user_input_audio_format": "pcm_16000"
+      },
+      "type": "conversation_initiation_metadata"
+    }
+  },
+  {
+    "timestamp": "2025-06-29T01:02:36.595Z",
+    "message": {
+      "ping_event": {
+        "event_id": 2,
+        "ping_ms": null
+      },
+      "type": "ping"
+    }
+  },
+  {
+    "timestamp": "2025-06-29T01:02:37.907Z",
+    "message": {
+      "vad_score_event": {
+        "vad_score": 0.01201203465461731
+      },
+      "type": "vad_score"
+    }
+  },
+  {
+    "timestamp": "2025-06-29T01:02:38.270Z",
+    "message": {
+      "ping_event": {
+        "event_id": 3,
+        "ping_ms": null
+      },
+      "type": "ping"
+    }
+  },
+  {
+    "timestamp": "2025-06-29T01:02:39.970Z",
+    "message": {
+      "ping_event": {
+        "event_id": 4,
+        "ping_ms": null
+      },
+      "type": "ping"
+    }
+  },
+  {
+    "timestamp": "2025-06-29T01:02:41.674Z",
+    "message": {
+      "ping_event": {
+        "event_id": 5,
+        "ping_ms": null
+      },
+      "type": "ping"
+    }
+  }
+]

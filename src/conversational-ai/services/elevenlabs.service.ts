@@ -8,6 +8,7 @@ import {
   ElevenLabsError
 } from '../types/elevenlabs.types';
 import { logger } from '../../utils/logger';
+import { createTranscriptPoller, TranscriptPollerService } from './transcript-poller.service';
 
 export class ElevenLabsService extends EventEmitter {
   private config: ElevenLabsConfig;
@@ -26,6 +27,8 @@ export class ElevenLabsService extends EventEmitter {
   private lastAudioSentTime: number = 0;
   private audioChunkCount: number = 0;
   private totalAudioBytesSent: number = 0;
+  private transcriptPoller: TranscriptPollerService | null = null;
+  private elevenLabsConversationId: string | null = null;
 
   constructor(config: ElevenLabsConfig) {
     super();
@@ -167,8 +170,10 @@ export class ElevenLabsService extends EventEmitter {
       case 'conversation_initiation_metadata':
         // Log the client_events we're configured to receive
         const clientEvents = message.conversation_initiation_metadata_event?.client_events || [];
+        this.elevenLabsConversationId = message.conversation_initiation_metadata_event.conversation_id;
+        
         logger.info('ElevenLabs: Received conversation metadata', {
-          conversationId: message.conversation_initiation_metadata_event.conversation_id,
+          conversationId: this.elevenLabsConversationId,
           clientEvents: clientEvents,
           hasUserTranscript: clientEvents.includes('user_transcript'),
           hasAgentResponse: clientEvents.includes('agent_response')
@@ -179,14 +184,18 @@ export class ElevenLabsService extends EventEmitter {
           logger.error('ElevenLabs: CRITICAL ERROR - user_transcript not in client_events!', {
             receivedEvents: clientEvents,
             expectedEvents: ['audio', 'user_transcript', 'agent_response'],
-            conversationId: message.conversation_initiation_metadata_event.conversation_id
+            conversationId: this.elevenLabsConversationId
           });
+          
+          // Start polling as fallback
+          logger.warn('Starting transcript polling fallback due to missing client_events');
+          this.startTranscriptPolling();
           
           // Emit error to frontend
           this.emit('error', {
             code: 'MISSING_TRANSCRIPT_EVENTS',
-            message: 'ElevenLabs configuration error: transcripts will not be received',
-            details: { clientEvents }
+            message: 'ElevenLabs configuration error: using polling fallback',
+            details: { clientEvents, usingPolling: true }
           });
         }
         
@@ -629,7 +638,9 @@ export class ElevenLabsService extends EventEmitter {
     this.stopPingPong();
     this.stopKeepAlive();
     this.stopInactivityCheck();
+    this.stopTranscriptPolling();
     this.currentConversationId = null;
+    this.elevenLabsConversationId = null;
     
     // Clear transcription timeout
     if (this.transcriptionTimeout) {
@@ -813,6 +824,45 @@ export class ElevenLabsService extends EventEmitter {
 
   isActive(): boolean {
     return this.isConnected;
+  }
+
+  /**
+   * Start transcript polling as fallback
+   */
+  private startTranscriptPolling(): void {
+    if (!this.elevenLabsConversationId || !this.config.apiKey) {
+      logger.error('Cannot start transcript polling - missing conversation ID or API key');
+      return;
+    }
+
+    if (!this.transcriptPoller) {
+      this.transcriptPoller = createTranscriptPoller(this.config.apiKey);
+      
+      // Forward transcription events
+      this.transcriptPoller.on('transcription', (event: TranscriptionEvent) => {
+        logger.info('Transcript received via polling fallback', {
+          text: event.text,
+          speaker: event.speaker
+        });
+        this.emit('transcription', event);
+      });
+    }
+
+    this.transcriptPoller.startPolling(
+      this.currentConversationId || '',
+      this.elevenLabsConversationId
+    );
+  }
+
+  /**
+   * Stop transcript polling
+   */
+  private stopTranscriptPolling(): void {
+    if (this.transcriptPoller) {
+      this.transcriptPoller.stopPolling();
+      this.transcriptPoller.removeAllListeners();
+      this.transcriptPoller = null;
+    }
   }
 }
 
