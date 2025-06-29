@@ -17,13 +17,40 @@ export class DreamSharingService {
     options: ShareDreamRequest
   ): Promise<ShareDreamResponse> {
     try {
-      // Call the database function to share the dream
-      const { data, error } = await supabaseService.getClient()
-        .rpc('share_dream', {
-          p_dream_id: dreamId,
-          p_is_anonymous: options.isAnonymous,
-          p_display_name: options.displayName || null
-        });
+      const client = supabaseService.getServiceClient();
+      
+      // First verify the user owns the dream
+      const { data: dream, error: dreamError } = await client
+        .from('dreams')
+        .select('id')
+        .eq('id', dreamId)
+        .eq('user_id', userId)
+        .single();
+
+      if (dreamError || !dream) {
+        console.error('Dream not found or access denied:', dreamError);
+        return {
+          success: false,
+          shareId: '',
+          error: 'Dream not found or access denied'
+        };
+      }
+
+      // Insert or update the share
+      const { data, error } = await client
+        .from('shared_dreams')
+        .upsert({
+          dream_id: dreamId,
+          user_id: userId,
+          is_anonymous: options.isAnonymous,
+          display_name: options.displayName || null,
+          is_active: true,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'dream_id,user_id'
+        })
+        .select('id')
+        .single();
 
       if (error) {
         console.error('Error sharing dream:', error);
@@ -36,7 +63,7 @@ export class DreamSharingService {
 
       return {
         success: true,
-        shareId: data,
+        shareId: data.id,
         message: 'Dream shared successfully'
       };
     } catch (error) {
@@ -54,11 +81,18 @@ export class DreamSharingService {
    */
   async unshareDream(dreamId: string, userId: string): Promise<ShareDreamResponse> {
     try {
-      // Call the database function to unshare the dream
-      const { data, error } = await supabaseService.getClient()
-        .rpc('unshare_dream', {
-          p_dream_id: dreamId
-        });
+      const client = supabaseService.getServiceClient();
+      
+      // Update the share to inactive
+      const { data, error } = await client
+        .from('shared_dreams')
+        .update({ 
+          is_active: false,
+          updated_at: new Date().toISOString()
+        })
+        .eq('dream_id', dreamId)
+        .eq('user_id', userId)
+        .select('id');
 
       if (error) {
         console.error('Error unsharing dream:', error);
@@ -69,10 +103,11 @@ export class DreamSharingService {
         };
       }
 
+      const wasShared = data && data.length > 0;
       return {
-        success: data,
+        success: true,
         shareId: dreamId,
-        message: data ? 'Dream unshared successfully' : 'Dream was not shared'
+        message: wasShared ? 'Dream unshared successfully' : 'Dream was not shared'
       };
     } catch (error) {
       console.error('Unexpected error unsharing dream:', error);
@@ -96,7 +131,9 @@ export class DreamSharingService {
     };
   }> {
     try {
-      const { data, error } = await supabaseService.getClient()
+      const client = supabaseService.getServiceClient();
+      
+      const { data, error } = await client
         .from('shared_dreams')
         .select('is_anonymous, display_name, shared_at, is_active')
         .eq('dream_id', dreamId)
@@ -130,7 +167,7 @@ export class DreamSharingService {
       const offset = params.offset || 0;
 
       // Call the database function to get shared dreams with all details
-      const { data, error } = await supabaseService.getClient()
+      const { data, error } = await supabaseService.getServiceClient()
         .rpc('get_public_shared_dreams', {
           limit_count: limit,
           offset_count: offset
@@ -185,7 +222,7 @@ export class DreamSharingService {
   ): Promise<ShareDreamResponse> {
     try {
       // First check if the dream is already shared
-      const { data: existingShare, error: checkError } = await supabaseService.getClient()
+      const { data: existingShare, error: checkError } = await supabaseService.getServiceClient()
         .from('shared_dreams')
         .select('id')
         .eq('dream_id', dreamId)
@@ -198,7 +235,7 @@ export class DreamSharingService {
       }
 
       // Update existing share
-      const { error } = await supabaseService.getClient()
+      const { error } = await supabaseService.getServiceClient()
         .from('shared_dreams')
         .update({
           is_anonymous: options.isAnonymous,

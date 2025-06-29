@@ -1,10 +1,14 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import { isAuthenticated } from '../middleware/auth';
+import { isAuthenticatedDev } from '../middleware/auth-dev';
 import { dreamSharingService } from '../services/dream-sharing.service';
 import { ShareDreamRequest, GetSharedDreamsParams } from '../types';
 
 const router = Router();
+
+// Use dev auth in development for testing
+const authMiddleware = process.env.NODE_ENV === 'development' ? isAuthenticatedDev : isAuthenticated;
 
 // Validation schemas
 const shareDreamSchema = z.object({
@@ -21,7 +25,7 @@ const getSharedDreamsSchema = z.object({
  * POST /api/dreams/:dreamId/share
  * Share a dream publicly
  */
-router.post('/dreams/:dreamId/share', isAuthenticated, async (req: Request, res: Response) => {
+router.post('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
     const userId = req.user!.id;
@@ -63,7 +67,7 @@ router.post('/dreams/:dreamId/share', isAuthenticated, async (req: Request, res:
  * DELETE /api/dreams/:dreamId/share
  * Stop sharing a dream
  */
-router.delete('/dreams/:dreamId/share', isAuthenticated, async (req: Request, res: Response) => {
+router.delete('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
     const userId = req.user!.id;
@@ -93,7 +97,7 @@ router.delete('/dreams/:dreamId/share', isAuthenticated, async (req: Request, re
  * PATCH /api/dreams/:dreamId/share
  * Update sharing settings for a dream
  */
-router.patch('/dreams/:dreamId/share', isAuthenticated, async (req: Request, res: Response) => {
+router.patch('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
     const userId = req.user!.id;
@@ -135,7 +139,7 @@ router.patch('/dreams/:dreamId/share', isAuthenticated, async (req: Request, res
  * GET /api/dreams/:dreamId/share/status
  * Get sharing status for a specific dream
  */
-router.get('/dreams/:dreamId/share/status', isAuthenticated, async (req: Request, res: Response) => {
+router.get('/dreams/:dreamId/share/status', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
     const userId = req.user!.id;
