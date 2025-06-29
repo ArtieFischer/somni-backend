@@ -82,35 +82,38 @@ export class ElevenLabsSessionService {
     
     const expiresAt = new Date(Date.now() + params.expiresIn * 1000);
     
-    // Option 1: Try ElevenLabs signed URL API
-    if (process.env.ELEVENLABS_SUPPORTS_SIGNED_URLS === 'true') {
-      try {
-        const response = await fetch('https://api.elevenlabs.io/v1/convai/conversation/signed-url', {
-          method: 'POST',
-          headers: {
-            'xi-api-key': config.elevenLabs.apiKey,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            agent_id: params.agentId,
-            expires_in: params.expiresIn
-          })
+    // Option 1: Try ElevenLabs signed URL API (always try first)
+    try {
+      const response = await fetch('https://api.elevenlabs.io/v1/convai/conversation/signed-url', {
+        method: 'POST',
+        headers: {
+          'xi-api-key': config.elevenLabs.apiKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          agent_id: params.agentId,
+          expires_in: params.expiresIn
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json() as { signed_url: string };
+        logger.info('Created ElevenLabs signed URL', {
+          agentId: params.agentId,
+          expiresIn: params.expiresIn
         });
-        
-        if (response.ok) {
-          const data = await response.json() as { signed_url: string };
-          logger.info('Created ElevenLabs signed URL', {
-            agentId: params.agentId,
-            expiresIn: params.expiresIn
-          });
-          return {
-            token: data.signed_url,
-            expiresAt
-          };
-        }
-      } catch (error) {
-        logger.warn('Failed to create ElevenLabs signed URL, falling back to JWT:', error);
+        return {
+          token: data.signed_url,
+          expiresAt
+        };
+      } else {
+        logger.warn('ElevenLabs signed URL API returned error', {
+          status: response.status,
+          statusText: response.statusText
+        });
       }
+    } catch (error) {
+      logger.warn('Failed to create ElevenLabs signed URL, falling back to JWT:', error);
     }
     
     // Option 2: Create JWT token
@@ -148,23 +151,35 @@ export class ElevenLabsSessionService {
     dynamicVariables?: Record<string, any>;
   }): Promise<string> {
     
-    // Build WebSocket URL with authentication
+    // If using signed URL token from ElevenLabs API, return it directly
+    if (params.sessionToken.startsWith('wss://') || params.sessionToken.startsWith('https://')) {
+      logger.info('Using ElevenLabs signed URL', {
+        agentId: params.agentId,
+        urlPreview: params.sessionToken.substring(0, 50) + '...'
+      });
+      return params.sessionToken;
+    }
+    
+    // For JWT tokens, the @elevenlabs/react SDK expects authorization via headers
+    // Return the WebSocket URL and let the frontend handle authentication
     const baseUrl = 'wss://api.elevenlabs.io/v1/convai/conversation';
     
-    // Build query parameters
+    // Build query parameters with agent ID
     const urlParams = new URLSearchParams({
       agent_id: params.agentId
     });
     
-    // If using signed URL token, add it as authorization
-    if (params.sessionToken.startsWith('http')) {
-      // Already a signed URL from ElevenLabs
-      return params.sessionToken;
-    }
+    const signedUrl = `${baseUrl}?${urlParams.toString()}`;
     
-    // Otherwise, construct URL with agent ID
-    // The frontend will need to add the authorization header
-    return `${baseUrl}?${urlParams.toString()}`;
+    logger.info('Generated WebSocket URL for JWT authentication', {
+      agentId: params.agentId,
+      hasToken: !!params.sessionToken,
+      tokenLength: params.sessionToken.length,
+      urlPreview: signedUrl.substring(0, 80) + '...',
+      note: 'Frontend should use JWT token in Authorization header'
+    });
+    
+    return signedUrl;
   }
   
   /**

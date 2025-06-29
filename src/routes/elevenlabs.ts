@@ -102,6 +102,7 @@ router.post('/init', async (req, res) => {
       data: {
         conversationId: conversation.id,
         signedUrl,
+        authToken: sessionData.token, // Include auth token for frontend
         dynamicVariables,
         isResumed: (context.previousMessages?.length || 0) > 0,
         messageCount: context.previousMessages?.length || 0

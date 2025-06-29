@@ -23,6 +23,7 @@ The ElevenLabs conversational AI integration is now fully operational with prope
   "data": {
     "conversationId": "uuid",
     "signedUrl": "wss://api.elevenlabs.io/v1/convai/conversation?agent_id=...",
+    "authToken": "jwt_token_or_signed_url",
     "dynamicVariables": {
       "user_name": "string",
       "user_profile": "string",
@@ -99,9 +100,14 @@ const response = await fetch('/api/v1/conversations/elevenlabs/init', {
 
 const { data } = await response.json();
 
-// 3. Start conversation with signed URL
+// 3. Start conversation with signed URL and auth token
 await conversation.startSession({
-  signedUrl: data.signedUrl
+  signedUrl: data.signedUrl,
+  // If authToken is a full signed URL, use it directly
+  // If authToken is a JWT, include it in the authorization header
+  headers: data.authToken.startsWith('wss://') ? {} : {
+    'Authorization': `Bearer ${data.authToken}`
+  }
 });
 ```
 
