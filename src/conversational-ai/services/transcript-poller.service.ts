@@ -19,7 +19,7 @@ export class TranscriptPollerService extends EventEmitter {
   /**
    * Start polling for transcripts
    */
-  startPolling(conversationId: string, elevenLabsConversationId: string): void {
+  async startPolling(conversationId: string, elevenLabsConversationId: string): Promise<void> {
     if (this.pollingInterval) {
       this.stopPolling();
     }
@@ -29,14 +29,43 @@ export class TranscriptPollerService extends EventEmitter {
       elevenLabsConversationId
     });
 
+    // Get initial transcript count
+    try {
+      const initialTranscripts = await this.fetchTranscripts(elevenLabsConversationId);
+      this.lastTranscriptIndex = initialTranscripts.length;
+      logger.info('Initial transcript count', {
+        count: this.lastTranscriptIndex,
+        elevenLabsConversationId
+      });
+    } catch (error) {
+      logger.error('Error fetching initial transcripts:', error);
+    }
+
     // Poll every 2 seconds
     this.pollingInterval = setInterval(async () => {
       try {
         const transcripts = await this.fetchTranscripts(elevenLabsConversationId);
         
+        // Log polling results
+        logger.debug('Transcript polling result', {
+          elevenLabsConversationId,
+          transcriptCount: transcripts.length,
+          lastIndex: this.lastTranscriptIndex,
+          hasNewTranscripts: transcripts.length > this.lastTranscriptIndex
+        });
+        
         // Check for new transcripts
         if (transcripts.length > this.lastTranscriptIndex) {
           const newTranscripts = transcripts.slice(this.lastTranscriptIndex);
+          
+          logger.info('New transcripts found via polling', {
+            count: newTranscripts.length,
+            transcripts: newTranscripts.map(t => ({
+              role: t.role,
+              hasMessage: !!t.message,
+              messageLength: t.message?.length || 0
+            }))
+          });
           
           for (const transcript of newTranscripts) {
             if (transcript.role === 'user' && transcript.message) {
@@ -60,6 +89,21 @@ export class TranscriptPollerService extends EventEmitter {
         logger.error('Error polling for transcripts:', error);
       }
     }, 2000);
+    
+    // Also run an immediate poll after a delay to catch early transcripts
+    setTimeout(async () => {
+      try {
+        const transcripts = await this.fetchTranscripts(elevenLabsConversationId);
+        if (transcripts.length > this.lastTranscriptIndex) {
+          logger.info('Immediate poll found new transcripts', {
+            count: transcripts.length - this.lastTranscriptIndex
+          });
+          // Process will be handled by the next interval
+        }
+      } catch (error) {
+        logger.error('Error in immediate poll:', error);
+      }
+    }, 3000); // 3 second delay for first poll
   }
 
   /**
@@ -85,7 +129,18 @@ export class TranscriptPollerService extends EventEmitter {
       }
     });
     
-    return response.data.transcript || [];
+    // Log the response structure for debugging
+    logger.debug('ElevenLabs transcript API response', {
+      hasData: !!response.data,
+      hasTranscript: !!response.data?.transcript,
+      transcriptType: typeof response.data?.transcript,
+      dataKeys: response.data ? Object.keys(response.data) : []
+    });
+    
+    // Handle different possible response structures
+    const transcripts = response.data?.transcript || response.data?.transcripts || response.data || [];
+    
+    return Array.isArray(transcripts) ? transcripts : [];
   }
 }
 

@@ -189,7 +189,9 @@ export class ElevenLabsService extends EventEmitter {
           
           // Start polling as fallback
           logger.warn('Starting transcript polling fallback due to missing client_events');
-          this.startTranscriptPolling();
+          this.startTranscriptPolling().catch(err => 
+            logger.error('Failed to start transcript polling:', err)
+          );
           
           // Emit error to frontend
           this.emit('error', {
@@ -308,8 +310,11 @@ export class ElevenLabsService extends EventEmitter {
       
       case 'ping':
         // ElevenLabs sends ping messages to keep connection alive
-        // We can respond with pong if needed
         logger.debug('ElevenLabs: Received ping');
+        // Send pong response to keep connection alive
+        if (this.ws && this.isConnected) {
+          this.ws.send(JSON.stringify({ type: 'pong' }));
+        }
         break;
       
       case 'audio':
@@ -824,7 +829,7 @@ export class ElevenLabsService extends EventEmitter {
   /**
    * Start transcript polling as fallback
    */
-  private startTranscriptPolling(): void {
+  private async startTranscriptPolling(): Promise<void> {
     if (!this.elevenLabsConversationId || !this.config.apiKey) {
       logger.error('Cannot start transcript polling - missing conversation ID or API key');
       return;
@@ -843,7 +848,7 @@ export class ElevenLabsService extends EventEmitter {
       });
     }
 
-    this.transcriptPoller.startPolling(
+    await this.transcriptPoller.startPolling(
       this.currentConversationId || '',
       this.elevenLabsConversationId
     );
