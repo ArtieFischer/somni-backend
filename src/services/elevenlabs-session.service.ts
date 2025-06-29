@@ -17,11 +17,19 @@ export interface SessionTokenData {
 
 export interface DynamicVariables {
   user_name: string;
-  user_profile: string;
-  dream_content: string;
-  dream_emotions: string[];
-  conversation_context: string;
-  interpreter_style: string;
+  max_turn_length: number;
+  dreamContent: string;
+  dreamSymbols: string;
+  age: number;
+  recurringThemes: string;
+  emotionalToneprimary: string;
+  emotionalToneintensity: number;
+  clarity: number;
+  mood: number;
+  quickTake: string;
+  interpretationSummary: string;
+  previousMessages: string;
+  dream_topic: string;
   [key: string]: any;
 }
 
@@ -71,13 +79,14 @@ export class ElevenLabsSessionService {
   }
   
   /**
-   * Create secure session token
+   * Create secure session token with dynamic variables
    */
   static async createSessionToken(params: {
     agentId: string;
     userId: string;
     conversationId: string;
     expiresIn: number;
+    dynamicVariables?: Record<string, any>;
   }): Promise<SessionTokenData> {
     
     const expiresAt = new Date(Date.now() + params.expiresIn * 1000);
@@ -116,11 +125,12 @@ export class ElevenLabsSessionService {
       logger.warn('Failed to create ElevenLabs signed URL, falling back to JWT:', error);
     }
     
-    // Option 2: Create JWT token
+    // Option 2: Create JWT token with dynamic variables
     const payload = {
       agentId: params.agentId,
       userId: params.userId,
       conversationId: params.conversationId,
+      dynamicVariables: params.dynamicVariables || {},
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(expiresAt.getTime() / 1000)
     };
@@ -205,26 +215,17 @@ export class ElevenLabsSessionService {
       logger.error('Failed to fetch dream details', error);
     }
     
-    // Build conversation history summary
-    const conversationSummary = context.previousMessages?.length > 0
-      ? `Previous conversation with ${context.previousMessages.length} messages.`
-      : 'New conversation starting';
+    // Get interpretation details to extract all needed fields
+    const { data: interpretation, error: interpError } = await supabaseService.getServiceClient()
+      .from('interpretations')
+      .select('*')
+      .eq('dream_id', dreamId)
+      .eq('interpreter_type', interpreterId)
+      .single();
     
-    // Get last message topic if available
-    const lastTopic = context.previousMessages?.length > 0
-      ? context.previousMessages[context.previousMessages.length - 1].content.substring(0, 50)
-      : 'dream analysis';
-    
-    // Interpreter-specific prompting
-    const interpreterStyles: Record<string, string> = {
-      jung: 'Focus on archetypes, collective unconscious, and personal growth insights',
-      freud: 'Analyze unconscious desires, childhood experiences, and symbolic meanings',
-      mary: 'Provide gentle, nurturing guidance with emotional support',
-      lakshmi: 'Offer spiritual wisdom, divine feminine insights, and abundance mindset'
-    };
-    
-    // Extract emotions from interpretation (already extracted from emotional_tone)
-    const dreamEmotions = context.interpretation?.emotions || [];
+    if (interpError && interpError.code !== 'PGRST116') {
+      logger.error('Failed to fetch interpretation details', interpError);
+    }
     
     // Debug user profile structure
     logger.info('User profile data for dynamic variables', {
@@ -243,25 +244,87 @@ export class ElevenLabsSessionService {
       ? Math.floor((Date.now() - new Date(userProfile.birth_date).getTime()) / (365.25 * 24 * 60 * 60 * 1000))
       : null;
     
-    return {
-      user_name: userProfile?.username || userProfile?.handle || 'Dreamer',
-      user_profile: `${age || 'unknown'} years old, ${userProfile?.location_city || userProfile?.location_country || 'location unknown'}`,
-      dream_content: dream?.raw_transcript || context.dreamContent || 'No dream content available',
-      dream_emotions: dreamEmotions,
-      dream_themes: context.interpretation?.themes || [],
-      dream_date: dream?.created_at ? new Date(dream.created_at).toLocaleDateString() : 'unknown',
-      dream_mood: dream?.mood ? `${dream.mood}/10` : 'not specified',
-      dream_clarity: dream?.clarity ? `${dream.clarity}/10` : 'not specified',
-      conversation_context: conversationSummary,
-      last_topic: lastTopic,
-      interpreter_style: interpreterStyles[interpreterId] || 'Provide thoughtful dream analysis',
-      session_type: 'dream_interpretation',
-      platform: 'mobile_app',
-      is_resumed_conversation: context.previousMessages?.length > 0 ? 'true' : 'false',
-      message_count: context.previousMessages?.length || 0,
-      interpretation_summary: context.interpretation?.interpretationSummary || '',
-      has_interpretation: !!context.interpretation
+    // Extract all required variables
+    const userName = userProfile?.username || userProfile?.handle || 'Friend';
+    const dreamContent = dream?.raw_transcript || context.dreamContent || 'No dream content available';
+    
+    // Extract symbols - join array to string if needed
+    const dreamSymbols = interpretation?.symbols || context.interpretation?.symbols || [];
+    const dreamSymbolsString = Array.isArray(dreamSymbols) ? dreamSymbols.join(', ') : dreamSymbols;
+    
+    // Extract themes - join array to string if needed
+    const recurringThemes = context.interpretation?.themes || 
+                           this.extractThemesFromInterpretation(interpretation) || 
+                           ["growth", "transformation", "relationships"];
+    const recurringThemesString = Array.isArray(recurringThemes) ? recurringThemes.join(', ') : recurringThemes;
+    
+    // Extract emotional tone details
+    const emotionalToneData = interpretation?.emotional_tone || context.interpretation?.emotionalTone;
+    let emotionalTonePrimary = 'neutral';
+    let emotionalToneIntensity = 0.5;
+    
+    if (emotionalToneData) {
+      if (typeof emotionalToneData === 'object' && emotionalToneData.primary) {
+        emotionalTonePrimary = emotionalToneData.primary;
+        emotionalToneIntensity = emotionalToneData.intensity || 0.5;
+      } else if (typeof emotionalToneData === 'string') {
+        emotionalTonePrimary = emotionalToneData;
+      }
+    }
+    
+    // Extract other fields from interpretation
+    const clarity = dream?.clarity || 70;
+    const mood = dream?.mood || 5;
+    const quickTake = interpretation?.quick_take || context.interpretation?.quickTake || '';
+    const interpretationSummary = interpretation?.interpretation_summary || context.interpretation?.interpretationSummary || '';
+    const dreamTopic = interpretation?.dream_topic || 'general';
+    
+    // Build previousMessages string (empty for now as requested)
+    const previousMessages = '';
+    
+    const dynamicVariables = {
+      // All required fields
+      user_name: userName,
+      max_turn_length: 90,
+      dreamContent: dreamContent,
+      dreamSymbols: dreamSymbolsString,
+      age: age || 25,
+      recurringThemes: recurringThemesString,
+      emotionalToneprimary: emotionalTonePrimary,
+      emotionalToneintensity: emotionalToneIntensity,
+      clarity: clarity,
+      mood: mood,
+      quickTake: quickTake,
+      interpretationSummary: interpretationSummary,
+      previousMessages: previousMessages,
+      dream_topic: dreamTopic
     };
+    
+    // Log the final dynamic variables
+    logger.info('Built dynamic variables for ElevenLabs', {
+      dreamId: dreamId,
+      interpreterId: interpreterId,
+      dynamicVariables: dynamicVariables
+    });
+    
+    return dynamicVariables;
+  }
+  
+  /**
+   * Helper method to extract themes from interpretation
+   */
+  private static extractThemesFromInterpretation(interpretation: any): string[] {
+    if (!interpretation?.full_response) return [];
+    
+    const fullResponse = typeof interpretation.full_response === 'string' 
+      ? JSON.parse(interpretation.full_response) 
+      : interpretation.full_response;
+    
+    // Try different possible locations for themes
+    return fullResponse?.themes || 
+           fullResponse?.interpretation?.themes || 
+           fullResponse?.stageMetadata?.themeIdentification?.themes ||
+           [];
   }
   
   /**
@@ -368,6 +431,70 @@ export class ElevenLabsSessionService {
     }
     
     return count;
+  }
+  
+  /**
+   * Initialize conversation with dynamic variables by sending WebSocket message to ElevenLabs
+   */
+  static async initializeConversationWithDynamicVariables(params: {
+    agentId: string;
+    dynamicVariables: Record<string, any>;
+  }): Promise<boolean> {
+    try {
+      // Import WebSocket dynamically to avoid issues
+      const { WebSocket } = await import('ws');
+      
+      // Create WebSocket connection to ElevenLabs
+      const wsUrl = `wss://api.elevenlabs.io/v1/convai/conversation?agent_id=${params.agentId}`;
+      const ws = new WebSocket(wsUrl, {
+        headers: {
+          'Authorization': `Bearer ${config.elevenLabs.apiKey}`
+        }
+      });
+      
+      return new Promise((resolve, reject) => {
+        ws.on('open', () => {
+          logger.info('Connected to ElevenLabs WebSocket for conversation initialization');
+          
+          // Send conversation initiation message with dynamic variables
+          const initMessage = {
+            type: 'conversation_initiation_client_data',
+            dynamic_variables: params.dynamicVariables,
+            conversation_config_override: {
+              agent: {
+                first_message: `Hello ${params.dynamicVariables.user_name || 'there'}, I'm here to help you explore your dream. Tell me about it, and we can delve into its meanings together.`
+              }
+            }
+          };
+          
+          ws.send(JSON.stringify(initMessage));
+          logger.info('Sent conversation initiation with dynamic variables to ElevenLabs', {
+            agentId: params.agentId,
+            variableKeys: Object.keys(params.dynamicVariables),
+            user_name: params.dynamicVariables.user_name
+          });
+          
+          // Close connection after sending initialization
+          setTimeout(() => {
+            ws.close();
+            resolve(true);
+          }, 1000);
+        });
+        
+        ws.on('error', (error) => {
+          logger.error('Failed to initialize conversation with ElevenLabs:', error);
+          reject(error);
+        });
+        
+        ws.on('close', () => {
+          logger.info('ElevenLabs WebSocket connection closed after initialization');
+        });
+      });
+      
+    } catch (error) {
+      logger.error('Failed to initialize conversation with dynamic variables:', error);
+      return false;
+    }
   }
   
   /**

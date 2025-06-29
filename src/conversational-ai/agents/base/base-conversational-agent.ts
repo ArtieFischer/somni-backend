@@ -55,17 +55,10 @@ export abstract class BaseConversationalAgent extends BaseDreamInterpreter {
         throw new Error('ElevenLabs agent ID is not configured');
       }
       
-      this.elevenLabsService = new ElevenLabsService({
-        apiKey,
-        agentId: this.elevenLabsAgentId,
-        voiceSettings: this.voiceSettings
-      });
+      this.elevenLabsService = new ElevenLabsService();
 
       // Build dynamic variables before connecting
       const dynamicVariables = context ? await this.buildDynamicVariables(context, userProfile) : undefined;
-      
-      // Connect with dynamic variables
-      await this.elevenLabsService.connect(conversationId, dynamicVariables);
       
       if (dynamicVariables) {
         logger.info(`Initialized ElevenLabs conversation with variables:`, {
@@ -339,7 +332,7 @@ Important: This is a voice conversation, so keep your responses suitable for spo
    */
   async cleanup(): Promise<void> {
     if (this.elevenLabsService) {
-      await this.elevenLabsService.disconnect();
+      // ElevenLabsService is now deprecated - no cleanup needed
       this.elevenLabsService = null;
     }
   }
