@@ -208,7 +208,7 @@ export class ElevenLabsSessionService {
       lakshmi: 'Offer spiritual wisdom, divine feminine insights, and abundance mindset'
     };
     
-    // Extract emotions from dream or interpretation
+    // Extract emotions from interpretation (already extracted from emotional_tone)
     const dreamEmotions = context.interpretation?.emotions || [];
     
     return {
