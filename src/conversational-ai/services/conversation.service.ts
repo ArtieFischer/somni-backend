@@ -506,6 +506,47 @@ class ConversationService {
            response?.stageMetadata?.emotionalAnalysis?.primaryTone ||
            'neutral';
   }
+
+  /**
+   * Update conversation with additional fields
+   */
+  async updateConversation(conversationId: string, updates: {
+    elevenlabs_agent_id?: string;
+    implementation_type?: 'websocket' | 'elevenlabs';
+    status?: string;
+    last_message_at?: Date;
+    message_count?: number;
+  }): Promise<void> {
+    try {
+      const updateData: any = {};
+      
+      if (updates.elevenlabs_agent_id) {
+        updateData.elevenlabs_agent_id = updates.elevenlabs_agent_id;
+      }
+      if (updates.implementation_type) {
+        updateData.implementation_type = updates.implementation_type;
+      }
+      if (updates.status) {
+        updateData.status = updates.status;
+      }
+      if (updates.last_message_at) {
+        updateData.last_message_at = updates.last_message_at.toISOString();
+      }
+      if (updates.message_count !== undefined) {
+        updateData.message_count = updates.message_count;
+      }
+      
+      const { error } = await supabaseService.getServiceClient()
+        .from('conversations')
+        .update(updateData)
+        .eq('id', conversationId);
+
+      if (error) throw error;
+    } catch (error) {
+      logger.error('Failed to update conversation:', error);
+      throw error;
+    }
+  }
 }
 
 // Export singleton instance

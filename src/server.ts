@@ -32,6 +32,8 @@ import { embeddingWorker } from './workers/embeddingWorker';
 import { debugEmbeddingRouter } from './routes/debugEmbedding';
 import { debugServiceRoleRouter } from './routes/debugServiceRole';
 import { dreamInterpretationRouter } from './routes/dream-interpretation';
+import elevenlabsRouter from './routes/elevenlabs';
+import dreamSharingRouter from './routes/dream-sharing';
 
 const app = express();
 
@@ -88,6 +90,8 @@ app.use('/api/v1/dreams', dreamInterpretationRouter);
 app.use('/api/v1/debug-embedding-jobs', debugEmbeddingJobsRouter);
 app.use('/api/v1/debug-embedding', debugEmbeddingRouter);
 app.use('/api/v1/debug-service-role', debugServiceRoleRouter);
+app.use('/api/v1/conversations/elevenlabs', elevenlabsRouter);
+app.use('/api/v1', dreamSharingRouter);
 
 // Root endpoint
 app.get('/', (_req, res) => {
@@ -112,6 +116,9 @@ app.use((error: Error, _req: express.Request, res: express.Response, _next: expr
   res.status(500).json({ error: 'Internal server error' });
 });
 
+// Import cleanup job
+import { startElevenLabsCleanupJob } from './jobs/elevenlabs-cleanup';
+
 // Start server
 app.listen(config.port, () => {
   logger.info(`Somni Backend Service started on port ${config.port}`);
@@ -119,6 +126,9 @@ app.listen(config.port, () => {
   // Start embedding worker
   embeddingWorker.start();
   logger.info('Dream embedding worker started');
+  
+  // Start ElevenLabs cleanup job
+  startElevenLabsCleanupJob();
 });
 
 // Graceful shutdown

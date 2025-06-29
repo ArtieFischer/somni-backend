@@ -196,14 +196,7 @@ export class ElevenLabsService extends EventEmitter {
           fullEvent: JSON.stringify(message.conversation_initiation_metadata_event)
         });
         
-        // Always start transcript polling as primary source of truth
-        // WebSocket transcript events are unreliable, so we use polling instead
-        this.startTranscriptPolling().catch(err => 
-          logger.error('Failed to start transcript polling:', {
-            message: err instanceof Error ? err.message : 'Unknown error',
-            conversationId: this.elevenLabsConversationId
-          })
-        );
+        // Note: Moving to frontend React SDK - this WebSocket proxy will be deprecated
         
         // Now we can send our initialization message with dynamic variables
         if (this.pendingInitialization) {
@@ -222,12 +215,19 @@ export class ElevenLabsService extends EventEmitter {
         break;
       
       case 'user_transcript':
-        // WebSocket transcript events are disabled - using polling as single source of truth
-        logger.info('ElevenLabs: User transcript received via WebSocket (ignored - using polling)', {
-          hasTranscriptionEvent: !!message.user_transcription_event,
-          hasTranscriptEvent: !!message.user_transcript_event,
-          rawMessage: JSON.stringify(message).slice(0, 200)
-        });
+        // Handle both possible field names: user_transcription_event and user_transcript_event
+        const transcriptText = 
+          message.user_transcription_event?.user_transcript ??
+          message.user_transcript_event?.user_transcript;
+        
+        if (transcriptText && transcriptText.trim()) {
+          this.emit('transcription', {
+            text: transcriptText,
+            speaker: 'user',
+            timestamp: Date.now(),
+            isFinal: true
+          } as TranscriptionEvent);
+        }
         break;
       
       case 'agent_response':
@@ -255,12 +255,14 @@ export class ElevenLabsService extends EventEmitter {
         break;
       
       case 'user_transcription':
-        // WebSocket transcript events are disabled - using polling as single source of truth
-        logger.info('ElevenLabs: User transcription received via WebSocket (ignored - using polling)', {
-          hasTranscript: !!message.user_transcript,
-          transcript: message.user_transcript,
-          length: message.user_transcript?.length || 0
-        });
+        if (message.user_transcript && message.user_transcript.trim()) {
+          this.emit('transcription', {
+            text: message.user_transcript,
+            speaker: 'user',
+            timestamp: Date.now(),
+            isFinal: true
+          } as TranscriptionEvent);
+        }
         break;
       
       case 'vad_score':

@@ -317,4 +317,57 @@ export type RequestValidationSchema<T = any> = {
   body?: T;
   query?: T;
   params?: T;
-}; 
+};
+
+// Dream Sharing types
+export interface SharedDream {
+  id: string;
+  dream_id: string;
+  user_id: string;
+  is_anonymous: boolean;
+  display_name?: string | null;
+  is_active: boolean;
+  shared_at: string;
+  updated_at: string;
+}
+
+export interface ShareDreamRequest {
+  isAnonymous: boolean;
+  displayName?: string | null;
+}
+
+export interface ShareDreamResponse {
+  success: boolean;
+  shareId: string;
+  message?: string;
+  error?: string;
+}
+
+export interface PublicSharedDream {
+  share_id: string;
+  dream_id: string;
+  dream_title: string | null;
+  dream_transcript: string | null;
+  dream_created_at: string;
+  mood: number | null;
+  clarity: number | null;
+  is_anonymous: boolean;
+  display_name: string | null;
+  shared_at: string;
+  themes: Array<{
+    code: string;
+    label: string;
+  }>;
+}
+
+export interface GetSharedDreamsParams {
+  limit?: number;
+  offset?: number;
+}
+
+export interface GetSharedDreamsResponse {
+  success: boolean;
+  dreams: PublicSharedDream[];
+  total?: number;
+  error?: string;
+} 
