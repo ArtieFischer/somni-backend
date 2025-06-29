@@ -358,6 +358,22 @@ export class ConversationalAIHandler {
       });
     });
 
+    elevenLabsService.on('first_message_timeout', (data: any) => {
+      logger.warn('First message timeout detected', {
+        ...data,
+        socketId: socket.id,
+        userId: socket.userId
+      });
+      
+      // Forward to frontend
+      socket.emit('first_message_timeout', {
+        message: 'The AI agent did not respond within the expected time. This might indicate a configuration issue.',
+        conversationId: data.conversationId,
+        timestamp: new Date().toISOString(),
+        suggestion: 'Please check the ElevenLabs agent configuration or try reconnecting.'
+      });
+    });
+
     // Reconnection events - commented out to prevent loops
     // elevenLabsService.on('reconnecting', (data: any) => {
     //   socket.emit('reconnecting', data);

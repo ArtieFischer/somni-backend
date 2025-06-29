@@ -29,6 +29,7 @@ export class ElevenLabsService extends EventEmitter {
   private totalAudioBytesSent: number = 0;
   private transcriptPoller: TranscriptPollerService | null = null;
   private elevenLabsConversationId: string | null = null;
+  private firstMessageTimeout: NodeJS.Timeout | null = null;
 
   constructor(config: ElevenLabsConfig) {
     super();
@@ -53,7 +54,13 @@ export class ElevenLabsService extends EventEmitter {
       // For MVP, using public agents with direct connection
       // Note: The agent_id refers to a pre-configured agent in ElevenLabs dashboard
       // which already has voice, LLM model, and system prompt configured
-      this.ws = new WebSocket(wsUrl);
+      
+      // Pass authorization header for API authentication
+      this.ws = new WebSocket(wsUrl, {
+        headers: {
+          'Authorization': wsConfig.authorization
+        }
+      });
 
       this.setupEventHandlers();
       
@@ -201,7 +208,8 @@ export class ElevenLabsService extends EventEmitter {
         // Now we can send our initialization message with dynamic variables
         if (this.pendingInitialization) {
           logger.info('ElevenLabs: Sending pending initialization with variables', {
-            variableKeys: Object.keys(this.pendingInitialization)
+            variableKeys: Object.keys(this.pendingInitialization),
+            isResumed: this.pendingInitialization.is_resumed_conversation
           });
           this.sendConversationInitiation(this.pendingInitialization);
           this.pendingInitialization = null;
@@ -236,6 +244,13 @@ export class ElevenLabsService extends EventEmitter {
           isTentative: message.agent_response_event.is_tentative,
           length: message.agent_response_event.agent_response?.length || 0
         });
+        
+        // Clear first message timeout since agent is responding
+        if (this.firstMessageTimeout) {
+          clearTimeout(this.firstMessageTimeout);
+          this.firstMessageTimeout = null;
+        }
+        
         this.emit('agent_response', {
           text: message.agent_response_event.agent_response,
           isTentative: message.agent_response_event.is_tentative
@@ -327,6 +342,13 @@ export class ElevenLabsService extends EventEmitter {
   }
 
   private handleAudioData(data: Buffer): void {
+    // Clear first message timeout since we're receiving audio (agent is speaking)
+    if (this.firstMessageTimeout) {
+      clearTimeout(this.firstMessageTimeout);
+      this.firstMessageTimeout = null;
+      logger.info('First message timeout cleared - received agent audio');
+    }
+    
     // Emit the raw buffer data for streaming
     this.emit('audio', data);
     
@@ -517,6 +539,19 @@ export class ElevenLabsService extends EventEmitter {
     logger.info('Agent first_message configured - agent should speak automatically', {
       isResumed: dynamicVariables?.is_resumed_conversation === 'true'
     });
+    
+    // Set timeout to detect if agent doesn't speak within 10 seconds
+    this.firstMessageTimeout = setTimeout(() => {
+      logger.warn('First message timeout - agent did not speak within 10 seconds', {
+        conversationId: this.currentConversationId,
+        elevenLabsConversationId: this.elevenLabsConversationId,
+        isResumed: dynamicVariables?.is_resumed_conversation === 'true'
+      });
+      this.emit('first_message_timeout', {
+        message: 'Agent did not respond within expected time. There might be an issue with the agent configuration.',
+        conversationId: this.currentConversationId
+      });
+    }, 10000);
   }
 
   sendToolResponse(toolCallId: string, result: unknown): void {
@@ -649,6 +684,12 @@ export class ElevenLabsService extends EventEmitter {
       this.transcriptionTimeout = null;
     }
     
+    // Clear first message timeout
+    if (this.firstMessageTimeout) {
+      clearTimeout(this.firstMessageTimeout);
+      this.firstMessageTimeout = null;
+    }
+    
     if (this.ws) {
       this.ws.close();
       this.ws = null;
@@ -706,8 +747,8 @@ export class ElevenLabsService extends EventEmitter {
     this.keepAliveInterval = setInterval(() => {
       const timeSinceLastActivity = Date.now() - this.lastActivityTime;
       
-      // Send keep-alive if no activity for 20 seconds (well before the 60-second timeout)
-      if (this.ws && this.isConnected && timeSinceLastActivity > 20000) {
+      // Send keep-alive if no activity for 45 seconds (closer to the 60-second timeout but still safe)
+      if (this.ws && this.isConnected && timeSinceLastActivity > 45000) {
         logger.info('Sending keep-alive ping', {
           timeSinceLastActivity,
           conversationId: this.currentConversationId,
@@ -727,7 +768,7 @@ export class ElevenLabsService extends EventEmitter {
           });
         }
       }
-    }, 10000); // Check every 10 seconds (more frequent than before)
+    }, 15000); // Check every 15 seconds (less frequent to reduce overhead)
   }
 
   /**
