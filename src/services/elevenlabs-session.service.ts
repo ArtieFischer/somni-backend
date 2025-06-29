@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { supabaseService } from './supabase';
 import { logger } from '../utils/logger';
+import { config } from '../config';
 
 export interface AgentConfig {
   agentId: string;
@@ -32,41 +33,41 @@ export class ElevenLabsSessionService {
   static getAgentConfig(interpreterId: string): AgentConfig {
     const agentConfigs: Record<string, AgentConfig> = {
       jung: {
-        agentId: process.env.ELEVENLABS_JUNG_AGENT_ID!,
+        agentId: config.elevenLabs.agentIds.jung,
         name: 'Dr. Carl Jung',
         description: 'Jungian dream analysis specialist',
         voiceId: 'voice-jung-id'
       },
       freud: {
-        agentId: process.env.ELEVENLABS_FREUD_AGENT_ID!,
+        agentId: config.elevenLabs.agentIds.freud,
         name: 'Dr. Sigmund Freud', 
         description: 'Freudian psychoanalysis expert',
         voiceId: 'voice-freud-id'
       },
       mary: {
-        agentId: process.env.ELEVENLABS_MARY_AGENT_ID!,
+        agentId: config.elevenLabs.agentIds.mary,
         name: 'Mary',
         description: 'Compassionate dream guide',
         voiceId: 'voice-mary-id'
       },
       lakshmi: {
-        agentId: process.env.ELEVENLABS_LAKSHMI_AGENT_ID!,
+        agentId: config.elevenLabs.agentIds.lakshmi,
         name: 'Lakshmi',
         description: 'Spiritual wisdom and insight',
         voiceId: 'voice-lakshmi-id'
       }
     };
     
-    const config = agentConfigs[interpreterId];
-    if (!config) {
+    const agentConfig = agentConfigs[interpreterId];
+    if (!agentConfig) {
       throw new Error(`Unknown interpreter: ${interpreterId}`);
     }
     
-    if (!config.agentId) {
+    if (!agentConfig.agentId) {
       throw new Error(`Agent ID not configured for interpreter: ${interpreterId}`);
     }
     
-    return config;
+    return agentConfig;
   }
   
   /**
@@ -87,7 +88,7 @@ export class ElevenLabsSessionService {
         const response = await fetch('https://api.elevenlabs.io/v1/convai/conversation/signed-url', {
           method: 'POST',
           headers: {
-            'xi-api-key': process.env.ELEVENLABS_API_KEY!,
+            'xi-api-key': config.elevenLabs.apiKey,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -123,7 +124,7 @@ export class ElevenLabsSessionService {
     
     const token = jwt.sign(
       payload,
-      process.env.ELEVENLABS_SESSION_SECRET || process.env.JWT_SECRET!,
+      process.env.ELEVENLABS_SESSION_SECRET || config.jwt.secret,
       { algorithm: 'HS256' }
     );
     
@@ -342,7 +343,7 @@ export class ElevenLabsSessionService {
     try {
       const decoded = jwt.verify(
         token,
-        process.env.ELEVENLABS_SESSION_SECRET || process.env.JWT_SECRET!
+        process.env.ELEVENLABS_SESSION_SECRET || config.jwt.secret
       );
       return decoded;
     } catch (error) {

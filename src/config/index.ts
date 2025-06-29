@@ -10,6 +10,13 @@ const envSchema = z.object({
   
   // ElevenLabs Configuration
   ELEVENLABS_API_KEY: z.string().min(1, 'ElevenLabs API key is required'),
+  ELEVENLABS_AGENT_ID_JUNG: z.string().min(1, 'ElevenLabs Agent ID for Jung is required'),
+  ELEVENLABS_AGENT_ID_FREUD: z.string().min(1, 'ElevenLabs Agent ID for Freud is required'),
+  ELEVENLABS_AGENT_ID_LAKSHMI: z.string().min(1, 'ElevenLabs Agent ID for Lakshmi is required'),
+  ELEVENLABS_AGENT_ID_MARY: z.string().min(1, 'ElevenLabs Agent ID for Mary is required'),
+  
+  // JWT Configuration
+  JWT_SECRET: z.string().min(32, 'JWT secret must be at least 32 characters'),
   
   // OpenRouter Configuration
   OPENROUTER_API_KEY: z.string().min(1, 'OpenRouter API key is required'),
@@ -69,6 +76,17 @@ export const config = {
   // ElevenLabs
   elevenLabs: {
     apiKey: parseResult.data.ELEVENLABS_API_KEY,
+    agentIds: {
+      jung: parseResult.data.ELEVENLABS_AGENT_ID_JUNG,
+      freud: parseResult.data.ELEVENLABS_AGENT_ID_FREUD,
+      lakshmi: parseResult.data.ELEVENLABS_AGENT_ID_LAKSHMI,
+      mary: parseResult.data.ELEVENLABS_AGENT_ID_MARY,
+    },
+  },
+  
+  // JWT
+  jwt: {
+    secret: parseResult.data.JWT_SECRET,
   },
   
   // OpenRouter
@@ -134,6 +152,7 @@ export const {
   isDevelopment,
   isProduction,
   elevenLabs,
+  jwt,
   openRouter,
   models,
   costTracking,

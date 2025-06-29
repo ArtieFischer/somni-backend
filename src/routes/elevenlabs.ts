@@ -16,9 +16,10 @@ router.use(authMiddleware);
  * Initialize ElevenLabs conversation with session token
  */
 router.post('/init', async (req, res) => {
+  const { dreamId, interpreterId } = req.body;
+  const userId = req.user!.id;
+  
   try {
-    const { dreamId, interpreterId } = req.body;
-    const userId = req.user!.id;
     
     // Input validation
     if (!dreamId || !interpreterId) {
@@ -108,10 +109,30 @@ router.post('/init', async (req, res) => {
     });
     
   } catch (error) {
-    logger.error('Failed to initialize ElevenLabs conversation:', error);
+    logger.error('Failed to initialize ElevenLabs conversation:', {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+      dreamId,
+      interpreterId,
+      userId
+    });
+    
+    // Provide more specific error messages
+    let errorMessage = 'Failed to initialize conversation';
+    if (error instanceof Error) {
+      if (error.message.includes('Agent ID not configured')) {
+        errorMessage = `Agent configuration missing for ${interpreterId}. Please check environment variables.`;
+      } else if (error.message.includes('Unknown interpreter')) {
+        errorMessage = 'Invalid interpreter type selected';
+      } else if (error.message.includes('JWT_SECRET')) {
+        errorMessage = 'Server configuration error: Missing JWT secret';
+      }
+    }
+    
     res.status(500).json({
       success: false,
-      error: 'Failed to initialize conversation'
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error instanceof Error ? error.message : String(error) : undefined
     });
   }
 });

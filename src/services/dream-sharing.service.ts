@@ -19,6 +19,8 @@ export class DreamSharingService {
     try {
       const client = supabaseService.getServiceClient();
       
+      console.log('shareDream called with:', { dreamId, userId, options });
+      
       // First verify the user owns the dream
       const { data: dream, error: dreamError } = await client
         .from('dreams')
@@ -27,8 +29,20 @@ export class DreamSharingService {
         .eq('user_id', userId)
         .single();
 
+      console.log('Dream ownership check:', { 
+        dreamId, 
+        userId, 
+        found: !!dream, 
+        error: dreamError?.message 
+      });
+
       if (dreamError || !dream) {
-        console.error('Dream not found or access denied:', dreamError);
+        console.error('Dream not found or access denied:', {
+          dreamId,
+          userId,
+          error: dreamError,
+          message: dreamError?.message
+        });
         return {
           success: false,
           shareId: '',

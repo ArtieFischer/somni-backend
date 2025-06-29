@@ -7,6 +7,7 @@ import { BaseConversationalAgent } from '../agents/base/base-conversational-agen
 import { ConversationContext } from '../types/conversation.types';
 import { conversationService } from '../services/conversation.service';
 import { logger } from '../../utils/logger';
+import { config } from '../../config';
 
 interface AuthenticatedSocket extends Socket {
   userId?: string;
@@ -42,7 +43,7 @@ export class ConversationalAIWebSocketServer {
         }
 
         // Verify JWT token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+        const decoded = jwt.verify(token, config.jwt.secret) as any;
         socket.userId = decoded.userId;
         socket.conversationId = socket.handshake.query.conversationId as string;
 

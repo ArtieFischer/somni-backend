@@ -29,7 +29,19 @@ router.post('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: 
   try {
     const dreamId = req.params.dreamId;
     
+    // Log incoming request details
+    console.log('Share dream request:', {
+      dreamId,
+      userId: req.user?.id,
+      body: req.body,
+      headers: {
+        authorization: req.headers.authorization ? 'Present' : 'Missing',
+        contentType: req.headers['content-type']
+      }
+    });
+    
     if (!req.user?.id) {
+      console.error('User not authenticated in share dream');
       return res.status(401).json({
         success: false,
         error: 'User not authenticated'
@@ -41,6 +53,12 @@ router.post('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: 
     // Validate request body
     const validationResult = shareDreamSchema.safeParse(req.body);
     if (!validationResult.success) {
+      console.error('Share dream validation failed:', {
+        dreamId,
+        userId,
+        body: req.body,
+        errors: validationResult.error.errors
+      });
       return res.status(400).json({
         error: 'Invalid request data',
         details: validationResult.error.errors
@@ -53,10 +71,22 @@ router.post('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: 
     const result = await dreamSharingService.shareDream(dreamId, userId, shareRequest);
 
     if (!result.success) {
+      console.error('Share dream service failed:', {
+        dreamId,
+        userId,
+        error: result.error,
+        result
+      });
       return res.status(400).json({
         error: result.error || 'Failed to share dream'
       });
     }
+
+    console.log('Dream shared successfully:', {
+      dreamId,
+      userId,
+      shareId: result.shareId
+    });
 
     return res.json({
       success: true,
