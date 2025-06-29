@@ -70,6 +70,15 @@ export class ElevenLabsService extends EventEmitter {
           this.startPingPong();
           this.startKeepAlive();
           this.startInactivityCheck();
+          
+          // Send a test ping immediately to verify connection
+          setTimeout(() => {
+            if (this.ws && this.isConnected) {
+              logger.debug('Sending initial test ping');
+              this.ws.ping();
+            }
+          }, 1000);
+          
           resolve();
         });
 
@@ -170,13 +179,14 @@ export class ElevenLabsService extends EventEmitter {
       case 'conversation_initiation_metadata':
         // Log the client_events we're configured to receive
         const clientEvents = message.conversation_initiation_metadata_event?.client_events || [];
-        this.elevenLabsConversationId = message.conversation_initiation_metadata_event.conversation_id;
+        this.elevenLabsConversationId = message.conversation_initiation_metadata_event?.conversation_id;
         
         logger.info('ElevenLabs: Received conversation metadata', {
           conversationId: this.elevenLabsConversationId,
           clientEvents: clientEvents,
           hasUserTranscript: clientEvents.includes('user_transcript'),
-          hasAgentResponse: clientEvents.includes('agent_response')
+          hasAgentResponse: clientEvents.includes('agent_response'),
+          fullEvent: JSON.stringify(message.conversation_initiation_metadata_event)
         });
         
         // Verify we have the necessary events
@@ -187,13 +197,15 @@ export class ElevenLabsService extends EventEmitter {
             conversationId: this.elevenLabsConversationId
           });
           
-          // Start polling as fallback
-          logger.warn('Starting transcript polling fallback due to missing client_events');
-          this.startTranscriptPolling().catch(err => 
-            logger.error('Failed to start transcript polling:', {
-              message: err instanceof Error ? err.message : 'Unknown error'
-            })
-          );
+          // Only start polling if we have a valid conversation ID
+          if (this.elevenLabsConversationId) {
+            logger.warn('Starting transcript polling fallback due to missing client_events');
+            this.startTranscriptPolling().catch(err => 
+              logger.error('Failed to start transcript polling:', {
+                message: err instanceof Error ? err.message : 'Unknown error'
+              })
+            );
+          }
           
           // Emit error to frontend
           this.emit('error', {
@@ -437,15 +449,28 @@ export class ElevenLabsService extends EventEmitter {
         chunkCount: this.audioChunkCount
       });
       
+      // Update activity time to prevent disconnection during long audio
+      this.lastActivityTime = Date.now();
+      
+      // Send a ping to keep connection alive
+      if (this.ws && this.isConnected) {
+        try {
+          this.ws.ping();
+          logger.debug('Sent ping after transcription timeout');
+        } catch (error) {
+          logger.error('Failed to send ping after timeout', error);
+        }
+      }
+      
       // Emit timeout event for frontend awareness
       this.emit('transcription_timeout', {
         conversationId: this.currentConversationId,
         timeSinceLastAudio: Date.now() - this.lastAudioSentTime
       });
-    }, 15000); // 15 second timeout (increased from 10)
+    }, 20000); // 20 second timeout (increased from 15)
   }
 
-  sendConversationConfig(config: any): void {
+  sendConversationConfig(config: Record<string, unknown>): void {
     if (!this.isConnected || !this.ws) {
       throw new Error('Not connected to ElevenLabs');
     }
@@ -459,13 +484,13 @@ export class ElevenLabsService extends EventEmitter {
   /**
    * Send initial conversation configuration with dynamic variables
    */
-  sendConversationInitiation(dynamicVariables?: Record<string, any>): void {
+  sendConversationInitiation(dynamicVariables?: Record<string, unknown>): void {
     if (!this.isConnected || !this.ws) {
       throw new Error('Not connected to ElevenLabs');
     }
 
     // According to ElevenLabs docs, dynamic_variables go at the root level
-    const initMessage: any = {
+    const initMessage: Record<string, unknown> = {
       type: 'conversation_initiation_client_data',
       dynamic_variables: dynamicVariables || {},
       // ALWAYS include conversation_config_override with client_events
@@ -524,7 +549,7 @@ export class ElevenLabsService extends EventEmitter {
     });
   }
 
-  sendToolResponse(toolCallId: string, result: any): void {
+  sendToolResponse(toolCallId: string, result: unknown): void {
     if (!this.isConnected || !this.ws) {
       throw new Error('Not connected to ElevenLabs');
     }
@@ -565,13 +590,17 @@ export class ElevenLabsService extends EventEmitter {
       return;
     }
     
-    logger.debug('ElevenLabs: Sending user activity signal');
+    logger.debug('ElevenLabs: Sending ping to keep connection alive');
     
-    this.ws.send(JSON.stringify({
-      type: 'user_activity'
-    }));
-    
-    this.lastActivityTime = Date.now();
+    // Use ping frame instead of user_activity message
+    try {
+      this.ws.ping();
+      this.lastActivityTime = Date.now();
+    } catch (error) {
+      logger.error('Failed to send ping', {
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
   }
 
   /**
@@ -707,22 +736,20 @@ export class ElevenLabsService extends EventEmitter {
     this.keepAliveInterval = setInterval(() => {
       const timeSinceLastActivity = Date.now() - this.lastActivityTime;
       
-      // Send keep-alive if no activity for 30 seconds (well before the 60-second timeout)
-      if (this.ws && this.isConnected && timeSinceLastActivity > 30000) {
-        logger.info('Sending keep-alive user_activity message', {
+      // Send keep-alive if no activity for 20 seconds (well before the 60-second timeout)
+      if (this.ws && this.isConnected && timeSinceLastActivity > 20000) {
+        logger.info('Sending keep-alive ping', {
           timeSinceLastActivity,
           conversationId: this.currentConversationId,
           wsReadyState: this.ws.readyState
         });
         
         try {
-          // Send user_activity to keep connection alive
-          this.ws.send(JSON.stringify({
-            type: 'user_activity'
-          }));
+          // Send a ping frame instead of user_activity
+          this.ws.ping();
           
           this.lastActivityTime = Date.now();
-          logger.debug('Keep-alive sent successfully');
+          logger.debug('Keep-alive ping sent successfully');
         } catch (error) {
           logger.error('Failed to send keep-alive', {
             error: error instanceof Error ? error.message : 'Unknown error',
@@ -730,7 +757,7 @@ export class ElevenLabsService extends EventEmitter {
           });
         }
       }
-    }, 15000); // Check every 15 seconds (more frequent than before)
+    }, 10000); // Check every 10 seconds (more frequent than before)
   }
 
   /**
