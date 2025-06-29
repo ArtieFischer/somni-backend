@@ -24,6 +24,8 @@ import { dreamInterpretationRouter } from './routes/dream-interpretation';
 import { conversationRouter } from './routes/conversation';
 import { createUnifiedWebSocketServer } from './websocket/unified-websocket-server';
 import { conversationRouter as conversationalAIRouter } from './conversational-ai/api/conversation.controller';
+import elevenlabsRouter from './routes/elevenlabs';
+import dreamSharingRouter from './routes/dream-sharing';
 
 const app = express();
 
@@ -75,6 +77,8 @@ app.use('/api/v1/dream-embeddings', dreamEmbeddingRouter);
 app.use('/api/v1/dreams', dreamInterpretationRouter);
 app.use('/api/v1/conversations', conversationRouter);
 app.use('/api/conversations', conversationalAIRouter); // Conversational AI endpoints
+app.use('/api/v1/conversations/elevenlabs', elevenlabsRouter); // ElevenLabs endpoints
+app.use('/api/v1', dreamSharingRouter); // Dream sharing endpoints
 app.use('/api/v1/debug-embedding-jobs', debugEmbeddingJobsRouter);
 app.use('/api/v1/debug-embedding', debugEmbeddingRouter);
 app.use('/api/v1/debug-service-role', debugServiceRoleRouter);
