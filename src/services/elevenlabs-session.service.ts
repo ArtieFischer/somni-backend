@@ -300,11 +300,25 @@ export class ElevenLabsSessionService {
       dream_topic: dreamTopic
     };
     
-    // Log the final dynamic variables
+    // Log the final dynamic variables with individual values
     logger.info('Built dynamic variables for ElevenLabs', {
       dreamId: dreamId,
       interpreterId: interpreterId,
-      dynamicVariables: dynamicVariables
+      user_name: dynamicVariables.user_name,
+      max_turn_length: dynamicVariables.max_turn_length,
+      dreamContent: dynamicVariables.dreamContent.substring(0, 100) + '...',
+      dreamSymbols: dynamicVariables.dreamSymbols,
+      age: dynamicVariables.age,
+      recurringThemes: dynamicVariables.recurringThemes,
+      emotionalToneprimary: dynamicVariables.emotionalToneprimary,
+      emotionalToneintensity: dynamicVariables.emotionalToneintensity,
+      clarity: dynamicVariables.clarity,
+      mood: dynamicVariables.mood,
+      quickTake: dynamicVariables.quickTake,
+      interpretationSummary: dynamicVariables.interpretationSummary.substring(0, 100) + '...',
+      previousMessages: dynamicVariables.previousMessages,
+      dream_topic: dynamicVariables.dream_topic,
+      fullDynamicVariables: dynamicVariables
     });
     
     return dynamicVariables;
