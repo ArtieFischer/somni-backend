@@ -190,7 +190,9 @@ export class ElevenLabsService extends EventEmitter {
           // Start polling as fallback
           logger.warn('Starting transcript polling fallback due to missing client_events');
           this.startTranscriptPolling().catch(err => 
-            logger.error('Failed to start transcript polling:', err)
+            logger.error('Failed to start transcript polling:', {
+              message: err instanceof Error ? err.message : 'Unknown error'
+            })
           );
           
           // Emit error to frontend
@@ -310,11 +312,11 @@ export class ElevenLabsService extends EventEmitter {
       
       case 'ping':
         // ElevenLabs sends ping messages to keep connection alive
-        logger.debug('ElevenLabs: Received ping');
-        // Send pong response to keep connection alive
-        if (this.ws && this.isConnected) {
-          this.ws.send(JSON.stringify({ type: 'pong' }));
-        }
+        logger.debug('ElevenLabs: Received ping', {
+          hasEventId: !!message.event_id,
+          eventId: message.event_id
+        });
+        // Don't send pong - ElevenLabs doesn't expect a response
         break;
       
       case 'audio':

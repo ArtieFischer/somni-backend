@@ -38,7 +38,10 @@ export class TranscriptPollerService extends EventEmitter {
         elevenLabsConversationId
       });
     } catch (error) {
-      logger.error('Error fetching initial transcripts:', error);
+      logger.error('Error fetching initial transcripts:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        elevenLabsConversationId
+      });
     }
 
     // Poll every 2 seconds
@@ -86,7 +89,10 @@ export class TranscriptPollerService extends EventEmitter {
           this.lastTranscriptIndex = transcripts.length;
         }
       } catch (error) {
-        logger.error('Error polling for transcripts:', error);
+        logger.error('Error polling for transcripts:', {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          elevenLabsConversationId
+        });
       }
     }, 2000);
     
@@ -101,7 +107,9 @@ export class TranscriptPollerService extends EventEmitter {
           // Process will be handled by the next interval
         }
       } catch (error) {
-        logger.error('Error in immediate poll:', error);
+        logger.error('Error in immediate poll:', {
+          message: error instanceof Error ? error.message : 'Unknown error'
+        });
       }
     }, 3000); // 3 second delay for first poll
   }
