@@ -9,7 +9,7 @@ export { LakshmiConversationalAgent } from './agents/lakshmi-conversational.agen
 export { BaseConversationalAgent } from './agents/base/base-conversational-agent';
 
 // WebSocket
-export { createConversationalAIWebSocketServer, ConversationalAIWebSocketServer } from './websocket/websocket.server';
+// export { createConversationalAIWebSocketServer, ConversationalAIWebSocketServer } from './websocket/websocket.server';
 
 // API
 export { conversationController } from './api/conversation.controller';

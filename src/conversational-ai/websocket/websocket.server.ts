@@ -1,327 +1,327 @@
-import { Server as HTTPServer } from 'http';
-import { Server as SocketIOServer, Socket } from 'socket.io';
-import * as jwt from 'jsonwebtoken';
-import { JungConversationalAgent } from '../agents/jung-conversational.agent';
-import { LakshmiConversationalAgent } from '../agents/lakshmi-conversational.agent';
-import { BaseConversationalAgent } from '../agents/base/base-conversational-agent';
-import { ConversationContext } from '../types/conversation.types';
-import { conversationService } from '../services/conversation.service';
-import { logger } from '../../utils/logger';
-import { config } from '../../config';
+// import { Server as HTTPServer } from 'http';
+// import { Server as SocketIOServer, Socket } from 'socket.io';
+// import * as jwt from 'jsonwebtoken';
+// import { JungConversationalAgent } from '../agents/jung-conversational.agent';
+// import { LakshmiConversationalAgent } from '../agents/lakshmi-conversational.agent';
+// import { BaseConversationalAgent } from '../agents/base/base-conversational-agent';
+// import { ConversationContext } from '../types/conversation.types';
+// import { conversationService } from '../services/conversation.service';
+// import { logger } from '../../utils/logger';
+// import { config } from '../../config';
 
-interface AuthenticatedSocket extends Socket {
-  userId?: string;
-  conversationId?: string;
-  agent?: BaseConversationalAgent;
-  handshake: any;
-}
+// interface AuthenticatedSocket extends Socket {
+//   userId?: string;
+//   conversationId?: string;
+//   agent?: BaseConversationalAgent;
+//   handshake: any;
+// }
 
-export class ConversationalAIWebSocketServer {
-  private io: SocketIOServer;
-  private agents: Map<string, BaseConversationalAgent> = new Map();
+// export class ConversationalAIWebSocketServer {
+//   private io: SocketIOServer;
+//   private agents: Map<string, BaseConversationalAgent> = new Map();
 
-  constructor(httpServer: HTTPServer) {
-    this.io = new SocketIOServer(httpServer, {
-      cors: {
-        origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-        credentials: true
-      },
-      path: '/ws/conversation'
-    });
+//   constructor(httpServer: HTTPServer) {
+//     this.io = new SocketIOServer(httpServer, {
+//       cors: {
+//         origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+//         credentials: true
+//       },
+//       path: '/ws/conversation'
+//     });
 
-    this.setupMiddleware();
-    this.setupEventHandlers();
-  }
+//     this.setupMiddleware();
+//     this.setupEventHandlers();
+//   }
 
-  private setupMiddleware(): void {
-    // Authentication middleware
-    this.io.use(async (socket: AuthenticatedSocket, next) => {
-      try {
-        const token = socket.handshake.auth.token;
-        if (!token) {
-          return next(new Error('Authentication required'));
-        }
+//   private setupMiddleware(): void {
+//     // Authentication middleware
+//     this.io.use(async (socket: AuthenticatedSocket, next) => {
+//       try {
+//         const token = socket.handshake.auth.token;
+//         if (!token) {
+//           return next(new Error('Authentication required'));
+//         }
 
-        // Verify JWT token
-        const decoded = jwt.verify(token, config.jwt.secret) as any;
-        socket.userId = decoded.userId;
-        socket.conversationId = socket.handshake.query.conversationId as string;
+//         // Verify JWT token
+//         const decoded = jwt.verify(token, config.jwt.secret) as any;
+//         socket.userId = decoded.userId;
+//         socket.conversationId = socket.handshake.query.conversationId as string;
 
-        if (!socket.conversationId) {
-          return next(new Error('Conversation ID required'));
-        }
+//         if (!socket.conversationId) {
+//           return next(new Error('Conversation ID required'));
+//         }
 
-        next();
-      } catch (error) {
-        logger.error('WebSocket authentication failed:', error);
-        next(new Error('Authentication failed'));
-      }
-    });
-  }
+//         next();
+//       } catch (error) {
+//         logger.error('WebSocket authentication failed:', error);
+//         next(new Error('Authentication failed'));
+//       }
+//     });
+//   }
 
-  private setupEventHandlers(): void {
-    this.io.on('connection', async (socket: AuthenticatedSocket) => {
-      logger.info(`User ${socket.userId} connected to conversation ${socket.conversationId}`);
+//   private setupEventHandlers(): void {
+//     this.io.on('connection', async (socket: AuthenticatedSocket) => {
+//       logger.info(`User ${socket.userId} connected to conversation ${socket.conversationId}`);
 
-      try {
-        // Initialize conversation
-        await this.handleConnection(socket);
+//       try {
+//         // Initialize conversation
+//         await this.handleConnection(socket);
 
-        // Audio streaming
-        socket.on('audio_chunk', async (data) => {
-          await this.handleAudioChunk(socket, data);
-        });
+//         // Audio streaming
+//         socket.on('audio_chunk', async (data) => {
+//           await this.handleAudioChunk(socket, data);
+//         });
 
-        // Text input (fallback)
-        socket.on('text_input', async (data) => {
-          await this.handleTextInput(socket, data);
-        });
+//         // Text input (fallback)
+//         socket.on('text_input', async (data) => {
+//           await this.handleTextInput(socket, data);
+//         });
 
-        // End conversation
-        socket.on('end_conversation', async () => {
-          await this.handleEndConversation(socket);
-        });
+//         // End conversation
+//         socket.on('end_conversation', async () => {
+//           await this.handleEndConversation(socket);
+//         });
 
-        // Disconnect
-        socket.on('disconnect', () => {
-          this.handleDisconnect(socket);
-        });
+//         // Disconnect
+//         socket.on('disconnect', () => {
+//           this.handleDisconnect(socket);
+//         });
 
-        // Error handling
-        socket.on('error', (error) => {
-          logger.error('WebSocket error:', error);
-          socket.emit('error', { message: 'An error occurred' });
-        });
+//         // Error handling
+//         socket.on('error', (error) => {
+//           logger.error('WebSocket error:', error);
+//           socket.emit('error', { message: 'An error occurred' });
+//         });
 
-      } catch (error) {
-        logger.error('Connection setup failed:', error);
-        socket.emit('error', { message: 'Failed to initialize conversation' });
-        socket.disconnect();
-      }
-    });
-  }
+//       } catch (error) {
+//         logger.error('Connection setup failed:', error);
+//         socket.emit('error', { message: 'Failed to initialize conversation' });
+//         socket.disconnect();
+//       }
+//     });
+//   }
 
-  private async handleConnection(socket: AuthenticatedSocket): Promise<void> {
-    try {
-      // Get conversation details
-      const conversation = await conversationService.getConversation(socket.conversationId!);
-      if (!conversation) {
-        throw new Error('Conversation not found');
-      }
+//   private async handleConnection(socket: AuthenticatedSocket): Promise<void> {
+//     try {
+//       // Get conversation details
+//       const conversation = await conversationService.getConversation(socket.conversationId!);
+//       if (!conversation) {
+//         throw new Error('Conversation not found');
+//       }
 
-      // Create appropriate agent
-      const agent = this.createAgent(conversation.interpreterId);
-      socket.agent = agent;
-      this.agents.set(socket.conversationId!, agent);
+//       // Create appropriate agent
+//       const agent = this.createAgent(conversation.interpreterId);
+//       socket.agent = agent;
+//       this.agents.set(socket.conversationId!, agent);
 
-      // Initialize ElevenLabs connection
-      const elevenLabsService = await agent.initializeConversation(socket.conversationId!);
+//       // Initialize ElevenLabs connection
+//       const elevenLabsService = await agent.initializeConversation(socket.conversationId!);
 
-      // Set up ElevenLabs event forwarding
-      elevenLabsService.on('audio', (chunk) => {
-        socket.emit('audio_response', chunk);
-      });
+//       // Set up ElevenLabs event forwarding
+//       elevenLabsService.on('audio', (chunk) => {
+//         socket.emit('audio_response', chunk);
+//       });
 
-      elevenLabsService.on('transcription', (event) => {
-        socket.emit('transcription', event);
-        // Save transcription to database
-        if (event.isFinal) {
-          conversationService.saveMessage({
-            conversationId: socket.conversationId!,
-            role: event.speaker === 'user' ? 'user' : 'assistant',
-            content: event.text
-          }).catch(err => logger.error('Failed to save transcription:', err));
-        }
-      });
+//       elevenLabsService.on('transcription', (event) => {
+//         socket.emit('transcription', event);
+//         // Save transcription to database
+//         if (event.isFinal) {
+//           conversationService.saveMessage({
+//             conversationId: socket.conversationId!,
+//             role: event.speaker === 'user' ? 'user' : 'assistant',
+//             content: event.text
+//           }).catch(err => logger.error('Failed to save transcription:', err));
+//         }
+//       });
 
-      elevenLabsService.on('agent_response', (response) => {
-        socket.emit('agent_response', response);
-      });
+//       elevenLabsService.on('agent_response', (response) => {
+//         socket.emit('agent_response', response);
+//       });
 
-      elevenLabsService.on('vad_score', (score) => {
-        socket.emit('vad_score', score);
-      });
+//       elevenLabsService.on('vad_score', (score) => {
+//         socket.emit('vad_score', score);
+//       });
 
-      elevenLabsService.on('conversation_initiated', (metadata) => {
-        socket.emit('conversation_metadata', metadata);
-        // Update ElevenLabs session ID
-        if (metadata.conversationId) {
-          conversationService.updateElevenLabsSessionId(
-            socket.conversationId!,
-            metadata.conversationId
-          ).catch(err => logger.error('Failed to update session ID:', err));
-        }
-      });
+//       elevenLabsService.on('conversation_initiated', (metadata) => {
+//         socket.emit('conversation_metadata', metadata);
+//         // Update ElevenLabs session ID
+//         if (metadata.conversationId) {
+//           conversationService.updateElevenLabsSessionId(
+//             socket.conversationId!,
+//             metadata.conversationId
+//           ).catch(err => logger.error('Failed to update session ID:', err));
+//         }
+//       });
 
-      elevenLabsService.on('error', (error) => {
-        logger.error('ElevenLabs error:', error);
-        socket.emit('error', error);
-      });
+//       elevenLabsService.on('error', (error) => {
+//         logger.error('ElevenLabs error:', error);
+//         socket.emit('error', error);
+//       });
 
-      // Handle reconnection events
-      elevenLabsService.on('reconnecting', (data) => {
-        socket.emit('reconnecting', data);
-      });
+//       // Handle reconnection events
+//       elevenLabsService.on('reconnecting', (data) => {
+//         socket.emit('reconnecting', data);
+//       });
 
-      elevenLabsService.on('reconnected', () => {
-        socket.emit('reconnected');
-      });
+//       elevenLabsService.on('reconnected', () => {
+//         socket.emit('reconnected');
+//       });
 
-      elevenLabsService.on('reconnection_failed', (data) => {
-        socket.emit('reconnection_failed', data);
-      });
+//       elevenLabsService.on('reconnection_failed', (data) => {
+//         socket.emit('reconnection_failed', data);
+//       });
 
-      elevenLabsService.on('max_reconnection_attempts_reached', () => {
-        socket.emit('error', { 
-          code: 'MAX_RECONNECTION_ATTEMPTS',
-          message: 'Connection lost and could not be re-established'
-        });
-        this.handleEndConversation(socket);
-      });
+//       elevenLabsService.on('max_reconnection_attempts_reached', () => {
+//         socket.emit('error', { 
+//           code: 'MAX_RECONNECTION_ATTEMPTS',
+//           message: 'Connection lost and could not be re-established'
+//         });
+//         this.handleEndConversation(socket);
+//       });
 
-      // Get conversation context
-      const context = await conversationService.getConversationContext(socket.conversationId!);
+//       // Get conversation context
+//       const context = await conversationService.getConversationContext(socket.conversationId!);
 
-      // Send conversation starter
-      const starter = agent.getConversationStarter(context);
-      socket.emit('conversation_started', {
-        message: starter,
-        interpreter: conversation.interpreterId
-      });
+//       // Send conversation starter
+//       const starter = agent.getConversationStarter(context);
+//       socket.emit('conversation_started', {
+//         message: starter,
+//         interpreter: conversation.interpreterId
+//       });
 
-      // For MVP, also send as text transcription
-      socket.emit('transcription', {
-        text: starter,
-        speaker: 'agent',
-        timestamp: Date.now(),
-        isFinal: true
-      });
+//       // For MVP, also send as text transcription
+//       socket.emit('transcription', {
+//         text: starter,
+//         speaker: 'agent',
+//         timestamp: Date.now(),
+//         isFinal: true
+//       });
 
-    } catch (error) {
-      logger.error('Failed to handle connection:', error);
-      throw error;
-    }
-  }
+//     } catch (error) {
+//       logger.error('Failed to handle connection:', error);
+//       throw error;
+//     }
+//   }
 
-  private createAgent(interpreterId: string): BaseConversationalAgent {
-    switch (interpreterId) {
-      case 'jung':
-        return new JungConversationalAgent();
-      case 'lakshmi':
-        return new LakshmiConversationalAgent();
-      default:
-        throw new Error(`Unknown interpreter: ${interpreterId}`);
-    }
-  }
+//   private createAgent(interpreterId: string): BaseConversationalAgent {
+//     switch (interpreterId) {
+//       case 'jung':
+//         return new JungConversationalAgent();
+//       case 'lakshmi':
+//         return new LakshmiConversationalAgent();
+//       default:
+//         throw new Error(`Unknown interpreter: ${interpreterId}`);
+//     }
+//   }
 
-  private async handleAudioChunk(socket: AuthenticatedSocket, data: any): Promise<void> {
-    try {
-      if (!socket.agent) {
-        throw new Error('Agent not initialized');
-      }
+//   private async handleAudioChunk(socket: AuthenticatedSocket, data: any): Promise<void> {
+//     try {
+//       if (!socket.agent) {
+//         throw new Error('Agent not initialized');
+//       }
 
-      // Forward audio to ElevenLabs
-      const elevenLabsService = socket.agent['elevenLabsService'];
-      if (elevenLabsService && elevenLabsService.isActive()) {
-        elevenLabsService.sendAudio(data.chunk);
-      } else {
-        // MVP fallback: process as text
-        logger.warn('ElevenLabs not active, falling back to text processing');
-        socket.emit('error', { message: 'Audio processing unavailable, please use text input' });
-      }
+//       // Forward audio to ElevenLabs
+//       const elevenLabsService = socket.agent['elevenLabsService'];
+//       if (elevenLabsService && elevenLabsService.isActive()) {
+//         elevenLabsService.sendAudio(data.chunk);
+//       } else {
+//         // MVP fallback: process as text
+//         logger.warn('ElevenLabs not active, falling back to text processing');
+//         socket.emit('error', { message: 'Audio processing unavailable, please use text input' });
+//       }
 
-    } catch (error) {
-      logger.error('Failed to handle audio chunk:', error);
-      socket.emit('error', { message: 'Failed to process audio' });
-    }
-  }
+//     } catch (error) {
+//       logger.error('Failed to handle audio chunk:', error);
+//       socket.emit('error', { message: 'Failed to process audio' });
+//     }
+//   }
 
-  private async handleTextInput(socket: AuthenticatedSocket, data: any): Promise<void> {
-    try {
-      if (!socket.agent || !socket.conversationId) {
-        throw new Error('Agent or conversation not initialized');
-      }
+//   private async handleTextInput(socket: AuthenticatedSocket, data: any): Promise<void> {
+//     try {
+//       if (!socket.agent || !socket.conversationId) {
+//         throw new Error('Agent or conversation not initialized');
+//       }
 
-      const { text } = data;
+//       const { text } = data;
 
-      // Save user message
-      await conversationService.saveMessage({
-        conversationId: socket.conversationId,
-        role: 'user',
-        content: text
-      });
+//       // Save user message
+//       await conversationService.saveMessage({
+//         conversationId: socket.conversationId,
+//         role: 'user',
+//         content: text
+//       });
 
-      // Get updated context
-      const context = await conversationService.getConversationContext(socket.conversationId);
+//       // Get updated context
+//       const context = await conversationService.getConversationContext(socket.conversationId);
 
-      // Generate response
-      const response = await socket.agent.handleConversationTurn(text, context);
+//       // Generate response
+//       const response = await socket.agent.handleConversationTurn(text, context);
 
-      // Save agent response
-      await conversationService.saveMessage({
-        conversationId: socket.conversationId,
-        role: 'assistant',
-        content: response
-      });
+//       // Save agent response
+//       await conversationService.saveMessage({
+//         conversationId: socket.conversationId,
+//         role: 'assistant',
+//         content: response
+//       });
 
-      // Send response
-      socket.emit('text_response', { text: response });
-      socket.emit('transcription', {
-        text: response,
-        speaker: 'agent',
-        timestamp: Date.now(),
-        isFinal: true
-      });
+//       // Send response
+//       socket.emit('text_response', { text: response });
+//       socket.emit('transcription', {
+//         text: response,
+//         speaker: 'agent',
+//         timestamp: Date.now(),
+//         isFinal: true
+//       });
 
-    } catch (error) {
-      logger.error('Failed to handle text input:', error);
-      socket.emit('error', { message: 'Failed to generate response' });
-    }
-  }
+//     } catch (error) {
+//       logger.error('Failed to handle text input:', error);
+//       socket.emit('error', { message: 'Failed to generate response' });
+//     }
+//   }
 
-  private async handleEndConversation(socket: AuthenticatedSocket): Promise<void> {
-    try {
-      if (!socket.conversationId) return;
+//   private async handleEndConversation(socket: AuthenticatedSocket): Promise<void> {
+//     try {
+//       if (!socket.conversationId) return;
 
-      // Clean up agent
-      if (socket.agent) {
-        await socket.agent.cleanup();
-        this.agents.delete(socket.conversationId);
-      }
+//       // Clean up agent
+//       if (socket.agent) {
+//         await socket.agent.cleanup();
+//         this.agents.delete(socket.conversationId);
+//       }
 
-      // Update conversation status
-      await conversationService.endConversation(socket.conversationId);
+//       // Update conversation status
+//       await conversationService.endConversation(socket.conversationId);
 
-      socket.emit('conversation_ended', {
-        conversationId: socket.conversationId
-      });
+//       socket.emit('conversation_ended', {
+//         conversationId: socket.conversationId
+//       });
 
-      socket.disconnect();
+//       socket.disconnect();
 
-    } catch (error) {
-      logger.error('Failed to end conversation:', error);
-      socket.emit('error', { message: 'Failed to end conversation properly' });
-    }
-  }
+//     } catch (error) {
+//       logger.error('Failed to end conversation:', error);
+//       socket.emit('error', { message: 'Failed to end conversation properly' });
+//     }
+//   }
 
-  private handleDisconnect(socket: AuthenticatedSocket): void {
-    logger.info(`User ${socket.userId} disconnected from conversation ${socket.conversationId}`);
+//   private handleDisconnect(socket: AuthenticatedSocket): void {
+//     logger.info(`User ${socket.userId} disconnected from conversation ${socket.conversationId}`);
 
-    // Clean up agent if needed
-    if (socket.conversationId && socket.agent) {
-      socket.agent.cleanup().catch(error => {
-        logger.error('Failed to cleanup agent:', error);
-      });
-      this.agents.delete(socket.conversationId);
-    }
-  }
+//     // Clean up agent if needed
+//     if (socket.conversationId && socket.agent) {
+//       socket.agent.cleanup().catch(error => {
+//         logger.error('Failed to cleanup agent:', error);
+//       });
+//       this.agents.delete(socket.conversationId);
+//     }
+//   }
 
-  public getIO(): SocketIOServer {
-    return this.io;
-  }
-}
+//   public getIO(): SocketIOServer {
+//     return this.io;
+//   }
+// }
 
-// Factory function
-export function createConversationalAIWebSocketServer(httpServer: HTTPServer): ConversationalAIWebSocketServer {
-  return new ConversationalAIWebSocketServer(httpServer);
-}
+// // Factory function
+// export function createConversationalAIWebSocketServer(httpServer: HTTPServer): ConversationalAIWebSocketServer {
+//   return new ConversationalAIWebSocketServer(httpServer);
+// }

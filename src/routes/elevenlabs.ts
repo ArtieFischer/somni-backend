@@ -61,12 +61,13 @@ router.post('/init', async (req, res) => {
       interpreterId
     });
     
-    // 5. Create secure session token
+    // 5. Create secure session token with dynamic variables
     const sessionData = await ElevenLabsSessionService.createSessionToken({
       agentId: agentConfig.agentId,
       userId,
       conversationId: conversation.id,
-      expiresIn: parseInt(process.env.ELEVENLABS_SESSION_EXPIRY || '3600')
+      expiresIn: parseInt(process.env.ELEVENLABS_SESSION_EXPIRY || '3600'),
+      dynamicVariables
     });
     
     // 6. Store session in database
@@ -90,6 +91,20 @@ router.post('/init', async (req, res) => {
       sessionToken: sessionData.token,
       dynamicVariables
     });
+    
+    // 9. Initialize conversation with dynamic variables on ElevenLabs
+    try {
+      await ElevenLabsSessionService.initializeConversationWithDynamicVariables({
+        agentId: agentConfig.agentId,
+        dynamicVariables
+      });
+      logger.info('Successfully initialized conversation with dynamic variables', {
+        conversationId: conversation.id,
+        user_name: dynamicVariables.user_name
+      });
+    } catch (error) {
+      logger.warn('Failed to pre-initialize conversation, frontend will handle dynamic variables:', error);
+    }
     
     logger.info('ElevenLabs conversation initialized', {
       conversationId: conversation.id,
