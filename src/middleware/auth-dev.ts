@@ -34,24 +34,43 @@ export const isAuthenticatedDev = async (
       const dreamId = req.body.dreamId || req.params.dreamId;
       
       if (dreamId) {
-        // Get the user who owns this dream
-        const { data: dream } = await supabaseService.getServiceClient()
-          .from('dreams')
-          .select('user_id')
-          .eq('id', dreamId)
-          .single();
-        
-        if (dream) {
-          req.user = { id: dream.user_id } as any;
-          next();
+        try {
+          // Get the user who owns this dream
+          const { data: dream, error: dreamError } = await supabaseService.getServiceClient()
+            .from('dreams')
+            .select('user_id')
+            .eq('id', dreamId)
+            .single();
+          
+          if (dreamError) {
+            logger.error('Error fetching dream for auth:', dreamError);
+            res.status(404).json({
+              success: false,
+              error: 'Dream not found'
+            });
+            return;
+          }
+          
+          if (dream) {
+            req.user = { id: dream.user_id } as any;
+            next();
+            return;
+          }
+        } catch (error) {
+          logger.error('Database error in auth-dev:', error);
+          res.status(500).json({
+            success: false,
+            error: 'Database error during authentication'
+          });
           return;
         }
       }
       
-      res.status(400).json({
-        success: false,
-        error: 'When using service role key, dreamId is required in body or params'
-      });
+      // For endpoints that don't need dreamId, use a default test user
+      // This should only be used for testing non-dream-specific endpoints
+      req.user = { id: 'test-user-id' } as any;
+      logger.warn('Using default test user - DEV ONLY');
+      next();
       return;
     }
     

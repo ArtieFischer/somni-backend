@@ -28,7 +28,15 @@ const getSharedDreamsSchema = z.object({
 router.post('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
-    const userId = req.user!.id;
+    
+    if (!req.user?.id) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
+    const userId = req.user.id;
 
     // Validate request body
     const validationResult = shareDreamSchema.safeParse(req.body);
@@ -58,6 +66,7 @@ router.post('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: 
   } catch (error) {
     console.error('Error in share dream endpoint:', error);
     return res.status(500).json({
+      success: false,
       error: 'Internal server error'
     });
   }
@@ -70,7 +79,15 @@ router.post('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: 
 router.delete('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
-    const userId = req.user!.id;
+    
+    if (!req.user?.id) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
+    const userId = req.user.id;
 
     // Call service to unshare the dream
     const result = await dreamSharingService.unshareDream(dreamId, userId);
@@ -88,6 +105,7 @@ router.delete('/dreams/:dreamId/share', authMiddleware, async (req: Request, res
   } catch (error) {
     console.error('Error in unshare dream endpoint:', error);
     return res.status(500).json({
+      success: false,
       error: 'Internal server error'
     });
   }
@@ -100,7 +118,15 @@ router.delete('/dreams/:dreamId/share', authMiddleware, async (req: Request, res
 router.patch('/dreams/:dreamId/share', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
-    const userId = req.user!.id;
+    
+    if (!req.user?.id) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
+    const userId = req.user.id;
 
     // Validate request body
     const validationResult = shareDreamSchema.safeParse(req.body);
@@ -130,6 +156,7 @@ router.patch('/dreams/:dreamId/share', authMiddleware, async (req: Request, res:
   } catch (error) {
     console.error('Error in update dream sharing endpoint:', error);
     return res.status(500).json({
+      success: false,
       error: 'Internal server error'
     });
   }
@@ -142,7 +169,15 @@ router.patch('/dreams/:dreamId/share', authMiddleware, async (req: Request, res:
 router.get('/dreams/:dreamId/share/status', authMiddleware, async (req: Request, res: Response) => {
   try {
     const dreamId = req.params.dreamId;
-    const userId = req.user!.id;
+    
+    if (!req.user?.id) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
+    const userId = req.user.id;
 
     // Get sharing status
     const status = await dreamSharingService.getDreamSharingStatus(dreamId, userId);
@@ -155,6 +190,7 @@ router.get('/dreams/:dreamId/share/status', authMiddleware, async (req: Request,
   } catch (error) {
     console.error('Error in get sharing status endpoint:', error);
     return res.status(500).json({
+      success: false,
       error: 'Internal server error'
     });
   }
@@ -194,6 +230,7 @@ router.get('/shared-dreams', async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error in get shared dreams endpoint:', error);
     return res.status(500).json({
+      success: false,
       error: 'Internal server error'
     });
   }
