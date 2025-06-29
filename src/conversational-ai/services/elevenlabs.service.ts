@@ -197,8 +197,24 @@ export class ElevenLabsService extends EventEmitter {
             receivedEvents: clientEvents,
             expectedEvents: ['audio', 'user_transcript', 'agent_response'],
             conversationId: this.elevenLabsConversationId,
-            isEmpty: clientEvents.length === 0
+            isEmpty: clientEvents.length === 0,
+            // Log the full metadata event for debugging
+            fullMetadataEvent: JSON.stringify(message.conversation_initiation_metadata_event)
           });
+          
+          // If client_events is completely empty, this might be an agent configuration issue
+          if (clientEvents.length === 0) {
+            logger.error('CRITICAL: ElevenLabs agent returned empty client_events array. Check agent configuration in dashboard.');
+            this.emit('error', {
+              code: 'AGENT_CONFIGURATION_ERROR',
+              message: 'ElevenLabs agent not configured for transcript events. Check agent settings in dashboard.',
+              details: { 
+                conversationId: this.elevenLabsConversationId,
+                agentId: this.config.agentId,
+                suggestion: 'Verify agent has "User Transcript" events enabled in ElevenLabs dashboard'
+              }
+            });
+          }
           
           // Don't start polling immediately - wait to see if we receive transcripts via WebSocket
           // The empty client_events array might be a temporary state
@@ -206,6 +222,11 @@ export class ElevenLabsService extends EventEmitter {
           
           // Set a flag to potentially start polling later if needed
           this.schedulePollingFallback();
+        } else {
+          logger.info('ElevenLabs: client_events correctly configured', {
+            clientEvents,
+            conversationId: this.elevenLabsConversationId
+          });
         }
         
         // Now we can send our initialization message with dynamic variables
@@ -215,8 +236,17 @@ export class ElevenLabsService extends EventEmitter {
           });
           this.sendConversationInitiation(this.pendingInitialization);
           this.pendingInitialization = null;
+          
+          // Also try sending client events configuration separately
+          setTimeout(() => {
+            this.sendClientEventsConfiguration();
+          }, 1000);
         } else {
           logger.warn('ElevenLabs: No pending initialization variables to send');
+          // Still try to configure client events
+          setTimeout(() => {
+            this.sendClientEventsConfiguration();
+          }, 1000);
         }
         this.emit('conversation_initiated', {
           conversationId: message.conversation_initiation_metadata_event.conversation_id,
@@ -499,17 +529,24 @@ export class ElevenLabsService extends EventEmitter {
       // ALWAYS include conversation_config_override with client_events
       conversation_config_override: {
         conversation: {
+          // Use the newer format from ElevenLabs API v2
           client_events: [
             'audio',
             'user_transcript',
-            'agent_response',
-            'agent_response_correction',
-            'conversation_initiation_metadata'
-          ]
+            'agent_response'
+          ],
+          // Also try the alternative naming
+          client_tool_calls: true
         },
         agent: {} as { first_message: string }
       }
     };
+    
+    logger.info('ElevenLabs initiation message structure', {
+      hasConversationConfig: !!initMessage.conversation_config_override.conversation,
+      clientEvents: initMessage.conversation_config_override.conversation.client_events,
+      messageType: initMessage.type
+    });
     
     // Set the agent's first message based on conversation type
     if (dynamicVariables?.is_resumed_conversation === 'true') {
@@ -925,6 +962,46 @@ export class ElevenLabsService extends EventEmitter {
         );
       }
     }, 30000);
+  }
+  
+  /**
+   * Send client events configuration separately
+   */
+  private sendClientEventsConfiguration(): void {
+    if (!this.isConnected || !this.ws) {
+      return;
+    }
+    
+    logger.info('ElevenLabs: Sending separate client events configuration');
+    
+    try {
+      // Try different message formats to ensure client events are configured
+      const configs = [
+        {
+          type: 'conversation_config',
+          conversation_config: {
+            client_events: ['audio', 'user_transcript', 'agent_response']
+          }
+        },
+        {
+          type: 'client_events_config',
+          client_events: ['audio', 'user_transcript', 'agent_response']
+        }
+      ];
+      
+      configs.forEach((config, index) => {
+        setTimeout(() => {
+          if (this.ws && this.isConnected) {
+            logger.debug(`Sending client events config format ${index + 1}`, config);
+            this.ws.send(JSON.stringify(config));
+          }
+        }, index * 500); // Stagger the messages
+      });
+    } catch (error) {
+      logger.error('Failed to send client events configuration:', {
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
   }
 }
 
