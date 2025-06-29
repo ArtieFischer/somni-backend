@@ -490,7 +490,7 @@ export class ElevenLabsService extends EventEmitter {
     }
 
     // According to ElevenLabs docs, dynamic_variables go at the root level
-    const initMessage: Record<string, unknown> = {
+    const initMessage = {
       type: 'conversation_initiation_client_data',
       dynamic_variables: dynamicVariables || {},
       // ALWAYS include conversation_config_override with client_events
@@ -503,7 +503,8 @@ export class ElevenLabsService extends EventEmitter {
             'agent_response_correction',
             'conversation_initiation_metadata'
           ]
-        }
+        },
+        agent: {} as { first_message: string }
       }
     };
     
@@ -527,9 +528,9 @@ export class ElevenLabsService extends EventEmitter {
       age: dynamicVariables.age,
       emotionalToneprimary: dynamicVariables.emotionalToneprimary,
       hasContent: !!dynamicVariables.dreamContent,
-      contentLength: dynamicVariables.dreamContent?.length || 0,
+      contentLength: typeof dynamicVariables.dreamContent === 'string' ? dynamicVariables.dreamContent.length : 0,
       hasFirstMessage: !!dynamicVariables.first_message,
-      firstMessagePreview: dynamicVariables.first_message?.substring(0, 50)
+      firstMessagePreview: typeof dynamicVariables.first_message === 'string' ? dynamicVariables.first_message.substring(0, 50) : undefined
     } : {};
     
     logger.info('Sending conversation initiation to ElevenLabs', {
