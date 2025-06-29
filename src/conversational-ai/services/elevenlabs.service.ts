@@ -475,10 +475,16 @@ export class ElevenLabsService extends EventEmitter {
       }
     };
     
-    // If this is a resumed conversation, also override the first message
+    // Set the agent's first message based on conversation type
     if (dynamicVariables?.is_resumed_conversation === 'true') {
+      // Resumed conversation
       initMessage.conversation_config_override.agent = {
         first_message: `Welcome back ${dynamicVariables.user_name}, how else can I help you explore your dream?`
+      };
+    } else {
+      // New conversation - agent introduces themselves
+      initMessage.conversation_config_override.agent = {
+        first_message: `Hello ${dynamicVariables?.user_name || 'Dreamer'}, I'm here to help you explore your dream. Tell me about it, and we can delve into its meanings together.`
       };
     }
 
@@ -505,21 +511,10 @@ export class ElevenLabsService extends EventEmitter {
 
     this.ws.send(JSON.stringify(initMessage));
     
-    // For resumed conversations, the agent should send first_message automatically
-    // Don't send user_activity as it might interfere with transcript detection
-    if (dynamicVariables?.is_resumed_conversation !== 'true') {
-      // Only send user_activity for new conversations if needed
-      setTimeout(() => {
-        if (this.isConnected && this.ws) {
-          logger.info('Sending user_activity for new conversation');
-          this.ws.send(JSON.stringify({
-            type: 'user_activity'
-          }));
-        }
-      }, 1000); // Increase delay to ensure config is processed
-    } else {
-      logger.info('Skipping user_activity for resumed conversation - agent should speak first');
-    }
+    // Agent should now speak first automatically based on the first_message configuration
+    logger.info('Agent first_message configured - agent should speak automatically', {
+      isResumed: dynamicVariables?.is_resumed_conversation === 'true'
+    });
   }
 
   sendToolResponse(toolCallId: string, result: any): void {
