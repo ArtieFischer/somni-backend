@@ -29,6 +29,8 @@ export class ElevenLabsService extends EventEmitter {
   private totalAudioBytesSent: number = 0;
   private transcriptPoller: TranscriptPollerService | null = null;
   private elevenLabsConversationId: string | null = null;
+  private pollingFallbackTimer: NodeJS.Timeout | null = null;
+  private hasReceivedTranscript: boolean = false;
 
   constructor(config: ElevenLabsConfig) {
     super();
@@ -190,29 +192,20 @@ export class ElevenLabsService extends EventEmitter {
         });
         
         // Verify we have the necessary events
-        if (!clientEvents.includes('user_transcript')) {
-          logger.error('ElevenLabs: CRITICAL ERROR - user_transcript not in client_events!', {
+        if (clientEvents.length === 0 || !clientEvents.includes('user_transcript')) {
+          logger.error('ElevenLabs: WARNING - user_transcript not in client_events!', {
             receivedEvents: clientEvents,
             expectedEvents: ['audio', 'user_transcript', 'agent_response'],
-            conversationId: this.elevenLabsConversationId
+            conversationId: this.elevenLabsConversationId,
+            isEmpty: clientEvents.length === 0
           });
           
-          // Only start polling if we have a valid conversation ID
-          if (this.elevenLabsConversationId) {
-            logger.warn('Starting transcript polling fallback due to missing client_events');
-            this.startTranscriptPolling().catch(err => 
-              logger.error('Failed to start transcript polling:', {
-                message: err instanceof Error ? err.message : 'Unknown error'
-              })
-            );
-          }
+          // Don't start polling immediately - wait to see if we receive transcripts via WebSocket
+          // The empty client_events array might be a temporary state
+          logger.info('Will monitor for transcripts via WebSocket before starting polling fallback');
           
-          // Emit error to frontend
-          this.emit('error', {
-            code: 'MISSING_TRANSCRIPT_EVENTS',
-            message: 'ElevenLabs configuration error: using polling fallback',
-            details: { clientEvents, usingPolling: true }
-          });
+          // Set a flag to potentially start polling later if needed
+          this.schedulePollingFallback();
         }
         
         // Now we can send our initialization message with dynamic variables
@@ -237,6 +230,16 @@ export class ElevenLabsService extends EventEmitter {
           length: message.user_transcription_event.user_transcript?.length || 0,
           isEmpty: !message.user_transcription_event.user_transcript || message.user_transcription_event.user_transcript.trim() === ''
         });
+        
+        // Mark that we're receiving transcripts
+        this.hasReceivedTranscript = true;
+        
+        // Cancel polling fallback if scheduled
+        if (this.pollingFallbackTimer) {
+          clearTimeout(this.pollingFallbackTimer);
+          this.pollingFallbackTimer = null;
+          logger.info('Cancelled polling fallback - receiving transcripts via WebSocket');
+        }
         
         // Clear transcription timeout
         if (this.transcriptionTimeout) {
@@ -673,11 +676,18 @@ export class ElevenLabsService extends EventEmitter {
     this.stopTranscriptPolling();
     this.currentConversationId = null;
     this.elevenLabsConversationId = null;
+    this.hasReceivedTranscript = false;
     
     // Clear transcription timeout
     if (this.transcriptionTimeout) {
       clearTimeout(this.transcriptionTimeout);
       this.transcriptionTimeout = null;
+    }
+    
+    // Clear polling fallback timer
+    if (this.pollingFallbackTimer) {
+      clearTimeout(this.pollingFallbackTimer);
+      this.pollingFallbackTimer = null;
     }
     
     if (this.ws) {
@@ -893,6 +903,28 @@ export class ElevenLabsService extends EventEmitter {
       this.transcriptPoller.removeAllListeners();
       this.transcriptPoller = null;
     }
+  }
+  /**
+   * Schedule polling fallback if we don't receive transcripts
+   */
+  private schedulePollingFallback(): void {
+    // Clear any existing timer
+    if (this.pollingFallbackTimer) {
+      clearTimeout(this.pollingFallbackTimer);
+    }
+    
+    // Wait 30 seconds to see if we receive transcripts via WebSocket
+    this.pollingFallbackTimer = setTimeout(() => {
+      if (!this.hasReceivedTranscript && this.elevenLabsConversationId) {
+        logger.warn('No transcripts received via WebSocket after 30s, starting polling fallback');
+        this.startTranscriptPolling().catch(err => 
+          logger.error('Failed to start transcript polling:', {
+            message: err instanceof Error ? err.message : 'Unknown error',
+            conversationId: this.elevenLabsConversationId
+          })
+        );
+      }
+    }, 30000);
   }
 }
 

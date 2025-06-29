@@ -37,11 +37,14 @@ export class TranscriptPollerService extends EventEmitter {
         count: this.lastTranscriptIndex,
         elevenLabsConversationId
       });
-    } catch (error) {
-      logger.error('Error fetching initial transcripts:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        elevenLabsConversationId
-      });
+    } catch (error: any) {
+      if (error.response?.status !== 404) {
+        logger.error('Error fetching initial transcripts:', {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          status: error.response?.status,
+          elevenLabsConversationId
+        });
+      }
     }
 
     // Poll every 2 seconds
@@ -88,11 +91,19 @@ export class TranscriptPollerService extends EventEmitter {
           
           this.lastTranscriptIndex = transcripts.length;
         }
-      } catch (error) {
-        logger.error('Error polling for transcripts:', {
-          message: error instanceof Error ? error.message : 'Unknown error',
-          elevenLabsConversationId
-        });
+      } catch (error: any) {
+        // Don't log 404 errors as they're expected when conversation doesn't exist yet
+        if (error.response?.status === 404) {
+          logger.debug('Transcript API returned 404 - conversation may not exist yet', {
+            elevenLabsConversationId
+          });
+        } else {
+          logger.error('Error polling for transcripts:', {
+            message: error instanceof Error ? error.message : 'Unknown error',
+            status: error.response?.status,
+            elevenLabsConversationId
+          });
+        }
       }
     }, 2000);
     
@@ -106,10 +117,13 @@ export class TranscriptPollerService extends EventEmitter {
           });
           // Process will be handled by the next interval
         }
-      } catch (error) {
-        logger.error('Error in immediate poll:', {
-          message: error instanceof Error ? error.message : 'Unknown error'
-        });
+      } catch (error: any) {
+        if (error.response?.status !== 404) {
+          logger.error('Error in immediate poll:', {
+            message: error instanceof Error ? error.message : 'Unknown error',
+            status: error.response?.status
+          });
+        }
       }
     }, 3000); // 3 second delay for first poll
   }
