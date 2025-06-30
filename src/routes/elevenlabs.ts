@@ -147,18 +147,29 @@ router.post('/init', async (req, res) => {
     });
     
     // 11. Return fresh session data (never mark as resumed for ElevenLabs)
+    const responseData = {
+      conversationId: conversation.id,
+      elevenLabsSessionId, // Always new
+      signedUrl, // Always fresh
+      authToken: sessionData.token, // Fresh auth token
+      dynamicVariables,
+      previousMessages: context.previousMessages || [], // Include for context
+      isResumed: false, // ALWAYS false - no more session resumption
+      messageCount: context.previousMessages?.length || 0
+    };
+    
+    // Log the response to verify elevenLabsSessionId is included
+    logger.info('Sending ElevenLabs init response', {
+      conversationId: responseData.conversationId,
+      elevenLabsSessionId: responseData.elevenLabsSessionId,
+      hasSignedUrl: !!responseData.signedUrl,
+      hasAuthToken: !!responseData.authToken,
+      responseKeys: Object.keys(responseData)
+    });
+    
     res.json({
       success: true,
-      data: {
-        conversationId: conversation.id,
-        elevenLabsSessionId, // Always new
-        signedUrl, // Always fresh
-        authToken: sessionData.token, // Fresh auth token
-        dynamicVariables,
-        previousMessages: context.previousMessages || [], // Include for context
-        isResumed: false, // ALWAYS false - no more session resumption
-        messageCount: context.previousMessages?.length || 0
-      }
+      data: responseData
     });
     
   } catch (error) {
