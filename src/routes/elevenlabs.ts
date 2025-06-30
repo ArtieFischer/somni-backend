@@ -69,17 +69,17 @@ router.post('/init', async (req, res) => {
       dynamicVariables: {
         user_name: dynamicVariables.user_name,
         max_turn_length: dynamicVariables.max_turn_length,
-        dreamContent: dynamicVariables.dreamContent.substring(0, 100) + '...',
-        dreamSymbols: dynamicVariables.dreamSymbols,
+        dream_content: dynamicVariables.dream_content.substring(0, 100) + '...',
+        dream_symbols: dynamicVariables.dream_symbols,
         age: dynamicVariables.age,
-        recurringThemes: dynamicVariables.recurringThemes,
-        emotionalToneprimary: dynamicVariables.emotionalToneprimary,
-        emotionalToneintensity: dynamicVariables.emotionalToneintensity,
+        recurring_themes: dynamicVariables.recurring_themes,
+        emotional_tone_primary: dynamicVariables.emotional_tone_primary,
+        emotional_tone_intensity: dynamicVariables.emotional_tone_intensity,
         clarity: dynamicVariables.clarity,
         mood: dynamicVariables.mood,
-        quickTake: dynamicVariables.quickTake,
-        interpretationSummary: dynamicVariables.interpretationSummary.substring(0, 100) + '...',
-        previousMessages: dynamicVariables.previousMessages,
+        quick_take: dynamicVariables.quick_take,
+        interpretation_summary: dynamicVariables.interpretation_summary.substring(0, 100) + '...',
+        previous_messages: dynamicVariables.previous_messages,
         dream_topic: dynamicVariables.dream_topic
       }
     });

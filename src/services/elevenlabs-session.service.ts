@@ -18,17 +18,17 @@ export interface SessionTokenData {
 export interface DynamicVariables {
   user_name: string;
   max_turn_length: number;
-  dreamContent: string;
-  dreamSymbols: string;
+  dream_content: string;
+  dream_symbols: string;
   age: number;
-  recurringThemes: string;
-  emotionalToneprimary: string;
-  emotionalToneintensity: number;
+  recurring_themes: string;
+  emotional_tone_primary: string;
+  emotional_tone_intensity: number;
   clarity: number;
   mood: number;
-  quickTake: string;
-  interpretationSummary: string;
-  previousMessages: string;
+  quick_take: string;
+  interpretation_summary: string;
+  previous_messages: string;
   dream_topic: string;
   [key: string]: any;
 }
@@ -306,17 +306,17 @@ export class ElevenLabsSessionService {
       // All required fields
       user_name: userName,
       max_turn_length: 90,
-      dreamContent: dreamContent,
-      dreamSymbols: dreamSymbolsString,
+      dream_content: dreamContent,
+      dream_symbols: dreamSymbolsString,
       age: age || 25,
-      recurringThemes: recurringThemesString,
-      emotionalToneprimary: emotionalTonePrimary,
-      emotionalToneintensity: emotionalToneIntensity,
+      recurring_themes: recurringThemesString,
+      emotional_tone_primary: emotionalTonePrimary,
+      emotional_tone_intensity: emotionalToneIntensity,
       clarity: clarity,
       mood: mood,
-      quickTake: quickTake,
-      interpretationSummary: interpretationSummary,
-      previousMessages: previousMessagesString,
+      quick_take: quickTake,
+      interpretation_summary: interpretationSummary,
+      previous_messages: previousMessagesString,
       dream_topic: dreamTopic
     };
     
@@ -326,17 +326,17 @@ export class ElevenLabsSessionService {
       interpreterId: interpreterId,
       user_name: dynamicVariables.user_name,
       max_turn_length: dynamicVariables.max_turn_length,
-      dreamContent: dynamicVariables.dreamContent.substring(0, 100) + '...',
-      dreamSymbols: dynamicVariables.dreamSymbols,
+      dream_content: dynamicVariables.dream_content.substring(0, 100) + '...',
+      dream_symbols: dynamicVariables.dream_symbols,
       age: dynamicVariables.age,
-      recurringThemes: dynamicVariables.recurringThemes,
-      emotionalToneprimary: dynamicVariables.emotionalToneprimary,
-      emotionalToneintensity: dynamicVariables.emotionalToneintensity,
+      recurring_themes: dynamicVariables.recurring_themes,
+      emotional_tone_primary: dynamicVariables.emotional_tone_primary,
+      emotional_tone_intensity: dynamicVariables.emotional_tone_intensity,
       clarity: dynamicVariables.clarity,
       mood: dynamicVariables.mood,
-      quickTake: dynamicVariables.quickTake,
-      interpretationSummary: dynamicVariables.interpretationSummary.substring(0, 100) + '...',
-      previousMessages: dynamicVariables.previousMessages,
+      quick_take: dynamicVariables.quick_take,
+      interpretation_summary: dynamicVariables.interpretation_summary.substring(0, 100) + '...',
+      previous_messages: dynamicVariables.previous_messages,
       dream_topic: dynamicVariables.dream_topic,
       hasPreviousMessages: previousMessagesString.length > 0,
       previousMessagesCount: context.previousMessages?.length || 0,
