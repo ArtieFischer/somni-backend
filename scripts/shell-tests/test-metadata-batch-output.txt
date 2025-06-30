@@ -1,4 +1,0 @@
-Dream Metadata Batch Generation Test Results
-============================================
-Test run at: Sat Jun 21 12:31:22 JST 2025
-

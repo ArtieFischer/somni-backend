@@ -1,202 +1,0 @@
-test-dreams.sh: line 27: declare: -A: invalid option
-declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
-test-dreams.sh: line 28: declare: -A: invalid option
-declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
-🌟 Starting Dream Interpretation Tests...
-=========================================
-Testing 1 interpreter(s): mary
-
-
-🌙 Dream 1: Family House with Animals & Hair Loss
-=================================================
-
-🔮 Interpreter: mary
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   832    0     0  100   832      0    688  0:00:01  0:00:01 --:--:--   689100   832    0     0  100   832      0    376  0:00:02  0:00:02 --:--:--   376100   832    0     0  100   832      0    258  0:00:03  0:00:03 --:--:--   258100   832    0     0  100   832      0    197  0:00:04  0:00:04 --:--:--   197100   832    0     0  100   832      0    159  0:00:05  0:00:05 --:--:--   159100   832    0     0  100   832      0    133  0:00:06  0:00:06 --:--:--     0100  3878  100  3046  100   832    469    128  0:00:06  0:00:06 --:--:--   713
-{
-  "success": true,
-  "dreamId": "b1a5d866-43b1-414d-afde-ed20a75d5dee",
-  "interpretation": {
-    "dreamTopic": "Brain processing and memory consolidation",
-    "symbols": [],
-    "quickTake": "Your dream reflects fascinating brain activity during sleep, consolidating memories and processing emotions.",
-    "dreamWork": "During REM sleep, your brain processes recent experiences and emotional content.",
-    "interpretation": "This dream demonstrates your brain's remarkable ability to process information during sleep. While I cannot fully parse the specific content at this moment, your neural networks are clearly working to consolidate memories and regulate emotions through this dream experience.",
-    "selfReflection": "How might this dream relate to your recent experiences and current emotional state?"
-  },
-  "aiResponse": "```json\n{\n  \"Sleep Stage Context\": \"This dream suggests a complex interplay of brain processes during deep sleep, when the brain undergoes significant reorganization and consolidation of memories.\",\n  \"Brain Processing\": \"The vivid imagery and emotional tone of the dream suggest heightened limbic activation, a state characterized by increased activity in brain regions that process emotions, memories, and sensory experiences. The presence of various animals in the dream may represent the brain's attempt to process and consolidate disparate emotional and sensory inputs. The transition from playful interaction with the animals to the discovery of hair loss may indicate a shift from a state of relaxed, creative exploration to a more introspective, self-aware state. This shift is accompanied by synaptic pruning, a process that refines and strengthens neural connections, allowing for more efficient communication between brain regions.\",\n  \"Integration Guidance\": \"The dream suggests that you may be in a period of significant personal growth and reorganization, as your brain processes and consolidates various emotional and sensory experiences. The image of hair loss, rather than being a source of distress, may indicate a willingness to let go of old patterns or identities, allowing for new growth and self-expression. The parade-like procession of animals behind you suggests a sense of integration and harmony between different aspects of your personality. To apply this insight to your waking life, consider reflecting on areas where you may be holding onto old patterns or identities, and explore ways to cultivate a sense of curiosity and openness to change. This might involve engaging in creative activities, practicing self-compassion, or seeking out new social connections. By embracing this process of growth and reorganization, you may find that you're better able to navigate challenges and cultivate a deeper sense of well-being.\"\n}\n```",
-  "metadata": {
-    "interpreterType": "mary",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-19T10:51:02.971Z",
-    "analysisDepth": "deep",
-    "duration": 6480,
-    "tokenUsage": {
-      "promptTokens": 550,
-      "completionTokens": 348,
-      "totalTokens": 898,
-      "cost": 0
-    }
-  },
-  "testMode": true,
-  "testDuration": 6480
-}
-
-
-🌙 Dream 2: Office Turned Into Jungle Gym
-=================================================
-
-🔮 Interpreter: mary
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   813    0     0  100   813      0    670  0:00:01  0:00:01 --:--:--   671100   813    0     0  100   813      0    366  0:00:02  0:00:02 --:--:--   366100   813    0     0  100   813      0    252  0:00:03  0:00:03 --:--:--   252100  2908  100  2095  100   813    532    206  0:00:03  0:00:03 --:--:--   738
-{
-  "success": true,
-  "dreamId": "0d5c8200-869f-4d77-b432-c88ee66b909e",
-  "interpretation": {
-    "dreamTopic": "Brain processing and memory consolidation",
-    "symbols": [],
-    "quickTake": "Your dream reflects fascinating brain activity during sleep, consolidating memories and processing emotions.",
-    "dreamWork": "During REM sleep, your brain processes recent experiences and emotional content.",
-    "interpretation": "This dream demonstrates your brain's remarkable ability to process information during sleep. While I cannot fully parse the specific content at this moment, your neural networks are clearly working to consolidate memories and regulate emotions through this dream experience.",
-    "selfReflection": "How might this dream relate to your recent experiences and current emotional state?"
-  },
-  "aiResponse": "```json\n{\n  \"Network Activation\": \"The dreamer's cortical networks, particularly those involved in attention and executive function, illustrate a state of playful disorientation, as if the brain's usual workspace had been transformed into a dynamic playground.\",\n  \"Information Processing\": \"The dream illustrates the process of cortical consolidation, where recent experiences and emotions are being integrated into existing memory networks. The playground slides represent the fluid and adaptive nature of this process, as the dreamer navigates through different pathways, symbolizing the reorganization of memories and emotions.\",\n  \"Adaptive Function\": \"The dreamer's ability to laugh and find joy in the absurd situation illustrates the brain's adaptive function of emotional regulation. By embracing the unexpected and letting go of embarrassment, the dreamer is able to reframe the situation and find a sense of liberation, much like the release of tension that occurs during cortical processing.\"\n}\n```",
-  "metadata": {
-    "interpreterType": "mary",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-19T10:51:09.025Z",
-    "analysisDepth": "deep",
-    "duration": 3931,
-    "tokenUsage": {
-      "promptTokens": 531,
-      "completionTokens": 181,
-      "totalTokens": 712,
-      "cost": 0
-    }
-  },
-  "testMode": true,
-  "testDuration": 3932
-}
-
-
-🌙 Dream 3: Unprepared for Weird Exam
-=================================================
-
-🔮 Interpreter: mary
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   920    0     0  100   920      0    758  0:00:01  0:00:01 --:--:--   759100   920    0     0  100   920      0    414  0:00:02  0:00:02 --:--:--   414100   920    0     0  100   920      0    285  0:00:03  0:00:03 --:--:--   285100   920    0     0  100   920      0    217  0:00:04  0:00:04 --:--:--   217100  3555  100  2635  100   920    552    192  0:00:04  0:00:04 --:--:--   745
-{
-  "success": true,
-  "dreamId": "d6d46b39-9519-4093-a7f8-c0eaa4428d77",
-  "interpretation": {
-    "dreamTopic": "Brain processing and memory consolidation",
-    "symbols": [],
-    "quickTake": "Your dream reflects fascinating brain activity during sleep, consolidating memories and processing emotions.",
-    "dreamWork": "During REM sleep, your brain processes recent experiences and emotional content.",
-    "interpretation": "This dream demonstrates your brain's remarkable ability to process information during sleep. While I cannot fully parse the specific content at this moment, your neural networks are clearly working to consolidate memories and regulate emotions through this dream experience.",
-    "selfReflection": "How might this dream relate to your recent experiences and current emotional state?"
-  },
-  "aiResponse": "```json\n{\n  \"Sleep Stage Context\": \"This dream occurred during a stage of sleep characterized by heightened brain activity, similar to being awake, but with distinct differences in neural firing patterns that facilitate memory consolidation and emotional processing.\",\n  \"Brain Processing\": \"The dream suggests that your brain was actively engaging in memory encoding, particularly during the transition from a state of focused attention to one of increasing confusion and frustration. The vivid imagery of pasta shapes and the transformation of your phone into various objects indicates spontaneous neural firing patterns that draw upon stored memories and emotions, weaving them into a narrative that your brain uses to process and consolidate information.\",\n  \"Integration Guidance\": \"This dream suggests that you may be feeling overwhelmed by a current situation in your life, much like the anxiety of facing an unfamiliar exam. The brain's attempt to find solutions, represented by the desire to call your mom for help, indicates a search for reassurance or guidance. The transformation of your phone into various objects suggests that your brain is exploring different coping mechanisms or problem-solving strategies. The dream also suggests that you may be struggling with feelings of uncertainty or self-doubt, as embodied by the image of your phone turning into a banana or a stapler. By acknowledging and working through these emotions, you can better integrate your experiences and develop a greater sense of confidence and clarity.\"\n}\n```",
-  "metadata": {
-    "interpreterType": "mary",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-19T10:51:15.916Z",
-    "analysisDepth": "deep",
-    "duration": 4764,
-    "tokenUsage": {
-      "promptTokens": 566,
-      "completionTokens": 271,
-      "totalTokens": 837,
-      "cost": 0
-    }
-  },
-  "testMode": true,
-  "testDuration": 4765
-}
-
-
-🌙 Dream 4: Car That Keeps Changing
-=================================================
-
-🔮 Interpreter: mary
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   983    0     0  100   983      0   4717 --:--:-- --:--:-- --:--:--  4725100   983    0     0  100   983      0    809  0:00:01  0:00:01 --:--:--   810100   983    0     0  100   983      0    443  0:00:02  0:00:02 --:--:--   443100   983    0     0  100   983      0    305  0:00:03  0:00:03 --:--:--   305100   983    0     0  100   983      0    233  0:00:04  0:00:04 --:--:--   233100   983    0     0  100   983      0    188  0:00:05  0:00:05 --:--:--     0100   983    0     0  100   983      0    157  0:00:06  0:00:06 --:--:--     0100  4461  100  3478  100   983    490    138  0:00:07  0:00:07 --:--:--   713100  4461  100  3478  100   983    490    138  0:00:07  0:00:07 --:--:--   897
-{
-  "success": true,
-  "dreamId": "805e7668-3400-4e10-b3b0-f75c25122262",
-  "interpretation": {
-    "dreamTopic": "Brain processing and memory consolidation",
-    "symbols": [],
-    "quickTake": "Your dream reflects fascinating brain activity during sleep, consolidating memories and processing emotions.",
-    "dreamWork": "During REM sleep, your brain processes recent experiences and emotional content.",
-    "interpretation": "This dream demonstrates your brain's remarkable ability to process information during sleep. While I cannot fully parse the specific content at this moment, your neural networks are clearly working to consolidate memories and regulate emotions through this dream experience.",
-    "selfReflection": "How might this dream relate to your recent experiences and current emotional state?"
-  },
-  "aiResponse": "```json\n{\n  \"interpretation\": {\n    \"network_activation\": \"The dream highlights the dynamic interplay between different brain networks, particularly those involved in executive function, emotional regulation, and memory consolidation. The constantly changing vehicle may symbolize the flux in your thoughts and emotions, as different neural networks are activated and deactivated during the dream state.\",\n    \"information_processing\": \"The transformation of the car into various objects, such as a shopping cart and a swan boat, suggests that your brain is processing and consolidating information in a highly creative and adaptive way. This process is reflected in the shifting landscape of the dream, where you're navigating through different scenarios and emotions.\",\n    \"adaptive_function\": \"The dream highlights your brain's ability to adapt to changing circumstances and emotions. The various vehicles may represent different aspects of your personality or emotional states, and the dream is suggesting that you're able to navigate and integrate these different parts. The miniature friends may indicate a sense of disconnection or feeling overwhelmed by the demands of others.\",\n    \"sleep_architecture\": \"The dream takes place during a specific stage of sleep characterized by heightened brain activity and vivid dreams. The shifting scenery and emotions in the dream may be related to the natural fluctuations in neurotransmitters, such as norepinephrine, serotonin, and acetylcholine, which play a crucial role in regulating mood, motivation, and cognitive function.\",\n    \"insights\": \"The dream highlights your resilience and adaptability in the face of changing circumstances. It also suggests that you may be feeling overwhelmed or struggling to connect with others. The dream encourages you to explore your emotional landscape and find ways to integrate your different parts. By acknowledging and working with your emotions, you can develop greater self-awareness and improve your relationships with others.\",\n    \"practical_tips\": \"To apply the insights from this dream, consider taking time to reflect on your emotional state and how you navigate different situations. Engage in activities that promote self-awareness, such as journaling or meditation, and focus on building stronger connections with others through active listening and empathy.\"\n  }\n}\n```",
-  "metadata": {
-    "interpreterType": "mary",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-19T10:51:25.107Z",
-    "analysisDepth": "deep",
-    "duration": 7084,
-    "tokenUsage": {
-      "promptTokens": 575,
-      "completionTokens": 421,
-      "totalTokens": 996,
-      "cost": 0
-    }
-  },
-  "testMode": true,
-  "testDuration": 7084
-}
-
-
-🌙 Dream 5: Celebrity Cooking Disaster
-=================================================
-
-🔮 Interpreter: mary
------------------------------------------
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1009    0     0  100  1009      0    832  0:00:01  0:00:01 --:--:--   833100  1009    0     0  100  1009      0    455  0:00:02  0:00:02 --:--:--   456100  1009    0     0  100  1009      0    313  0:00:03  0:00:03 --:--:--   313100  1009    0     0  100  1009      0    239  0:00:04  0:00:04 --:--:--   239100  1009    0     0  100  1009      0    193  0:00:05  0:00:05 --:--:--   193100  1009    0     0  100  1009      0    161  0:00:06  0:00:06 --:--:--     0100  3874  100  2865  100  1009    430    151  0:00:06  0:00:06 --:--:--   643
-{
-  "success": true,
-  "dreamId": "b5c07306-109f-4c4e-9d70-42948f359503",
-  "interpretation": {
-    "dreamTopic": "Brain processing and memory consolidation",
-    "symbols": [],
-    "quickTake": "Your dream reflects fascinating brain activity during sleep, consolidating memories and processing emotions.",
-    "dreamWork": "During REM sleep, your brain processes recent experiences and emotional content.",
-    "interpretation": "This dream demonstrates your brain's remarkable ability to process information during sleep. While I cannot fully parse the specific content at this moment, your neural networks are clearly working to consolidate memories and regulate emotions through this dream experience.",
-    "selfReflection": "How might this dream relate to your recent experiences and current emotional state?"
-  },
-  "aiResponse": "```json\n{\n  \"Neural Activity\": \"The vivid, emotionally charged scenario of this dream reveals intense cortical processing in the brain's threat simulation network, which is typically active during periods of stress and anxiety. The brain's attempt to process and consolidate memories, especially emotional ones, is akin to a 'mental rehearsal' that helps prepare the individual for potential real-life threats.\",\n  \n  \"Cognitive Function\": \"This dream highlights the brain's unique ability to recontextualize and reevaluate past experiences, much like a 'cortical reboot.' The juxtaposition of a high-pressure cooking competition with childhood objects and settings suggests that the brain is reexamining past anxieties and reprocessing them through a new lens. The toy pots and pans may symbolize the dreamer's perception of their past self as 'unprepared' or 'inadequate,' while Gordon Ramsay's anger and the teddy bear's misguided advice represent the brain's attempt to reconcile these feelings.\",\n  \n  \"Personal Meaning\": \"The dream reveals that the individual may be struggling with feelings of inadequacy or self-doubt related to their past, which are still influencing their present. The brain's threat simulation network is actively working to reframe these experiences, suggesting that the individual is on a path towards healing and growth. The approval of Gordon Ramsay, a symbol of high expectations and criticism, indicates that the dreamer is developing a more compassionate and accepting relationship with their past self. This dream offers a valuable opportunity for self-reflection and personal growth, encouraging the individual to reevaluate their past experiences and integrate them into their present narrative in a more positive and empowering way.\"\n}\n```",
-  "metadata": {
-    "interpreterType": "mary",
-    "modelUsed": "meta-llama/llama-4-scout:free",
-    "processedAt": "2025-06-19T10:51:33.897Z",
-    "analysisDepth": "deep",
-    "duration": 6657,
-    "tokenUsage": {
-      "promptTokens": 586,
-      "completionTokens": 338,
-      "totalTokens": 924,
-      "cost": 0
-    }
-  },
-  "testMode": true,
-  "testDuration": 6658
-}
-
-
-✨ All dream tests completed!
-==============================
-Results saved to: mary-test-results.txt
