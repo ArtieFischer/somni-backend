@@ -93,16 +93,14 @@ export class ElevenLabsSessionService {
     
     // Option 1: Try ElevenLabs signed URL API (always try first)
     try {
-      const response = await fetch('https://api.elevenlabs.io/v1/convai/conversation/signed-url', {
-        method: 'POST',
+      const url = new URL('https://api.elevenlabs.io/v1/convai/conversation/get-signed-url');
+      url.searchParams.append('agent_id', params.agentId);
+      
+      const response = await fetch(url.toString(), {
+        method: 'GET',
         headers: {
-          'xi-api-key': config.elevenLabs.apiKey,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          agent_id: params.agentId,
-          expires_in: params.expiresIn
-        })
+          'xi-api-key': config.elevenLabs.apiKey
+        }
       });
       
       if (response.ok) {
