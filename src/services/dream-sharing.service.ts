@@ -216,7 +216,8 @@ export class DreamSharingService {
         is_anonymous: dream.is_anonymous,
         display_name: dream.display_name,
         shared_at: dream.shared_at,
-        themes: dream.themes || []
+        themes: dream.themes || [],
+        image_url: dream.image_url || null
       }));
 
       return {

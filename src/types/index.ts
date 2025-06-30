@@ -358,6 +358,7 @@ export interface PublicSharedDream {
     code: string;
     label: string;
   }>;
+  image_url: string | null;
 }
 
 export interface GetSharedDreamsParams {
