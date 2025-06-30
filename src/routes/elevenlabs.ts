@@ -152,7 +152,24 @@ router.post('/init', async (req, res) => {
       elevenLabsSessionId, // Always new
       signedUrl, // Always fresh
       authToken: sessionData.token, // Fresh auth token
-      dynamicVariables,
+      dynamicVariables, // Snake case for ElevenLabs
+      // Also include camelCase version for frontend compatibility
+      dynamicVariablesCamelCase: {
+        userName: dynamicVariables.user_name,
+        maxTurnLength: dynamicVariables.max_turn_length,
+        dreamContent: dynamicVariables.dream_content,
+        dreamSymbols: dynamicVariables.dream_symbols,
+        age: dynamicVariables.age,
+        recurringThemes: dynamicVariables.recurring_themes,
+        emotionalTonePrimary: dynamicVariables.emotional_tone_primary,
+        emotionalToneIntensity: dynamicVariables.emotional_tone_intensity,
+        clarity: dynamicVariables.clarity,
+        mood: dynamicVariables.mood,
+        quickTake: dynamicVariables.quick_take,
+        interpretationSummary: dynamicVariables.interpretation_summary,
+        previousMessages: dynamicVariables.previous_messages,
+        dreamTopic: dynamicVariables.dream_topic
+      },
       previousMessages: context.previousMessages || [], // Include for context
       isResumed: false, // ALWAYS false - no more session resumption
       messageCount: context.previousMessages?.length || 0
