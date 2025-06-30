@@ -22,6 +22,7 @@ import {
 import { openRouterService } from '../../../services/openrouter';
 import { logger } from '../../../utils/logger';
 import { dreamInterpretationConfig } from '../../config';
+import { modelConfigService } from '../../../services/modelConfig';
 
 export abstract class BaseDreamInterpreter implements IDreamInterpreter {
   protected openrouter = openRouterService;
@@ -34,6 +35,104 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
     this.type = config.type;
     this.metadata = config.metadata;
     this.personality = config.personality;
+  }
+  
+  /**
+   * Generate JSON completion with automatic retry on parse errors
+   */
+  protected async generateJSONWithRetry(
+    messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>,
+    options: {
+      temperature?: number;
+      maxTokens?: number;
+      interpreterType?: InterpreterType;
+      responseFormat?: { type: 'json_object' };
+    },
+    parseFunction: (content: string) => any
+  ): Promise<{ parsed: any; model: string; usage: any }> {
+    // Get the full model chain
+    const modelChain = modelConfigService.getModelChain(undefined, this.type);
+    
+    logger.info('Starting JSON generation with retry chain', {
+      interpreterType: this.type,
+      modelChain,
+      totalModels: modelChain.length
+    });
+    
+    let lastError: Error | null = null;
+    
+    // Try each model in the chain
+    for (let i = 0; i < modelChain.length; i++) {
+      const currentModel = modelChain[i];
+      
+      try {
+        logger.info(`Attempting JSON generation with model ${i + 1}/${modelChain.length}`, {
+          model: currentModel,
+          interpreterType: this.type
+        });
+        
+        // Make the request with the specific model
+        const response = await this.openrouter.generateCompletion(
+          messages,
+          {
+            ...options,
+            model: currentModel,
+            responseFormat: { type: 'json_object' }
+          }
+        );
+        
+        // Try to parse the response
+        try {
+          const parsed = parseFunction(response.content);
+          
+          logger.info('Successfully parsed JSON response', {
+            model: currentModel,
+            interpreterType: this.type,
+            attempt: i + 1
+          });
+          
+          return {
+            parsed,
+            model: response.model,
+            usage: response.usage
+          };
+        } catch (parseError) {
+          logger.warn('JSON parsing failed, trying next model', {
+            model: currentModel,
+            attempt: i + 1,
+            totalModels: modelChain.length,
+            parseError: parseError instanceof Error ? parseError.message : String(parseError),
+            contentPreview: response.content.substring(0, 200)
+          });
+          
+          lastError = parseError instanceof Error ? parseError : new Error(String(parseError));
+          
+          // Continue to next model
+          continue;
+        }
+      } catch (requestError) {
+        logger.warn('Model request failed, trying next model', {
+          model: currentModel,
+          attempt: i + 1,
+          totalModels: modelChain.length,
+          error: requestError instanceof Error ? requestError.message : String(requestError)
+        });
+        
+        lastError = requestError instanceof Error ? requestError : new Error(String(requestError));
+        
+        // Continue to next model
+        continue;
+      }
+    }
+    
+    // All models failed
+    logger.error('All models in chain failed to generate valid JSON', {
+      modelChain,
+      interpreterType: this.type,
+      lastError: lastError?.message
+    });
+    
+    throw new Error(`Failed to generate valid JSON after trying all models: ${lastError?.message}`);
   }
   
   /**
@@ -50,7 +149,46 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
       // Use higher token limit for gemini-2.5-flash
       const maxTokens = currentModel.includes('gemini-2.5-flash') ? 1500 : 800;
       
-      const response = await this.openrouter.generateCompletion(
+      // Define the parse function that includes our JSON cleaning logic
+      const parseJSON = (content: string) => {
+        // First try direct parsing
+        try {
+          return JSON.parse(content);
+        } catch (firstError) {
+          // Log the initial failure
+          logger.debug('Direct JSON parsing failed, attempting cleanup', {
+            error: firstError instanceof Error ? firstError.message : String(firstError),
+            contentLength: content.length
+          });
+          
+          // Fallback: Extract JSON from response (handle markdown code blocks)
+          let cleanedContent = content;
+          
+          // Remove markdown code blocks
+          cleanedContent = cleanedContent.replace(/```json\s*/gi, '').replace(/```\s*/g, '');
+          
+          // Try to extract JSON object
+          const jsonMatch = cleanedContent.match(/\{[\s\S]*\}/);
+          if (jsonMatch) {
+            let jsonStr = jsonMatch[0];
+            
+            // Try to fix common JSON issues
+            // Fix unescaped quotes within string values
+            jsonStr = jsonStr.replace(/"([^"]*)":\s*"([^"]*)"/g, (match, key, value) => {
+              // Escape any unescaped quotes within the value
+              const escapedValue = value.replace(/(?<!\\)"/g, '\\"');
+              return `"${key}": "${escapedValue}"`;
+            });
+            
+            return JSON.parse(jsonStr);
+          } else {
+            return JSON.parse(cleanedContent);
+          }
+        }
+      };
+      
+      // Use the retry method
+      const result = await this.generateJSONWithRetry(
         [
           {
             role: 'system',
@@ -66,53 +204,17 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
           maxTokens,
           interpreterType: this.type,
           responseFormat: { type: 'json_object' }
-        }
+        },
+        parseJSON
       );
-      
-      // Parse JSON response - with schema validation, the response should be valid JSON
-      let assessment;
-      try {
-        assessment = JSON.parse(response.content);
-      } catch (parseError) {
-        // Log the actual response for debugging
-        logger.error('Failed to parse JSON response in assessRelevance', {
-          rawContent: response.content,
-          contentLength: response.content.length,
-          parseError: parseError instanceof Error ? parseError.message : String(parseError)
-        });
-        
-        // Fallback: Extract JSON from response (handle markdown code blocks)
-        let cleanedContent = response.content;
-        
-        // Remove markdown code blocks
-        cleanedContent = cleanedContent.replace(/```json\s*/gi, '').replace(/```\s*/g, '');
-        
-        // Try to extract JSON object
-        const jsonMatch = cleanedContent.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          let jsonStr = jsonMatch[0];
-          
-          // Try to fix common JSON issues
-          // Fix unescaped quotes within string values
-          jsonStr = jsonStr.replace(/"([^"]*)":\s*"([^"]*)"/g, (match, key, value) => {
-            // Escape any unescaped quotes within the value
-            const escapedValue = value.replace(/(?<!\\)"/g, '\\"');
-            return `"${key}": "${escapedValue}"`;
-          });
-          
-          assessment = JSON.parse(jsonStr);
-        } else {
-          assessment = JSON.parse(cleanedContent);
-        }
-      }
       
       return {
         success: true,
-        data: this.validateRelevanceAssessment(assessment, context.knowledgeFragments || []),
+        data: this.validateRelevanceAssessment(result.parsed, context.knowledgeFragments || []),
         metadata: {
-          model: response.model,
-          promptTokens: response.usage?.promptTokens,
-          completionTokens: response.usage?.completionTokens
+          model: result.model,
+          promptTokens: result.usage?.promptTokens,
+          completionTokens: result.usage?.completionTokens
         }
       };
       
@@ -186,14 +288,37 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
     try {
       const prompt = this.buildFormattingPrompt(context, fullInterpretation, relevanceData);
       
-      // Use a model better suited for JSON generation
-      const jsonFriendlyModel = this.type === 'mary' 
-        ? 'mistralai/mistral-nemo:free'  // Mary uses Mistral for JSON
-        : this.type === 'freud'
-        ? 'openai/gpt-4o-mini'  // Freud already has GPT-4o-mini as fallback
-        : undefined;  // Others use default chain
+      // Define the parse function that includes our JSON cleaning logic
+      const parseJSON = (content: string) => {
+        // First try direct parsing
+        try {
+          return JSON.parse(content);
+        } catch (firstError) {
+          logger.debug('Direct JSON parsing failed in formatToJSON, attempting extraction', {
+            error: firstError instanceof Error ? firstError.message : String(firstError)
+          });
+          
+          // Extract JSON from response (handle markdown code blocks)
+          let jsonString = content;
+          
+          // Try to extract JSON from markdown code blocks first
+          const codeBlockMatch = content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+          if (codeBlockMatch) {
+            jsonString = codeBlockMatch[1];
+          } else {
+            // Fall back to finding raw JSON
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+              jsonString = jsonMatch[0];
+            }
+          }
+          
+          return JSON.parse(jsonString);
+        }
+      };
       
-      const response = await this.openrouter.generateCompletion(
+      // Use the retry method
+      const result = await this.generateJSONWithRetry(
         [
           {
             role: 'system',
@@ -208,44 +333,12 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
           temperature: 0.2,
           maxTokens: 2000,
           interpreterType: this.type,
-          responseFormat: { type: 'json_object' },
-          model: jsonFriendlyModel
-        }
+          responseFormat: { type: 'json_object' }
+        },
+        parseJSON
       );
       
-      // Parse JSON response - with schema validation, the response should be valid JSON
-      let formatted;
-      try {
-        formatted = JSON.parse(response.content);
-      } catch (parseError) {
-        logger.warn('Direct JSON parsing failed, attempting extraction:', parseError);
-        
-        // Extract JSON from response (handle markdown code blocks)
-        let jsonString = response.content;
-        
-        // Try to extract JSON from markdown code blocks first
-        const codeBlockMatch = response.content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
-        if (codeBlockMatch) {
-          jsonString = codeBlockMatch[1];
-        } else {
-          // Fall back to finding raw JSON
-          const jsonMatch = response.content.match(/\{[\s\S]*\}/);
-          if (jsonMatch) {
-            jsonString = jsonMatch[0];
-          }
-        }
-        
-        try {
-          formatted = JSON.parse(jsonString);
-        } catch (secondError) {
-          logger.error('JSON extraction and parsing failed:', secondError);
-          logger.error('Response content:', response.content.substring(0, 500));
-          
-          // With strict schema, parsing failures should be rare
-          // If they occur, it's likely a model issue
-          throw new Error(`Failed to parse JSON response: ${secondError instanceof Error ? secondError.message : String(secondError)}`);
-        }
-      }
+      const formatted = result.parsed;
       
       // Add metadata and full interpretation
       // Fix: Map interpretationCore to interpreterCore if present
@@ -254,7 +347,7 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
         delete formatted.interpretationCore;
       }
       
-      const result: FormattedInterpretation = {
+      const finalResult: FormattedInterpretation = {
         ...formatted,
         fullInterpretation: fullInterpretation.interpretation,
         authenticityMarkers: {
@@ -271,11 +364,11 @@ export abstract class BaseDreamInterpreter implements IDreamInterpreter {
       
       return {
         success: true,
-        data: result,
+        data: finalResult,
         metadata: {
-          model: response.model,
-          promptTokens: response.usage?.promptTokens,
-          completionTokens: response.usage?.completionTokens
+          model: result.model,
+          promptTokens: result.usage?.promptTokens,
+          completionTokens: result.usage?.completionTokens
         }
       };
       

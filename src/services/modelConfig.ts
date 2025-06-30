@@ -1,6 +1,7 @@
 import { models, costTracking } from '../config';
 import { logger } from '../utils/logger';
 import type { InterpreterType, TokenUsage } from '../types';
+import { dreamInterpretationConfig } from '../dream-interpretation/config';
 
 // Model configuration interface
 export interface ModelConfig {
@@ -51,7 +52,7 @@ export class ModelConfigService {
   private readonly interpreterConfigs: Record<InterpreterType, InterpreterModelConfig> = {
     jung: {
       defaultModel: QUICK_MODELS.LLAMA_4,
-      fallbackModel: QUICK_MODELS.MISTRAL_NEMO,
+      fallbackModel: QUICK_MODELS.GPT_4O_MINI,
       temperature: 0.9,  // Higher for more creative Jungian analysis
       maxTokens: 2000
     },
@@ -63,13 +64,13 @@ export class ModelConfigService {
     },
     mary: {
       defaultModel: QUICK_MODELS.LLAMA_4,
-      fallbackModel: QUICK_MODELS.GEMMA_2,
+      fallbackModel: QUICK_MODELS.GPT_4O_MINI,
       temperature: 0.5,  // Lower for more factual scientific analysis
       maxTokens: 1500
     },
     lakshmi: {
       defaultModel: QUICK_MODELS.LLAMA_4,
-      fallbackModel: QUICK_MODELS.MISTRAL_NEMO,
+      fallbackModel: QUICK_MODELS.GPT_4O_MINI,
       temperature: 0.8,  // Higher for mystical interpretations
       maxTokens: 1500
     }
@@ -238,17 +239,35 @@ export class ModelConfigService {
    * Get model chain for interpreter with fallback
    */
   getModelChain(preferredModel?: string, interpreterType?: InterpreterType): string[] {
-    if (interpreterType) {
-      const config = this.interpreterConfigs[interpreterType];
-      return [config.defaultModel, config.fallbackModel];
+    // Get LLM config from dream interpretation config
+    const llmConfig = dreamInterpretationConfig.getLLMConfig();
+    
+    // Build the full model chain with all fallbacks
+    const modelChain: string[] = [];
+    
+    // If a preferred model is specified, use it first
+    if (preferredModel) {
+      modelChain.push(preferredModel);
+    } else {
+      // Use primary model from config
+      modelChain.push(llmConfig.primaryModel);
     }
     
-    // Generic fallback chain if no interpreter specified
-    return [
-      preferredModel || QUICK_MODELS.LLAMA_4,
-      QUICK_MODELS.LLAMA_3_1,
-      QUICK_MODELS.GEMMA_2
-    ];
+    // Add fallback models from config
+    if (llmConfig.fallbackModel && !modelChain.includes(llmConfig.fallbackModel)) {
+      modelChain.push(llmConfig.fallbackModel);
+    }
+    
+    if (llmConfig.fallbackModel2 && !modelChain.includes(llmConfig.fallbackModel2)) {
+      modelChain.push(llmConfig.fallbackModel2);
+    }
+    
+    // Ensure we have at least one model
+    if (modelChain.length === 0) {
+      modelChain.push(QUICK_MODELS.LLAMA_4);
+    }
+    
+    return modelChain;
   }
 
   /**

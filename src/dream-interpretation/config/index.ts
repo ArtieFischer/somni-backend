@@ -135,8 +135,8 @@ const defaultConfig: DreamInterpretationConfig = {
   llm: {
     provider: 'openrouter',
     primaryModel: 'google/gemini-2.5-flash-preview-05-20',
-    fallbackModel: 'mistralai/mistral-nemo:free',
-    fallbackModel2: 'google/gemini-2.5-flash-preview-05-20',
+    fallbackModel: 'openai/gpt-4o-mini',
+    fallbackModel2: 'mistralai/mistral-nemo:free',
     baseUrl: 'https://openrouter.ai/api/v1',
     timeout: 60000, // 60 seconds
     siteUrl: 'https://somni.app',
