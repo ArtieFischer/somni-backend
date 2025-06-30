@@ -305,7 +305,7 @@ export class ElevenLabsSessionService {
     const dynamicVariables = {
       // All required fields
       user_name: userName,
-      max_turn_length: 90,
+      max_turn_length: 40,
       dream_content: dreamContent,
       dream_symbols: dreamSymbolsString,
       age: age || 25,
