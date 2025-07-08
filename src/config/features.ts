@@ -15,7 +15,7 @@ export const features = {
   // Dream title generation
   titleGeneration: {
     enabled: process.env['ENABLE_TITLE_GENERATION'] !== 'false', // Default true
-    model: process.env['TITLE_GENERATION_MODEL'] || 'meta-llama/llama-4-scout:free',
+    model: process.env['TITLE_GENERATION_MODEL'] || 'google/gemini-2.0-flash-exp:free',
     maxTokens: parseInt(process.env['TITLE_GENERATION_MAX_TOKENS'] || '20'),
     temperature: parseFloat(process.env['TITLE_GENERATION_TEMPERATURE'] || '0.7')
   },

@@ -469,15 +469,16 @@ ${transcript}`;
     ];
 
     // Enhanced model chain with JSON-friendly models
-    // Models known to work well with JSON: Mistral variants, Dolphin, and newer models
-    const modelChain = options.model 
-      ? [options.model]
-      : [
-          'mistralai/mistral-nemo:free',           // Good at following instructions
-          'cognitivecomputations/dolphin3.0-mistral-24b:free', // Very good at structured output
-          'google/gemma-2-9b-it:free',             // Google's model, good at structured tasks
-          'meta-llama/llama-4-maverick:free'        // Fallback, doesn't support response_format
-        ];
+    // Always use fallback chain, but if a model is specified, use it as the primary
+    const primaryModel = options.model || 'google/gemini-2.0-flash-exp:free';
+    const fallbackModels = [
+      'mistralai/mistral-nemo:free',              // Good at following instructions, free
+      'gpt-4o-mini',                              // Very reliable, good at JSON
+      'meta-llama/llama-4-maverick:free'          // Last resort fallback
+    ];
+    
+    // Create model chain with primary model first, then fallbacks (deduplicated)
+    const modelChain = [primaryModel, ...fallbackModels.filter(m => m !== primaryModel)];
     
     let lastError: unknown;
     const maxRetriesPerModel = 2; // Retry each model up to 2 times for JSON parsing issues
@@ -487,7 +488,10 @@ ${transcript}`;
         try {
           logger.info('Attempting dream metadata generation', { 
             model,
+            modelIndex: modelChain.indexOf(model) + 1,
+            totalModels: modelChain.length,
             attempt,
+            maxAttempts: maxRetriesPerModel,
             dreamId: options.dreamId,
             transcriptLength: transcript.length 
           });
@@ -648,11 +652,16 @@ ${transcript}`;
           
           logger.error('Dream metadata generation failed', {
             model,
+            modelIndex: modelChain.indexOf(model) + 1,
+            totalModels: modelChain.length,
             attempt,
+            maxAttempts: maxRetriesPerModel,
             dreamId: options.dreamId,
             error: errorMessage,
+            errorType: error instanceof Error ? error.constructor.name : 'Unknown',
             is503Error,
-            isRateLimit
+            isRateLimit,
+            willRetry: !(model === modelChain[modelChain.length - 1] && attempt === maxRetriesPerModel)
           });
 
           // If it's the last attempt for the last model, throw
@@ -660,13 +669,22 @@ ${transcript}`;
             throw this.handleOpenRouterError(lastError);
           }
 
-          // Wait before next attempt/model
+          // Wait before next attempt/model with exponential backoff for 503 errors
           let waitTime = 1000; // Default wait
-          if (is503Error) waitTime = 3000;
-          if (isRateLimit) waitTime = 5000;
+          if (is503Error) {
+            // Exponential backoff for 503 errors: 5s, 10s, 20s...
+            waitTime = Math.min(5000 * Math.pow(2, attempt - 1), 30000);
+          }
+          if (isRateLimit) {
+            // Longer wait for rate limits
+            waitTime = 10000;
+          }
           
-          logger.info(`Waiting ${waitTime}ms before ${attempt < maxRetriesPerModel ? 'retry' : 'next model'}`, { 
-            dreamId: options.dreamId 
+          const nextAction = attempt < maxRetriesPerModel ? 'retry with same model' : 'try next model';
+          logger.info(`Waiting ${waitTime}ms before ${nextAction}`, { 
+            dreamId: options.dreamId,
+            currentModel: model,
+            nextModel: attempt < maxRetriesPerModel ? model : modelChain[modelChain.indexOf(model) + 1] || 'none'
           });
           await this.delay(waitTime);
         }
