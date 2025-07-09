@@ -447,14 +447,14 @@ Context: You are analyzing dream descriptions submitted by users seeking psychol
 
     const userPrompt = `### TASKS
 1. "title": 4-7 words, evocative, no punctuation at the end.
-2. "imagePrompt": ≤ 30 words. Create a single visual scene that illustrates the dream. Focus only on what can be seen - colors, objects, environment, lighting. Pure visual description, present tense.
+2. "imagePrompt": EXACTLY 20-30 words. Create a single visual scene that illustrates the dream. Focus only on what can be seen - colors, objects, environment, lighting. Pure visual description, present tense. CRITICAL: Must be between 20-30 words, no more, no less.
 3. "mood": Integer 1-5. Assess the emotional tone: 1=very negative/frightening, 2=somewhat negative/uncomfortable, 3=neutral/mixed, 4=somewhat positive/pleasant, 5=very positive/joyful.
 4. "clarity": Integer 1-100. Assess dream coherence and recall quality: 1-20=fragmented/unclear, 21-40=somewhat unclear, 41-60=moderately clear, 61-80=mostly clear, 81-100=extremely vivid/detailed.
 
 ### RULES
 • Each field is independent – do not let wording of one influence another.  
 • Use only information from the FULL transcript below.
-• For imagePrompt: Be specific with visual details - textures, colors, lighting, atmosphere. No feelings or interpretations.
+• For imagePrompt: Must be 20-30 words. Focus on one main visual scene. Be specific with colors and lighting. No feelings or interpretations.
 • For mood: Consider the overall emotional atmosphere and dreamer's apparent feelings.
 • For clarity: Consider level of detail, coherence of narrative, and apparent recall quality.
 • Output **exactly** this JSON schema: {"title":"…","imagePrompt":"…","mood":1-5,"clarity":1-100}
@@ -617,6 +617,17 @@ ${transcript}`;
           // Clean up title and imagePrompt
           metadata.title = metadata.title.trim().replace(/\.$/, ''); // Remove trailing period
           metadata.imagePrompt = metadata.imagePrompt.trim();
+          
+          // Enforce word count limit on imagePrompt (safety measure)
+          const imagePromptWords = metadata.imagePrompt.split(/\s+/);
+          if (imagePromptWords.length > 30) {
+            logger.warn('Image prompt exceeded 30 words, truncating', {
+              model,
+              originalWordCount: imagePromptWords.length,
+              dreamId: options.dreamId
+            });
+            metadata.imagePrompt = imagePromptWords.slice(0, 30).join(' ');
+          }
 
           // Track costs
           modelConfigService.trackCost(
